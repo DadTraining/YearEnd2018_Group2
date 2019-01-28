@@ -34,6 +34,7 @@ public:
     virtual bool init();
     
 	void Page();
+	void Loading();
 
     CREATE_FUNC(IntroScene);
 };

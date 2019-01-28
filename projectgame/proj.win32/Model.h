@@ -4,7 +4,7 @@ class Model
 {
 protected:
 	cocos2d::Sprite* mSprite;
-	cocos2d::Vec2* mPos;
+	cocos2d::Vec2 mPos;
 	bool mVisible;
 public:
 	Model();
