@@ -24,8 +24,14 @@
 
 #include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
-
+#include "Shark.h"
 USING_NS_CC;
+
+
+#pragma region Shark
+Shark* sk;
+#pragma endregion
+
 
 Scene* GamePlayScene::createScene()
 {
@@ -52,9 +58,13 @@ bool GamePlayScene::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("sprites.plist", "sprites.png");
+
+	sk = new Shark(this);
+	sk->SetVisible(true);
 
 
-
+	this->scheduleUpdate();
     return true;
 }
 
@@ -62,5 +72,10 @@ bool GamePlayScene::init()
 void GamePlayScene::menuCloseCallback(Ref* pSender)
 {
     
+	
+}
 
+void GamePlayScene::update(float delta)
+{
+	sk->Update();
 }

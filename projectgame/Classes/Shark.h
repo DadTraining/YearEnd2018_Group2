@@ -1,10 +1,13 @@
 #pragma once
 #include "cocos2d.h"
+#include "Model.h"
 
-class Shark
+class Shark : public Model
 {
 protected:
 	float mSize;
+	float mDelay;
+	bool mPosLeft;
 	std::string mColor;
 	int mTotalColor;
 	float mSpeed;
@@ -24,6 +27,7 @@ public:
 	void RunAway();
 	void ChangeDirection();
 	void Clone();
+	void Bite();
 
 	virtual void Update();
 	virtual void Init();
