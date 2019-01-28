@@ -2,7 +2,7 @@
 #include "cocos2d.h"
 class Model
 {
-private:
+protected:
 	cocos2d::Sprite* mSprite;
 	cocos2d::Vec2* mPos;
 	bool mVisible;
