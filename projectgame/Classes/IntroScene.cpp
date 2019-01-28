@@ -58,6 +58,7 @@ void IntroScene::Page()
 	auto pageView = ui::PageView::create();
 	pageView->setContentSize(Size(SCREEN_W, SCREEN_H));
 	pageView->setBounceEnabled(true);
+	pageView->setTouchEnabled(true);
 	pageView->setAnchorPoint(Vec2(0.5, 0.5));
 	pageView->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 2));
 	this->addChild(pageView);
@@ -67,38 +68,64 @@ void IntroScene::Page()
 		auto layout = ui::Layout::create();
 		layout->setContentSize(pageView->getContentSize());
 		auto sprite = Sprite::create("HelloWorld.png");
-		sprite->setPosition(layout->getSize().width / 2, layout->getSize().height / 2);
+		sprite->setPosition(Vec2(layout->getSize().width / 2, layout->getSize().height / 2));
 		layout->addChild(sprite);
 		pageView->addPage(layout);
 
 	}
 	pageView->scrollToItem(3);
+
 }
 
 void IntroScene::Loading()
 {
-	auto loadingBarBG = Sprite::create(LOADING_BAR_BACKGROUND);
-	loadingBarBG->setPosition(Vec2(SCREEN_W / 2, 20));
-	loadingBarBG->setScaleY(0.08);
-	loadingBarBG->setScaleX(0.2);
+	static auto loadingBarBG = Sprite::create(LOADING_BAR_BACKGROUND);
+	loadingBarBG->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 7));
+	loadingBarBG->setScaleY(LOADING_BAR_SCALE_Y);
+	loadingBarBG->setScaleX(LOADING_BAR_SCALE_X);
+	loadingBarBG->setVisible(true);
 	addChild(loadingBarBG, 2);
 
 	static auto loadingBar = ui::LoadingBar::create(LOADING_BAR);
 	loadingBar->setPercent(0);
 	loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
 	loadingBar->setPosition(loadingBarBG->getPosition());
-	loadingBar->setScaleY(0.08);
-	loadingBar->setScaleX(0.2);
+	loadingBar->setScaleY(LOADING_BAR_SCALE_Y);
+	loadingBar->setScaleX(LOADING_BAR_SCALE_X);
+	loadingBar->setVisible(true);
 	addChild(loadingBar, 2);
+
+	static auto button = ui::Button::create(BUTTON_PLAY);
+	button->setPosition(loadingBar->getPosition());
+	button->setScale(BUTTON_PLAY_SCALE);
+	button->setVisible(false);
+	this->addChild(button, 3);
 
 	auto updateLoadingBar = CallFunc::create([]() {
 		if (loadingBar->getPercent() < 100)
 		{
-			loadingBar->setPercent(loadingBar->getPercent() + 5);
+			loadingBar->setPercent(loadingBar->getPercent() + 1);
 		}
+		
 		if (loadingBar->getPercent() == 100)
 		{
-				Director::getInstance()->replaceScene(TransitionTurnOffTiles::create(1, HelloWorld::createScene()));
+			loadingBarBG->setVisible(false);
+			loadingBar->setVisible(false);
+			button->setVisible(true);
+
+			button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+				switch (type)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, HelloWorld::createScene()));
+					break;
+				default:
+					break;
+				}
+			});
+			//Director::getInstance()->replaceScene(TransitionTurnOffTiles::create(1, HelloWorld::createScene()));
 		}
 	});
 
@@ -107,4 +134,11 @@ void IntroScene::Loading()
 	loadingBar->runAction(repeatLoad);
 
 }
+
+void IntroScene::ButtonPlay()
+{
+	
+}
+
+
 

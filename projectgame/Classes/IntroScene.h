@@ -35,8 +35,12 @@ public:
     
 	void Page();
 	void Loading();
+	void ButtonPlay();
 
     CREATE_FUNC(IntroScene);
+private:
+	
+
 };
 
 
