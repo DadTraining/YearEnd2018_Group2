@@ -22,12 +22,11 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#pragma once
 
 #include "cocos2d.h"
 
-class HelloWorld : public cocos2d::Scene
+class GamePlayScene : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -38,7 +37,7 @@ public:
     void menuCloseCallback(cocos2d::Ref* pSender);
     
     // implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(GamePlayScene);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+
