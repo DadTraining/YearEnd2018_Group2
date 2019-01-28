@@ -28,6 +28,7 @@ public:
 	void ChangeDirection();
 	void Clone();
 	void Bite();
+	void Swim();
 
 	virtual void Update();
 	virtual void Init();

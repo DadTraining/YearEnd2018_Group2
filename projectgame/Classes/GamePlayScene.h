@@ -37,6 +37,7 @@ public:
     
 	void update(float delta) override;
     // implement the "static create()" method manually
+	void SharkAliveCallBack();
     CREATE_FUNC(GamePlayScene);
 };
 
