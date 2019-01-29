@@ -8,15 +8,38 @@ Model::~Model()
 {
 }
 
+/*set this visible shark alive
+set sprite visible*/
 void Model::SetVisible(bool vis)
 {
-	mSprite->setVisible(vis);
-	mVisible = vis;
+	SetAlive(vis);
+	SetSpriteVisible(vis);
 }
 
+/*get visible share
+*true is alive
+*false is death*/
 bool Model::IsVisible()
 {
 	return mVisible;
+}
+
+/*set Shark alive or death*/
+void Model::SetAlive(bool vis)
+{
+	mVisible = vis;
+}
+
+/*set visible shark*/
+void Model::SetSpriteVisible(bool vis)
+{
+	mSprite->setVisible(vis);
+}
+
+/*return sprite is visible*/
+bool Model::SpriteIsVisible()
+{
+	return mSprite->isVisible();
 }
 
 cocos2d::Animation* Model::CreateAnimation(std::string name,int start, int frames, float delay)

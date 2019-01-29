@@ -31,6 +31,30 @@ void Shark::Damaged()
 
 void Shark::Killed()
 {
+	mSprite->stopAllActions();
+	mSprite->setFlippedY(true);
+	mSprite->setPositionZ(-1);
+	auto _sct = cocos2d::ScaleTo::create(1, 0);
+	auto _move = cocos2d::MoveTo::create(2, cocos2d::Vec2(mSprite->getPosition().x, SCREEN_H));
+	auto _fOut = cocos2d::FadeOut::create(2);
+	auto _fIn = cocos2d::FadeIn::create(0.1);
+	auto _spawn = cocos2d::Spawn::create(
+		_sct,
+		_move,
+		_fOut,
+		nullptr
+	);
+	auto _vis = cocos2d::CallFunc::create([=]() {
+		mSprite->setFlippedY(false);
+		Model::SetSpriteVisible(false);
+	});
+	auto _sqe = cocos2d::Sequence::create(
+		_spawn,
+		_vis,
+		_fIn,
+		nullptr
+	);
+	mSprite->runAction(_sqe);
 }
 
 void Shark::Angry()
@@ -47,7 +71,7 @@ void Shark::RunAway()
 	auto _pos = mSprite->getPosition();
 	if (mMoveToLeft)
 	{
-		_pos.x += mSpeed;
+		_pos.x += mSpeed * SHARK_SPEED_RUNAWAY;
 		if (_pos.x > SCREEN_W)
 		{
 			SetVisible(false);
@@ -58,7 +82,7 @@ void Shark::RunAway()
 	}
 	else
 	{
-		_pos.x -= mSpeed;
+		_pos.x -= mSpeed * SHARK_SPEED_RUNAWAY;
 		if (_pos.x < 0)
 		{
 			SetVisible(false);
@@ -121,8 +145,10 @@ void Shark::Move()
 			mSprite->setPosition(_pos);
 			if (_pos.x < SCREEN_W / 2)
 			{
-				Shark::BiteAnimation();
-				//mVisible = false;
+				//Shark::BiteAnimation();
+				SetAlive(false);
+				Shark::Killed();
+
 			}
 		}
 		else if (!mMoveToLeft
@@ -132,8 +158,9 @@ void Shark::Move()
 			mSprite->setPosition(_pos);
 			if (_pos.x > SCREEN_W / 2)
 			{
-				Shark::BiteAnimation();
-				//mVisible = false;
+				//Shark::BiteAnimation();
+				SetAlive(false);
+				Shark::Killed();
 			}
 		}
 
@@ -145,16 +172,15 @@ void Shark::RunAwayAnimation()
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_RUN_AWAY_START, SHARK_RUN_AWAY_FRAME, mDelay - 0.05));
 	auto _visi = cocos2d::CallFunc::create([=]() {
-		mStatus = SHARK_STATUS_RUNAWAY;
 		mSprite->stopAllActions();
 		//mMoveToLeft = !mMoveToLeft;
 		mPos = mSprite->getPosition();
 		mSprite->setFlipX(!mMoveToLeft);
-		
+		mStatus = SHARK_STATUS_RUNAWAY;
 		Shark::SwimAnimation();
 	});
 	auto _run = cocos2d::CallFunc::create([=]() {
-		
+
 	});
 	auto sqe = cocos2d::Sequence::create(
 		_animate,
@@ -184,29 +210,18 @@ void Shark::Init()
 {
 	SetVisible(true);
 	//set color
-	int color = cocos2d::random(1, 6);
+	int color = cocos2d::random(1, 3);
 	switch (color)
 	{
 	case 1:
 		mColor = SHARK_BLUE;
 		break;
+
 	case 2:
-		mColor = SHARK_GREEN;
-		break;
-	case 3:
-		mColor = SHARK_ORANGE;
-		break;
-	case 4:
-		mColor = SHARK_PURPLE;
-		break;
-	case 5:
 		mColor = SHARK_RED;
 		break;
-	case 6:
+	case 3:
 		mColor = SHARK_YELLOW;
-		break;
-	default:
-		mColor = SHARK_BLUE;
 		break;
 	}
 

@@ -102,7 +102,8 @@ void GamePlayScene::SharkAliveCallBack()
 {
 	for (int i = 0; i < sharkList.size(); i++)
 	{
-		if (!sharkList[i]->IsVisible())
+		auto x = sharkList[i]->SpriteIsVisible();
+		if (!x)
 		{
 			//sharkList[i]->SetVisible(true);
 			sharkList[i]->Init();

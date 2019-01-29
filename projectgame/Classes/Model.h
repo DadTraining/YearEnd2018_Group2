@@ -14,6 +14,10 @@ public:
 	void SetVisible(bool vis);
 	bool IsVisible();
 
+	void SetAlive(bool vis);
+	void SetSpriteVisible(bool vis);
+	bool SpriteIsVisible();
+
 	cocos2d::Animation* CreateAnimation(std::string name, int start, int frames, float delay);
 
 	virtual void Update() = 0;
