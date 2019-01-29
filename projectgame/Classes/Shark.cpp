@@ -39,7 +39,7 @@ void Shark::Killed()
 	auto _fOut = cocos2d::FadeOut::create(2);
 	auto _fIn = cocos2d::FadeIn::create(0.1);
 	auto _spawn = cocos2d::Spawn::create(
-		_sct,
+		//_sct,
 		_move,
 		_fOut,
 		nullptr
