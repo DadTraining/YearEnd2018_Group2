@@ -7,7 +7,7 @@ class Shark : public Model
 protected:
 	float mSize;
 	float mDelay;
-	bool mPosLeft;
+	bool mMoveToLeft;
 	std::string mColor;
 	int mTotalColor;
 	float mSpeed;
@@ -27,8 +27,10 @@ public:
 	void RunAway();
 	void ChangeDirection();
 	void Clone();
-	void Bite();
-	void Swim();
+	void BiteAnimation();
+	void SwimAnimation();
+	void Move();
+	void RunAwayAnimation();
 
 	virtual void Update();
 	virtual void Init();

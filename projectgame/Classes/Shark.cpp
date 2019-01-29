@@ -11,6 +11,7 @@ Shark::Shark(cocos2d::Scene * scene)
 {
 	mSprite = cocos2d::Sprite::create();
 	//Init();	
+	mStatus = " ";
 	SetVisible(false);
 	scene->addChild(mSprite, 1);
 }
@@ -43,7 +44,29 @@ void Shark::Normal()
 
 void Shark::RunAway()
 {
-	
+	auto _pos = mSprite->getPosition();
+	if (mMoveToLeft)
+	{
+		_pos.x += mSpeed;
+		if (_pos.x > SCREEN_W)
+		{
+			SetVisible(false);
+			mStatus = " ";
+			mSprite->stopAllActions();
+		}
+
+	}
+	else
+	{
+		_pos.x -= mSpeed;
+		if (_pos.x < 0)
+		{
+			SetVisible(false);
+			mStatus = " ";
+			mSprite->stopAllActions();
+		}
+	}
+	mSprite->setPosition(_pos);
 }
 
 void Shark::ChangeDirection()
@@ -55,23 +78,28 @@ void Shark::Clone()
 }
 
 /*shark bite cable */
-void Shark::Bite()
+void Shark::BiteAnimation()
 {
 	mSprite->stopAllActions();
-	auto animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
-	auto visi = cocos2d::CallFunc::create([=]() {
-		SetVisible(false);
-		mSprite->stopAllActions();
+	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
+	auto _visi = cocos2d::CallFunc::create([=]() {
+		//SetVisible(false);
+		//mSprite->stopAllActions();
+		Shark::RunAwayAnimation();
 	});
+
+
 	auto sqe = cocos2d::Sequence::create(
-		cocos2d::Repeat::create(animate, 2),
+		cocos2d::Repeat::create(_animate, 2),
 		//cocos2d::DelayTime::create(0.5f),
-		visi,
+		_visi,
 		nullptr);
 	mSprite->runAction(sqe);
 }
 
-void Shark::Swim()
+//////////////////////////////////
+/* this is animation of shark*/
+void Shark::SwimAnimation()
 {
 	mSprite->setPosition(mPos);
 	mSprite->setScale(mSize);
@@ -80,33 +108,75 @@ void Shark::Swim()
 	mSprite->runAction(sqe);
 }
 
-/*update per frame*/
-void Shark::Update()
+/* this is moving function of shark*/
+void Shark::Move()
 {
 	if (mVisible)
 	{
 		auto _pos = mSprite->getPosition();
-		if (mPosLeft && _pos.x > SCREEN_W / 2 - mSpeed)
+		if (mMoveToLeft
+			&& _pos.x > SCREEN_W / 2 - mSpeed)
 		{
 			_pos.x -= mSpeed;
 			mSprite->setPosition(_pos);
 			if (_pos.x < SCREEN_W / 2)
 			{
-				Shark::Bite();
+				Shark::BiteAnimation();
 				//mVisible = false;
 			}
 		}
-		else if (!mPosLeft && _pos.x < SCREEN_W / 2 + mSpeed)
+		else if (!mMoveToLeft
+			&& _pos.x < SCREEN_W / 2 + mSpeed)
 		{
 			_pos.x += mSpeed;
 			mSprite->setPosition(_pos);
 			if (_pos.x > SCREEN_W / 2)
 			{
-				Shark::Bite();
+				Shark::BiteAnimation();
 				//mVisible = false;
 			}
 		}
+
 	}
+}
+
+void Shark::RunAwayAnimation()
+{
+	mSprite->stopAllActions();
+	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_RUN_AWAY_START, SHARK_RUN_AWAY_FRAME, mDelay - 0.05));
+	auto _visi = cocos2d::CallFunc::create([=]() {
+		mStatus = SHARK_STATUS_RUNAWAY;
+		mSprite->stopAllActions();
+		//mMoveToLeft = !mMoveToLeft;
+		mPos = mSprite->getPosition();
+		mSprite->setFlipX(!mMoveToLeft);
+		
+		Shark::SwimAnimation();
+	});
+	auto _run = cocos2d::CallFunc::create([=]() {
+		
+	});
+	auto sqe = cocos2d::Sequence::create(
+		_animate,
+		_visi,
+		_run,
+		nullptr);
+	mSprite->runAction(sqe);
+}
+
+/*update per frame*/
+void Shark::Update()
+{
+	auto _pos = mSprite->getPosition();
+	if (mStatus == " " || mStatus.empty())
+	{
+		Shark::Move();
+	}
+	else if (mStatus == SHARK_STATUS_RUNAWAY)
+	{
+		Shark::RunAway();
+	}
+
 }
 
 /*initialization for shark*/
@@ -172,15 +242,15 @@ void Shark::Init()
 	auto posX = cocos2d::random(1, 2);
 	if (posX == 1)
 	{
-		mPosLeft = true; // run right to left
+		mMoveToLeft = true; // run from right to left
 	}
 	else
 	{
-		mPosLeft = false; // run left to right
+		mMoveToLeft = false; // run from left to right
 	}
 
 	auto posY = cocos2d::random(100, SCREEN_H - 100);
-	if (mPosLeft)
+	if (mMoveToLeft)
 	{
 		mPos = cocos2d::Vec2(SCREEN_W + SHARK_POS, posY);
 		mSprite->setAnchorPoint(cocos2d::Vec2(0, 0.5));
@@ -190,7 +260,7 @@ void Shark::Init()
 		mPos = cocos2d::Vec2(-SHARK_POS, posY);
 		mSprite->setAnchorPoint(cocos2d::Vec2(1, 0.5));
 	}
-	mSprite->setFlipX(mPosLeft);
-	Shark::Swim();
+	mSprite->setFlipX(mMoveToLeft);
+	Shark::SwimAnimation();
 
 }

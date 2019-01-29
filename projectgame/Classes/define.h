@@ -3,7 +3,7 @@
 // screen
 #define SCREEN_H 576
 #define SCREEN_W 1024
-
+#define FPS 40
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -36,4 +36,10 @@
 
 #define SHARK_MAX_ON_SCREEN 7
 #define SHARK_CALL_BACK_ALIVE 60
+
+#define SHARK_RUN_AWAY_START 9
+#define SHARK_RUN_AWAY_FRAME 9
+
+#define SHARK_STATUS_RUNAWAY "RUNAWAY"
+#define SHARK_STATUS_BITE "BITE"
 
