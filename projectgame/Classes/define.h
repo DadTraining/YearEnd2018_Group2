@@ -11,3 +11,5 @@
 
 #define BUTTON_PLAY "button/button_play.png"
 #define BUTTON_PLAY_SCALE 0.7
+
+#define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"

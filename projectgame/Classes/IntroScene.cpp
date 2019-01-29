@@ -26,7 +26,7 @@
 #include "HelloWorldScene.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
-#include "SimpleAudioEngine.h"
+
 
 USING_NS_CC;
 
@@ -50,9 +50,11 @@ bool IntroScene::init()
 
 	Page();
 	Loading();
+	BGMusic();
 	return true;
 }
 
+/*Creat PageView to show guidance*/
 void IntroScene::Page()
 {
 	auto pageView = ui::PageView::create();
@@ -60,7 +62,7 @@ void IntroScene::Page()
 	pageView->setBounceEnabled(true);
 	pageView->setTouchEnabled(true);
 	pageView->setAnchorPoint(Vec2(0.5, 0.5));
-	pageView->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 2));
+	pageView->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 2 + SCREEN_H / 7));
 	this->addChild(pageView);
 
 	for (int i = 0; i < 3; i++)
@@ -77,6 +79,15 @@ void IntroScene::Page()
 
 }
 
+/*Creat Background Music*/
+void IntroScene::BGMusic()
+{
+	audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic(MUSIC_BACKGROUND, true);
+	
+}
+
+/*Creat LoadingBar*/
 void IntroScene::Loading()
 {
 	static auto loadingBarBG = Sprite::create(LOADING_BAR_BACKGROUND);
@@ -95,32 +106,39 @@ void IntroScene::Loading()
 	loadingBar->setVisible(true);
 	addChild(loadingBar, 2);
 
+	//////////////
+	//button play
 	static auto button = ui::Button::create(BUTTON_PLAY);
 	button->setPosition(loadingBar->getPosition());
 	button->setScale(BUTTON_PLAY_SCALE);
 	button->setVisible(false);
 	this->addChild(button, 3);
 
-	auto updateLoadingBar = CallFunc::create([]() {
+	auto updateLoadingBar = CallFunc::create([=]() {
 		if (loadingBar->getPercent() < 100)
 		{
 			loadingBar->setPercent(loadingBar->getPercent() + 1);
 		}
-		
+
 		if (loadingBar->getPercent() == 100)
 		{
 			loadingBarBG->setVisible(false);
 			loadingBar->setVisible(false);
-			button->setVisible(true);
 
+			//button play appear when loading finish
+			button->setVisible(true);
 			button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 				switch (type)
 				{
 				case ui::Widget::TouchEventType::BEGAN:
 					break;
 				case ui::Widget::TouchEventType::ENDED:
+				{
+					audio->stopBackgroundMusic();
 					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, HelloWorld::createScene()));
 					break;
+				}
+
 				default:
 					break;
 				}
@@ -133,6 +151,8 @@ void IntroScene::Loading()
 	loadingBar->runAction(repeatLoad);
 
 }
+
+
 
 
 

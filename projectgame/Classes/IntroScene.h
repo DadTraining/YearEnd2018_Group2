@@ -23,7 +23,7 @@
  ****************************************************************************/
 
 #pragma once
-
+#include "SimpleAudioEngine.h"
 #include "cocos2d.h"
 
 class IntroScene : public cocos2d::Scene
@@ -35,10 +35,11 @@ public:
     
 	void Page();
 	void Loading();
+	void BGMusic();
 
     CREATE_FUNC(IntroScene);
 private:
-	
+	CocosDenshion::SimpleAudioEngine *audio;
 
 };
 
