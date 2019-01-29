@@ -26,6 +26,7 @@ bool MapScene::init()
 	
 	//-----------------------level 1------------------------
 	auto button1 = ui::Button::create(BUTTON_1);
+	button1->setScale(0.8);
 	button1->setPosition(Vec2(visibleSize.width-860, visibleSize.height-135));	
 	button1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
@@ -33,7 +34,7 @@ bool MapScene::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;			
 		case ui::Widget::TouchEventType::ENDED:			
-			
+			// dialog
 			auto bt1 = Sprite::create(DIALOG_MAP);
 			bt1->setScale(0.2);
 			bt1->setPosition(Vec2(SCREEN_W-512,SCREEN_H-288));
@@ -43,6 +44,7 @@ bool MapScene::init()
 			IMG_Star->setScale(0.5);
 			IMG_Star->setPosition(Vec2(SCREEN_W/2, SCREEN_H-245));
 			addChild(IMG_Star);
+
 
 			//button play
 			auto button_play = ui::Button::create(BUTTON_PLAY);
@@ -70,6 +72,7 @@ bool MapScene::init()
 				case ui::Widget::TouchEventType::BEGAN:
 					break;
 				case ui::Widget::TouchEventType::ENDED:
+
 					break;
 				}
 			});
@@ -86,7 +89,8 @@ bool MapScene::init()
 	// -------------------level 2--------------------
 	
 	auto button2 = ui::Button::create(BUTTON_2);
-	button2->setPosition(Vec2(visibleSize.width -950, visibleSize.height - 200));
+	button2->setScale(0.8);
+	button2->setPosition(Vec2(visibleSize.width -772, visibleSize.height - 200));
 	button2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type2) {
 		switch (type2)
 		{
@@ -105,10 +109,10 @@ bool MapScene::init()
 			addChild(IMG_Star);
 
 			//button play
-			auto button_play = ui::Button::create(BUTTON_PLAY);
-			button_play->setScale(0.7);
-			button_play->setPosition(Vec2(SCREEN_W / 2, SCREEN_H - 335));
-			button_play->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+			auto button_play2 = ui::Button::create(BUTTON_PLAY);
+			button_play2->setScale(0.7);
+			button_play2->setPosition(Vec2(SCREEN_W / 2, SCREEN_H - 335));
+			button_play2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
 				switch (t)
 				{
 				case ui::Widget::TouchEventType::BEGAN:
@@ -118,7 +122,7 @@ bool MapScene::init()
 				}
 			});
 
-			addChild(button_play);
+			addChild(button_play2);
 
 			//button exit dialog
 			auto button_exit2 = ui::Button::create(BUTTON_EXIT);
