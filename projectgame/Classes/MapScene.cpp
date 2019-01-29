@@ -23,10 +23,11 @@ bool MapScene::init()
 	background->setPosition(SCREEN_W / 2, SCREEN_H / 2);
 	background->setScale(1.03);
 	addChild(background);
-
-	auto button = ui::Button::create(BUTTON_1);
-	button->setPosition(Vec2(visibleSize.width-860, visibleSize.height-135));	
-	button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+	
+	//-----------------------level 1------------------------
+	auto button1 = ui::Button::create(BUTTON_1);
+	button1->setPosition(Vec2(visibleSize.width-860, visibleSize.height-135));	
+	button1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
@@ -79,8 +80,71 @@ bool MapScene::init()
 		}
 		
 	});
-	addChild(button);
+	addChild(button1);
+
+
+	// -------------------level 2--------------------
 	
+	auto button2 = ui::Button::create(BUTTON_2);
+	button2->setPosition(Vec2(visibleSize.width -950, visibleSize.height - 200));
+	button2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type2) {
+		switch (type2)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+
+			auto bt2 = Sprite::create(DIALOG_MAP);
+			bt2->setScale(0.2);
+			bt2->setPosition(Vec2(SCREEN_W - 512, SCREEN_H - 288));
+			addChild(bt2);
+
+			auto IMG_Star = Sprite::create(IMG_STAR);
+			IMG_Star->setScale(0.5);
+			IMG_Star->setPosition(Vec2(SCREEN_W / 2, SCREEN_H - 245));
+			addChild(IMG_Star);
+
+			//button play
+			auto button_play = ui::Button::create(BUTTON_PLAY);
+			button_play->setScale(0.7);
+			button_play->setPosition(Vec2(SCREEN_W / 2, SCREEN_H - 335));
+			button_play->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+				switch (t)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				}
+			});
+
+			addChild(button_play);
+
+			//button exit dialog
+			auto button_exit2 = ui::Button::create(BUTTON_EXIT);
+			button_exit2->setScale(0.35);
+			button_exit2->setPosition(Vec2(SCREEN_W - 396, SCREEN_H - 202));
+			button_exit2->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType i) {
+				switch (i)
+				{
+				case ui::Widget::TouchEventType::BEGAN:
+					break;
+				case ui::Widget::TouchEventType::ENDED:
+					break;
+				}
+			});
+
+			addChild(button_exit2);
+
+			break;
+		}
+
+	});
+	addChild(button2);
+
+	// -------------------------level 3---------------------------
+	 
+
 	return true;
 }
 
