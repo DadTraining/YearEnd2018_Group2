@@ -125,7 +125,6 @@ void IntroScene::Loading()
 					break;
 				}
 			});
-			//Director::getInstance()->replaceScene(TransitionTurnOffTiles::create(1, HelloWorld::createScene()));
 		}
 	});
 
@@ -133,11 +132,6 @@ void IntroScene::Loading()
 	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
 	loadingBar->runAction(repeatLoad);
 
-}
-
-void IntroScene::ButtonPlay()
-{
-	
 }
 
 

@@ -2,7 +2,7 @@
 #define FPS 40
 
 #define SCREEN_W 1024
-#define SCREEN_H 768
+#define SCREEN_H 576
 
 #define LOADING_BAR_BACKGROUND "loadingbar/bar_1.png"
 #define LOADING_BAR "loadingbar/bar_2.png"
