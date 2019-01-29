@@ -30,11 +30,14 @@
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>src\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\GamePlayScene.cpp">
       <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MapScene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Model.cpp">
+      <Filter>src\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,14 +50,17 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>src\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\Classes\GamePlayScene.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\define.h">
       <Filter>src\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MapScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Model.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
