@@ -145,9 +145,9 @@ void Shark::Move()
 			mSprite->setPosition(_pos);
 			if (_pos.x < SCREEN_W / 2)
 			{
-				//Shark::BiteAnimation();
-				SetAlive(false);
-				Shark::Killed();
+				Shark::BiteAnimation();
+				//SetAlive(false);
+				//Shark::Killed();
 
 			}
 		}
@@ -158,9 +158,9 @@ void Shark::Move()
 			mSprite->setPosition(_pos);
 			if (_pos.x > SCREEN_W / 2)
 			{
-				//Shark::BiteAnimation();
-				SetAlive(false);
-				Shark::Killed();
+				Shark::BiteAnimation();
+				//SetAlive(false);
+				//Shark::Killed();
 			}
 		}
 
@@ -264,7 +264,7 @@ void Shark::Init()
 		mMoveToLeft = false; // run from left to right
 	}
 
-	auto posY = cocos2d::random(100, SCREEN_H - 100);
+	auto posY = cocos2d::random(SHARK_ZONE_UNDER, SCREEN_H - SHARK_ZONE_TOP);
 	if (mMoveToLeft)
 	{
 		mPos = cocos2d::Vec2(SCREEN_W + SHARK_POS, posY);

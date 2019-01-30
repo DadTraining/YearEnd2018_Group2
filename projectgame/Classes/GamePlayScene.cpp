@@ -62,6 +62,21 @@ bool GamePlayScene::init()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
+	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
+
+	addChild(_backGround, 0);
+
+	auto _cable = cocos2d::Sprite::create(CABLE_IMG);
+	_cable->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
+
+	addChild(_cable, 1);
+
+	auto _btnYellow = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
+	_btnYellow->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 5));
+
+	addChild(_btnYellow, 999);
+
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 
 	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
@@ -82,7 +97,7 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-//	sk->Update();
+	//	sk->Update();
 	callBackAlive += 1;
 	if (callBackAlive % SHARK_CALL_BACK_ALIVE == 0)
 	{

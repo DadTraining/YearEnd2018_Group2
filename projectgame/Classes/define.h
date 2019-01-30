@@ -1,9 +1,14 @@
 #pragma once
 
 // screen
-#define SCREEN_H 576
-#define SCREEN_W 1024
+#define SCREEN_H 683
+#define SCREEN_W 1366
 #define FPS 40
+
+#define BACKGROUND_IMG "background/background_1.png"
+#define CABLE_IMG "cable/cable_1.png"
+
+#define BUTTON_YELLOW_IMG "button/yellowbutton.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -12,6 +17,9 @@
 #define SHARK_RED "redshark_"
 #define SHARK_YELLOW "yellowshark_"
 #define SHARK_PURPLE "purpleshark_"
+
+#define SHARK_ZONE_UNDER 200
+#define SHARK_ZONE_TOP 100
 
 #define SHARK_SWIM_FRAMES 4
 #define SHARK_SWIM_START 1
