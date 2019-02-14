@@ -27,6 +27,7 @@
 #include "Shark.h"
 #include <vector>
 #include "define.h"	
+#include "Constants.h"
 USING_NS_CC;
 
 
@@ -60,22 +61,45 @@ bool GamePlayScene::init()
 	}
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	//Constants::setVisibleSize(visibleSize);
+
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	_backGround->setScaleY(Constants::getVisibleSize().height / _backGround->getContentSize().height);
+	_backGround->setScaleX(Constants::getVisibleSize().width / _backGround->getContentSize().width);
 
-	addChild(_backGround, 0);
+	addChild(_backGround, -1);
 
 	auto _cable = cocos2d::Sprite::create(CABLE_IMG);
 	_cable->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-
+	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
 	addChild(_cable, 1);
 
 	auto _btnYellow = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	_btnYellow->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 5));
+	_btnYellow->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
+	_btnYellow->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnYellow->getContentSize().height));
+	addChild(_btnYellow, 137);
 
-	addChild(_btnYellow, 999);
+	auto _btnBlue = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
+	_btnBlue->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 5, visibleSize.height / 7));
+	_btnBlue->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnBlue->getContentSize().height));
+
+	addChild(_btnBlue, 137);
+
+	auto _btnRed = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
+	_btnRed->setPosition(cocos2d::Vec2(visibleSize.width * 3 / 5, visibleSize.height / 7));
+	_btnRed->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnRed->getContentSize().height));
+
+	addChild(_btnRed, 137);
+
+	auto _btnBlack = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
+	_btnBlack->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 5, visibleSize.height / 7));
+	_btnBlack->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnBlack->getContentSize().height));
+
+	addChild(_btnBlack, 137);
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 

@@ -1,5 +1,6 @@
 #include "Shark.h"
 #include "define.h"
+#include "Constants.h"
 
 
 Shark::Shark()
@@ -72,7 +73,7 @@ void Shark::RunAway()
 	if (mMoveToLeft)
 	{
 		_pos.x += mSpeed * SHARK_SPEED_RUNAWAY;
-		if (_pos.x > SCREEN_W)
+		if (_pos.x > Constants::getVisibleSize().width )
 		{
 			SetVisible(false);
 			mStatus = " ";
@@ -139,11 +140,11 @@ void Shark::Move()
 	{
 		auto _pos = mSprite->getPosition();
 		if (mMoveToLeft
-			&& _pos.x > SCREEN_W / 2 - mSpeed)
+			&& _pos.x > Constants::getVisibleSize().width / 2 - mSpeed)
 		{
 			_pos.x -= mSpeed;
 			mSprite->setPosition(_pos);
-			if (_pos.x < SCREEN_W / 2)
+			if (_pos.x < Constants::getVisibleSize().width / 2)
 			{
 				Shark::BiteAnimation();
 				//SetAlive(false);
@@ -152,11 +153,11 @@ void Shark::Move()
 			}
 		}
 		else if (!mMoveToLeft
-			&& _pos.x < SCREEN_W / 2 + mSpeed)
+			&& _pos.x < Constants::getVisibleSize().width / 2 + mSpeed)
 		{
 			_pos.x += mSpeed;
 			mSprite->setPosition(_pos);
-			if (_pos.x > SCREEN_W / 2)
+			if (_pos.x > Constants::getVisibleSize().width / 2)
 			{
 				Shark::BiteAnimation();
 				//SetAlive(false);
@@ -216,7 +217,6 @@ void Shark::Init()
 	case 1:
 		mColor = SHARK_BLUE;
 		break;
-
 	case 2:
 		mColor = SHARK_RED;
 		break;
@@ -240,6 +240,7 @@ void Shark::Init()
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	case 3:
+	//	auto sp = cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("blueshark_1.png");
 		mSize = SHARK_SIZE_BIG;
 		mDelay = SHARK_DELAY_BIG;
 		mSpeed = SHARK_SPEED_BIG;
@@ -267,7 +268,7 @@ void Shark::Init()
 	auto posY = cocos2d::random(SHARK_ZONE_UNDER, SCREEN_H - SHARK_ZONE_TOP);
 	if (mMoveToLeft)
 	{
-		mPos = cocos2d::Vec2(SCREEN_W + SHARK_POS, posY);
+		mPos = cocos2d::Vec2(Constants::getVisibleSize().width  + SHARK_POS, posY);
 		mSprite->setAnchorPoint(cocos2d::Vec2(0, 0.5));
 	}
 	else
