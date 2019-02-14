@@ -30,16 +30,16 @@ void Ship::Update()
 {
 	if (mUp)
 	{
-		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y + SHIP_SPEED));
-		if (GetLocation().y == SCREEN_H)
+		mSprite->setPosition(cocos2d::Vec2(GetPosition().x, GetPosition().y + SHIP_SPEED));
+		if (GetPosition().y == SCREEN_H)
 		{
 			mUp = false;
 		}
 	}
 	else
 	{
-		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y - SHIP_SPEED));
-		if (GetLocation().y == 0)
+		mSprite->setPosition(cocos2d::Vec2(GetPosition().x, GetPosition().y - SHIP_SPEED));
+		if (GetPosition().y == 100)
 		{
 			mUp = true;
 		}
