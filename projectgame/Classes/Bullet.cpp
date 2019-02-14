@@ -5,12 +5,13 @@
 
 Bullet::Bullet(cocos2d::Scene * scene) : Model()
 {
+	// Set variable
+	mIsRunRight = true;
+
 	mSprite = cocos2d::Sprite::create(BULLET_IMG);
 	this->GetSprite()->setScale(0.5);
 	
 	scene->addChild(mSprite);
-
-	
 }
 
 Bullet::~Bullet()
@@ -20,38 +21,35 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-	
 	SetVisible(false);
-	}
+}
+void Bullet::Shoot(bool right)
+{
+	mIsRunRight = right;
+}
 void Bullet::Update()
 {
-
-}
-
-void Bullet::ShootRight()
-{
 	if (IsVisible())
 	{
-		mSprite->setPosition(GetLocation().x + 5, GetLocation().y);
-		if (GetLocation().x > SCREEN_W)
+		if (mIsRunRight)
 		{
-			SetVisible(false);
+			mSprite->setPosition(GetLocation().x + 5, GetLocation().y);
+			if (GetLocation().x > SCREEN_W)
+			{
+				SetVisible(false);
+			}
 		}
-
-	}
-}
-
-void Bullet::ShootLeft()
-{
-	if (IsVisible())
-	{
-		mSprite->setPosition(GetLocation().x - 5, GetLocation().y);
-		if (GetLocation().x < 0)
+		else 
 		{
-			SetVisible(false);
+			mSprite->setPosition(GetLocation().x - 5, GetLocation().y);
+			if (GetLocation().x < - 10)
+			{
+				SetVisible(false);
+			}
 		}
 	}
 }
+
 
 
 

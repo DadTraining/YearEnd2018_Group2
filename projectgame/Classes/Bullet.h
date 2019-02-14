@@ -6,13 +6,21 @@ class Bullet : public Model
 {
 private:
 	int mSpeed;
+	bool mIsRunRight;
 
 public:
 	Bullet(cocos2d::Scene * scene);
 	~Bullet();
+
+	/**
+	* Shoot bullet to right or to left
+	*
+	* @param right : true is run to right, false is run to left
+	*/
+	void Shoot(bool right);
+
 	virtual void Update();
-	virtual void ShootRight();
-	virtual void ShootLeft();
+	
 	virtual void Init();
 	void SetSpeed(int speed);
 	int GetSpeed();

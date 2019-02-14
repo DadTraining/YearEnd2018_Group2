@@ -12,13 +12,12 @@ Ship::Ship(cocos2d::Scene * scene) :Model()
 	listener->onTouchBegan= CC_CALLBACK_2(Ship::onTouchBegan, this);
 	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, scene);
 	
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		auto b = new Bullet(scene);
 		b->Init();
 		listBullet.push_back(b);
 	}
-
 }
 
 Ship::~Ship()
@@ -29,7 +28,8 @@ Ship::~Ship()
 
 void Ship::Update()
 {
-	if (mUp) {
+	if (mUp)
+	{
 		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y + SHIP_SPEED));
 		if (GetLocation().y == SCREEN_H)
 		{
@@ -44,22 +44,13 @@ void Ship::Update()
 			mUp = true;
 		}
 	}
+
 	for (int i = 0; i < listBullet.size(); i++)
 	{
 		if (!listBullet.at(i)->IsVisible()) {
 			listBullet.at(i)->UpdateLocation(Vec2(GetPosition() + Vec2(10, 0)));
 		}
-		if (!mLeft)
-		{
-
-			listBullet.at(i)->ShootRight();
-		}
-		
-		else
-		{
-			listBullet.at(i)->ShootLeft();
-		}
-
+		listBullet.at(i)->Update();
 	}
 
 
@@ -68,7 +59,7 @@ void Ship::Update()
 	if (mFrameBullet % 4 == 0) {
 		for (int i = 0; i < listBullet.size(); i++) {
 			if (!listBullet.at(i)->IsVisible()) {
-				listBullet.at(i)->Init();
+				listBullet.at(i)->Shoot(!mLeft);
 				listBullet.at(i)->SetVisible(true);
 				break;
 			}
@@ -104,9 +95,11 @@ bool Ship::onTouchBegan(Touch * touch, Event * event)
 
 void Ship::onTouchMoved(Touch * touch, Event * event)
 {
+
 }
 
 void Ship::onTouchEnded(Touch * touch, Event * event)
 {
+
 }
 
