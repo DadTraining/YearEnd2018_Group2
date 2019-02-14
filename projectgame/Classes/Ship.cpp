@@ -2,12 +2,15 @@
 #include"cocos2d.h"
 #include"Model.h"
 #include"define.h"
-Ship::Ship(cocos2d::Scene * scene) :Model()
+#include "Constants.h"
+
+Ship::Ship(cocos2d::Scene * scene) 
 {
-	mSprite = cocos2d::Sprite::create(SHIP_IMG);
-	scene->addChild(mSprite);
+	mSprite = cocos2d::Sprite::create();
+	scene->addChild(mSprite,999);
 	mUp = true;
 	mLeft = false;
+	//mSprite->setFlipX(!mLeft);
 	auto listener = EventListenerTouchOneByOne::create();
 	listener->onTouchBegan= CC_CALLBACK_2(Ship::onTouchBegan, this);
 	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, scene);
@@ -18,7 +21,7 @@ Ship::Ship(cocos2d::Scene * scene) :Model()
 		b->Init();
 		listBullet.push_back(b);
 	}
-
+	Init();
 }
 
 Ship::~Ship()
@@ -31,7 +34,7 @@ void Ship::Update()
 {
 	if (mUp) {
 		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y + SHIP_SPEED));
-		if (GetLocation().y == SCREEN_H)
+		if (GetLocation().y >= Constants::getVisibleSize().height)
 		{
 			mUp = false;
 		}
@@ -39,7 +42,7 @@ void Ship::Update()
 	else
 	{
 		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y - SHIP_SPEED));
-		if (GetLocation().y == 0)
+		if (GetLocation().y <= Constants::getVisibleSize().height/4 )
 		{
 			mUp = true;
 		}
@@ -49,7 +52,7 @@ void Ship::Update()
 		if (!listBullet.at(i)->IsVisible()) {
 			listBullet.at(i)->UpdateLocation(Vec2(GetPosition() + Vec2(10, 0)));
 		}
-		if (!mLeft)
+		if (mLeft)
 		{
 
 			listBullet.at(i)->ShootRight();
@@ -79,22 +82,22 @@ void Ship::Update()
 void Ship::Init()
 {
 
-	this->GetSprite()->setScale(SHIP_SCALE);
-	this->SetPosition(cocos2d::Vec2(SCREEN_W / 2, SCREEN_H / 2));
-
+	//this->GetSprite()->setScale(SHIP_SCALE);
+	this->SetPosition(cocos2d::Vec2(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 2));
+	auto animate = cocos2d::Animate::create(CreateAnimation(SHIP_IMG,1,SHIP_FRAME,0.15));
+	mSprite->runAction(cocos2d::RepeatForever::create(animate));
 }
 
 bool Ship::onTouchBegan(Touch * touch, Event * event)
 {
 	auto mLocation = touch->getLocation();
-	if (mLocation.x > SCREEN_W / 2)
+	if (mLocation.x > Constants::getVisibleSize().width / 2)
 	{
-		mLeft = false;
-		
+		mLeft = true;		
 	}
 	else
 	{
-		mLeft = true;
+		mLeft = false;
 		
 	}
 	mSprite->setFlipX(mLeft);

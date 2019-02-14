@@ -31,7 +31,6 @@ class GamePlayScene : public cocos2d::Scene
 {
 private:
 	Ship * ship;
-	Bullet *bullet;
 	Vec2 mLocation;
 public:
 	static cocos2d::Scene* createScene();

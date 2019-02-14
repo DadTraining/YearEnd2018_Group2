@@ -2,6 +2,7 @@
 #include"cocos2d.h"
 #include"Model.h"
 #include"define.h"
+#include "Constants.h"
 
 Bullet::Bullet(cocos2d::Scene * scene) : Model()
 {
@@ -30,7 +31,7 @@ void Bullet::ShootRight()
 	if (IsVisible())
 	{
 		mSprite->setPosition(GetLocation().x + 5, GetLocation().y);
-		if (GetLocation().x > SCREEN_W)
+		if (GetLocation().x > Constants::getVisibleSize().width)
 		{
 			SetVisible(false);
 		}
