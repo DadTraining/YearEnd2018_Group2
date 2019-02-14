@@ -120,6 +120,7 @@ bool GamePlayScene::init()
 	ship->Init();
 	scheduleUpdate();
 	return true;
+	//
 }
 
 

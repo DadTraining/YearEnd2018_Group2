@@ -15,6 +15,24 @@ void Model::SetVisible(bool vis)
 	SetAlive(vis);
 	SetSpriteVisible(vis);
 }
+Model::Model()
+{
+}
+
+Model::~Model()
+{
+}
+
+void Model::SetVisible(bool vis)
+{
+	mSprite->setVisible(vis);
+	mVisible = vis;
+}
+
+bool Model::IsVisible()
+{
+	return mVisible;
+}
 
 /*get visible share
 *true is alive
@@ -24,6 +42,7 @@ bool Model::IsVisible()
 	return mVisible;
 }
 
+cocos2d::Vec2 Model::GetPosition()
 /*set Shark alive or death*/
 void Model::SetAlive(bool vis)
 {
@@ -33,6 +52,7 @@ void Model::SetAlive(bool vis)
 /*set visible shark*/
 void Model::SetSpriteVisible(bool vis)
 {
+	return this->GetSprite()->getPosition();
 	mSprite->setVisible(vis);
 }
 
@@ -41,7 +61,21 @@ bool Model::SpriteIsVisible()
 {
 	return mSprite->isVisible();
 }
+void Model::SetPosition(cocos2d::Vec2 mPos)
+{
+	this->GetSprite()->setPosition(mPos);
+}
+cocos2d::Sprite * Model::GetSprite()
+{
+	return this->mSprite;
+}
 
+void Model::SetSprite(cocos2d::Sprite * sprite)
+{
+	this->mSprite = sprite;
+}
+cocos2d::Vec2 Model::GetLocation() {
+	return mSprite->getPosition();
 cocos2d::Animation* Model::CreateAnimation(std::string name,int start, int frames, float delay)
 {
 	cocos2d::Vector<cocos2d::SpriteFrame*> _frames;
