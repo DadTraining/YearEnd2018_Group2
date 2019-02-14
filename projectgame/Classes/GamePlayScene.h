@@ -35,22 +35,12 @@ private:
 	Vec2 mLocation;
 public:
 	static cocos2d::Scene* createScene();
-
-	virtual bool init();
-
-
 	void menuCloseCallback(cocos2d::Ref* pSender);
-	virtual void update(float DeltaTime);
-
-	CREATE_FUNC(GamePlayScene);
     virtual bool init() override;
-    
-    // a selector callback
-    void menuCloseCallback(cocos2d::Ref* pSender);
     
 	void update(float delta) override;
     // implement the "static create()" method manually
 	void SharkAliveCallBack();
-    CREATE_FUNC(GamePlayScene);
+	CREATE_FUNC(GamePlayScene);
 };
 

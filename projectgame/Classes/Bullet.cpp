@@ -7,10 +7,7 @@ Bullet::Bullet(cocos2d::Scene * scene) : Model()
 {
 	mSprite = cocos2d::Sprite::create(BULLET_IMG);
 	this->GetSprite()->setScale(0.5);
-	
 	scene->addChild(mSprite);
-
-	
 }
 
 Bullet::~Bullet()

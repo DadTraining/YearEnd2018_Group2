@@ -112,8 +112,6 @@ bool GamePlayScene::init()
 	callBackAlive = 0;
 	this->scheduleUpdate();
 	return true;
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	auto background = Sprite::create("background.png");
 	background->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 2));
 	background->setScale(0.6);
@@ -145,14 +143,8 @@ void GamePlayScene::update(float delta)
 			sharkList[i]->Update();
 		}
 	}
-}
-
-
-}
-void GamePlayScene::update(float DeltaTime)
-{
 	ship->Update();
-
+}
 
 void GamePlayScene::SharkAliveCallBack()
 {
