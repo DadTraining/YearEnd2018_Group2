@@ -8,6 +8,15 @@
 #define BUTTON_3 "map/3.png"
 #define BUTTON_4 "map/4.png"
 #define BUTTON_5 "map/5.png"
+#define BUTTON_6 "map/6.png"
+#define BUTTON_7 "map/7.png"
+#define BUTTON_8 "map/8.png"
+
+#define Lable_1 "map/level.png"
+#define Lable_2 "map/Level2.png"
+#define Lable_3 "map/Level3.png"
+#define Lable_4 "map/Level4.png"
+#define Lable_5 "map/Level5.png"
 
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
