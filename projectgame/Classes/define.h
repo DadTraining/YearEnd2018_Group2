@@ -13,7 +13,7 @@
 #define DIALOG_MAP "map/tb.png"
 #define BUTTON_PLAY "map/play.png"
 #define IMG_STAR "map/2stars.png"
-#define BUTTON_EXIT "map/imgexit.png"
+#define BUTTON_EXIT "map/cancel.png"
 
 #define POPUP_SCALE_X 0.53
 #define POPUP_SCALE_Y 0.51

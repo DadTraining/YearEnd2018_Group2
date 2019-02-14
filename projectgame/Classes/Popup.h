@@ -1,5 +1,5 @@
 #pragma once
-#include"ui\CocosGUI.h"
+
 #include "cocos2d.h"
 class Popup : public cocos2d::Node
 {
@@ -11,6 +11,8 @@ public:
 	virtual bool init();
 	virtual void onExit();
 	void setBackground();
+	void disappear();
+	
 
 	CREATE_FUNC(Popup);
 

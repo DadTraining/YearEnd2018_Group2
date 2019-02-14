@@ -26,19 +26,18 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpPlay.h"
 #include "define.h"
-#include"ui\CocosGUI.h"
+#include "ui\CocosGUI.h"
 
 USING_NS_CC;
 
 bool PopupPlay::init()
 {
-	if (!Node::init()) return false;
-
-	setBackground();
+	Popup::init();
+	Popup::setBackground();
 
 	auto btnPlay = ui::Button::create(BUTTON_PLAY);
 	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-								+ mBackground->getContentSize().height / 21));
+								+ mBackground->getContentSize().height / 22));
 	
 	mLayer->addChild(btnPlay, 1);
 	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
@@ -50,10 +49,12 @@ bool PopupPlay::init()
 			break;
 		}
 	});
+
+	
 	return true;
 }
 
 void PopupPlay::onExit()
 {
-	Node::onExit();
+	Popup::onExit();
 }
