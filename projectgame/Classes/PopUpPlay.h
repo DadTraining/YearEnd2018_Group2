@@ -22,40 +22,17 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HelloWorldScene.h"
-#include "SimpleAudioEngine.h"
-#include "MapScene.h"
-#include "PopUpPlay.h"
+#pragma once
+#include "cocos2d.h"
 #include "Popup.h"
 
-USING_NS_CC;
-
-Scene* HelloWorld::createScene()
+class PopupPlay : public Popup
 {
-    return HelloWorld::create();
-}
+public:
 
-// Print useful error message instead of segfaulting when files are not there.
-
-// on "init" you need to initialize your instance
-bool HelloWorld::init()
-{
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
-
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-	PopupPlay *popup = PopupPlay::create();
-	addChild(popup);
-
-    return true;
-}
+    virtual bool init() override;
+	virtual void onExit() override;
+    
+    CREATE_FUNC(PopupPlay);
+};
 

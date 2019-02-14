@@ -22,40 +22,38 @@
  THE SOFTWARE.
  ****************************************************************************/
 
-#include "HelloWorldScene.h"
+#include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
-#include "MapScene.h"
 #include "PopUpPlay.h"
-#include "Popup.h"
+#include "define.h"
+#include"ui\CocosGUI.h"
 
 USING_NS_CC;
 
-Scene* HelloWorld::createScene()
+bool PopupPlay::init()
 {
-    return HelloWorld::create();
+	if (!Node::init()) return false;
+
+	setBackground();
+
+	auto btnPlay = ui::Button::create(BUTTON_PLAY);
+	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
+								+ mBackground->getContentSize().height / 21));
+	
+	mLayer->addChild(btnPlay, 1);
+	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+		switch (t)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		}
+	});
+	return true;
 }
 
-// Print useful error message instead of segfaulting when files are not there.
-
-// on "init" you need to initialize your instance
-bool HelloWorld::init()
+void PopupPlay::onExit()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::init() )
-    {
-        return false;
-    }
-
-    auto visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
-    /////////////////////////////
-    // 3. add your codes below...
-
-	PopupPlay *popup = PopupPlay::create();
-	addChild(popup);
-
-    return true;
+	Node::onExit();
 }
-
