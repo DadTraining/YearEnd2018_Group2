@@ -32,7 +32,8 @@
 USING_NS_CC;
 
 #pragma region declare
-auto visibleSize = Constants::getVisibleSize();
+//auto _ScreenSize = Constants::getVisibleSize();
+cocos2d::Size _ScreenSize;
 #pragma endregion
 
 
@@ -51,8 +52,8 @@ bool IntroScene::init()
 		return false;
 	}
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
-	Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	_ScreenSize = Director::getInstance()->getVisibleSize();
+	//Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	Page();
 	Loading();
@@ -64,11 +65,11 @@ bool IntroScene::init()
 void IntroScene::Page()
 {
 	auto pageView = ui::PageView::create();
-	pageView->setContentSize(Size(visibleSize.width, visibleSize.height));
+	pageView->setContentSize(Size(_ScreenSize.width, _ScreenSize.height));
 	pageView->setBounceEnabled(true);
 	pageView->setTouchEnabled(true);
 	pageView->setAnchorPoint(Vec2(0.5, 0.5));
-	pageView->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + visibleSize.height / 7));
+	pageView->setPosition(Vec2(_ScreenSize.width / 2, _ScreenSize.height / 2 + _ScreenSize.height / 7));
 	this->addChild(pageView);
 
 	for (int i = 0; i < 3; i++)
@@ -97,18 +98,14 @@ void IntroScene::BGMusic()
 void IntroScene::Loading()
 {
 	static auto loadingBarBG = Sprite::create(LOADING_BAR_BACKGROUND);
-	loadingBarBG->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 7));
-	loadingBarBG->setScaleY(LOADING_BAR_SCALE_Y);
-	loadingBarBG->setScaleX(LOADING_BAR_SCALE_X);
+	loadingBarBG->setPosition(Vec2(_ScreenSize.width / 2, _ScreenSize.height / 7));
 	loadingBarBG->setVisible(true);
 	addChild(loadingBarBG, 2);
 
 	static auto loadingBar = ui::LoadingBar::create(LOADING_BAR);
 	loadingBar->setPercent(0);
 	loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
-	loadingBar->setPosition(loadingBarBG->getPosition());
-	loadingBar->setScaleY(LOADING_BAR_SCALE_Y);
-	loadingBar->setScaleX(LOADING_BAR_SCALE_X);
+	loadingBar->setPosition(loadingBarBG->getPosition());	
 	loadingBar->setVisible(true);
 	addChild(loadingBar, 2);
 
@@ -116,7 +113,7 @@ void IntroScene::Loading()
 	//button play
 	static auto button = ui::Button::create(BUTTON_PLAY);
 	button->setPosition(loadingBar->getPosition());
-	button->setScale(BUTTON_PLAY_SCALE);
+	//button->setScale(BUTTON_PLAY_SCALE);
 	button->setVisible(false);
 	this->addChild(button, 3);
 
