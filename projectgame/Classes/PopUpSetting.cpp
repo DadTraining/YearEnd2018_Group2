@@ -24,52 +24,27 @@
 
 #include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
-#include "PopUpPlay.h"
+#include "PopUpSetting.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
 
 USING_NS_CC;
 
-bool PopupPlay::init()
+bool PopupSetting::init()
 {
 	Popup::init();
 	Popup::setBackground();
 
-	auto btnPlay = ui::Button::create(BUTTON_PLAY);
-	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-								+ mBackground->getContentSize().height / 22));
+	//add setting label
+	auto setting = cocos2d::Sprite::create(SETTING);
+	setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
+	mLayer->addChild(setting);
+	setting->setScale(0.75);
 	
-	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			break;
-		}
-	});
-
-	auto btnSetting = ui::Button::create(BUTTON_SETTING);
-	btnSetting->setPosition(Vec2(- mBackground->getContentSize().width / 7, 
-		-mBackground->getContentSize().height / 4
-		+ mBackground->getContentSize().height / 22));
-
-	btnSetting->setScale(0.75);
-	mLayer->addChild(btnSetting, 1);
-	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			break;
-		}
-	});
 	return true;
 }
 
-void PopupPlay::onExit()
+void PopupSetting::onExit()
 {
 	Popup::onExit();
 }

@@ -39,7 +39,7 @@ void Popup::setBackground()
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			disappear();
-			mLayer->setVisible(false);
+			mLayer->removeFromParentAndCleanup(true);
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			break; 

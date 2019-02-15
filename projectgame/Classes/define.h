@@ -23,6 +23,8 @@
 #define BUTTON_PLAY "map/play.png"
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
+#define BUTTON_SETTING "map/settings.png"
+#define SETTING "map/setting.png"
 
 #define POPUP_SCALE_X 0.53
 #define POPUP_SCALE_Y 0.51

@@ -26,6 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include "MapScene.h"
 #include "PopUpPlay.h"
+#include "PopUpSetting.h"
 #include "Popup.h"
 
 USING_NS_CC;
@@ -53,7 +54,7 @@ bool HelloWorld::init()
     /////////////////////////////
     // 3. add your codes below...
 
-	PopupPlay *popup = PopupPlay::create();
+	PopupSetting *popup = PopupSetting::create();
 	addChild(popup);
 
     return true;
