@@ -23,6 +23,25 @@ void Bullet::Init()
 	}
 void Bullet::Update()
 {
+	if (IsVisible())
+	{
+		if (mIsRunRight)
+		{
+			mSprite->setPosition(GetPosition().x + 5, GetPosition().y);
+			if (GetPosition().x > SCREEN_W)
+			{
+				SetVisible(false);
+			}
+		}
+		else
+		{
+			mSprite->setPosition(GetPosition().x - 5, GetPosition().y);
+			if (GetPosition().x < -10)
+			{
+				SetVisible(false);
+			}
+		}
+	}
 
 }
 
