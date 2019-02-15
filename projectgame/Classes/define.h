@@ -25,6 +25,11 @@
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"
 #define SETTING "map/setting.png"
+#define BGM "map/BGM.png"
+#define SFX "map/SFX.png"
+#define SLIDE_BAR_BG "map/Slider_Back.png"
+#define SLIDE_BAR_PROGRESS "map/Slider_PressBar.png"
+#define SLIDE_ROUND "map/round.png"
 
 #define POPUP_SCALE_X 0.53
 #define POPUP_SCALE_Y 0.51

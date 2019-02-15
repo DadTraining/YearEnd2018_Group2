@@ -35,6 +35,8 @@ bool PopupPlay::init()
 	Popup::init();
 	Popup::setBackground();
 
+	///////////////
+	//Button play
 	auto btnPlay = ui::Button::create(BUTTON_PLAY);
 	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
 								+ mBackground->getContentSize().height / 22));
@@ -50,6 +52,8 @@ bool PopupPlay::init()
 		}
 	});
 
+	////////////////
+	//Button setting
 	auto btnSetting = ui::Button::create(BUTTON_SETTING);
 	btnSetting->setPosition(Vec2(- mBackground->getContentSize().width / 7, 
 		-mBackground->getContentSize().height / 4
