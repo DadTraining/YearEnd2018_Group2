@@ -23,6 +23,6 @@ public:
 
 	virtual void Update() = 0;
 	virtual void Init() = 0;
-	
+	cocos2d::Vec2 GetLocation();
 };
 

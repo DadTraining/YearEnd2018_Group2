@@ -38,3 +38,6 @@ void Model::SetSprite(cocos2d::Sprite * sprite)
 {
 	this->mSprite = sprite;
 }
+cocos2d::Vec2 Model::GetLocation() {
+	return mSprite->getPosition();   
+}

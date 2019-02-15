@@ -31,7 +31,7 @@ void Ship::Update()
 	if (mUp)
 	{
 		mSprite->setPosition(cocos2d::Vec2(GetPosition().x, GetPosition().y + SHIP_SPEED));
-		if (GetPosition().y == SCREEN_H)
+		if (GetPosition().y >= SCREEN_H)
 		{
 			mUp = false;
 		}
@@ -39,7 +39,7 @@ void Ship::Update()
 	else
 	{
 		mSprite->setPosition(cocos2d::Vec2(GetPosition().x, GetPosition().y - SHIP_SPEED));
-		if (GetPosition().y == 100)
+		if (GetPosition().y <= 100)
 		{
 			mUp = true;
 		}
