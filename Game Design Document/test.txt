@@ -1,0 +1,6 @@
+ti le vang bang cach tinh nhu sau 
+
+#uoc luong cai sprite do chiem bao nhieu phan cua man hinh theo width hoac height
+# mang cai size(w,h) man hinh ra chia cho cai o tren
+#sau do mang luon cai vua tinh o tren chia cho kich thuoc go^'c t? cua cai sprite hien tai 
+(Constants::getVisibleSize().height / 6)/_btnYellow->getContentSize().height
