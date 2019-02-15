@@ -40,6 +40,8 @@ public:
 	void update(float delta) override;
     // implement the "static create()" method manually
 	void SharkAliveCallBack();
+
+	bool onTouchBegan(Touch *touch, Event *event);
 	CREATE_FUNC(GamePlayScene);
 };
 

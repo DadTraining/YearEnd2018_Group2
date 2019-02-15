@@ -11,6 +11,11 @@ USING_NS_CC;
 std::vector<Shark*> sharkList;
 int callBackAlive;
 Shark* sk;
+cocos2d::Sprite* bluebutton;
+cocos2d::Sprite* redbutton;
+cocos2d::Sprite* yellowbutton;
+cocos2d::Sprite* blackbutton;
+
 #pragma endregion
 
 
@@ -54,28 +59,25 @@ bool GamePlayScene::init()
 	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
 	addChild(_cable, 1);
 
-	auto _btnYellow = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	_btnYellow->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
-	_btnYellow->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnYellow->getContentSize().height));
-	addChild(_btnYellow, 137);
+	yellowbutton = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
+	yellowbutton->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
+	yellowbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, yellowbutton->getContentSize().height));
+	addChild(yellowbutton, 137);
 
-	auto _btnBlue = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	_btnBlue->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 5, visibleSize.height / 7));
-	_btnBlue->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnBlue->getContentSize().height));
+	bluebutton = cocos2d::Sprite::create(BUTTON_BLUE_IMG);
+	bluebutton->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 5, visibleSize.height / 7));
+	bluebutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, bluebutton->getContentSize().height));
+	addChild(bluebutton, 137);
 
-	addChild(_btnBlue, 137);
+	redbutton = cocos2d::Sprite::create(BUTTON_RED_IMG);
+	redbutton->setPosition(cocos2d::Vec2(visibleSize.width * 3 / 5, visibleSize.height / 7));
+	redbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, redbutton->getContentSize().height));
+	addChild(redbutton, 137);
 
-	auto _btnRed = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	_btnRed->setPosition(cocos2d::Vec2(visibleSize.width * 3 / 5, visibleSize.height / 7));
-	_btnRed->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnRed->getContentSize().height));
-
-	addChild(_btnRed, 137);
-
-	auto _btnBlack = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	_btnBlack->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 5, visibleSize.height / 7));
-	_btnBlack->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnBlack->getContentSize().height));
-
-	addChild(_btnBlack, 137);
+	blackbutton = cocos2d::Sprite::create(BUTTON_BLACK_IMG);
+	blackbutton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 5, visibleSize.height / 7));
+	blackbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, blackbutton->getContentSize().height));
+	addChild(blackbutton, 137);
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 
@@ -85,6 +87,11 @@ bool GamePlayScene::init()
 	}
 	//sk = new Shark(this);
 	//sk->SetVisible(true);
+
+	auto listenerButton = EventListenerTouchOneByOne::create();
+	listenerButton->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan,this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerButton, this);
+
 	callBackAlive = 0;
 	ship = new Ship(this);
 	this->scheduleUpdate();
@@ -128,4 +135,32 @@ void GamePlayScene::SharkAliveCallBack()
 			break;
 		}
 	}
+}
+
+bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
+{
+	auto localTouch = touch->getLocation();
+
+	if (bluebutton->getBoundingBox().containsPoint(localTouch))
+	{
+		ship->ShootColor(BULLET_SHOOT_BLUE);
+	}
+	else if(yellowbutton->getBoundingBox().containsPoint(localTouch))
+	{
+		ship->ShootColor(BULLET_SHOOT_YELLOW);
+
+	}
+	else if (blackbutton->getBoundingBox().containsPoint(localTouch))
+	{
+		ship->ShootColor(BULLET_SHOOT_BLACK);
+
+	}
+	else if (redbutton->getBoundingBox().containsPoint(localTouch))
+	{
+		ship->ShootColor(BULLET_SHOOT_RED);
+
+	}
+
+
+	return false;
 }

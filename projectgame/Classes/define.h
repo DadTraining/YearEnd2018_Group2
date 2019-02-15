@@ -18,6 +18,10 @@
 #define CABLE_IMG "cable/cable_1.png"
 
 #define BUTTON_YELLOW_IMG "button/yellowbutton.png"
+#define BUTTON_BLUE_IMG "button/bluebutton.png"
+#define BUTTON_RED_IMG "button/redbutton.png"
+#define BUTTON_WHITE_IMG "button/whitebutton.png"
+#define BUTTON_BLACK_IMG "button/blackbutton.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -62,3 +66,9 @@
 
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_BITE "BITE"
+
+#define BULLET_SHOOT_RED "RED"
+#define BULLET_SHOOT_BLUE "BLUE"
+#define BULLET_SHOOT_YELLOW "YELLOW"
+#define BULLET_SHOOT_BLACK "BLACK"
+#define BULLET_SHOOT_WHITE "WHITE"
