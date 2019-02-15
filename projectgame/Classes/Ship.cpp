@@ -62,7 +62,7 @@ void Ship::Update()
 	if (mFrameBullet % 4 == 0) {
 		for (int i = 0; i < listBullet.size(); i++) {
 			if (!listBullet.at(i)->IsVisible()) {
-				listBullet.at(i)->Shoot(!mLeft);
+				listBullet.at(i)->Shoot(mLeft);
 				listBullet.at(i)->SetVisible(true);
 				break;
 			}
