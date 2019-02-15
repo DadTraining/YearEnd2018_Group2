@@ -25,10 +25,16 @@
 #include "IntroScene.h"
 #include "HelloWorldScene.h"
 #include "define.h"
+#include "Constants.h"
 #include "ui\CocosGUI.h"
 
 
 USING_NS_CC;
+
+#pragma region declare
+auto visibleSize = Constants::getVisibleSize();
+#pragma endregion
+
 
 Scene* IntroScene::createScene()
 {
@@ -58,11 +64,11 @@ bool IntroScene::init()
 void IntroScene::Page()
 {
 	auto pageView = ui::PageView::create();
-	pageView->setContentSize(Size(SCREEN_W, SCREEN_H));
+	pageView->setContentSize(Size(visibleSize.width, visibleSize.height));
 	pageView->setBounceEnabled(true);
 	pageView->setTouchEnabled(true);
 	pageView->setAnchorPoint(Vec2(0.5, 0.5));
-	pageView->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 2 + SCREEN_H / 7));
+	pageView->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + visibleSize.height / 7));
 	this->addChild(pageView);
 
 	for (int i = 0; i < 3; i++)
@@ -91,7 +97,7 @@ void IntroScene::BGMusic()
 void IntroScene::Loading()
 {
 	static auto loadingBarBG = Sprite::create(LOADING_BAR_BACKGROUND);
-	loadingBarBG->setPosition(Vec2(SCREEN_W / 2, SCREEN_H / 7));
+	loadingBarBG->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 7));
 	loadingBarBG->setScaleY(LOADING_BAR_SCALE_Y);
 	loadingBarBG->setScaleX(LOADING_BAR_SCALE_X);
 	loadingBarBG->setVisible(true);
