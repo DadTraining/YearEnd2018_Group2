@@ -10,8 +10,8 @@
 #define BULLET_SPEED 3
 
 // screen
-#define SCREEN_H 960
-#define SCREEN_W 1920
+#define SCREEN_H 512
+#define SCREEN_W 1024
 #define FPS 40
 
 #define BACKGROUND_IMG "background/background_1.png"
