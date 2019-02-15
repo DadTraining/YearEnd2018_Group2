@@ -51,6 +51,11 @@ void Bullet::ShootLeft()
 	}
 }
 
+void Bullet::Shoot(bool right)
+{
+	mIsRunRight = right;
+}
+
 
 
 void Bullet::SetSpeed(int speed)
