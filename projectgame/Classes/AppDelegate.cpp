@@ -25,7 +25,7 @@ THE SOFTWARE.
 #include "AppDelegate.h"
 #include "HelloWorldScene.h"
 #include "GamePlayScene.h"
-
+#include "IntroScene.h"
 #include "define.h"
 
 // #define USE_AUDIO_ENGINE 1
