@@ -25,6 +25,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Popup.h"
+#include "ui\CocosGUI.h"
 
 class PopupSetting : public Popup
 {
@@ -33,7 +34,7 @@ public:
     virtual bool init() override;
 	virtual void onExit() override;
 	void slider();
-	void slilderEvent(Ref *sender, ui::Slider::EventType type);
+	void slilderEvent(Ref *sender, cocos2d::ui::Slider::EventType type);
     
     CREATE_FUNC(PopupSetting);
 

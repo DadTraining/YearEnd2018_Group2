@@ -26,7 +26,7 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpSetting.h"
 #include "define.h"
-#include "ui\CocosGUI.h"
+
 
 USING_NS_CC;
 
@@ -44,18 +44,18 @@ bool PopupSetting::init()
 	
 	///////////////
 	//Add label BGM and SFX
-	auto sfx = cocos2d::Sprite::create(SFX);
-	sfx->setPosition(Vec2(-mBackground->getContentSize().width / 6, 
+	sfx = cocos2d::Sprite::create(SFX);
+	sfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
 		setting->getPosition().y - mBackground->getContentSize().height / 8));
 	mLayer->addChild(sfx);
 	sfx->setScale(0.75);
 
-	auto bgm = cocos2d::Sprite::create(BGM);
+	bgm = cocos2d::Sprite::create(BGM);
 	bgm->setPosition(Vec2(sfx->getPosition().x, 
 		sfx->getPosition().y - mBackground->getContentSize().height / 10));
 	mLayer->addChild(bgm);
 	bgm->setScale(0.75);
-
+	slider();
 	
 	return true;
 }
@@ -69,14 +69,14 @@ void PopupSetting::onExit()
 void PopupSetting::slider()
 {
 	
-	auto slider = ui::Slider::create();
+	auto slider = cocos2d::ui::Slider::create();
 	slider->loadBarTexture(SLIDE_BAR_BG);
 	slider->loadSlidBallTextureNormal(SLIDE_ROUND);
 	slider->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
 	slider->setAnchorPoint(Vec2(0, 0.5));
-	slider->setScale(0.5);
+	slider->setScale(0.45);
 
-	slider->setPosition(Vec2(bgm->getPosition().x + mBackground->getContentSize().width / 10,
+	slider->setPosition(Vec2(bgm->getPosition().x + mBackground->getContentSize().width / 12,
 		bgm->getPosition().y));
 	mLayer->addChild(slider);
 
@@ -84,13 +84,13 @@ void PopupSetting::slider()
 }
 
 /*Slider Event*/
-void PopupSetting::slilderEvent(Ref * sender, ui::Slider::EventType type)
+void PopupSetting::slilderEvent(Ref * sender, cocos2d::ui::Slider::EventType type)
 {
 	switch (type)
 	{
-	case ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
+	case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
 	{
-		ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
+		cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
 		int percentage = _slider->getPercent();
 
 		break;
