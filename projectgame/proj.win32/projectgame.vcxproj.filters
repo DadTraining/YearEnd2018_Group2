@@ -7,16 +7,16 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
+    <Filter Include="resource\src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Model">
+    <Filter Include="resource\src\Model">
       <UniqueIdentifier>{846d3f05-76d4-4d89-a273-c0d227748785}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Common">
+    <Filter Include="resource\src\Common">
       <UniqueIdentifier>{8480ea05-ebc7-4a7d-912e-5c7202b31fdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Scene">
+    <Filter Include="resource\src\Scene">
       <UniqueIdentifier>{caafa401-0fa2-4df9-afed-69919718ce86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -25,28 +25,31 @@
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>src\Common</Filter>
+      <Filter>resource\src\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>src\Scene</Filter>
+      <Filter>resource\src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GamePlayScene.cpp">
-      <Filter>src\Scene</Filter>
+      <Filter>resource\src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shark.cpp">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model.cpp">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Constants.cpp">
-      <Filter>src\Common</Filter>
+      <Filter>resource\src\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Ship.cpp">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Bullet.cpp">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\MyBodyParser.cpp">
+      <Filter>resource\src\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -54,31 +57,34 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>src\Common</Filter>
+      <Filter>resource\src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>src\Scene</Filter>
+      <Filter>resource\src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GamePlayScene.h">
-      <Filter>src\Scene</Filter>
+      <Filter>resource\src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\define.h">
-      <Filter>src\Common</Filter>
+      <Filter>resource\src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shark.h">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model.h">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Constants.h">
-      <Filter>src\Common</Filter>
+      <Filter>resource\src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Ship.h">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Bullet.h">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\MyBodyParser.h">
+      <Filter>resource\src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -30,6 +30,7 @@
 #define SHARK_RED "redshark_"
 #define SHARK_YELLOW "yellowshark_"
 #define SHARK_PURPLE "purpleshark_"
+#define SHARK_BODY_SPRITE "shark/buleshark_11.png"
 
 #define SHARK_REAL_SIZE 70
 
@@ -77,3 +78,5 @@
 #define BULLET_SHOOT_YELLOW_IMG "yellobubble_"
 #define BULLET_SHOOT_BLACK_IMG ""
 #define BULLET_SHOOT_WHITE_IMG ""
+
+#define BULLET_SPEED 12

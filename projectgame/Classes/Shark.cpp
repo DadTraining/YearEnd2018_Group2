@@ -10,7 +10,9 @@ Shark::Shark()
 /*initialization shark*/
 Shark::Shark(cocos2d::Scene * scene)
 {
-	mSprite = cocos2d::Sprite::create();
+
+	mSprite = cocos2d::Sprite::create(SHARK_BODY_SPRITE);
+	
 	//Init();	
 	mStatus = " ";
 	SetVisible(false);

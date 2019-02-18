@@ -49,7 +49,7 @@ void Bullet::ShootRight()
 {
 	if (IsVisible())
 	{
-		mSprite->setPosition(GetLocation().x + 5, GetLocation().y);
+		mSprite->setPosition(GetLocation().x + BULLET_SPEED, GetLocation().y);
 		if (GetLocation().x > Constants::getVisibleSize().width)
 		{
 			SetVisible(false);
@@ -62,7 +62,7 @@ void Bullet::ShootLeft()
 {
 	if (IsVisible())
 	{
-		mSprite->setPosition(GetLocation().x - 5, GetLocation().y);
+		mSprite->setPosition(GetLocation().x - BULLET_SPEED, GetLocation().y);
 		if (GetLocation().x < 0)
 		{
 			SetVisible(false);
