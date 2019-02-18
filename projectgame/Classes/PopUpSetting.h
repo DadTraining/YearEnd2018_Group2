@@ -33,13 +33,15 @@ public:
 
     virtual bool init() override;
 	virtual void onExit() override;
-	void slider();
-	void slilderEvent(Ref *sender, cocos2d::ui::Slider::EventType type);
+	void sliderBGM();
+	void sliderSFX();
+
     
     CREATE_FUNC(PopupSetting);
 
 private:
-	cocos2d::Sprite *sfx, *bgm;
-
+	cocos2d::Sprite *mSfx, *mBgm;
+	int mPercentSFX, mPercentBGM;
+	
 };
 

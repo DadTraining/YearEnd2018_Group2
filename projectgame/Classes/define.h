@@ -24,6 +24,7 @@
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"
+#define BUTTON_ACCEPT "map/accept.png"
 #define SETTING "map/setting.png"
 #define BGM "map/BGM.png"
 #define SFX "map/SFX.png"
