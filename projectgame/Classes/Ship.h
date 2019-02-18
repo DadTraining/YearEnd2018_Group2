@@ -27,6 +27,6 @@ public:
 	void onTouchEnded(Touch *touch, Event *event);
 
 
-	void ShootColor(std::string color);
+	void ShootColor(int color);
 
 };
