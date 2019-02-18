@@ -15,7 +15,7 @@ Ship::Ship(cocos2d::Scene * scene)
 	listener->onTouchBegan = CC_CALLBACK_2(Ship::onTouchBegan, this);
 	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, scene);
 
-	for (int i = 0; i < 15; i++)
+	for (int i = 0; i < 30; i++)
 	{
 		auto b = new Bullet(scene);
 		b->Init();
@@ -49,11 +49,7 @@ void Ship::Update()
 	}
 	for (int i = 0; i < listBullet.size(); i++)
 	{
-		if (!listBullet.at(i)->IsVisible()) {
-			listBullet.at(i)->UpdateLocation(Vec2(mSprite->getPosition()));
-		}
 		listBullet.at(i)->Update();
-
 	}
 
 
@@ -117,6 +113,7 @@ void Ship::ShootColor(int color)
 		auto bullet = listBullet.at(i);
 		if (!bullet->IsVisible()) {
 			bullet->Shoot(mLeft);
+			bullet->UpdateLocation(Vec2(mSprite->getPosition()));
 			bullet->SetVisible(true);
 			bullet->SetColor(color);
 			break;

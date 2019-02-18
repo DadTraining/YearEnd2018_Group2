@@ -1,6 +1,7 @@
 #include "Shark.h"
 #include "define.h"
 #include "Constants.h"
+#include "MyBodyParser.h"
 
 
 Shark::Shark()
@@ -11,8 +12,17 @@ Shark::Shark()
 Shark::Shark(cocos2d::Scene * scene)
 {
 
-	mSprite = cocos2d::Sprite::create(SHARK_BODY_SPRITE);
-	
+	mSprite = cocos2d::Sprite::create();
+	MyBodyParser::getInstance()->parseJsonFile(SHARK_BODY_PARSER);
+	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite,SHARK_BODY_SPRITE,cocos2d::PhysicsMaterial(1,1,0));
+
+	if (spriteBody != nullptr)
+	{
+		CCLOG("haha");
+		spriteBody->setDynamic(false);
+		mSprite->addComponent(spriteBody);
+	}
+
 	//Init();	
 	mStatus = " ";
 	SetVisible(false);

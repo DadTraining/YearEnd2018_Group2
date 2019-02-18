@@ -21,7 +21,12 @@ cocos2d::Sprite* blackbutton;
 
 Scene* GamePlayScene::createScene()
 {
-	return GamePlayScene::create();
+	auto layer = GamePlayScene::createWithPhysics();
+	layer->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	auto scene = GamePlayScene::create();
+	layer->addChild(scene);
+
+	return layer;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
