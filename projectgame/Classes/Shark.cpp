@@ -26,7 +26,7 @@ Shark::Shark(cocos2d::Scene * scene)
 		mSprite->getPhysicsBody()->setContactTestBitmask(true);
 	}*/
 
-	mStatus = " ";
+	SetStatus(" ");
 	SetVisible(false);
 	scene->addChild(mSprite);
 }
@@ -91,7 +91,7 @@ void Shark::RunAway()
 		if (_pos.x > Constants::getVisibleSize().width )
 		{
 			SetVisible(false);
-			mStatus = " ";
+			SetStatus(" ");
 			mSprite->stopAllActions();
 		}
 
@@ -120,6 +120,7 @@ void Shark::Clone()
 /*shark bite cable */
 void Shark::BiteAnimation()
 {
+	SetStatus(SHARK_STATUS_BITE);
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
 	auto _visi = cocos2d::CallFunc::create([=]() {
@@ -159,25 +160,14 @@ void Shark::Move()
 		{
 			_pos.x -= mSpeed;
 			mSprite->setPosition(_pos);
-			if (_pos.x < Constants::getVisibleSize().width / 2)
-			{
-				Shark::BiteAnimation();
-				//SetAlive(false);
-				//Shark::Killed();
-
-			}
+			
 		}
 		else if (!mMoveToLeft
 			&& _pos.x < Constants::getVisibleSize().width / 2 + mSpeed)
 		{
 			_pos.x += mSpeed;
 			mSprite->setPosition(_pos);
-			if (_pos.x > Constants::getVisibleSize().width / 2)
-			{
-				Shark::BiteAnimation();
-				//SetAlive(false);
-				//Shark::Killed();
-			}
+			
 		}
 
 	}
@@ -192,7 +182,7 @@ void Shark::RunAwayAnimation()
 		//mMoveToLeft = !mMoveToLeft;
 		mPos = mSprite->getPosition();
 		mSprite->setFlipX(!mMoveToLeft);
-		mStatus = SHARK_STATUS_RUNAWAY;
+		SetStatus(SHARK_STATUS_RUNAWAY);
 		Shark::SwimAnimation();
 	});
 	auto _run = cocos2d::CallFunc::create([=]() {
@@ -218,6 +208,10 @@ void Shark::Update()
 	{
 		Shark::RunAway();
 		//Cable::Bitten();
+	}
+	else if(mStatus == SHARK_STATUS_BITE)
+	{
+
 	}
 
 }

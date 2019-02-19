@@ -41,5 +41,9 @@ public:
 	bool BittenCable(Cable *cable);
 
 	std::string GetColor();
+	void SetStatus(std::string status) {
+		mStatus = status;
+	}
+
 };
 

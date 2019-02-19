@@ -23,7 +23,7 @@ cocos2d::Sprite* blackbutton;
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -118,8 +118,8 @@ bool GamePlayScene::init()
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	cable = new Cable(this);
-	cable->getRect();
-	
+	cable->GetRect();
+
 	this->scheduleUpdate();
 
 	return true;
@@ -149,7 +149,7 @@ void GamePlayScene::update(float delta)
 	ship->Update();
 	//cable->Update();
 
-	CheckColisionSharkWithCable(cable);
+
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -170,31 +170,26 @@ bool GamePlayScene::CheckColisionSharkWithCable(Cable * cable)
 {
 	for (int i = 0; i < sharkList.size(); i++)
 	{
-		if (sharkList.at(i)->IsVisible())
+		auto shark = sharkList.at(i);
+		if (shark->IsVisible())
 		{
-			auto rectCable = cable->getRect();
-			auto rectShark = sharkList.at(i)->getRect();
+			auto rectCable = cable->GetRect();
+			auto rectShark = shark->GetRect();
 			if (rectShark.intersectsRect(rectCable))
 			{
-
-				//sharkList.at(i)->setIsBitten(true);
-				//cable->Bitten();
-				if ((sharkList.at(i)->IsBitten()))
+				if ((shark->IsBitten()))
 				{
 					cable->Bitten();
-					sharkList.at(i)->setIsBitten(false);
+					shark->setIsBitten(false);
+					shark->BiteAnimation();
 				}
-				
 				return true;
-
 			}
-
-			
 		}
 	}
 	return false;
 }
-}
+
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
@@ -228,9 +223,15 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	auto shapeB = contact.getShapeB()->getBody();
 	auto a = shapeA->getCollisionBitmask();
 	auto b = shapeB->getCollisionBitmask();
-	if (a != b)
+	if (a == 1 && b == 2 ||
+		a == 2 && b == 1)
 	{
 		ship->Collision(sharkList);
+	}
+	else if (a == 1 && b == 3 || a == 3 && b == 1)
+	{
+		CCLOG("bitte");
+		CheckColisionSharkWithCable(cable);
 	}
 	return true;
 }

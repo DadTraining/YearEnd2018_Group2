@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include"GamePlayScene.h"
 #include"Shark.h"
+#include "MyBodyParser.h"
 
 Cable::Cable(cocos2d::Scene * scene) 
 {
@@ -70,6 +71,15 @@ void Cable::CreatCable(Scene *scene)
 	
 	mSprite->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	mSprite->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height, 1, mSprite->getContentSize().height));
+
+	auto width = mSprite->getContentSize().width / 4;
+	auto height = mSprite->getContentSize().height;
+	auto cableBody = cocos2d::PhysicsBody::createBox(Size(width,height),PHYSICSBODY_MATERIAL_DEFAULT,Vec2(3,3));
+	cableBody->setContactTestBitmask(true);
+	cableBody->setDynamic(false);
+	cableBody->setCollisionBitmask(3);
+	mSprite->setPhysicsBody(cableBody);
+
 	scene->addChild(mSprite);
 }
 
