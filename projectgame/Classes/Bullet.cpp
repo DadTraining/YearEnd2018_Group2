@@ -3,11 +3,24 @@
 #include"Model.h"
 #include"define.h"
 #include "Constants.h"
+#include "MyBodyParser.h"
 
 Bullet::Bullet(cocos2d::Scene * scene) : Model()
 {
-	mSprite = cocos2d::Sprite::create();
-	this->GetSprite()->setScale(0.5);
+	mSprite = cocos2d::Sprite::create("Bullet.png");
+	//this->GetSprite()->setScale(0.5);
+	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite, BULLET_BODY, cocos2d::PhysicsMaterial(1, 1, 0));
+
+	if (spriteBody != nullptr)
+	{
+		CCLOG("bullet");
+		spriteBody->setDynamic(false);
+		mSprite->setPhysicsBody(spriteBody);
+		mSprite->getPhysicsBody()->setCategoryBitmask(4);
+		mSprite->getPhysicsBody()->setCollisionBitmask(2);
+		mSprite->getPhysicsBody()->setContactTestBitmask(true);
+	}
+	
 	scene->addChild(mSprite);
 }
 
@@ -124,5 +137,31 @@ void Bullet::SetColor(int color)
 	default:
 		break;
 	}
+}
+
+std::string Bullet::GetColor()
+{
+	std::string color;
+	switch (mColor)
+	{
+	case 1://red
+		color = SHARK_RED;
+		break;
+	case 2: // blue
+		color = SHARK_BLUE;
+		break;
+	case 3://yellow
+		color = SHARK_YELLOW;
+		break;
+	case 4://black
+		break;
+	case 5://white
+		break;
+	case 6:
+		break;
+	default:
+		break;
+	}
+	return color;
 }
 

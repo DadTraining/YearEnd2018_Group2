@@ -1,5 +1,6 @@
 #pragma once
 #include "cocos2d.h"
+#include "Shark.h"
 #include "Model.h"
 #include"Bullet.h"
 #include<vector>
@@ -28,5 +29,8 @@ public:
 
 
 	void ShootColor(int color);
+
+	void Collision(std::vector<Shark*> sharks);
+
 
 };

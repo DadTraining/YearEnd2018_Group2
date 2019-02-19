@@ -22,4 +22,6 @@ public:
 
 	void SetColor(int color);
 
+	std::string GetColor();
+
 };

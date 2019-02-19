@@ -15,13 +15,16 @@ Ship::Ship(cocos2d::Scene * scene)
 	listener->onTouchBegan = CC_CALLBACK_2(Ship::onTouchBegan, this);
 	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, scene);
 
-	for (int i = 0; i < 30; i++)
+	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		auto b = new Bullet(scene);
 		b->Init();
 		listBullet.push_back(b);
 	}
 	Init();
+
+
+
 }
 
 Ship::~Ship()
@@ -120,4 +123,34 @@ void Ship::ShootColor(int color)
 		}
 	}
 }
+
+void Ship::Collision(std::vector<Shark*> sharks)
+{
+	for (int i = 0; i < sharks.size(); i++)
+	{
+		auto shark = sharks.at(i);
+		if (shark->IsVisible())
+		{
+			for (int j = 0; j < listBullet.size(); j++)
+			{
+				auto bullet = listBullet.at(i);
+				if (bullet->IsVisible())
+				{
+					if (bullet->GetRect().intersectsRect(shark->GetRect()))
+					{
+						if (bullet->GetColor() == shark->GetColor())
+						{
+							CCLOG("true");
+						}
+						else
+						{
+							CCLOG("false");
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
 

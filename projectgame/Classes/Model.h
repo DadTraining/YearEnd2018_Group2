@@ -29,5 +29,7 @@ public:
 	bool SpriteIsVisible();
 	cocos2d::Animation* CreateAnimation(std::string name, int start, int frames, float delay);
 
+	virtual cocos2d::Rect GetRect();
+
 };
 

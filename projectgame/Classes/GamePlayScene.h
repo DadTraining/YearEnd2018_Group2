@@ -32,16 +32,21 @@ class GamePlayScene : public cocos2d::Scene
 private:
 	Ship * ship;
 	Vec2 mLocation;
+	cocos2d::PhysicsWorld* mPhysicsWorld;
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);
-    virtual bool init() override;
-    
+	virtual bool init() override;
+
 	void update(float delta) override;
-    // implement the "static create()" method manually
+	// implement the "static create()" method manually
 	void SharkAliveCallBack();
 
 	bool onTouchBegan(Touch *touch, Event *event);
+	bool onContactBegin(PhysicsContact& contact);
+
+	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
+
 	CREATE_FUNC(GamePlayScene);
 };
 

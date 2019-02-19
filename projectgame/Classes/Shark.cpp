@@ -12,15 +12,17 @@ Shark::Shark()
 Shark::Shark(cocos2d::Scene * scene)
 {
 
-	mSprite = cocos2d::Sprite::create();
-	MyBodyParser::getInstance()->parseJsonFile(SHARK_BODY_PARSER);
-	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite,SHARK_BODY_SPRITE,cocos2d::PhysicsMaterial(1,1,0));
+	mSprite = cocos2d::Sprite::create("shark/blueshark_11.png");
+	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite,SHARK_BODY_SPRITE_LEFT,cocos2d::PhysicsMaterial(1,1,0));
 
 	if (spriteBody != nullptr)
 	{
-		CCLOG("haha");
+		CCLOG("shark");
 		spriteBody->setDynamic(false);
-		mSprite->addComponent(spriteBody);
+		mSprite->setPhysicsBody(spriteBody);
+		mSprite->getPhysicsBody()->setCategoryBitmask(8);
+		mSprite->getPhysicsBody()->setCollisionBitmask(16);
+		mSprite->getPhysicsBody()->setContactTestBitmask(true);
 	}
 
 	//Init();	
@@ -292,3 +294,9 @@ void Shark::Init()
 	Shark::SwimAnimation();
 
 }
+
+std::string Shark::GetColor()
+{
+	return mColor;
+}
+

@@ -4,6 +4,7 @@
 #include <vector>
 #include "define.h"	
 #include "Constants.h"
+#include "MyBodyParser.h"
 USING_NS_CC;
 
 
@@ -21,12 +22,14 @@ cocos2d::Sprite* blackbutton;
 
 Scene* GamePlayScene::createScene()
 {
-	auto layer = GamePlayScene::createWithPhysics();
-	layer->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
-	auto scene = GamePlayScene::create();
-	layer->addChild(scene);
+	auto scene = cocos2d::Scene::createWithPhysics();
+	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
-	return layer;
+	auto layer = GamePlayScene::create();
+	layer->SetPhysicsWorld(scene->getPhysicsWorld());
+
+	scene->addChild(layer);
+	return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -48,7 +51,7 @@ bool GamePlayScene::init()
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
-	//Constants::setVisibleSize(visibleSize);
+	MyBodyParser::getInstance()->parseJsonFile(SHARK_BODY_PARSER);
 
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -90,8 +93,8 @@ bool GamePlayScene::init()
 	{
 		sharkList.push_back(new Shark(this));
 	}
-	//sk = new Shark(this);
-	//sk->SetVisible(true);
+	sk = new Shark(this);
+	sk->SetVisible(true);
 
 	auto listenerButton = EventListenerTouchOneByOne::create();
 	listenerButton->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan,this);
@@ -99,6 +102,12 @@ bool GamePlayScene::init()
 
 	callBackAlive = 0;
 	ship = new Ship(this);
+
+
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+
 	this->scheduleUpdate();
 	return true;
 	//
@@ -126,6 +135,7 @@ void GamePlayScene::update(float delta)
 		}
 	}
 	ship->Update();
+//	ship->Collision(sharkList);
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -150,7 +160,7 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 	{
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	}
-	else if(yellowbutton->getBoundingBox().containsPoint(localTouch))
+	else if (yellowbutton->getBoundingBox().containsPoint(localTouch))
 	{
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 
@@ -163,9 +173,12 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 	else if (redbutton->getBoundingBox().containsPoint(localTouch))
 	{
 		ship->ShootColor(BULLET_SHOOT_RED);
-
 	}
-
-
 	return false;
+}
+
+
+bool GamePlayScene::onContactBegin(PhysicsContact & contact)
+{
+	return true;
 }

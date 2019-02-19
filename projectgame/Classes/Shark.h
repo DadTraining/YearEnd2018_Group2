@@ -34,5 +34,7 @@ public:
 
 	virtual void Update();
 	virtual void Init();
+
+	std::string GetColor();
 };
 

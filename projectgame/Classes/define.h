@@ -30,8 +30,9 @@
 #define SHARK_RED "redshark_"
 #define SHARK_YELLOW "yellowshark_"
 #define SHARK_PURPLE "purpleshark_"
-#define SHARK_BODY_SPRITE "blueshark_11"
-#define SHARK_BODY_PARSER "bodyshark.json"
+#define SHARK_BODY_SPRITE_LEFT "leftshark"
+#define SHARK_BODY_SPRITE_RIGHT "rightshark"
+#define SHARK_BODY_PARSER "bodyphysics.json"
 
 #define SHARK_REAL_SIZE 70
 
@@ -60,7 +61,7 @@
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
 
-#define SHARK_MAX_ON_SCREEN 5
+#define SHARK_MAX_ON_SCREEN 1
 #define SHARK_CALL_BACK_ALIVE 40
 
 #define SHARK_RUN_AWAY_START 9
@@ -69,6 +70,8 @@
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_BITE "BITE"
 
+
+#define BULLET_MAX 15
 #define BULLET_SHOOT_RED 1
 #define BULLET_SHOOT_BLUE 2
 #define BULLET_SHOOT_YELLOW 3
@@ -79,5 +82,5 @@
 #define BULLET_SHOOT_YELLOW_IMG "yellobubble_"
 #define BULLET_SHOOT_BLACK_IMG ""
 #define BULLET_SHOOT_WHITE_IMG ""
-
+#define BULLET_BODY "bullet"
 #define BULLET_SPEED 12
