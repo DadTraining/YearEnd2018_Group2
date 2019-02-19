@@ -77,3 +77,22 @@ void PopupPlay::onExit()
 {
 	Popup::onExit();
 }
+
+/*Init level*/
+void PopupPlay::initLevel()
+{
+	MapLevel *level = new MapLevel();
+	
+	for (int i = 1; i < LIST_BUTTON_MAX; i++)
+	{
+		level->SetLevel(i);
+		level->SetStar(0);
+		listLevel.push_back(level);
+	}
+}
+
+/*Set level popup*/
+void PopupPlay::setLevel()
+{
+
+}

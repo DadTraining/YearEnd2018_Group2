@@ -25,14 +25,20 @@
 #pragma once
 #include "cocos2d.h"
 #include "Popup.h"
+#include "MapLevel.h"
 
 class PopupPlay : public Popup
 {
+private:
+	std::vector<MapLevel*> listLevel;
 public:
 
     virtual bool init() override;
 	virtual void onExit() override;
     
+	void initLevel();
+	void setLevel();
+
     CREATE_FUNC(PopupPlay);
 };
 
