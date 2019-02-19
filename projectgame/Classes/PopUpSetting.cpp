@@ -63,7 +63,7 @@ bool PopupSetting::init()
 	
 	////////////////
 	//Add button accept
-	auto btnAccept = cocos2d::ui::Button::create(BUTTON_EXIT);
+	auto btnAccept = cocos2d::ui::Button::create(BUTTON_ACCEPT);
 	btnAccept->setScale(0.75);
 	btnAccept->setPosition(cocos2d::Vec2(-mBackground->getContentSize().width / 7,
 		-mBackground->getContentSize().height / 4

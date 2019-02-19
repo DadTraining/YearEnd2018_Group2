@@ -34,3 +34,5 @@
 
 #define POPUP_SCALE_X 0.53
 #define POPUP_SCALE_Y 0.51
+
+#define LIST_BUTTON_MAX 16
