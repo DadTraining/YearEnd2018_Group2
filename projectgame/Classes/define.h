@@ -10,8 +10,8 @@
 #define BULLET_SPEED 3
 
 // screen
-#define SCREEN_H 512
-#define SCREEN_W 1024
+#define SCREEN_H 720
+#define SCREEN_W 1280
 #define FPS 40
 
 #define BACKGROUND_IMG "background/background_1.png"
@@ -62,3 +62,9 @@
 
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_BITE "BITE"
+
+
+//cable
+#define HP_CABLEWHITE "cable/healthwhite.png"
+#define HP_CABLERED "cable/healthred.png"
+#define ICON_HP "cable/iconhealth.png"

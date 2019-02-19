@@ -26,11 +26,14 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include"Bullet.h"
 #include"Ship.h"
+#include"Cable.h"
+#include"Shark.h"
 
 class GamePlayScene : public cocos2d::Scene
 {
 private:
 	Ship * ship;
+	Cable *cable;	
 	Vec2 mLocation;
 public:
 	static cocos2d::Scene* createScene();
@@ -40,6 +43,8 @@ public:
 	void update(float delta) override;
     // implement the "static create()" method manually
 	void SharkAliveCallBack();
+	bool CheckColisionSharkWithCable(Cable * cable);
+	
 	CREATE_FUNC(GamePlayScene);
 };
 
