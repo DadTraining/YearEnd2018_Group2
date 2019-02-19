@@ -79,3 +79,9 @@ cocos2d::Animation* Model::CreateAnimation(std::string name,int start, int frame
 	auto animation = cocos2d::Animation::createWithSpriteFrames(_frames,delay);
 	return animation;
 }
+
+cocos2d::Rect Model::getRect()
+{
+	return cocos2d::Rect(mSprite->getBoundingBox());
+}
+
