@@ -3,6 +3,7 @@
 #include"ui\CocosGUI.h"
 //using namespace cocos2d;
 #include "cocos2d.h"
+
 class Model
 {
 protected:

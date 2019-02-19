@@ -1,12 +1,14 @@
 #pragma once
 #include "cocos2d.h"
 #include "Model.h"
+#include"Cable.h"
 
 class Shark : public Model
 {
 protected:
 	float mSize;
 	float mDelay;
+	bool mIsBitten;
 	bool mMoveToLeft;
 	std::string mColor;
 	int mTotalColor;
@@ -34,6 +36,9 @@ public:
 
 	virtual void Update();
 	virtual void Init();
+	bool IsBitten();
+	void setIsBitten(bool bitten);
+	bool BittenCable(Cable *cable);
 
 	std::string GetColor();
 };

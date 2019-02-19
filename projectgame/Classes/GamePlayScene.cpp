@@ -62,12 +62,17 @@ bool GamePlayScene::init()
 
 	addChild(_backGround, -1);
 
-	auto _cable = cocos2d::Sprite::create(CABLE_IMG);
+	/*auto _cable = cocos2d::Sprite::create(CABLE_IMG);
 	_cable->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height, 1, _cable->getContentSize().height));
-	addChild(_cable, 1);
+	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
+	addChild(_cable, 1);*/
 
 #pragma region button
+
+	auto _btnYellow = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
+	_btnYellow->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
+	_btnYellow->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnYellow->getContentSize().height));
+	addChild(_btnYellow, 137);
 
 	yellowbutton = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
 	yellowbutton->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
@@ -112,9 +117,12 @@ bool GamePlayScene::init()
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	cable = new Cable(this);
+	cable->getRect();
+	
 	this->scheduleUpdate();
+
 	return true;
-	//
 }
 
 
@@ -139,7 +147,9 @@ void GamePlayScene::update(float delta)
 		}
 	}
 	ship->Update();
-	//	ship->Collision(sharkList);
+	//cable->Update();
+
+	CheckColisionSharkWithCable(cable);
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -154,6 +164,36 @@ void GamePlayScene::SharkAliveCallBack()
 			break;
 		}
 	}
+}
+
+bool GamePlayScene::CheckColisionSharkWithCable(Cable * cable)
+{
+	for (int i = 0; i < sharkList.size(); i++)
+	{
+		if (sharkList.at(i)->IsVisible())
+		{
+			auto rectCable = cable->getRect();
+			auto rectShark = sharkList.at(i)->getRect();
+			if (rectShark.intersectsRect(rectCable))
+			{
+
+				//sharkList.at(i)->setIsBitten(true);
+				//cable->Bitten();
+				if ((sharkList.at(i)->IsBitten()))
+				{
+					cable->Bitten();
+					sharkList.at(i)->setIsBitten(false);
+				}
+				
+				return true;
+
+			}
+
+			
+		}
+	}
+	return false;
+}
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)

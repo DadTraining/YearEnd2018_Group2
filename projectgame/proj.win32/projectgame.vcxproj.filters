@@ -51,6 +51,9 @@
     <ClCompile Include="..\Classes\MyBodyParser.cpp">
       <Filter>resource\src\Model</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Cable.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -85,6 +88,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\MyBodyParser.h">
       <Filter>resource\src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Cable.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

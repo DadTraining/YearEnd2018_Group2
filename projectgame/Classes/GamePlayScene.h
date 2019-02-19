@@ -26,11 +26,14 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include"Bullet.h"
 #include"Ship.h"
+#include"Cable.h"
+#include"Shark.h"
 
 class GamePlayScene : public cocos2d::Scene
 {
 private:
 	Ship * ship;
+	Cable *cable;	
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
 public:
@@ -49,6 +52,8 @@ public:
 
 	void AddButtonColor(int kind, cocos2d::Vec2 pos);
 
+	bool CheckColisionSharkWithCable(Cable * cable);
+	
 	CREATE_FUNC(GamePlayScene);
 };
 

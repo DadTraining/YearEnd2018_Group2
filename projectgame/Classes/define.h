@@ -84,3 +84,9 @@
 #define BULLET_SHOOT_WHITE_IMG ""
 #define BULLET_BODY "bullet"
 #define BULLET_SPEED 12
+
+
+//cable
+#define HP_CABLEWHITE "cable/healthwhite.png"
+#define HP_CABLERED "cable/healthred.png"
+#define ICON_HP "cable/iconhealth.png"

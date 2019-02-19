@@ -2,6 +2,7 @@
 #include "define.h"
 #include "Constants.h"
 #include "MyBodyParser.h"
+#include"Cable.h"
 
 
 Shark::Shark()
@@ -82,6 +83,7 @@ void Shark::Normal()
 
 void Shark::RunAway()
 {
+
 	auto _pos = mSprite->getPosition();
 	if (mMoveToLeft)
 	{
@@ -215,6 +217,7 @@ void Shark::Update()
 	else if (mStatus == SHARK_STATUS_RUNAWAY)
 	{
 		Shark::RunAway();
+		//Cable::Bitten();
 	}
 
 }
@@ -223,6 +226,7 @@ void Shark::Update()
 void Shark::Init()
 {
 	SetVisible(true);
+	setIsBitten(true);
 	//set color
 	int color = cocos2d::random(1, 3);
 	switch (color)
@@ -313,5 +317,21 @@ void Shark::Init()
 std::string Shark::GetColor()
 {
 	return mColor;
+}
+
+bool Shark::IsBitten()
+{
+	return mIsBitten;
+}
+
+void Shark::setIsBitten(bool bitten)
+{
+	mIsBitten = bitten;
+}
+
+bool Shark::BittenCable(Cable * cable)
+{
+	cable->Bitten();
+	return false;
 }
 
