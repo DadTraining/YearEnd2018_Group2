@@ -17,11 +17,16 @@
 #define BACKGROUND_IMG "background/background_1.png"
 #define CABLE_IMG "cable/cable_1.png"
 
-#define BUTTON_YELLOW_IMG "button/yellowbutton.png"
-#define BUTTON_BLUE_IMG "button/bluebutton.png"
-#define BUTTON_RED_IMG "button/redbutton.png"
-#define BUTTON_WHITE_IMG "button/whitebutton.png"
-#define BUTTON_BLACK_IMG "button/blackbutton.png"
+#define BUTTON_YELLOW_IMG_NOR "button/yellowbuttonnor.png"
+#define BUTTON_YELLOW_IMG_PRESS "button/yellowbuttonpress.png"
+#define BUTTON_BLUE_IMG_NOR "button/bluebuttonnor.png"
+#define BUTTON_BLUE_IMG_PRESS "button/bluebuttonpress.png"
+#define BUTTON_RED_IMG_NOR "button/redbuttonnor.png"
+#define BUTTON_RED_IMG_PRESS "button/redbuttonpress.png"
+#define BUTTON_WHITE_IMG_NOR "button/whitebuttonnor.png"
+#define BUTTON_WHITE_IMG_PRESS "button/whitebuttonpress.png"
+#define BUTTON_BLACK_IMG_NOR "button/blackbuttonnor.png"
+#define BUTTON_BLACK_IMG_PRESS "button/blackbuttonpress.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"

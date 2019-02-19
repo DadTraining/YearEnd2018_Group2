@@ -5,6 +5,7 @@
 #include "define.h"	
 #include "Constants.h"
 #include "MyBodyParser.h"
+#include "ui\UIButton.h"
 USING_NS_CC;
 
 
@@ -12,18 +13,13 @@ USING_NS_CC;
 std::vector<Shark*> sharkList;
 int callBackAlive;
 Shark* sk;
-cocos2d::Sprite* bluebutton;
-cocos2d::Sprite* redbutton;
-cocos2d::Sprite* yellowbutton;
-cocos2d::Sprite* blackbutton;
-
 #pragma endregion
 
 
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -67,33 +63,36 @@ bool GamePlayScene::init()
 	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
 	addChild(_cable, 1);*/
 
+
 #pragma region button
 
-	auto _btnYellow = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	_btnYellow->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
-	_btnYellow->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, _btnYellow->getContentSize().height));
-	addChild(_btnYellow, 137);
+	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR, BUTTON_BLUE_IMG_PRESS);
+	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 10, visibleSize.height * 1.5 / 10));
+	blueButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_BLUE);
+	});
+	addChild(blueButton,100);
 
-	yellowbutton = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
-	yellowbutton->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
-	//yellowbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, yellowbutton->getContentSize().height));
-	addChild(yellowbutton, 137);
+	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR, BUTTON_RED_IMG_PRESS);
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 10, visibleSize.height * 1.5 / 10));
+	redButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_RED);
+	});
+	addChild(redButton,100);
 
-	bluebutton = cocos2d::Sprite::create(BUTTON_BLUE_IMG);
-	bluebutton->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 5, visibleSize.height / 7));
-	//bluebutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, bluebutton->getContentSize().height));
-	addChild(bluebutton, 137);
+	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR, BUTTON_YELLOW_IMG_PRESS);
+	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width * 6 / 10, visibleSize.height * 1.5 / 10));
+	yellowButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_YELLOW);
+	});
+	addChild(yellowButton,100);
 
-	redbutton = cocos2d::Sprite::create(BUTTON_RED_IMG);
-	redbutton->setPosition(cocos2d::Vec2(visibleSize.width * 3 / 5, visibleSize.height / 7));
-	//redbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, redbutton->getContentSize().height));
-	addChild(redbutton, 137);
-
-	blackbutton = cocos2d::Sprite::create(BUTTON_BLACK_IMG);
-	blackbutton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 5, visibleSize.height / 7));
-	//blackbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, blackbutton->getContentSize().height));
-	addChild(blackbutton, 137);
-
+	auto blackButton = ui::Button::create(BUTTON_BLACK_IMG_NOR, BUTTON_BLACK_IMG_PRESS);
+	blackButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, visibleSize.height * 1.5 / 10));
+	blackButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_BLACK);
+	});
+	addChild(blackButton,100);
 #pragma endregion
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
@@ -111,6 +110,7 @@ bool GamePlayScene::init()
 
 	callBackAlive = 0;
 	ship = new Ship(this);
+
 
 
 	auto contactListener = EventListenerPhysicsContact::create();
@@ -166,7 +166,7 @@ void GamePlayScene::SharkAliveCallBack()
 	}
 }
 
-bool GamePlayScene::CheckColisionSharkWithCable(Cable * cable)
+bool GamePlayScene::CheckColisionSharkWithCable()
 {
 	for (int i = 0; i < sharkList.size(); i++)
 	{
@@ -193,26 +193,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(Cable * cable)
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
-	auto localTouch = touch->getLocation();
-
-	if (bluebutton->getBoundingBox().containsPoint(localTouch))
-	{
-		ship->ShootColor(BULLET_SHOOT_BLUE);
-	}
-	else if (yellowbutton->getBoundingBox().containsPoint(localTouch))
-	{
-		ship->ShootColor(BULLET_SHOOT_YELLOW);
-
-	}
-	else if (blackbutton->getBoundingBox().containsPoint(localTouch))
-	{
-		ship->ShootColor(BULLET_SHOOT_BLACK);
-
-	}
-	else if (redbutton->getBoundingBox().containsPoint(localTouch))
-	{
-		ship->ShootColor(BULLET_SHOOT_RED);
-	}
+	
 	return false;
 }
 
@@ -231,8 +212,8 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	else if (a == 1 && b == 3 || a == 3 && b == 1)
 	{
 		CCLOG("bitte");
-		CheckColisionSharkWithCable(cable);
+		CheckColisionSharkWithCable();
 	}
-	return true;
+	return false;
 }
 

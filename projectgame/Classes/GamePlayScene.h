@@ -50,9 +50,7 @@ public:
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
 
-	void AddButtonColor(int kind, cocos2d::Vec2 pos);
-
-	bool CheckColisionSharkWithCable(Cable * cable);
+	bool CheckColisionSharkWithCable();
 	
 	CREATE_FUNC(GamePlayScene);
 };

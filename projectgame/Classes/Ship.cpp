@@ -142,6 +142,8 @@ void Ship::Collision(std::vector<Shark*> sharks)
 						if (bullet->GetColor() == shark->GetColor())
 						{
 							CCLOG("true");
+							shark->Killed();
+							bullet->SetVisible(false);
 						}
 						else
 						{

@@ -14,21 +14,9 @@ Shark::Shark(cocos2d::Scene * scene)
 {
 
 	mSprite = cocos2d::Sprite::create("shark/shark.png");
-	/*auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite,SHARK_BODY_SPRITE_LEFT,cocos2d::PhysicsMaterial(1,1,0));
-
-	if (spriteBody != nullptr)
-	{
-		CCLOG("shark");
-		spriteBody->setDynamic(false);
-		mSprite->setPhysicsBody(spriteBody);
-		mSprite->getPhysicsBody()->setCategoryBitmask(1);
-		mSprite->getPhysicsBody()->setCollisionBitmask(1);
-		mSprite->getPhysicsBody()->setContactTestBitmask(true);
-	}*/
-
 	SetStatus(" ");
 	SetVisible(false);
-	scene->addChild(mSprite);
+	scene->addChild(mSprite,100);
 }
 
 Shark::Shark(const Shark * shark)
@@ -49,12 +37,12 @@ void Shark::Killed()
 	mSprite->stopAllActions();
 	mSprite->setFlippedY(true);
 	mSprite->setPositionZ(-1);
+	SetAlive(false);
 	auto _sct = cocos2d::ScaleTo::create(1, 0);
 	auto _move = cocos2d::MoveTo::create(2, cocos2d::Vec2(mSprite->getPosition().x, SCREEN_H));
 	auto _fOut = cocos2d::FadeOut::create(2);
 	auto _fIn = cocos2d::FadeIn::create(0.1);
 	auto _spawn = cocos2d::Spawn::create(
-		//_sct,
 		_move,
 		_fOut,
 		nullptr
