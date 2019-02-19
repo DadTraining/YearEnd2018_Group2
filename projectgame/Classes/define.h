@@ -10,8 +10,8 @@
 #define BULLET_SPEED 3
 
 // screen
-#define SCREEN_H 512
-#define SCREEN_W 1024
+#define SCREEN_H 720
+#define SCREEN_W 1280
 #define FPS 40
 
 #define BACKGROUND_IMG "background/background_1.png"
@@ -43,9 +43,9 @@
 #define SHARK_SWIM_START 1
 #define SHARK_SWIM_DELAY 0.27
 
-#define SHARK_SIZE_SMALL 1.53
-#define SHARK_SIZE_NORMAL 1.83
-#define SHARK_SIZE_BIG 2.13
+#define SHARK_SIZE_SMALL 1.5
+#define SHARK_SIZE_NORMAL 1.75
+#define SHARK_SIZE_BIG 2
 
 #define SHARK_DELAY_SMALL 0.13
 #define SHARK_DELAY_NORMAL 0.17
@@ -56,7 +56,7 @@
 #define SHARK_SPEED_SMALL 2.5
 #define SHARK_SPEED_NORMAL 1.7
 #define SHARK_SPEED_BIG 1
-#define SHARK_SPEED_RUNAWAY 5
+#define SHARK_SPEED_RUNAWAY 13
 
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4

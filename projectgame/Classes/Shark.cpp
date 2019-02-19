@@ -12,23 +12,22 @@ Shark::Shark()
 Shark::Shark(cocos2d::Scene * scene)
 {
 
-	mSprite = cocos2d::Sprite::create("shark/blueshark_11.png");
-	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite,SHARK_BODY_SPRITE_LEFT,cocos2d::PhysicsMaterial(1,1,0));
+	mSprite = cocos2d::Sprite::create("shark/shark.png");
+	/*auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite,SHARK_BODY_SPRITE_LEFT,cocos2d::PhysicsMaterial(1,1,0));
 
 	if (spriteBody != nullptr)
 	{
 		CCLOG("shark");
 		spriteBody->setDynamic(false);
 		mSprite->setPhysicsBody(spriteBody);
-		mSprite->getPhysicsBody()->setCategoryBitmask(8);
-		mSprite->getPhysicsBody()->setCollisionBitmask(16);
+		mSprite->getPhysicsBody()->setCategoryBitmask(1);
+		mSprite->getPhysicsBody()->setCollisionBitmask(1);
 		mSprite->getPhysicsBody()->setContactTestBitmask(true);
-	}
+	}*/
 
-	//Init();	
 	mStatus = " ";
 	SetVisible(false);
-	scene->addChild(mSprite, 1);
+	scene->addChild(mSprite);
 }
 
 Shark::Shark(const Shark * shark)
@@ -140,7 +139,7 @@ void Shark::BiteAnimation()
 /* this is animation of shark*/
 void Shark::SwimAnimation()
 {
-	mSprite->setPosition(mPos);
+	
 	mSprite->setScale(mSize);
 	auto ani = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_SWIM_START, SHARK_SWIM_FRAMES, mDelay));
 	auto sqe = cocos2d::RepeatForever::create(ani);
@@ -279,19 +278,35 @@ void Shark::Init()
 		mMoveToLeft = false; // run from left to right
 	}
 
-	auto posY = cocos2d::random(SHARK_ZONE_UNDER, SCREEN_H - SHARK_ZONE_TOP);
+	auto posY = cocos2d::random(Constants::getVisibleSize().height*3/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
+	cocos2d::PhysicsBody* spriteBody;
+	Shark::SwimAnimation();
+	auto sharkSize = mSprite->getContentSize().width / 2;
 	if (mMoveToLeft)
 	{
-		mPos = cocos2d::Vec2(Constants::getVisibleSize().width  + SHARK_POS, posY);
-		mSprite->setAnchorPoint(cocos2d::Vec2(0, 0.5));
+		mPos = cocos2d::Vec2(Constants::getVisibleSize().width  + sharkSize, posY);
+		spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite, SHARK_BODY_SPRITE_LEFT, cocos2d::PhysicsMaterial(1, 1, 0));
+
+	//	mSprite->setAnchorPoint(cocos2d::Vec2(0, 0.5));
 	}
 	else
 	{
-		mPos = cocos2d::Vec2(-SHARK_POS, posY);
-		mSprite->setAnchorPoint(cocos2d::Vec2(1, 0.5));
+		mPos = cocos2d::Vec2(-sharkSize, posY);
+		spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite, SHARK_BODY_SPRITE_RIGHT, cocos2d::PhysicsMaterial(1, 1, 0));
+		//mSprite->setAnchorPoint(cocos2d::Vec2(1, 0.5));
 	}
+	mSprite->setPosition(mPos);
 	mSprite->setFlipX(mMoveToLeft);
-	Shark::SwimAnimation();
+	
+
+	if (spriteBody != nullptr)
+	{
+		spriteBody->setDynamic(false);
+		mSprite->setPhysicsBody(spriteBody);
+		//mSprite->getPhysicsBody()->setCategoryBitmask(1);
+		mSprite->getPhysicsBody()->setCollisionBitmask(1);
+		mSprite->getPhysicsBody()->setContactTestBitmask(true);
+	}
 
 }
 

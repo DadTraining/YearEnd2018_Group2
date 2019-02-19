@@ -18,7 +18,7 @@ Ship::Ship(cocos2d::Scene * scene)
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
 		auto b = new Bullet(scene);
-		b->Init();
+		//b->Init();
 		listBullet.push_back(b);
 	}
 	Init();
@@ -45,7 +45,7 @@ void Ship::Update()
 	else
 	{
 		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y - SHIP_SPEED));
-		if (GetLocation().y <= Constants::getVisibleSize().height / 4)
+		if (GetLocation().y <= Constants::getVisibleSize().height *3/10)
 		{
 			mUp = true;
 		}
@@ -118,6 +118,7 @@ void Ship::ShootColor(int color)
 			bullet->Shoot(mLeft);
 			bullet->UpdateLocation(Vec2(mSprite->getPosition()));
 			bullet->SetVisible(true);
+			bullet->Init();
 			bullet->SetColor(color);
 			break;
 		}

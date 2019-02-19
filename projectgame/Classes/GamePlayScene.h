@@ -47,6 +47,8 @@ public:
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
 
+	void AddButtonColor(int kind, cocos2d::Vec2 pos);
+
 	CREATE_FUNC(GamePlayScene);
 };
 

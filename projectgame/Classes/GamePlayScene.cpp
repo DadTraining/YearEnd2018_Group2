@@ -23,7 +23,7 @@ cocos2d::Sprite* blackbutton;
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -57,35 +57,39 @@ bool GamePlayScene::init()
 
 	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	_backGround->setScaleY(Constants::getVisibleSize().height / _backGround->getContentSize().height);
-	_backGround->setScaleX(Constants::getVisibleSize().width / _backGround->getContentSize().width);
+	//_backGround->setScaleY(Constants::getVisibleSize().height / _backGround->getContentSize().height);
+	//_backGround->setScaleX(Constants::getVisibleSize().width / _backGround->getContentSize().width);
 
 	addChild(_backGround, -1);
 
 	auto _cable = cocos2d::Sprite::create(CABLE_IMG);
 	_cable->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
+	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height, 1, _cable->getContentSize().height));
 	addChild(_cable, 1);
+
+#pragma region button
 
 	yellowbutton = cocos2d::Sprite::create(BUTTON_YELLOW_IMG);
 	yellowbutton->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 7));
-	yellowbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, yellowbutton->getContentSize().height));
+	//yellowbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, yellowbutton->getContentSize().height));
 	addChild(yellowbutton, 137);
 
 	bluebutton = cocos2d::Sprite::create(BUTTON_BLUE_IMG);
 	bluebutton->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 5, visibleSize.height / 7));
-	bluebutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, bluebutton->getContentSize().height));
+	//bluebutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, bluebutton->getContentSize().height));
 	addChild(bluebutton, 137);
 
 	redbutton = cocos2d::Sprite::create(BUTTON_RED_IMG);
 	redbutton->setPosition(cocos2d::Vec2(visibleSize.width * 3 / 5, visibleSize.height / 7));
-	redbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, redbutton->getContentSize().height));
+	//redbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, redbutton->getContentSize().height));
 	addChild(redbutton, 137);
 
 	blackbutton = cocos2d::Sprite::create(BUTTON_BLACK_IMG);
 	blackbutton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 5, visibleSize.height / 7));
-	blackbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, blackbutton->getContentSize().height));
+	//blackbutton->setScale(Constants::setScaleSprite(Constants::getVisibleSize().height, 6, blackbutton->getContentSize().height));
 	addChild(blackbutton, 137);
+
+#pragma endregion
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 
@@ -97,7 +101,7 @@ bool GamePlayScene::init()
 	sk->SetVisible(true);
 
 	auto listenerButton = EventListenerTouchOneByOne::create();
-	listenerButton->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan,this);
+	listenerButton->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerButton, this);
 
 	callBackAlive = 0;
@@ -135,7 +139,7 @@ void GamePlayScene::update(float delta)
 		}
 	}
 	ship->Update();
-//	ship->Collision(sharkList);
+	//	ship->Collision(sharkList);
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -180,5 +184,14 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 
 bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 {
+	auto shapeA = contact.getShapeA()->getBody();
+	auto shapeB = contact.getShapeB()->getBody();
+	auto a = shapeA->getCollisionBitmask();
+	auto b = shapeB->getCollisionBitmask();
+	if (a != b)
+	{
+		ship->Collision(sharkList);
+	}
 	return true;
 }
+

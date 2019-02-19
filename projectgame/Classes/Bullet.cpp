@@ -7,20 +7,9 @@
 
 Bullet::Bullet(cocos2d::Scene * scene) : Model()
 {
-	mSprite = cocos2d::Sprite::create("Bullet.png");
+	mSprite = cocos2d::Sprite::create("bullet/bullet.png");
 	//this->GetSprite()->setScale(0.5);
-	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite, BULLET_BODY, cocos2d::PhysicsMaterial(1, 1, 0));
-
-	if (spriteBody != nullptr)
-	{
-		CCLOG("bullet");
-		spriteBody->setDynamic(false);
-		mSprite->setPhysicsBody(spriteBody);
-		mSprite->getPhysicsBody()->setCategoryBitmask(4);
-		mSprite->getPhysicsBody()->setCollisionBitmask(2);
-		mSprite->getPhysicsBody()->setContactTestBitmask(true);
-	}
-	
+	SetVisible(false);
 	scene->addChild(mSprite);
 }
 
@@ -31,8 +20,16 @@ Bullet::~Bullet()
 
 void Bullet::Init()
 {
-
-	SetVisible(false);
+	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite, BULLET_BODY, cocos2d::PhysicsMaterial(1, 1, 0));
+	if (spriteBody != nullptr)
+	{
+		CCLOG("bullet");
+		spriteBody->setDynamic(false);
+		mSprite->setPhysicsBody(spriteBody);
+		//mSprite->getPhysicsBody()->setCategoryBitmask(2);
+		mSprite->getPhysicsBody()->setCollisionBitmask(2);
+		mSprite->getPhysicsBody()->setContactTestBitmask(true);
+	}
 }
 void Bullet::Update()
 {
