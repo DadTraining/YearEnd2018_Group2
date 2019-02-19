@@ -30,14 +30,14 @@
 class PopupPlay : public Popup
 {
 private:
-	std::vector<MapLevel*> listLevel;
+	
 public:
 
     virtual bool init() override;
 	virtual void onExit() override;
     
-	void initLevel();
-	void setLevel();
+	
+	void setLevel(int numLevel, int numStars);
 
     CREATE_FUNC(PopupPlay);
 };

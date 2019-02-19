@@ -78,21 +78,21 @@ void PopupPlay::onExit()
 	Popup::onExit();
 }
 
-/*Init level*/
-void PopupPlay::initLevel()
-{
-	MapLevel *level = new MapLevel();
-	
-	for (int i = 1; i < LIST_BUTTON_MAX; i++)
-	{
-		level->SetLevel(i);
-		level->SetStar(0);
-		listLevel.push_back(level);
-	}
-}
-
 /*Set level popup*/
-void PopupPlay::setLevel()
+void PopupPlay::setLevel(int numLevel, int numStars)
 {
+	std::string png = ".png", stars = "stars", path = "map/", l = "level", le, st;
+	char cLevel = '0' + numLevel;
+	le = path + l + cLevel + png; //path of level png
+	
+	auto lv = Sprite::create(le);
+	lv->setPosition(Vec2(0, mBackground->getContentSize().height / 5));
+	mLayer->addChild(lv);
 
+	char cStars = '0' + numStars;
+	st = path + cStars + stars + png;
+	auto star = Sprite::create(st);
+	star->setPosition(Vec2(0, mBackground->getContentSize().height / 17));
+	star->setScale(0.5);
+	mLayer->addChild(star);
 }

@@ -1,7 +1,7 @@
 #include"Model.h"
 #include"MapScene.h"
 #include"define.h"
-#include<iostream>
+
 
 Size visibleSize;
 
@@ -28,6 +28,9 @@ bool MapScene::init()
 	//background->setScale(0.5);
 	addChild(background, -1);
 
+	initLevel();
+
+	
 	setListButton();
 	return true;
 }
@@ -39,11 +42,15 @@ void MapScene::setListButton()
 
 	for (int i = 1; i < LIST_BUTTON_MAX; i++)
 	{
+		////////////////
+		//add button to list
 		c = '0' + i;
 		normal = path + c + png;
 		pressed = path + c + num + png;
 		auto button = ui::Button::create(normal, pressed);
 		listButton.push_back(button);
+
+		
 		///////////////////
 		//set position for button
 		switch (i)
@@ -110,14 +117,36 @@ void MapScene::setListButton()
 		
 		this->addChild(button);
 
-		button->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType type) {
+		/////////////////
+		//creat popup play
+		PopupPlay *popup = PopupPlay::create();
+		this->addChild(popup, 3);
+		
+		//popup->setLevel(listLevel[i]->GetLevel(), listLevel[i]->GetStar());
+		popup->setVisible(false);
+
+		button->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 			switch (type)
 			{
 			case ui::Widget::TouchEventType::BEGAN:
 				break;
 			case ui::Widget::TouchEventType::ENDED:
+				popup->setVisible(true);
+				popup->setLevel(listLevel[i - 1]->GetLevel(), listLevel[i - 1]->GetStar());
 				break;
 			}
 		});
+	}
+}
+
+/*Init level*/
+void MapScene::initLevel()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		MapLevel *level = new MapLevel();
+		level->SetLevel(i + 1);
+		level->SetStar(0);
+		listLevel.push_back(level);
 	}
 }

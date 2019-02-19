@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpPlay.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpSetting.cpp \
 				   $(LOCAL_PATH)/../../../Classes/MapScene.cpp \
+				   $(LOCAL_PATH)/../../../Classes/MapLevel.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Popup.cpp 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes

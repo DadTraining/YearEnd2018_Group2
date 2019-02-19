@@ -34,14 +34,15 @@ void Popup::setBackground()
 		+ mBackground->getContentSize().height / 22));
 
 	mLayer->addChild(btnExit);
-	btnExit->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType t) {
+	btnExit->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType t) {
 		switch (t)
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
-			disappear();
-			mLayer->removeFromParentAndCleanup(true);
+			
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
+			disappear();
+			mLayer->removeFromParentAndCleanup(true);
 			break; 
 	
 		}
