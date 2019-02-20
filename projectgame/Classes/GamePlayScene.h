@@ -26,6 +26,8 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include"Bullet.h"
 #include"Ship.h"
+#include"Item.h"
+using namespace std;
 #include"Cable.h"
 #include"Shark.h"
 
@@ -36,6 +38,8 @@ private:
 	Cable *cable;	
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
+	std::vector<ui::Button*> listItem;
+	
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);

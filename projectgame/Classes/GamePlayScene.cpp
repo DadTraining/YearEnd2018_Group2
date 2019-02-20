@@ -13,6 +13,8 @@ USING_NS_CC;
 std::vector<Shark*> sharkList;
 int callBackAlive;
 Shark* sk;
+Item * item;
+
 #pragma endregion
 
 
@@ -112,6 +114,53 @@ bool GamePlayScene::init()
 
 	callBackAlive = 0;
 	ship = new Ship(this);
+	item = new Item(this);
+	for (int i = 1; i <= 3; i++)
+	{
+		std::string path = "item/", png = ".png", name;
+		char c = '0' + i;
+		name = path + c + png;
+		auto button = ui::Button::create(name);
+		listItem.push_back(button);
+		switch (i)
+		{
+		case 1:
+			//button= ui::Button::create(ITEM_BRICK_IMAGE);
+			
+			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.85, Constants::getVisibleSize().height * 0.95));
+			button->setScale(ITEM_SCAlE);
+			button->addClickEventListener([=](Ref* event)
+			{
+				item->StunShark(sharkList);
+
+			});
+			break;
+		case 2:
+			//button = ui::Button::create(ITEM_HP_IMAGE);
+			button->setScale(ITEM_SCAlE);
+			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.9, Constants::getVisibleSize().height * 0.95));
+			button->addClickEventListener([=](Ref* event)
+			{
+				item->IncreaseBlood();
+				
+			});
+			break;
+		case 3:
+			//button = ui::Button::create(ITEM_BOOM_IMAGE);
+			button->setScale(ITEM_SCAlE);
+			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.95, Constants::getVisibleSize().height * 0.95));
+			button->addClickEventListener([=](Ref* event)
+			{
+				item->KillSharkByBoom(sharkList);
+			});
+			break;
+		default:
+			break;	
+		}
+		this->addChild(button);
+		
+	}
+
 
 
 
@@ -147,11 +196,10 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
+		
 	}
 	ship->Update();
-	//cable->Update();
-
-
+	item->Update();
 }
 
 void GamePlayScene::SharkAliveCallBack()

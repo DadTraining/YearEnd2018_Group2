@@ -54,6 +54,9 @@
     <ClCompile Include="..\Classes\Cable.cpp">
       <Filter>resource\src\Model</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Item.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -91,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\Cable.h">
       <Filter>resource\src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Item.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
