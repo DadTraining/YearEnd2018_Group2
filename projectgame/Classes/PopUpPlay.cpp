@@ -25,6 +25,7 @@
 #include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
 #include "PopUpPlay.h"
+#include "PopUpSetting.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
 
@@ -48,6 +49,7 @@ bool PopupPlay::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
 		}
 	});
@@ -67,6 +69,8 @@ bool PopupPlay::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
+			PopupSetting *popup = PopupSetting::create();
+			this->addChild(popup, 3);
 			break;
 		}
 	});
