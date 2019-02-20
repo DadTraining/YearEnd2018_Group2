@@ -18,6 +18,8 @@ Item * item;
 #pragma endregion
 
 
+#include "GamePlayScene.h"
+#include "SimpleAudioEngine.h"
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();

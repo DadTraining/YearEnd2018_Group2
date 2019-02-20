@@ -17,10 +17,14 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/MyBodyParser.cpp \
                    $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Model.cpp  \
+				    $(LOCAL_PATH)/../../../Classes/IntroScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/GamePlayScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Ship.cpp \
+				   $(LOCAL_PATH)/../../../Classes/Cable.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Bullet.cpp \
-				   $(LOCAL_PATH)/../../../Classes/Shark.cpp 
+				   $(LOCAL_PATH)/../../../Classes/Shark.cpp \
+				   $(LOCAL_PATH)/../../../Classes/Item.cpp 
+
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../../Classes
 
