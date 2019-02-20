@@ -59,4 +59,3 @@ public:
 	CREATE_FUNC(GamePlayScene);
 };
 
-#endif // __HELLOWORLD_SCENE_H__
