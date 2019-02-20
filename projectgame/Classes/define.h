@@ -17,16 +17,11 @@
 #define BACKGROUND_IMG "background/background_1.png"
 #define CABLE_IMG "cable/cable_1.png"
 
-#define BUTTON_YELLOW_IMG_NOR "button/yellowbuttonnor.png"
-#define BUTTON_YELLOW_IMG_PRESS "button/yellowbuttonpress.png"
-#define BUTTON_BLUE_IMG_NOR "button/bluebuttonnor.png"
-#define BUTTON_BLUE_IMG_PRESS "button/bluebuttonpress.png"
-#define BUTTON_RED_IMG_NOR "button/redbuttonnor.png"
-#define BUTTON_RED_IMG_PRESS "button/redbuttonpress.png"
-#define BUTTON_WHITE_IMG_NOR "button/whitebuttonnor.png"
-#define BUTTON_WHITE_IMG_PRESS "button/whitebuttonpress.png"
-#define BUTTON_BLACK_IMG_NOR "button/blackbuttonnor.png"
-#define BUTTON_BLACK_IMG_PRESS "button/blackbuttonpress.png"
+#define BUTTON_YELLOW_IMG_NOR "button/yellowbutton.png"
+#define BUTTON_BLUE_IMG_NOR "button/bluebutton.png"
+#define BUTTON_RED_IMG_NOR "button/redbutton.png"
+#define BUTTON_WHITE_IMG_NOR "button/whitebutton.png"
+#define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -66,7 +61,7 @@
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
 
-#define SHARK_MAX_ON_SCREEN 10
+#define SHARK_MAX_ON_SCREEN 3
 #define SHARK_CALL_BACK_ALIVE 40
 
 #define SHARK_RUN_AWAY_START 9

@@ -18,13 +18,10 @@ Item * item;
 
 #pragma endregion
 
-
-#include "GamePlayScene.h"
-#include "SimpleAudioEngine.h"
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -71,28 +68,28 @@ bool GamePlayScene::init()
 
 #pragma region button
 
-	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR, BUTTON_BLUE_IMG_PRESS);
+	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 10, visibleSize.height * 1.5 / 10));
 	blueButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
 	addChild(blueButton,100);
 
-	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR, BUTTON_RED_IMG_PRESS);
+	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
 	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 10, visibleSize.height * 1.5 / 10));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
 	addChild(redButton,100);
 
-	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR, BUTTON_YELLOW_IMG_PRESS);
+	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
 	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width * 6 / 10, visibleSize.height * 1.5 / 10));
 	yellowButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
 	addChild(yellowButton,100);
 
-	auto blackButton = ui::Button::create(BUTTON_BLACK_IMG_NOR, BUTTON_BLACK_IMG_PRESS);
+	auto blackButton = ui::Button::create(BUTTON_BLACK_IMG_NOR);
 	blackButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, visibleSize.height * 1.5 / 10));
 	blackButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLACK);
