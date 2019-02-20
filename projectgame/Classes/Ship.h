@@ -30,7 +30,7 @@ public:
 
 	void ShootColor(int color);
 
-	void Collision(std::vector<Shark*> sharks);
+	void Collision(std::vector<Shark*> sharks,int sharkTag,int bulletTag);
 
 
 };

@@ -73,28 +73,28 @@ bool GamePlayScene::init()
 	blueButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
-	addChild(blueButton,100);
+	addChild(blueButton, 100);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
 	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 10, visibleSize.height * 1.5 / 10));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
-	addChild(redButton,100);
+	addChild(redButton, 100);
 
 	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
 	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width * 6 / 10, visibleSize.height * 1.5 / 10));
 	yellowButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
-	addChild(yellowButton,100);
+	addChild(yellowButton, 100);
 
 	auto blackButton = ui::Button::create(BUTTON_BLACK_IMG_NOR);
 	blackButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, visibleSize.height * 1.5 / 10));
 	blackButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLACK);
 	});
-	addChild(blackButton,100);
+	addChild(blackButton, 100);
 #pragma endregion
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
@@ -105,6 +105,7 @@ bool GamePlayScene::init()
 		s->SetTag(1 + i);
 		sharkList.push_back(s);
 	}
+
 	sk = new Shark(this);
 	sk->SetVisible(true);
 
@@ -126,7 +127,7 @@ bool GamePlayScene::init()
 		{
 		case 1:
 			//button= ui::Button::create(ITEM_BRICK_IMAGE);
-			
+
 			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.85, Constants::getVisibleSize().height * 0.95));
 			button->setScale(ITEM_SCAlE);
 			button->addClickEventListener([=](Ref* event)
@@ -142,7 +143,7 @@ bool GamePlayScene::init()
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->IncreaseBlood();
-				
+
 			});
 			break;
 		case 3:
@@ -155,10 +156,10 @@ bool GamePlayScene::init()
 			});
 			break;
 		default:
-			break;	
+			break;
 		}
 		this->addChild(button);
-		
+
 	}
 
 
@@ -196,7 +197,7 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
-		
+
 	}
 	ship->Update();
 	item->Update();
@@ -235,7 +236,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
-	
+
 	return false;
 }
 
@@ -244,9 +245,9 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 {
 	auto shapeA = contact.getShapeA()->getBody()->getNode();
 	auto shapeB = contact.getShapeB()->getBody()->getNode();
-	/*auto a = shapeA->getCollisionBitmask();
-	auto b = shapeB->getCollisionBitmask();*/
-	if (shapeA->getTag()== 0 && shapeB->getTag() !=0 ||
+	auto a = shapeA->getTag();
+	auto b = shapeB->getTag();
+	if (shapeA->getTag() == 0 && shapeB->getTag() != 0 ||
 		shapeA->getTag() != 0 && shapeB->getTag() == 0
 		)
 	{
@@ -259,12 +260,22 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 		{
 			CheckColisionSharkWithCable(shapeB->getTag());
 		}
-		
+
 	}
-	else 
+	else if (shapeA->getTag() >= 100 && shapeB->getTag() > 0 && shapeB->getTag() < 100 ||
+		shapeB->getTag() >= 100 && shapeA->getTag() > 0 && shapeA->getTag() < 100
+		)
 	{
-		
+		if (shapeA->getTag() >= 100)
+		{
+			ship->Collision(sharkList, shapeB->getTag(), shapeA->getTag());
+		} 
+		else
+		{ 
+			ship->Collision(sharkList, shapeA->getTag(), shapeB->getTag());
+		}
 	}
+	CCLOG("game play : colision");
 	return false;
 }
 

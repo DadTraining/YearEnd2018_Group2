@@ -26,8 +26,7 @@ void Bullet::Init()
 		CCLOG("bullet");
 		spriteBody->setDynamic(false);
 		mSprite->setPhysicsBody(spriteBody);
-		//mSprite->getPhysicsBody()->setCategoryBitmask(2);
-		mSprite->getPhysicsBody()->setCollisionBitmask(2);
+		mSprite->getPhysicsBody()->setCategoryBitmask(0x01);
 		mSprite->getPhysicsBody()->setContactTestBitmask(true);
 	}
 }

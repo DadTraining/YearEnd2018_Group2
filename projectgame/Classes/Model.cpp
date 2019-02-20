@@ -14,6 +14,10 @@ void Model::SetVisible(bool vis)
 {
 	SetAlive(vis);
 	SetSpriteVisible(vis);
+	if (mSprite->getPhysicsBody() != nullptr)
+	{
+		mSprite->getPhysicsBody()->setEnabled(vis);
+	}
 }
 
 

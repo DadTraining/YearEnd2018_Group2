@@ -232,6 +232,8 @@ void Shark::UnUpdate(cocos2d::Vec2 pos)
 /*initialization for shark*/
 void Shark::Init()
 {
+	mStatus = " ";
+	mOldStatus = " ";
 	SetVisible(true);
 	setIsBitten(true);
 	//set color

@@ -19,6 +19,7 @@ Ship::Ship(cocos2d::Scene * scene)
 	{
 		auto b = new Bullet(scene);
 		//b->Init();
+		b->SetTag(100 + i);
 		listBullet.push_back(b);
 	}
 	Init();
@@ -55,18 +56,6 @@ void Ship::Update()
 		listBullet.at(i)->Update();
 	}
 
-
-
-	//mFrameBullet++;
-	//if (mFrameBullet % 4 == 0) {
-	//	for (int i = 0; i < listBullet.size(); i++) {
-	//		if (!listBullet.at(i)->IsVisible()) {
-	//			listBullet.at(i)->Shoot(mLeft);
-	//			listBullet.at(i)->SetVisible(true);
-	//			break;
-	//		}
-	//	}
-	//}
 }
 
 void Ship::Init()
@@ -125,35 +114,26 @@ void Ship::ShootColor(int color)
 	}
 }
 
-void Ship::Collision(std::vector<Shark*> sharks)
+void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 {
-	for (int i = 0; i < sharks.size(); i++)
+	auto shark = sharks[sharkTag - 1];
+	auto bullet = listBullet[bulletTag - 100];
+	if (shark->IsAlive() && bullet->IsAlive())
 	{
-		auto shark = sharks.at(i);
-		if (shark->IsVisible())
+		if (shark->GetColor() == bullet->GetColor())
 		{
-			for (int j = 0; j < listBullet.size(); j++)
-			{
-				auto bullet = listBullet.at(i);
-				if (bullet->IsVisible())
-				{
-					if (bullet->GetRect().intersectsRect(shark->GetRect()))
-					{
-						if (bullet->GetColor() == shark->GetColor())
-						{
-							CCLOG("true");
-							shark->Killed();
-							bullet->SetVisible(false);
-						}
-						else
-						{
-							CCLOG("false");
-						}
-					}
-				}
-			}
+			shark->Killed();
+			bullet->SetVisible(false);
+		}
+		else
+		{
+			bullet->SetVisible(false);
 		}
 	}
+	
 }
+
+
+
 
 
