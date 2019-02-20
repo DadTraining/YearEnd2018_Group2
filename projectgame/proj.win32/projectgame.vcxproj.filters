@@ -7,16 +7,16 @@
     <Filter Include="resource">
       <UniqueIdentifier>{715254bc-d70b-4ec5-bf29-467dd3ace079}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\src">
+    <Filter Include="src">
       <UniqueIdentifier>{bb6c862e-70e9-49d9-81b7-3829a6f50471}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\src\Model">
+    <Filter Include="src\Model">
       <UniqueIdentifier>{846d3f05-76d4-4d89-a273-c0d227748785}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\src\Common">
+    <Filter Include="src\Common">
       <UniqueIdentifier>{8480ea05-ebc7-4a7d-912e-5c7202b31fdb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="resource\src\Scene">
+    <Filter Include="src\Scene">
       <UniqueIdentifier>{caafa401-0fa2-4df9-afed-69919718ce86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -25,34 +25,34 @@
       <Filter>win32</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\AppDelegate.cpp">
-      <Filter>resource\src\Common</Filter>
+      <Filter>src\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
-      <Filter>resource\src\Scene</Filter>
+      <Filter>src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\GamePlayScene.cpp">
-      <Filter>resource\src\Scene</Filter>
+      <Filter>src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Shark.cpp">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Model.cpp">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Constants.cpp">
-      <Filter>resource\src\Common</Filter>
+      <Filter>src\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Ship.cpp">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Bullet.cpp">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MyBodyParser.cpp">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Cable.cpp">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Item.cpp">
       <Filter>src\Model</Filter>
@@ -63,37 +63,37 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\AppDelegate.h">
-      <Filter>resource\src\Common</Filter>
+      <Filter>src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\HelloWorldScene.h">
-      <Filter>resource\src\Scene</Filter>
+      <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GamePlayScene.h">
-      <Filter>resource\src\Scene</Filter>
+      <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\define.h">
-      <Filter>resource\src\Common</Filter>
+      <Filter>src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Shark.h">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Model.h">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Constants.h">
-      <Filter>resource\src\Common</Filter>
+      <Filter>src\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Ship.h">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Bullet.h">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MyBodyParser.h">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Cable.h">
-      <Filter>resource\src\Model</Filter>
+      <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Item.h">
       <Filter>src\Model</Filter>
