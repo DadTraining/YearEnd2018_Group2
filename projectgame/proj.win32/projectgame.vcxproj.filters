@@ -52,7 +52,7 @@
       <Filter>resource\src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\Cable.cpp">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,7 +90,7 @@
       <Filter>resource\src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\Cable.h">
-      <Filter>src\Model</Filter>
+      <Filter>resource\src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

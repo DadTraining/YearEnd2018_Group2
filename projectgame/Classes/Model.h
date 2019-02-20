@@ -32,5 +32,14 @@ public:
 
 	virtual cocos2d::Rect GetRect();
 
+	void SetTag(int tag) {
+		mSprite->setTag(tag);
+	}
+	bool IsAlive() {
+		return mVisible;
+	}
+
+
+
 };
 

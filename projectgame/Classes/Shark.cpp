@@ -109,6 +109,7 @@ void Shark::Clone()
 void Shark::BiteAnimation()
 {
 	SetStatus(SHARK_STATUS_BITE);
+	//this->SetAlive(false);
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
 	auto _visi = cocos2d::CallFunc::create([=]() {
@@ -243,13 +244,11 @@ void Shark::Init()
 		mSize = SHARK_SIZE_BIG;
 		mDelay = SHARK_DELAY_BIG;
 		mSpeed = SHARK_SPEED_BIG;
-
 		break;
 	default:
 		mSize = SHARK_SIZE_NORMAL;
 		mDelay = SHARK_DELAY_NORMAL;
 		mSpeed = SHARK_SPEED_NORMAL;
-
 		break;
 	}
 
@@ -289,8 +288,7 @@ void Shark::Init()
 	{
 		spriteBody->setDynamic(false);
 		mSprite->setPhysicsBody(spriteBody);
-		//mSprite->getPhysicsBody()->setCategoryBitmask(1);
-		mSprite->getPhysicsBody()->setCollisionBitmask(1);
+		mSprite->getPhysicsBody()->setCollisionBitmask(0x02);
 		mSprite->getPhysicsBody()->setContactTestBitmask(true);
 	}
 

@@ -19,7 +19,7 @@ Shark* sk;
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -99,7 +99,9 @@ bool GamePlayScene::init()
 
 	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
 	{
-		sharkList.push_back(new Shark(this));
+		Shark* s = new Shark(this);
+		s->SetTag(1 + i);
+		sharkList.push_back(s);
 	}
 	sk = new Shark(this);
 	sk->SetVisible(true);
@@ -166,25 +168,16 @@ void GamePlayScene::SharkAliveCallBack()
 	}
 }
 
-bool GamePlayScene::CheckColisionSharkWithCable()
+bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 {
 	for (int i = 0; i < sharkList.size(); i++)
 	{
-		auto shark = sharkList.at(i);
-		if (shark->IsVisible())
+		auto tag = sharkList[i];
+		if (tag->GetSprite()->getTag() == sharkTag && tag->IsBitten())
 		{
-			auto rectCable = cable->GetRect();
-			auto rectShark = shark->GetRect();
-			if (rectShark.intersectsRect(rectCable))
-			{
-				if ((shark->IsBitten()))
-				{
-					cable->Bitten();
-					shark->setIsBitten(false);
-					shark->BiteAnimation();
-				}
-				return true;
-			}
+			cable->Bitten();
+			tag->setIsBitten(false);
+			tag->BiteAnimation();
 		}
 	}
 	return false;
@@ -200,19 +193,29 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 
 bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 {
-	auto shapeA = contact.getShapeA()->getBody();
-	auto shapeB = contact.getShapeB()->getBody();
-	auto a = shapeA->getCollisionBitmask();
-	auto b = shapeB->getCollisionBitmask();
-	if (a == 1 && b == 2 ||
-		a == 2 && b == 1)
+	auto shapeA = contact.getShapeA()->getBody()->getNode();
+	auto shapeB = contact.getShapeB()->getBody()->getNode();
+	/*auto a = shapeA->getCollisionBitmask();
+	auto b = shapeB->getCollisionBitmask();*/
+	if (shapeA->getTag()== 0 && shapeB->getTag() !=0 ||
+		shapeA->getTag() != 0 && shapeB->getTag() == 0
+		)
 	{
-		ship->Collision(sharkList);
+		CCLOG("bitten");
+		if (shapeA->getTag() != 0)
+		{
+			CheckColisionSharkWithCable(shapeA->getTag());
+		}
+		else
+		{
+			CheckColisionSharkWithCable(shapeB->getTag());
+		}
+		
 	}
-	else if (a == 1 && b == 3 || a == 3 && b == 1)
+	else 
 	{
-		CCLOG("bitte");
-		CheckColisionSharkWithCable();
+		/*CCLOG("bitte");
+		ship->Collision(sharkList);*/
 	}
 	return false;
 }

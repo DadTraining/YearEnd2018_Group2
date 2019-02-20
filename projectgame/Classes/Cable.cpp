@@ -75,9 +75,10 @@ void Cable::CreatCable(Scene *scene)
 	auto width = mSprite->getContentSize().width / 4;
 	auto height = mSprite->getContentSize().height;
 	auto cableBody = cocos2d::PhysicsBody::createBox(Size(width,height),PHYSICSBODY_MATERIAL_DEFAULT,Vec2(3,3));
-	cableBody->setContactTestBitmask(true);
 	cableBody->setDynamic(false);
-	cableBody->setCollisionBitmask(3);
+	cableBody->setCategoryBitmask(0x01);
+	cableBody->setContactTestBitmask(true);
+	this->SetTag(0);
 	mSprite->setPhysicsBody(cableBody);
 
 	scene->addChild(mSprite);

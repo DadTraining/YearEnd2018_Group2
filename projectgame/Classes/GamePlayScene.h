@@ -50,7 +50,7 @@ public:
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
 
-	bool CheckColisionSharkWithCable();
+	bool CheckColisionSharkWithCable(int sharkTag);
 	
 	CREATE_FUNC(GamePlayScene);
 };
