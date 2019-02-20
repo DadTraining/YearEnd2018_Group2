@@ -22,5 +22,6 @@ public:
 	virtual void Init();
 	void LoadingBar(Scene *scene);
 	void CreatCable(Scene * scene);
-
+	void EffectCable();
+	
 };

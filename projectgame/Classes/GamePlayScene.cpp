@@ -153,6 +153,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(Cable * cable)
 				//cable->Bitten();
 				if ((sharkList.at(i)->IsBitten()))
 				{
+					cable->EffectCable();					
 					cable->Bitten();
 					sharkList.at(i)->setIsBitten(false);
 				}
@@ -166,3 +167,4 @@ bool GamePlayScene::CheckColisionSharkWithCable(Cable * cable)
 	}
 	return false;
 }
+
