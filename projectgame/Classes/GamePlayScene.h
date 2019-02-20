@@ -26,12 +26,15 @@ THE SOFTWARE.
 #include "cocos2d.h"
 #include"Bullet.h"
 #include"Ship.h"
-
+#include"Item.h"
+using namespace std;
 class GamePlayScene : public cocos2d::Scene
 {
 private:
 	Ship * ship;
 	Vec2 mLocation;
+	std::vector<ui::Button*> listItem;
+	
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);

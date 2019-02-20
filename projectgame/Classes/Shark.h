@@ -13,6 +13,7 @@ protected:
 	float mSpeed;
 	int mDamage;
 	std::string mStatus;
+	std::string mOldStatus;
 
 public:
 	Shark();
@@ -30,9 +31,19 @@ public:
 	void BiteAnimation();
 	void SwimAnimation();
 	void Move();
+	void UnMove(cocos2d::Vec2 pos);
 	void RunAwayAnimation();
 
 	virtual void Update();
+	void UnUpdate(cocos2d::Vec2 pos);
 	virtual void Init();
+	void SetStatus(std::string status) {
+		this->mStatus= status;
+	}
+
+	void SetOldStatus() {
+		mStatus = mOldStatus;
+	}
+
 };
 

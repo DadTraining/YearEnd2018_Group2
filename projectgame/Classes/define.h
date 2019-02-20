@@ -62,3 +62,17 @@
 
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_BITE "BITE"
+#define SHARK_STATUS_STUN "STUN"
+
+
+#define ITEM_BOOM_IMAGE "item/3.png"
+#define ITEM_BRICK_IMAGE "item/1.png"
+#define ITEM_HP_IMAGE "item/2.png"
+#define ITEM_HP1_IMAGE "item/hp1.png"
+
+#define ITEM_SCAlE 0.3
+
+#define LOADINGBAR_BG_IMAGE "item/power_bg.png"
+#define LOADINGBAR_IMAGE "item/power_loading.png"
+
+#define LOADING_BAR_SCALE 0.3

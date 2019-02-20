@@ -13,6 +13,7 @@ Shark::Shark(cocos2d::Scene * scene)
 	mSprite = cocos2d::Sprite::create();
 	//Init();	
 	mStatus = " ";
+	mOldStatus = " ";
 	SetVisible(false);
 	scene->addChild(mSprite, 1);
 }
@@ -77,6 +78,7 @@ void Shark::RunAway()
 		{
 			SetVisible(false);
 			mStatus = " ";
+			mOldStatus = " ";
 			mSprite->stopAllActions();
 		}
 
@@ -87,7 +89,7 @@ void Shark::RunAway()
 		if (_pos.x < 0)
 		{
 			SetVisible(false);
-			mStatus = " ";
+			mStatus = " "; mOldStatus = " ";
 			mSprite->stopAllActions();
 		}
 	}
@@ -168,6 +170,16 @@ void Shark::Move()
 	}
 }
 
+void Shark::UnMove(cocos2d::Vec2 pos)
+{
+	if (mVisible)
+	{
+		mSprite->stopAllActions();
+		mSprite->setPosition(pos);
+	}
+	
+}
+
 void Shark::RunAwayAnimation()
 {
 	mSprite->stopAllActions();
@@ -178,6 +190,7 @@ void Shark::RunAwayAnimation()
 		mPos = mSprite->getPosition();
 		mSprite->setFlipX(!mMoveToLeft);
 		mStatus = SHARK_STATUS_RUNAWAY;
+		mOldStatus = SHARK_STATUS_RUNAWAY;
 		Shark::SwimAnimation();
 	});
 	auto _run = cocos2d::CallFunc::create([=]() {
@@ -204,6 +217,11 @@ void Shark::Update()
 		Shark::RunAway();
 	}
 
+}
+
+void Shark::UnUpdate(cocos2d::Vec2 pos)
+{
+	this->mStatus = SHARK_STATUS_STUN;
 }
 
 /*initialization for shark*/
