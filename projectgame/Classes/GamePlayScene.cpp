@@ -178,6 +178,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 			cable->Bitten();
 			tag->setIsBitten(false);
 			tag->BiteAnimation();
+			cable->EffectCable();
 		}
 	}
 	return false;
