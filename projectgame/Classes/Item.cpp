@@ -8,7 +8,7 @@
 Item::Item(cocos2d::Scene * scene) : Model()
 { 
 	
-	//CreatItem(scene);
+	
 	LoadingBarPower(scene);
 	mStatusStun = false;
 	mTimeStun = 0;
@@ -70,39 +70,12 @@ void Item::LoadingBarPower(Scene * scene)
 	power_loadingBar->setPercent(0);
 	scene->addChild(power_loadingBar,999);
 
-	/*auto updateloadingbar = CallFunc::create([=]() {
-		if (loadingBar->getPercent() < 100)
-		{
-			loadingBar->setPercent(loadingBar->getPercent() + 1);
-		}
-	});
-	auto sequenceloadingbar = Sequence::create(updateloadingbar, DelayTime::create(0.1), nullptr);
-	auto repeat = Repeat::create(sequenceloadingbar, 100);
-	loadingBar->runAction(repeat);*/
+	
 }
 
 void Item::CreatItem(Scene * scene)
 {
-	auto SizeScene = Director::getInstance()->getVisibleSize();
 	
-	buttonBrick = ui::Button::create(ITEM_BRICK_IMAGE);
-	buttonBrick->setPosition(Vec2(Constants::getVisibleSize().width * 0.85, Constants::getVisibleSize().height * 0.95));
-	buttonBrick->setScale(ITEM_SCAlE);
-	
-	buttonHP = ui::Button::create(ITEM_HP_IMAGE);
-	buttonHP->setScale(ITEM_SCAlE);
-	buttonHP->setPosition(Vec2(Constants::getVisibleSize().width * 0.9, Constants::getVisibleSize().height * 0.95));
-	buttonHP->addClickEventListener([=](Ref* event)
-	{  
-		IncreaseBlood();
-	});
-	buttonBoom = ui::Button::create(ITEM_BOOM_IMAGE);
-	buttonBoom->setScale(ITEM_SCAlE);
-	buttonBoom->setPosition(Vec2(Constants::getVisibleSize().width * 0.95, Constants::getVisibleSize().height * 0.95));
-
-	scene->addChild(buttonBrick);
-	scene->addChild(buttonHP);
-	scene->addChild(buttonBoom);
 }
 
 void Item::IncreaseBlood()
@@ -126,6 +99,10 @@ void Item::StunShark(std::vector<Shark*> sharkList)
 
 void Item::KillSharkByBoom(std::vector<Shark*> sharkList)
 {
+	for (int i = 0; i < sharkList.size(); i++)
+	{
+		sharkList[i]->Killed();
+	}
 	
 }
 
