@@ -81,6 +81,9 @@ cocos2d::Animation* Model::CreateAnimation(std::string name,int start, int frame
 }
 
 cocos2d::Rect Model::GetRect()
+bool Model::IsVisible()
 {
 	return mSprite->getBoundingBox();
+}
+	return mVisible;
 }
