@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include"GamePlayScene.h"
 #include"Shark.h"
+#include<time.h>
 #include "MyBodyParser.h"
 
 Cable::Cable(cocos2d::Scene * scene) 
@@ -83,4 +84,19 @@ void Cable::CreatCable(Scene *scene)
 
 	scene->addChild(mSprite);
 }
+
+void Cable::EffectCable()
+{
+	/*cocos2d::Waves* waveEffect = cocos2d::Waves::create(2.0, cocos2d::Size(20, 20), 5, 25,false,true);	  
+	mSprite->runAction(waveEffect);*/
+	auto fadeOut = FadeOut::create(0.5);
+	auto fadein = FadeIn::create(0.5);
+	auto sequen = Sequence::create(fadeOut, fadein,fadeOut->clone(),fadein->clone(), nullptr);
+	mSprite->runAction(sequen);
+	srand(time(NULL));
+
+
+}
+
+
 
