@@ -24,7 +24,7 @@ void Cable::Bitten()
 {
 	mHp -= 5;
 	loadingBar->setPercent(mHp);
-	log("%d", mHp);
+	//log("%d", mHp);
 }
 
 void Cable::Armor()

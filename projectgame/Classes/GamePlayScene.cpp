@@ -45,7 +45,7 @@ bool GamePlayScene::init()
 		return false;
 	}
 
-	auto visibleSize = Director::getInstance()->getVisibleSize();
+	auto static visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
 	MyBodyParser::getInstance()->parseJsonFile(SHARK_BODY_PARSER);
 
@@ -201,7 +201,7 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 		shapeA->getTag() != 0 && shapeB->getTag() == 0
 		)
 	{
-		CCLOG("bitten");
+		//CCLOG("bitten");
 		if (shapeA->getTag() != 0)
 		{
 			CheckColisionSharkWithCable(shapeA->getTag());
@@ -214,8 +214,7 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	}
 	else 
 	{
-		/*CCLOG("bitte");
-		ship->Collision(sharkList);*/
+		
 	}
 	return false;
 }
