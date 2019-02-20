@@ -122,7 +122,7 @@
 #define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"
 
 
-#define IMG_MAPSCENE "map/map.png"
+#define IMG_MAPSCENE "map/map_2.png"
 #define BUTTON_1 "map/1.png"
 #define BUTTON_2  "map/2.png"
 #define BUTTON_3 "map/3.png"
@@ -140,7 +140,7 @@
 
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
-#define BUTTON_PLAY "map/play.png"
+#define BUTTON_MAP_PLAY "map/play.png"
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"

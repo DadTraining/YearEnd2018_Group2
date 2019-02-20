@@ -64,11 +64,11 @@ cocos2d::Vec2 Model::GetLocation() {
 	return mSprite->getPosition();
 }
 
-cocos2d::Animation* Model::CreateAnimation(std::string name,int start, int frames, float delay)
+cocos2d::Animation* Model::CreateAnimation(std::string name, int start, int frames, float delay)
 {
 	cocos2d::Vector<cocos2d::SpriteFrame*> _frames;
 
-	for (int i = start; i <= start+frames-1; i++)
+	for (int i = start; i <= start + frames - 1; i++)
 	{
 		char temp[20] = { 0 };
 		sprintf(temp, "%d.png", i);
@@ -76,14 +76,12 @@ cocos2d::Animation* Model::CreateAnimation(std::string name,int start, int frame
 		auto frame = cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(_name);
 		_frames.pushBack(frame);
 	}
-	auto animation = cocos2d::Animation::createWithSpriteFrames(_frames,delay);
+	auto animation = cocos2d::Animation::createWithSpriteFrames(_frames, delay);
 	return animation;
 }
 
 cocos2d::Rect Model::GetRect()
-bool Model::IsVisible()
 {
 	return mSprite->getBoundingBox();
 }
-	return mVisible;
-}
+
