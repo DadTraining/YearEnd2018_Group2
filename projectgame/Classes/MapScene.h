@@ -11,8 +11,9 @@ using namespace std;
 class MapScene :public cocos2d::Scene
 {
 private:
-	std::vector<cocos2d::ui::Button*> listButton;
-	std::vector<MapLevel*> listLevel;
+	std::vector<cocos2d::ui::Button*> mListButton;
+	std::vector<MapLevel*> mListLevel;
+	std::vector<PopupPlay*> mListPlay;
 public:
 	
 	static cocos2d::Scene* createScene();
@@ -20,5 +21,6 @@ public:
 
 	void setListButton();
 	void initLevel();
+	void initPopUpLevel();
 	CREATE_FUNC(MapScene);
 };

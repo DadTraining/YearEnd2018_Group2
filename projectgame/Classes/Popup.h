@@ -13,6 +13,7 @@ public:
 	void setBackground();
 	void disappear();
 	
+	cocos2d::Layer* getLayer();
 
 	CREATE_FUNC(Popup);
 

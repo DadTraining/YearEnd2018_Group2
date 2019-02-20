@@ -41,8 +41,9 @@ void Popup::setBackground()
 			
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
-			disappear();
-			mLayer->removeFromParentAndCleanup(true);
+			//disappear();
+			mLayer->setVisible(false);
+			//mLayer->removeFromParentAndCleanup(true);
 			break; 
 	
 		}
@@ -55,5 +56,10 @@ void Popup::disappear()
 	auto dis = cocos2d::TargetedAction::create(mLayer, cocos2d::FadeOut::create(3));
 	this->runAction(dis);
 
+}
+
+cocos2d::Layer* Popup::getLayer()
+{
+	return mLayer;
 }
 
