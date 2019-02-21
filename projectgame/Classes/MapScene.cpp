@@ -1,9 +1,10 @@
 #include"Model.h"
 #include"MapScene.h"
 #include"define.h"
+#include "Constants.h"
 
 
-Size _visibleSize;
+//Size Constants::getVisibleSize();
 
 Scene* MapScene::createScene()
 {
@@ -18,12 +19,12 @@ bool MapScene::init()
 	}
 
 
-	_visibleSize = Director::getInstance()->getVisibleSize();
+	//Constants::getVisibleSize() = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	auto background = Sprite::create(IMG_MAPSCENE);
 
-	background->setPosition(Vec2(_visibleSize.width / 2 + origin.x,
-		_visibleSize.height / 2 + origin.y));
+	background->setPosition(Vec2(Constants::getVisibleSize().width / 2 + origin.x,
+		Constants::getVisibleSize().height / 2 + origin.y));
 	
 	addChild(background, -1);
 
@@ -59,56 +60,56 @@ void MapScene::setListButton()
 		{
 		case 1:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 6.31,
-				_visibleSize.height * 3.07 / 4));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 6.31,
+				Constants::getVisibleSize().height * 3.07 / 4));
 			break;
 		}
 		case 2:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 4.1,
-				_visibleSize.height / 1.52));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 4.1,
+				Constants::getVisibleSize().height / 1.52));
 			break;
 		}
 		case 3:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 4.65,
-				_visibleSize.height / 2.02));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 4.65,
+				Constants::getVisibleSize().height / 2.02));
 			break;
 		}
 		case 4:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 7.55,
-				_visibleSize.height / 2.6));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 7.55,
+				Constants::getVisibleSize().height / 2.6));
 			break;
 		}
 		case 5:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 5.46,
-				_visibleSize.height / 4.15));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 5.46,
+				Constants::getVisibleSize().height / 4.15));
 			break;
 		}
 		case 6:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 3.37,
-				_visibleSize.height / 4.2));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 3.37,
+				Constants::getVisibleSize().height / 4.2));
 			break;
 		}
 		case 7:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 2.65,
-				_visibleSize.height / 2.695));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 2.65,
+				Constants::getVisibleSize().height / 2.695));
 			break;
 		}
 		case 8:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 2.61,
-				_visibleSize.height / 1.83));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 2.61,
+				Constants::getVisibleSize().height / 1.83));
 			break;
 		}
 		case 9:
 		{
-			button->setPosition(Vec2(_visibleSize.width / 2.1,
-				_visibleSize.height / 1.4));
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 2.1,
+				Constants::getVisibleSize().height / 1.4));
 			break;
 		}
 		default:
