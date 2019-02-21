@@ -7,6 +7,7 @@ class Bullet : public Model
 private:
 	int mSpeed;
 	bool mIsRunRight;
+	int mColor;
 public:
 	Bullet(cocos2d::Scene * scene);
 	~Bullet();
@@ -18,4 +19,9 @@ public:
 	void SetSpeed(int speed);
 	int GetSpeed();
 	void UpdateLocation(cocos2d::Vec2);
+
+	void SetColor(int color);
+
+	std::string GetColor();
+
 };
