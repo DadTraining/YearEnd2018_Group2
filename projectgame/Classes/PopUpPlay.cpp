@@ -85,7 +85,7 @@ void PopupPlay::onExit()
 /*Set level popup*/
 void PopupPlay::setLevel(int numLevel, int numStars)
 {
-	std::string png = ".png", stars = "stars", path = "map/", l = "level", le, st;
+	std::string png = ".png", stars = "stars", path = "map/", l = "Level", le, st;
 	char cLevel = '0' + numLevel;
 	le = path + l + cLevel + png; //path of level png
 	

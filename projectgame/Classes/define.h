@@ -127,12 +127,6 @@
 #define BUTTON_7 "map/7.png"
 #define BUTTON_8 "map/8.png"
 
-#define Lable_1 "map/Level.png"
-#define Lable_2 "map/Level2.png"
-#define Lable_3 "map/Level3.png"
-#define Lable_4 "map/Level4.png"
-#define Lable_5 "map/Level5.png"
-
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
 #define BUTTON_MAP_PLAY "map/play.png"
