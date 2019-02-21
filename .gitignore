@@ -334,4 +334,5 @@ ASALocalRun/
 bin/
 cocos2d/
 proj.ios_mac/
-proj.linux
+proj.linux/
+Debug.win32/
