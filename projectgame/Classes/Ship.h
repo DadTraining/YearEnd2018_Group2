@@ -2,9 +2,10 @@
 #include "cocos2d.h"
 #include "Shark.h"
 #include "Model.h"
-#include"Bullet.h"
-#include<vector>
-using namespace std;
+#include "Meat.h"
+#include "Bullet.h"
+#include <vector>
+
 using namespace cocos2d;
 class Ship : public Model
 {
@@ -25,6 +26,7 @@ public:
 	virtual void Init();
 	
 	void leftOrRight(bool direction);
+	bool getDirection();
 
 	void ShootColor(int color);
 

@@ -83,6 +83,11 @@ void Ship::leftOrRight(bool direction)
 	}
 }
 
+bool Ship::getDirection()
+{
+	return mLeft;
+}
+
 void Ship::ShootColor(int color)
 {
 	for (int i = 0; i < listBullet.size(); i++) {

@@ -52,7 +52,6 @@ void Item::OnClickMenuItem(cocos2d::Ref * sender)
 
 void Item::IncreaseBlood()
 {
-	
 	//power_loadingBar->setPercent(power_loadingBar->getPercent() + 10);
 }
 
@@ -85,6 +84,8 @@ void Item::ChangeStatusStun()
 		mSharkList[i]->SetOldStatus();
 	}
 }
+
+
 
 
 

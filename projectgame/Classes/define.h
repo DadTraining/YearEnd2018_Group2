@@ -27,6 +27,7 @@
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
 
 #define ITEM_BOX "button/warning.png"
+#define MEAT "item/meat.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"

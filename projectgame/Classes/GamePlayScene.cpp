@@ -135,6 +135,7 @@ bool GamePlayScene::init()
 		name = path + c + png;
 		auto button = ui::Button::create(name);
 		listItem.push_back(button);
+
 		switch (i)
 		{
 		case 1: //brick
@@ -168,13 +169,6 @@ bool GamePlayScene::init()
 		this->addChild(button, 4);
 
 	}
-
-
-
-
-	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	cable = new Cable(this);
 	cable->GetRect();

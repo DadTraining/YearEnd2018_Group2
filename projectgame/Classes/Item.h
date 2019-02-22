@@ -14,14 +14,9 @@ private:
 	bool mStatusStun;
 	int mScoreSpend;
 
-	cocos2d::ui::Button *buttonBrick;
-	cocos2d::ui::Button *buttonHP;
-	cocos2d::ui::Button *buttonBoom;
-
 	Sprite * power_bg;
 	cocos2d::ui::LoadingBar *power_loadingBar;
 	std::vector<Shark*> mSharkList;
-
 
 public:
 	Item(cocos2d::Scene * scene);
