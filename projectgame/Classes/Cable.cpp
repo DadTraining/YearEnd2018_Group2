@@ -3,32 +3,88 @@
 #include "Constants.h"
 #include "ui/CocosGUI.h"
 
-Cable::Cable(cocos2d::Scene * scene) 
-{
-	CreatCable(scene);
-	LoadingBar(scene);	
-	
-	mHp = 100;
-}
 
 #pragma region declare
 cocos2d::Sprite* loadingbar_white;
 ui::LoadingBar * loadingBar;
+ui::LoadingBar * loadingBarGreen;
 cocos2d::Sprite* mTargetSprite;
 #pragma endregion
 
 
 Cable::Cable(cocos2d::Scene * scene)
 {
-	mHp -= 5;	
+	auto visibleSize = Constants::getVisibleSize();
+	mHp = 100;
+	CreateCable(scene);
+	LoadingBar(scene);
+
+
+	mTargetSprite = cocos2d::Sprite::create("target/target_1.png");
+	mTargetSprite->setVisible(false);
+	//mTargetSprite->setPosition(300, 300);
+	scene->addChild(mTargetSprite, 999);
+	TargetAnimation();
+
+
+	
+}
+
+Cable::~Cable()
+{
+
+}
+
+void Cable::Bitten()
+{
+	mHp -= 5;
 	loadingBarGreen->setPercent(mHp);
 	if (mHp >= 0 && mHp < 20) {
 		loadingBarGreen->loadTexture(HP_CABLERED);
 		EffectLoadingBar();
 	}
-	
-	//log("%d", mHp);
+
 }
+
+void Cable::Armor()
+{
+}
+
+
+void Cable::Update()
+{
+
+}
+
+void Cable::Init()
+{
+}
+
+void Cable::LoadingBar(cocos2d::Scene * scene)
+{
+	auto visibleSize = Constants::getVisibleSize();
+	//icon HP
+	auto iconhp = cocos2d::Sprite::create(ICON_HP);
+	iconhp->setPosition(cocos2d::Vec2(visibleSize.width / 16, visibleSize.height / 1.07));
+	iconhp->setScale(0.3);
+	scene->addChild(iconhp, 999);
+	//loadingbarwhite
+	loadingbar_white = cocos2d::Sprite::create(HP_CABLEWHITE);
+	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
+	loadingbar_white->setScale(0.3);
+	scene->addChild(loadingbar_white, 999);
+
+	//loading bar green
+	loadingBarGreen = ui::LoadingBar::create(HP_CABLEGREEN);
+	loadingBarGreen->setDirection(ui::LoadingBar::Direction::LEFT);
+	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
+	loadingBarGreen->setScale(0.3);
+	loadingBarGreen->setPercent(100);
+	scene->addChild(loadingBarGreen, 999);
+}
+
+void Cable::CreateCable(cocos2d::Scene * scene)
+{
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	mSprite = cocos2d::Sprite::create(CABLE_IMG);
@@ -46,73 +102,6 @@ Cable::Cable(cocos2d::Scene * scene)
 	mSprite->setPhysicsBody(cableBody);
 
 	scene->addChild(mSprite);
-#pragma endregion
-
-#pragma region loadingbar
-
-	//auto visibleSize = Constants::getVisibleSize();
-	//icon HP
-	auto iconhp = cocos2d::Sprite::create(ICON_HP);
-	iconhp->setPosition(cocos2d::Vec2(visibleSize.width / 16, visibleSize.height / 1.07));
-	iconhp->setScale(0.3);
-	scene->addChild(iconhp, 999);
-	//loadingbarwhite
-	loadingbar_white = cocos2d::Sprite::create(HP_CABLEWHITE);
-	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
-	loadingbar_white->setScale(0.3);
-	scene->addChild(loadingbar_white,999);	
-
-	//loading bar
-	loadingBar = ui::LoadingBar::create(HP_CABLERED);
-	loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
-	loadingBar->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
-	loadingBar->setScale(0.3);
-	loadingBar->setPercent(100);
-	scene->addChild(loadingBar, 999);
-#pragma endregion
-
-	mHp = 100;
-
-	mTargetSprite = cocos2d::Sprite::create("target/target_1.png");
-	mTargetSprite->setVisible(false);
-	//mTargetSprite->setPosition(300, 300);
-	scene->addChild(mTargetSprite, 999);
-	TargetAnimation();
-	//loading bar green
-    loadingBarGreen = ui::LoadingBar::create(HP_CABLEGREEN);
-	
-	
-	loadingBarGreen->setDirection(ui::LoadingBar::Direction::LEFT);
-	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
-	loadingBarGreen->setScale(0.3);
-	loadingBarGreen->setPercent(100);
-	scene->addChild(loadingBarGreen, 999);
-}
-
-Cable::~Cable()
-{
-
-}
-
-void Cable::Bitten()
-{
-	mHp -= 5;
-	loadingBar->setPercent(mHp);
-	//log("%d", mHp);
-}
-
-void Cable::Armor()
-{
-}
-
-
-void Cable::Update()
-{
-
-}
-
-void Cable::Init()
-{
 }
 
 void Cable::EffectCable()
@@ -176,8 +165,6 @@ void Cable::CheckSharkNearCable(std::vector<Shark*> sharks, Ship* ship)
 	{
 		SetTarget(cocos2d::Vec2(0, 0), false);
 	}
-
-
 }
 
 void Cable::EffectLoadingBar()

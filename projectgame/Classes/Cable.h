@@ -8,9 +8,7 @@
 class Cable : public Model
 {
 private:	
-	Sprite * loadingbar_white;
-	//ui::LoadingBar * loadingBar;
-	ui::LoadingBar * loadingBarGreen;
+	
 	int mHp;
 
 public:
@@ -19,8 +17,13 @@ public:
 	void Bitten();
 	void Armor();
 
+
+
 	virtual void Update();
 	virtual void Init();
+	void LoadingBar(cocos2d::Scene* scene);
+	void CreateCable(cocos2d::Scene* scene);
+
 	void EffectCable();
 	
 	void TargetAnimation();
