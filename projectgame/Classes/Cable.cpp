@@ -13,6 +13,7 @@ Cable::Cable(cocos2d::Scene * scene)
 {
 	CreatCable(scene);
 	LoadingBar(scene);	
+	
 	mHp = 100;
 }
 
@@ -23,8 +24,13 @@ Cable::~Cable()
 
 void Cable::Bitten()
 {
-	mHp -= 5;
-	loadingBar->setPercent(mHp);
+	mHp -= 5;	
+	loadingBarGreen->setPercent(mHp);
+	if (mHp >= 0 && mHp < 20) {
+		loadingBarGreen->loadTexture(HP_CABLERED);
+		EffectLoadingBar();
+	}
+	
 	//log("%d", mHp);
 }
 
@@ -54,15 +60,17 @@ void Cable::LoadingBar(Scene * scene)
     loadingbar_white = cocos2d::Sprite::create(HP_CABLEWHITE);
 	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
 	loadingbar_white->setScale(0.3);
-	scene->addChild(loadingbar_white,999);
+	scene->addChild(loadingbar_white,999);	
 
-	//loading bar
-    loadingBar = ui::LoadingBar::create(HP_CABLERED);
-	loadingBar->setDirection(ui::LoadingBar::Direction::LEFT);
-	loadingBar->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
-	loadingBar->setScale(0.3);
-	loadingBar->setPercent(100);
-	scene->addChild(loadingBar,999);
+	//loading bar green
+    loadingBarGreen = ui::LoadingBar::create(HP_CABLEGREEN);
+	
+	
+	loadingBarGreen->setDirection(ui::LoadingBar::Direction::LEFT);
+	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
+	loadingBarGreen->setScale(0.3);
+	loadingBarGreen->setPercent(100);
+	scene->addChild(loadingBarGreen, 999);
 }
 
 void Cable::CreatCable(Scene *scene)
@@ -97,6 +105,20 @@ void Cable::EffectCable()
 	srand(time(NULL));
 
 
+}
+
+void Cable::EffectLoadingBar()
+{
+	auto fadeOut_LoadingBar = FadeOut::create(0.5);
+	auto fadeIn_LoadingBar = FadeIn::create(0.5);
+	auto sequen_LoadingBar = Sequence::create(fadeOut_LoadingBar, fadeIn_LoadingBar, fadeOut_LoadingBar->clone(), fadeIn_LoadingBar->clone(), nullptr);
+	loadingBarGreen->runAction(sequen_LoadingBar);
+
+	/*auto fadeOut_LoadingBarWhite = FadeOut::create(0.5);
+	auto fadeIn_LoadingBarWhite = FadeIn::create(0.5);
+	auto sequen_LoadingBarWhite = Sequence::create(fadeOut_LoadingBarWhite, fadeIn_LoadingBarWhite, fadeOut_LoadingBarWhite->clone(), fadeIn_LoadingBarWhite->clone());
+	loadingbar_white->runAction(sequen_LoadingBarWhite);*/
+	
 }
 
 

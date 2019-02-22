@@ -89,6 +89,7 @@
 //cable
 #define HP_CABLEWHITE "cable/healthwhite.png"
 #define HP_CABLERED "cable/healthred.png"
+#define HP_CABLEGREEN "cable/healthgreen.png"
 #define ICON_HP "cable/iconhealth.png"
 #define SHARK_STATUS_STUN "STUN"
 
