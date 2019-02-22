@@ -21,7 +21,7 @@ Item * item;
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -66,28 +66,28 @@ bool GamePlayScene::init()
 	whiteButton->addClickEventListener([&](Ref* event) {
 		//ship->ShootColor(BULLET_SHOOT_BLACK);
 	});
-	addChild(whiteButton, 100);
+	addChild(whiteButton, 999);
 
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, whiteButton->getPosition().y));
 	blueButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
-	addChild(blueButton, 100);
+	addChild(blueButton, 999);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
 	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.9 /7, visibleSize.height / 3.75));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
-	addChild(redButton, 100);
+	addChild(redButton, 999);
 
 	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
 	yellowButton->setPosition(cocos2d::Vec2(whiteButton->getPosition().x, visibleSize.height / 3));
 	yellowButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
-	addChild(yellowButton, 100);
+	addChild(yellowButton, 999);
 
 	////////////////////////
 	//left and right button
@@ -210,7 +210,7 @@ void GamePlayScene::update(float delta)
 	}
 	ship->Update();
 	item->Update();
-	cable->CheckSharkNearCable(sharkList, ship->GetDirection());
+	cable->CheckSharkNearCable(sharkList, ship);
 }
 
 void GamePlayScene::SharkAliveCallBack()

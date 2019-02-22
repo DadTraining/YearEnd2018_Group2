@@ -117,17 +117,17 @@ void Cable::TargetAnimation()
 
 }
 
-void Cable::CheckSharkNearCable(std::vector<Shark*> sharks, bool directionShip)
+void Cable::CheckSharkNearCable(std::vector<Shark*> sharks, Ship* ship)
 {
 	float _minPos = MIN_POSITION;
 	Shark* sh;
 	for (int i = 0; i < sharks.size(); i++)
 	{
 		auto sk = sharks[i];
-		if (sk->GetDirection() == directionShip && sk->IsVisible())
+		if (sk->GetDirection() == ship->GetDirection() && sk->IsVisible())
 		{
 			float pos;
-			if (directionShip)
+			if (ship->GetDirection())
 			{
 				pos = (float)sk->GetLocation().x - this->GetLocation().x;
 				mTargetSprite->setAnchorPoint(cocos2d::Vec2(1, 0.5));
@@ -147,6 +147,7 @@ void Cable::CheckSharkNearCable(std::vector<Shark*> sharks, bool directionShip)
 	if (_minPos < MIN_POSITION && sh != nullptr)
 	{
 		SetTarget(sh->GetLocation(), true);
+		ship->ShipMove(sh->GetLocation().y);
 	}
 	else
 	{

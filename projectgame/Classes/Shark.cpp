@@ -289,7 +289,7 @@ void Shark::Init()
 		mMoveToLeft = false; // run from left to right
 	}
 
-	auto posY = cocos2d::random(Constants::getVisibleSize().height*3/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
+	auto posY = cocos2d::random(Constants::getVisibleSize().height*4/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
 	cocos2d::PhysicsBody* spriteBody;
 	Shark::SwimAnimation();
 	auto sharkSize = mSprite->getContentSize().width / 2;

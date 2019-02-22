@@ -21,7 +21,6 @@ public:
 	virtual void Init();
 	
 	void leftOrRight(bool direction);
-	bool getDirection();
 
 	void ShootColor(int color);
 
@@ -30,6 +29,10 @@ public:
 	bool GetDirection() {
 		return mLeft;
 	}
+
+	void SetPositionY(float y);
+
+	void ShipMove(float posY);
 
 
 };
