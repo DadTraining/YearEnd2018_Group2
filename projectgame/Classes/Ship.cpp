@@ -10,10 +10,6 @@ Ship::Ship(cocos2d::Scene * scene)
 	scene->addChild(mSprite, 999);
 	mUp = true;
 	mLeft = false;
-	//mSprite->setFlipX(!mLeft);
-	auto listener = EventListenerTouchOneByOne::create();
-	listener->onTouchBegan = CC_CALLBACK_2(Ship::onTouchBegan, this);
-	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, scene);
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
@@ -61,42 +57,30 @@ void Ship::Update()
 void Ship::Init()
 {
 
-	//this->GetSprite()->setScale(SHIP_SCALE);
 	this->SetPosition(cocos2d::Vec2(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 2));
 	auto animate = cocos2d::Animate::create(CreateAnimation(SHIP_IMG, 1, SHIP_FRAME, 0.15));
 	mSprite->runAction(cocos2d::RepeatForever::create(animate));
 }
 
-bool Ship::onTouchBegan(Touch * touch, Event * event)
+void Ship::leftOrRight(bool direction)
 {
-	auto mLocation = touch->getLocation();
-	auto size = Constants::getVisibleSize();
-	if (mLocation.x > size.width / 2 &&
-		mLocation.y > size.height * 2 / 7 &&
-		mLocation.y < size.height * 4 / 5
-		)
+	//direction = true is right
+	if (direction)
 	{
-		mLeft = true;
+		if (!mLeft)
+		{
+			mLeft = true;
+			mSprite->setFlipX(mLeft);
+		}
 	}
-	else if (mLocation.x < size.width / 2 &&
-		mLocation.y > size.height * 2 / 7 &&
-		mLocation.y < size.height * 4 / 5
-		)
+	else
 	{
-		mLeft = false;
-
+		if (mLeft)
+		{
+			mLeft = false;
+			mSprite->setFlipX(mLeft);
+		}
 	}
-	mSprite->setFlipX(mLeft);
-
-	return true;
-}
-
-void Ship::onTouchMoved(Touch * touch, Event * event)
-{
-}
-
-void Ship::onTouchEnded(Touch * touch, Event * event)
-{
 }
 
 void Ship::ShootColor(int color)

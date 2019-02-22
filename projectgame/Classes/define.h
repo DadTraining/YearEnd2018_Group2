@@ -21,7 +21,12 @@
 #define BUTTON_BLUE_IMG_NOR "button/bluebutton.png"
 #define BUTTON_RED_IMG_NOR "button/redbutton.png"
 #define BUTTON_WHITE_IMG_NOR "button/whitebutton.png"
+#define BUTTON_LEFT "button/left.png"
+#define BUTTON_RIGHT "button/right.png"
+#define BUTTON_WHITE_IMG_PRE "button/pressbutton.png"
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
+
+#define ITEM_BOX "button/warning.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -43,9 +48,9 @@
 #define SHARK_SWIM_START 1
 #define SHARK_SWIM_DELAY 0.27
 
-#define SHARK_SIZE_SMALL 1.5
-#define SHARK_SIZE_NORMAL 1.75
-#define SHARK_SIZE_BIG 2
+#define SHARK_SIZE_SMALL 0.75
+#define SHARK_SIZE_NORMAL 1.25
+#define SHARK_SIZE_BIG 1.25
 
 #define SHARK_DELAY_SMALL 0.13
 #define SHARK_DELAY_NORMAL 0.17
@@ -100,19 +105,12 @@
 
 #define ITEM_SCAlE 0.3
 
-#define LOADINGBAR_BG_IMAGE "item/power_bg.png"
-#define LOADINGBAR_IMAGE "item/power_loading.png"
-
-#define LOADING_BAR_SCALE 0.3
-
-
 #define LOADING_BAR_BACKGROUND "loadingbar/bar_1.png"
 #define LOADING_BAR "loadingbar/bar_2.png"
 #define LOADING_BAR_SCALE_X 0.35
 #define LOADING_BAR_SCALE_Y 0.07
 
 #define BUTTON_PLAY "button/button_play.png"
-#define BUTTON_PLAY_SCALE 0.7
 
 #define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"
 

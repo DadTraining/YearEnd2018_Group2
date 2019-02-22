@@ -23,10 +23,8 @@ public:
 
 	virtual void Update();
 	virtual void Init();
-	bool onTouchBegan(Touch *touch, Event *event);
-	void onTouchMoved(Touch *touch, Event *event);
-	void onTouchEnded(Touch *touch, Event *event);
-
+	
+	void leftOrRight(bool direction);
 
 	void ShootColor(int color);
 
