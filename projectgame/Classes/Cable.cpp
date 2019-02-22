@@ -20,6 +20,7 @@ Cable::Cable(cocos2d::Scene * scene)
 Cable::~Cable()
 {
 
+
 }
 
 void Cable::Bitten()
