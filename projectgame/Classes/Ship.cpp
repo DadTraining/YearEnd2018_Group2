@@ -36,7 +36,7 @@ Ship::~Ship()
 
 void Ship::Update()
 {
-	if (mUp) {
+	/*if (mUp) {
 		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y + SHIP_SPEED));
 		if (GetLocation().y >= Constants::getVisibleSize().height * 9 / 10)
 		{
@@ -50,7 +50,7 @@ void Ship::Update()
 		{
 			mUp = true;
 		}
-	}
+	}*/
 	for (int i = 0; i < listBullet.size(); i++)
 	{
 		listBullet.at(i)->Update();
