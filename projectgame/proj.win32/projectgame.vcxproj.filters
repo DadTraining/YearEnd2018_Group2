@@ -75,6 +75,9 @@
     <ClCompile Include="..\Classes\MapScene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Meat.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\MapScene.h">
       <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Meat.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

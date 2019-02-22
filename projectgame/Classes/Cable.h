@@ -1,11 +1,10 @@
 #pragma once
 #include "cocos2d.h"
-#include "ui/CocosGUI.h"
 #include "Model.h"
-#include"Bullet.h"
-#include<vector>
-using namespace std;
-using namespace cocos2d;
+#include "Shark.h"
+#include "Ship.h"
+
+
 class Cable : public Model
 {
 private:	
@@ -13,6 +12,7 @@ private:
 	//ui::LoadingBar * loadingBar;
 	ui::LoadingBar * loadingBarGreen;
 	int mHp;
+
 public:
 	Cable(cocos2d::Scene * scene);
 	~Cable();
@@ -21,8 +21,11 @@ public:
 
 	virtual void Update();
 	virtual void Init();
-	void LoadingBar(Scene *scene);
-	void CreatCable(Scene * scene);
 	void EffectCable();
+	
+	void TargetAnimation();
+	void CheckSharkNearCable(std::vector<Shark*> sharks,Ship* ship);
+	void SetTarget(cocos2d::Vec2 pos, bool vis);
+
 	void EffectLoadingBar();
 };
