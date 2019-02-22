@@ -112,7 +112,7 @@ void Shark::Clone()
 void Shark::BiteAnimation()
 {
 	SetStatus(SHARK_STATUS_BITE);
-	//this->SetAlive(false);
+	this->SetAlive(false);
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
 	auto _visi = cocos2d::CallFunc::create([=]() {
@@ -335,9 +335,4 @@ void Shark::setIsBitten(bool bitten)
 	mIsBitten = bitten;
 }
 
-bool Shark::BittenCable(Cable * cable)
-{
-	cable->Bitten();
-	return false;
-}
 
