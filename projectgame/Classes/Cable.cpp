@@ -14,6 +14,8 @@ Cable::Cable(cocos2d::Scene * scene)
 	CreatCable(scene);
 	LoadingBar(scene);	
 	mHp = 100;
+	mTargetSprite = cocos2d::Sprite::create();
+	mTargetSprite->setVisible(false);
 }
 
 Cable::~Cable()
@@ -96,6 +98,17 @@ void Cable::EffectCable()
 	mSprite->runAction(sequen);
 	srand(time(NULL));
 
+
+}
+
+void Cable::TargetAnimation()
+{
+	auto animate = cocos2d::Animate::create(
+		this->CreateAnimation(TARGET_SHARK, 1, 2, 0.1)
+	);
+	mTargetSprite->runAction(
+		cocos2d::RepeatForever::create(animate)
+	);
 
 }
 

@@ -61,7 +61,7 @@
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
 
-#define SHARK_MAX_ON_SCREEN 10
+#define SHARK_MAX_ON_SCREEN 3
 #define SHARK_CALL_BACK_ALIVE 40
 
 #define SHARK_RUN_AWAY_START 9
@@ -145,3 +145,7 @@
 #define POPUP_SCALE_Y 0.51
 
 #define LIST_BUTTON_MAX 16
+
+// target
+#define TARGET_SHARK "target_"
+#define MIN_POSITION 100000

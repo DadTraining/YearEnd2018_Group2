@@ -3,6 +3,7 @@
 #include "ui/CocosGUI.h"
 #include "Model.h"
 #include"Bullet.h"
+#include "Shark.h"
 #include<vector>
 using namespace std;
 using namespace cocos2d;
@@ -12,6 +13,7 @@ private:
 	Sprite * loadingbar_white;
 	ui::LoadingBar * loadingBar;
 	int mHp;
+	cocos2d::Sprite* mTargetSprite;
 public:
 	Cable(cocos2d::Scene * scene);
 	~Cable();
@@ -24,4 +26,7 @@ public:
 	void CreatCable(Scene * scene);
 	void EffectCable();
 	
+	void TargetAnimation();
+
+
 };
