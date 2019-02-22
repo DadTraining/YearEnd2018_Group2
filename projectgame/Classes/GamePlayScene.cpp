@@ -55,46 +55,62 @@ bool GamePlayScene::init()
 
 	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	//_backGround->setScaleY(Constants::getVisibleSize().height / _backGround->getContentSize().height);
-	//_backGround->setScaleX(Constants::getVisibleSize().width / _backGround->getContentSize().width);
-
+	
 	addChild(_backGround, -1);
-
-	/*auto _cable = cocos2d::Sprite::create(CABLE_IMG);
-	_cable->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
-	addChild(_cable, 1);*/
 
 
 #pragma region button
 
+	auto whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR);
+	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
+	whiteButton->addClickEventListener([&](Ref* event) {
+		//ship->ShootColor(BULLET_SHOOT_BLACK);
+	});
+	addChild(whiteButton, 999);
+
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
-	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 2 / 10, visibleSize.height * 1.5 / 10));
+	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, whiteButton->getPosition().y));
 	blueButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
-	addChild(blueButton, 100);
+	addChild(blueButton, 999);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 4 / 10, visibleSize.height * 1.5 / 10));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.9 /7, visibleSize.height / 3.75));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
-	addChild(redButton, 100);
+	addChild(redButton, 999);
 
 	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
-	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width * 6 / 10, visibleSize.height * 1.5 / 10));
+	yellowButton->setPosition(cocos2d::Vec2(whiteButton->getPosition().x, visibleSize.height / 3));
 	yellowButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
-	addChild(yellowButton, 100);
+	addChild(yellowButton, 999);
 
-	auto blackButton = ui::Button::create(BUTTON_BLACK_IMG_NOR);
-	blackButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, visibleSize.height * 1.5 / 10));
-	blackButton->addClickEventListener([&](Ref* event) {
-		ship->ShootColor(BULLET_SHOOT_BLACK);
+	////////////////////////
+	//left and right button
+	auto leftButton = ui::Button::create(BUTTON_LEFT);
+	leftButton->setPosition(cocos2d::Vec2(visibleSize.width - whiteButton->getPosition().x, 
+							whiteButton->getPosition().y));
+	leftButton->addClickEventListener([&](Ref* event) {
+		ship->leftOrRight(false);
 	});
-	addChild(blackButton, 100);
+	addChild(leftButton, 100);
+
+	auto rightButton = ui::Button::create(BUTTON_RIGHT);
+	rightButton->setPosition(cocos2d::Vec2(leftButton->getPosition().x + visibleSize.width / 10,
+							whiteButton->getPosition().y));
+	rightButton->addClickEventListener([&](Ref* event) {
+		ship->leftOrRight(true);
+	});
+	addChild(rightButton, 100);
+
+	auto itemBox = Sprite::create(ITEM_BOX);
+	itemBox->setPosition(cocos2d::Vec2(visibleSize.width / 2,
+		whiteButton->getPosition().y - visibleSize.height / 50));
+	addChild(itemBox, 3);
 #pragma endregion
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
@@ -109,10 +125,6 @@ bool GamePlayScene::init()
 	sk = new Shark(this);
 	sk->SetVisible(true);
 
-	auto listenerButton = EventListenerTouchOneByOne::create();
-	listenerButton->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listenerButton, this);
-
 	callBackAlive = 0;
 	ship = new Ship(this);
 	item = new Item(this);
@@ -123,33 +135,29 @@ bool GamePlayScene::init()
 		name = path + c + png;
 		auto button = ui::Button::create(name);
 		listItem.push_back(button);
+
 		switch (i)
 		{
-		case 1:
-			//button= ui::Button::create(ITEM_BRICK_IMAGE);
-
-			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.85, Constants::getVisibleSize().height * 0.95));
-			button->setScale(ITEM_SCAlE);
+		case 1: //brick
+			button->setPosition(Vec2(visibleSize.width / 3, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->StunShark(sharkList);
 
 			});
 			break;
-		case 2:
-			//button = ui::Button::create(ITEM_HP_IMAGE);
-			button->setScale(ITEM_SCAlE);
-			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.9, Constants::getVisibleSize().height * 0.95));
+
+		case 2: //hp
+			button->setPosition(Vec2(visibleSize.width / 2, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->IncreaseBlood();
 
 			});
 			break;
-		case 3:
-			//button = ui::Button::create(ITEM_BOOM_IMAGE);
-			button->setScale(ITEM_SCAlE);
-			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.95, Constants::getVisibleSize().height * 0.95));
+
+		case 3: //bomb
+			button->setPosition(Vec2(visibleSize.width *2 / 3, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->KillSharkByBoom(sharkList);
@@ -158,19 +166,16 @@ bool GamePlayScene::init()
 		default:
 			break;
 		}
-		this->addChild(button);
+		this->addChild(button, 4);
 
 	}
 
-
-
+	cable = new Cable(this);
+	cable->GetRect();
 
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
-
-	cable = new Cable(this);
-	cable->GetRect();
 
 	this->scheduleUpdate();
 
@@ -197,10 +202,15 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
+		else if (sharkList[i]->GetSprite()->isVisible())
+		{
+			sharkList[i]->Update();
+		}
 
 	}
 	ship->Update();
 	item->Update();
+	cable->CheckSharkNearCable(sharkList, ship);
 }
 
 void GamePlayScene::SharkAliveCallBack()

@@ -84,7 +84,7 @@ void IntroScene::Loading()
 	//button play
 	static auto button = ui::Button::create(BUTTON_PLAY);
 	button->setPosition(loadingBar->getPosition());
-	//button->setScale(BUTTON_PLAY_SCALE);
+	
 	button->setVisible(false);
 	this->addChild(button, 3);
 	loadingBar->setPercent(70);

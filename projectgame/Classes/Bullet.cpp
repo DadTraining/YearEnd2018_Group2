@@ -36,7 +36,7 @@ void Bullet::Update()
 	{
 		if (mIsRunRight)
 		{
-			mSprite->setPosition(GetPosition().x + 5, GetPosition().y);
+			mSprite->setPosition(GetPosition().x + BULLET_SPEED, GetPosition().y);
 			if (GetPosition().x > SCREEN_W)
 			{
 				SetVisible(false);
@@ -44,7 +44,7 @@ void Bullet::Update()
 		}
 		else
 		{
-			mSprite->setPosition(GetPosition().x - 5, GetPosition().y);
+			mSprite->setPosition(GetPosition().x - BULLET_SPEED, GetPosition().y);
 			if (GetPosition().x < -10)
 			{
 				SetVisible(false);
