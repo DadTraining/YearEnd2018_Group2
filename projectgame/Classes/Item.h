@@ -30,8 +30,7 @@ public:
 	virtual void Init();
 	void Behavior();
 	void OnClickMenuItem(cocos2d::Ref *sender);
-	void LoadingBarPower(Scene * scene);
-	void CreatItem(Scene * scene);
+	
 	void IncreaseBlood();
 	void StunShark(std::vector<Shark*> sharkList);
 	void KillSharkByBoom(std::vector<Shark*> sharkList);
