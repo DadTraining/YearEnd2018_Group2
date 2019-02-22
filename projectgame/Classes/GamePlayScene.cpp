@@ -198,10 +198,15 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
+		else if (sharkList[i]->GetSprite()->isVisible())
+		{
+			sharkList[i]->Update();
+		}
 
 	}
 	ship->Update();
 	item->Update();
+	cable->CheckSharkNearCable(sharkList, ship->GetDirection());
 }
 
 void GamePlayScene::SharkAliveCallBack()

@@ -50,7 +50,7 @@
 #define SHARK_SWIM_DELAY 0.27
 
 #define SHARK_SIZE_SMALL 0.75
-#define SHARK_SIZE_NORMAL 1.25
+#define SHARK_SIZE_NORMAL 1
 #define SHARK_SIZE_BIG 1.25
 
 #define SHARK_DELAY_SMALL 0.13
@@ -59,15 +59,15 @@
 
 #define SHARK_POS 100
 
-#define SHARK_SPEED_SMALL 2.5
-#define SHARK_SPEED_NORMAL 1.7
-#define SHARK_SPEED_BIG 1
-#define SHARK_SPEED_RUNAWAY 13
+#define SHARK_SPEED_SMALL 1.5
+#define SHARK_SPEED_NORMAL 1.1
+#define SHARK_SPEED_BIG 0.7
+#define SHARK_SPEED_RUNAWAY 16
 
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
 
-#define SHARK_MAX_ON_SCREEN 10
+#define SHARK_MAX_ON_SCREEN 3
 #define SHARK_CALL_BACK_ALIVE 40
 
 #define SHARK_RUN_AWAY_START 9
@@ -75,7 +75,7 @@
 
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_BITE "BITE"
-
+#define SHARK_STATUS_STUN "STUN"
 
 #define BULLET_MAX 15
 #define BULLET_SHOOT_RED 1
@@ -96,7 +96,6 @@
 #define HP_CABLEWHITE "cable/healthwhite.png"
 #define HP_CABLERED "cable/healthred.png"
 #define ICON_HP "cable/iconhealth.png"
-#define SHARK_STATUS_STUN "STUN"
 
 
 #define ITEM_BOOM_IMAGE "item/3.png"
@@ -117,14 +116,6 @@
 
 
 #define IMG_MAPSCENE "map/map_2.png"
-#define BUTTON_1 "map/1.png"
-#define BUTTON_2  "map/2.png"
-#define BUTTON_3 "map/3.png"
-#define BUTTON_4 "map/4.png"
-#define BUTTON_5 "map/5.png"
-#define BUTTON_6 "map/6.png"
-#define BUTTON_7 "map/7.png"
-#define BUTTON_8 "map/8.png"
 
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
@@ -144,3 +135,7 @@
 #define POPUP_SCALE_Y 0.51
 
 #define LIST_BUTTON_MAX 16
+
+// target
+#define TARGET_SHARK "target_"
+#define MIN_POSITION 100000

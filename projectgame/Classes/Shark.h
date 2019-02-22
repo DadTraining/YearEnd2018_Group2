@@ -1,7 +1,7 @@
 #pragma once
 #include "cocos2d.h"
 #include "Model.h"
-#include"Cable.h"
+
 
 class Shark : public Model
 {
@@ -49,10 +49,16 @@ public:
 
 	bool IsBitten();
 	void setIsBitten(bool bitten);
-	bool BittenCable(Cable *cable);
+
 
 	std::string GetColor();
 	
+	bool GetDirection() {
+		return mMoveToLeft;
+	}
 
+	std::string GetStatus() {
+		return mStatus;
+	}
 };
 

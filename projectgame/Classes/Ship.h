@@ -32,5 +32,9 @@ public:
 
 	void Collision(std::vector<Shark*> sharks,int sharkTag,int bulletTag);
 
+	bool GetDirection() {
+		return mLeft;
+	}
+
 
 };
