@@ -1,6 +1,6 @@
 #pragma once
 
-#define SHIP_IMG "Ship_"
+#define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
 #define SHIP_SPEED 5
@@ -43,9 +43,9 @@
 #define SHARK_SWIM_START 1
 #define SHARK_SWIM_DELAY 0.27
 
-#define SHARK_SIZE_SMALL 1.5
-#define SHARK_SIZE_NORMAL 1.75
-#define SHARK_SIZE_BIG 2
+#define SHARK_SIZE_SMALL 0.75
+#define SHARK_SIZE_NORMAL 1
+#define SHARK_SIZE_BIG 1.25
 
 #define SHARK_DELAY_SMALL 0.13
 #define SHARK_DELAY_NORMAL 0.17

@@ -86,11 +86,10 @@ void PopupPlay::onExit()
 void PopupPlay::setLevel(int numLevel, int numStars)
 {
 	std::string png = ".png", stars = "stars", path = "map/", l = "Level", le, st;
-	char cLevel = '0' + numLevel;
-	le = path + l + cLevel + png; //path of level png
-	
-	auto lv = Sprite::create(le);
-	lv->setPosition(Vec2(0, mBackground->getContentSize().height / 5));
+	char cLevel[20] = { 0 };
+	sprintf(cLevel, "map/Level%d.png", numLevel);
+	auto lv = Sprite::create(cLevel);
+	lv->setPosition(Vec2(0, mBackground->getContentSize().height / 5.5));
 	mLayer->addChild(lv);
 
 	char cStars = '0' + numStars;

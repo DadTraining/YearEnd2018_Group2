@@ -1,6 +1,7 @@
 #include "Popup.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
+#include "Constants.h"
 
 bool Popup::init()
 {
@@ -43,6 +44,7 @@ void Popup::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			//disappear();
 			mLayer->setVisible(false);
+			Constants::SetEnableTouchEvent(true);
 			//mLayer->removeFromParentAndCleanup(true);
 			break; 
 	

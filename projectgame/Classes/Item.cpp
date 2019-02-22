@@ -9,7 +9,7 @@ Item::Item(cocos2d::Scene * scene) : Model()
 { 
 	
 	
-	LoadingBarPower(scene);
+	
 	mStatusStun = false;
 	mTimeStun = 0;
 

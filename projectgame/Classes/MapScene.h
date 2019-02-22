@@ -22,5 +22,6 @@ public:
 	void setListButton();
 	void initLevel();
 	void initPopUpLevel();
+	void setEnableTouch(bool enable);
 	CREATE_FUNC(MapScene);
 };

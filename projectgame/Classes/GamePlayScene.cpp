@@ -115,6 +115,7 @@ bool GamePlayScene::init()
 
 	callBackAlive = 0;
 	ship = new Ship(this);
+	//ship->SetVisible(false);
 	item = new Item(this);
 	for (int i = 1; i <= 3; i++)
 	{

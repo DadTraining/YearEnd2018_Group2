@@ -6,7 +6,8 @@
 
 Ship::Ship(cocos2d::Scene * scene)
 {
-	mSprite = cocos2d::Sprite::create();
+
+	mSprite = cocos2d::Sprite::create(SHIP_IMG);
 	scene->addChild(mSprite, 999);
 	mUp = true;
 	mLeft = false;
@@ -63,8 +64,8 @@ void Ship::Init()
 
 	//this->GetSprite()->setScale(SHIP_SCALE);
 	this->SetPosition(cocos2d::Vec2(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 2));
-	auto animate = cocos2d::Animate::create(CreateAnimation(SHIP_IMG, 1, SHIP_FRAME, 0.15));
-	mSprite->runAction(cocos2d::RepeatForever::create(animate));
+	//auto animate = cocos2d::Animate::create(CreateAnimation(SHIP_IMG, 1, SHIP_FRAME, 0.15));
+	//mSprite->runAction(cocos2d::RepeatForever::create(animate));
 }
 
 bool Ship::onTouchBegan(Touch * touch, Event * event)
@@ -105,8 +106,19 @@ void Ship::ShootColor(int color)
 		auto bullet = listBullet.at(i);
 		if (!bullet->IsVisible()) {
 			bullet->Shoot(mLeft);
-			bullet->UpdateLocation(Vec2(mSprite->getPosition()));
+		
+		  if (mLeft) {
+				//bullet->UpdateLocation(Vec2(mSprite->getPosition()+Vec2(50,-15)));
+				bullet->UpdateLocation(Vec2(mSprite->getPosition() + Vec2(mSprite->getContentSize().width*5/13,mSprite->getContentSize().height*-1.5/84 )));
+			}
+			else {
+				//bullet->UpdateLocation(Vec2(mSprite->getPosition()-Vec2(40,4)));
+				bullet->UpdateLocation(Vec2(mSprite->getPosition() - Vec2(mSprite->getContentSize().width * 4 / 13, mSprite->getContentSize().height*4/84)));
+			}
+
+			
 			bullet->SetVisible(true);
+			
 			bullet->Init();
 			bullet->SetColor(color);
 			break;
