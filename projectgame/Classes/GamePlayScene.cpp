@@ -21,7 +21,7 @@ Item * item;
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -172,6 +172,10 @@ bool GamePlayScene::init()
 
 	cable = new Cable(this);
 	cable->GetRect();
+
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	this->scheduleUpdate();
 

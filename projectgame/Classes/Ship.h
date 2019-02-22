@@ -6,21 +6,16 @@
 #include "Bullet.h"
 #include <vector>
 
-using namespace cocos2d;
 class Ship : public Model
 {
 private:
 	bool mUp;
 	bool mLeft;
-	vector<Bullet*> listBullet;
+	std::vector<Bullet*> listBullet;
 	int mFrameBullet;
-	
-
 public:
 	Ship(cocos2d::Scene * scene);
 	~Ship();
-
-
 
 	virtual void Update();
 	virtual void Init();
