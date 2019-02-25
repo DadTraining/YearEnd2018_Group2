@@ -158,6 +158,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\MapScene.cpp" />
     <ClCompile Include="..\Classes\Model.cpp" />
     <ClCompile Include="..\Classes\Popup.cpp" />
+    <ClCompile Include="..\Classes\PopUpHome.cpp" />
     <ClCompile Include="..\Classes\PopUpPlay.cpp" />
     <ClCompile Include="..\Classes\PopUpSetting.cpp" />
     <ClCompile Include="..\Classes\MyBodyParser.cpp" />
@@ -179,6 +180,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\MapScene.h" />
     <ClInclude Include="..\Classes\Model.h" />
     <ClInclude Include="..\Classes\Popup.h" />
+    <ClInclude Include="..\Classes\PopUpHome.h" />
     <ClInclude Include="..\Classes\PopUpPlay.h" />
     <ClInclude Include="..\Classes\PopUpSetting.h" />
     <ClInclude Include="..\Classes\Item.h" />
