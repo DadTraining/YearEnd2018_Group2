@@ -84,10 +84,6 @@ void Ship::leftOrRight(bool direction)
 	}
 }
 
-bool Ship::getDirection()
-{
-	return mLeft;
-}
 
 void Ship::ShootColor(int color)
 {
@@ -131,7 +127,25 @@ void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 			bullet->SetVisible(false);
 		}
 	}
-	
+
+}
+
+void Ship::SetPositionY(float y)
+{
+	mSprite->setPositionY(y);
+}
+
+void Ship::ShipMove(float posY)
+{
+	float _posY = this->GetLocation().y;
+	if (_posY < posY -10)
+	{
+		this->SetPositionY(_posY + SHIP_SPEED);
+	}
+	else if (_posY  > posY +10 )
+	{
+		this->SetPositionY(_posY - SHIP_SPEED);
+	}
 }
 
 

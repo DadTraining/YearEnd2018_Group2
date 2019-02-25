@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include "Model.h"
 #include "Shark.h"
+#include "Ship.h"
 
 
 class Cable : public Model
@@ -21,7 +22,7 @@ public:
 	void EffectCable();
 	
 	void TargetAnimation();
-	void CheckSharkNearCable(std::vector<Shark*> sharks, bool directionShip);
+	void CheckSharkNearCable(std::vector<Shark*> sharks,Ship* ship);
 	void SetTarget(cocos2d::Vec2 pos, bool vis);
 
 };

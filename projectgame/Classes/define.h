@@ -3,11 +3,11 @@
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
-#define SHIP_SPEED 5
+#define SHIP_SPEED 10
 
 
 #define BULLET_IMG "Bullet.png"
-#define BULLET_SPEED 3
+#define BULLET_SPEED 15
 
 // screen
 #define SCREEN_H 720
@@ -59,15 +59,15 @@
 
 #define SHARK_POS 100
 
-#define SHARK_SPEED_SMALL 1.5
-#define SHARK_SPEED_NORMAL 1.1
-#define SHARK_SPEED_BIG 0.7
+#define SHARK_SPEED_SMALL 2
+#define SHARK_SPEED_NORMAL 1.5
+#define SHARK_SPEED_BIG 1
 #define SHARK_SPEED_RUNAWAY 16
 
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
 
-#define SHARK_MAX_ON_SCREEN 3
+#define SHARK_MAX_ON_SCREEN 10
 #define SHARK_CALL_BACK_ALIVE 40
 
 #define SHARK_RUN_AWAY_START 9

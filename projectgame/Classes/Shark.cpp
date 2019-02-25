@@ -46,17 +46,17 @@ void Shark::Killed()
 	auto _fIn = cocos2d::FadeIn::create(0.1);
 	auto _spawn = cocos2d::Spawn::create(
 		_move,
-		_fOut,
+		//_fOut,
 		nullptr
 	);
 	auto _vis = cocos2d::CallFunc::create([=]() {
-		mSprite->setFlippedY(false);
+		//mSprite->setFlippedY(false);
 		Model::SetSpriteVisible(false);
 	});
 	auto _sqe = cocos2d::Sequence::create(
 		_spawn,
 		_vis,
-		_fIn,
+		//_fIn,
 		nullptr
 	);
 	mSprite->runAction(_sqe);
@@ -182,7 +182,6 @@ void Shark::UnMove(cocos2d::Vec2 pos)
 
 void Shark::RunAwayAnimation()
 {
-	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_RUN_AWAY_START, SHARK_RUN_AWAY_FRAME, mDelay - 0.05));
 	auto _visi = cocos2d::CallFunc::create([=]() {
 		mSprite->stopAllActions();
@@ -232,6 +231,11 @@ void Shark::UnUpdate(cocos2d::Vec2 pos)
 /*initialization for shark*/
 void Shark::Init()
 {
+	mSprite->setFlipY(false);
+	mSprite->runAction(
+		cocos2d::FadeIn::create(0.1)
+	);
+	mSprite->stopAllActions();
 	mStatus = " ";
 	mOldStatus = " ";
 	SetVisible(true);
@@ -289,7 +293,7 @@ void Shark::Init()
 		mMoveToLeft = false; // run from left to right
 	}
 
-	auto posY = cocos2d::random(Constants::getVisibleSize().height*3/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
+	auto posY = cocos2d::random(Constants::getVisibleSize().height*4/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
 	cocos2d::PhysicsBody* spriteBody;
 	Shark::SwimAnimation();
 	auto sharkSize = mSprite->getContentSize().width / 2;
