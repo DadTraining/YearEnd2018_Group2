@@ -3,6 +3,7 @@
 #include"Model.h"
 #include"define.h"
 #include "Constants.h"
+#include "InfoMap.h"
 
 Ship::Ship(cocos2d::Scene * scene)
 {
@@ -12,13 +13,7 @@ Ship::Ship(cocos2d::Scene * scene)
 	mUp = true;
 	mLeft = false;
 
-	for (int i = 0; i < BULLET_MAX; i++)
-	{
-		auto b = new Bullet(scene);
-		//b->Init();
-		b->SetTag(100 + i);
-		listBullet.push_back(b);
-	}
+	
 	Init();
 
 
@@ -48,6 +43,7 @@ void Ship::Update()
 			mUp = true;
 		}
 	}*/
+	auto listBullet = InfoMap::getBulletList();
 	for (int i = 0; i < listBullet.size(); i++)
 	{
 		listBullet.at(i)->Update();
@@ -87,6 +83,8 @@ void Ship::leftOrRight(bool direction)
 
 void Ship::ShootColor(int color)
 {
+	auto listBullet = InfoMap::getBulletList();
+
 	for (int i = 0; i < listBullet.size(); i++) {
 		auto bullet = listBullet.at(i);
 		if (!bullet->IsVisible()) {
@@ -113,6 +111,8 @@ void Ship::ShootColor(int color)
 
 void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 {
+	auto listBullet = InfoMap::getBulletList();
+
 	auto shark = sharks[sharkTag - 1];
 	auto bullet = listBullet[bulletTag - 100];
 	if (shark->IsAlive() && bullet->IsAlive())

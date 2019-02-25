@@ -11,7 +11,6 @@ class Ship : public Model
 private:
 	bool mUp;
 	bool mLeft;
-	std::vector<Bullet*> listBullet;
 	int mFrameBullet;
 public:
 	Ship(cocos2d::Scene * scene);

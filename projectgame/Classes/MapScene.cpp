@@ -2,6 +2,7 @@
 #include"MapScene.h"
 #include"define.h"
 #include "Constants.h"
+#include "InfoMap.h"
 
 
 //Size Constants::getVisibleSize();
@@ -36,6 +37,13 @@ bool MapScene::init()
 	initPopUpLevel();
 
 	setListButton();
+
+	for (int i = 0; i < Constants::GetListMap().size(); i++)
+	{
+		auto map = Constants::GetListMap().at(i);
+		Constants::SetEnableTouchEvent(i, map->AllowPlay());
+	}
+
 	return true;
 }
 
@@ -56,7 +64,8 @@ void MapScene::setListButton()
 		sprintf(normal, "map/%d.png", i);
 		sprintf(pressed, "map/%d.1.png", i);
 		
-		auto button = ui::Button::create(normal,pressed);
+		auto button = ui::Button::create(normal,pressed,pressed);
+		
 		mListButton.push_back(button);
 
 
@@ -164,9 +173,7 @@ void MapScene::setListButton()
 			break;
 		}
 
-		this->addChild(button);
-		
-		
+		this->addChild(button);			
 
 		button->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 			
@@ -177,7 +184,7 @@ void MapScene::setListButton()
 			case ui::Widget::TouchEventType::ENDED:
 				CCLOG("%i", i);
 				mListPlay[i - 1]->getLayer()->setVisible(true);
-				Constants::SetEnableTouchEvent(false);
+				Constants::SetEnableAllTouchEventOnMapLevel(false);
 				//button->setTouchEnabled(false);
 				break;
 			}

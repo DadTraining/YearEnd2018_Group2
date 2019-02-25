@@ -6,14 +6,15 @@
 #include "Constants.h"
 #include "MyBodyParser.h"
 #include "ui\UIButton.h"
+#include "InfoMap.h"
 
 USING_NS_CC;
 
 
 #pragma region Shark
-std::vector<Shark*> sharkList;
+
 int callBackAlive;
-Shark* sk;
+int timeLeft;
 Item * item;
 
 #pragma endregion
@@ -46,6 +47,7 @@ bool GamePlayScene::init()
 	{
 		return false;
 	}
+	timeLeft = 0;
 
 	auto static visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
@@ -55,7 +57,7 @@ bool GamePlayScene::init()
 
 	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	
+
 	addChild(_backGround, -1);
 
 
@@ -76,7 +78,7 @@ bool GamePlayScene::init()
 	addChild(blueButton, 999);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.9 /7, visibleSize.height / 3.75));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.9 / 7, visibleSize.height / 3.75));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
@@ -92,8 +94,8 @@ bool GamePlayScene::init()
 	////////////////////////
 	//left and right button
 	auto leftButton = ui::Button::create(BUTTON_LEFT);
-	leftButton->setPosition(cocos2d::Vec2(visibleSize.width - whiteButton->getPosition().x, 
-							whiteButton->getPosition().y));
+	leftButton->setPosition(cocos2d::Vec2(visibleSize.width - whiteButton->getPosition().x,
+		whiteButton->getPosition().y));
 	leftButton->addClickEventListener([&](Ref* event) {
 		ship->leftOrRight(false);
 	});
@@ -101,7 +103,7 @@ bool GamePlayScene::init()
 
 	auto rightButton = ui::Button::create(BUTTON_RIGHT);
 	rightButton->setPosition(cocos2d::Vec2(leftButton->getPosition().x + visibleSize.width / 10,
-							whiteButton->getPosition().y));
+		whiteButton->getPosition().y));
 	rightButton->addClickEventListener([&](Ref* event) {
 		ship->leftOrRight(true);
 	});
@@ -115,20 +117,11 @@ bool GamePlayScene::init()
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 
-	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
-	{
-		Shark* s = new Shark(this);
-		s->SetTag(1 + i);
-		sharkList.push_back(s);
-	}
-
-	sk = new Shark(this);
-	sk->SetVisible(true);
-
 	callBackAlive = 0;
 	ship = new Ship(this);
 	//ship->SetVisible(false);
 	item = new Item(this);
+	auto sharkList = InfoMap::getSharkList();
 	for (int i = 1; i <= 3; i++)
 	{
 		std::string path = "item/", png = ".png", name;
@@ -158,7 +151,7 @@ bool GamePlayScene::init()
 			break;
 
 		case 3: //bomb
-			button->setPosition(Vec2(visibleSize.width *2 / 3, itemBox->getPosition().y));
+			button->setPosition(Vec2(visibleSize.width * 2 / 3, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->KillSharkByBoom(sharkList);
@@ -190,6 +183,8 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
+	timeLeft += 1;
+	auto sharkList = InfoMap::getSharkList();
 	//	sk->Update();
 	callBackAlive += 1;
 	if (callBackAlive % SHARK_CALL_BACK_ALIVE == 0)
@@ -216,7 +211,26 @@ void GamePlayScene::update(float delta)
 
 void GamePlayScene::SharkAliveCallBack()
 {
-	for (int i = 0; i < sharkList.size(); i++)
+	auto sharkList = InfoMap::getSharkList();
+	int size;
+	if (timeLeft < 400)
+	{
+		size = (int)InfoMap::getPhase1;
+	}
+	else if (timeLeft < 800)
+	{
+		size = (int)InfoMap::getPhase2;
+	}
+	else if(timeLeft <1200)
+	{
+		size = (int)InfoMap::getPhase3;
+	}
+	else
+	{
+		//end game
+	}
+
+	for (int i = 0; i < size; i++)
 	{
 		auto x = sharkList[i]->SpriteIsVisible();
 		if (!x)
@@ -230,6 +244,7 @@ void GamePlayScene::SharkAliveCallBack()
 
 bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 {
+	auto sharkList = InfoMap::getSharkList();
 	for (int i = 0; i < sharkList.size(); i++)
 	{
 		auto tag = sharkList[i];
@@ -254,6 +269,7 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 
 bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 {
+	auto sharkList = InfoMap::getSharkList();
 	auto shapeA = contact.getShapeA()->getBody()->getNode();
 	auto shapeB = contact.getShapeB()->getBody()->getNode();
 	auto a = shapeA->getTag();
@@ -280,9 +296,9 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 		if (shapeA->getTag() >= 100)
 		{
 			ship->Collision(sharkList, shapeB->getTag(), shapeA->getTag());
-		} 
+		}
 		else
-		{ 
+		{
 			ship->Collision(sharkList, shapeA->getTag(), shapeB->getTag());
 		}
 	}

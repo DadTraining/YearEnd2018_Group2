@@ -44,7 +44,11 @@ void Popup::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			//disappear();
 			mLayer->setVisible(false);
-			Constants::SetEnableTouchEvent(true);
+			for (int i = 0; i < Constants::GetListMap().size(); i++)
+			{
+				auto map = Constants::GetListMap().at(i);
+				Constants::SetEnableTouchEvent(i, map->AllowPlay());
+			}
 			//mLayer->removeFromParentAndCleanup(true);
 			break; 
 	

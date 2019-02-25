@@ -6,8 +6,16 @@ class MapLevel
 protected:
 	int mLevel;
 	int mStar;
-	
+	int sharksPharse1;
+	int sharksPharse2;
+	int sharksPharse3;
+	int sharksSkin;
+	int score;
+	bool wasPlayPass;
+	bool allowPlay;
+
 public:
+	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin, bool PlayPass, int score,bool allow);
 	MapLevel();
 	MapLevel(cocos2d::Scene* scene,int lv, int st);
 	virtual ~MapLevel();
@@ -19,5 +27,12 @@ public:
 	int GetStar();
 	void SetStar(int st);
 
-	bool OnBegan(cocos2d::Touch* touch, cocos2d::Event * event);
+	int GetPhase(int phase);
+	bool WasPlay() {
+		return wasPlayPass;
+	}
+
+	bool AllowPlay() {
+		return allowPlay;
+	}
 };

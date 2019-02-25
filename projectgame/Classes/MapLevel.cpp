@@ -1,6 +1,19 @@
 #include "MapLevel.h"
 #include "define.h"
 
+MapLevel::MapLevel(int lv, int star, int p1, int p2, int p3, int sharkSkin, bool PlayPass, int score, bool allow)
+{
+	this->mLevel = lv;
+	this->mStar = star;
+	this->sharksPharse1 = p1;
+	this->sharksPharse2 = p2;
+	this->sharksPharse3 = p3;
+	this->sharksSkin = sharkSkin;
+	this->wasPlayPass = PlayPass;
+	this->score = score;
+	this->allowPlay = allow;
+}
+
 MapLevel::MapLevel()
 {
 }
@@ -36,7 +49,22 @@ void MapLevel::SetStar(int st)
 	mStar = st;
 }
 
-bool MapLevel::OnBegan(cocos2d::Touch * touch, cocos2d::Event * event)
+int MapLevel::GetPhase(int phase)
 {
-	return false;
+	switch (phase)
+	{
+		case 1:
+			return sharksPharse1;
+			break;
+		case 2:
+			return sharksPharse2;
+			break;
+		case 3:
+			return sharksPharse3;
+			break;
+		default:
+			return 0;
+			break;
+	}
 }
+
