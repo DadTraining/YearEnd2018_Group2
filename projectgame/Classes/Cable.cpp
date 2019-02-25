@@ -12,7 +12,7 @@
 Cable::Cable(cocos2d::Scene * scene) 
 {
 	CreatCable(scene);
-	LoadingBar(scene);	
+	//LoadingBar(scene);	
 	mHp = 100;
 }
 
@@ -24,7 +24,7 @@ Cable::~Cable()
 void Cable::Bitten()
 {
 	mHp -= 5;
-	loadingBar->setPercent(mHp);
+	//loadingBar->setPercent(mHp);
 	//log("%d", mHp);
 }
 

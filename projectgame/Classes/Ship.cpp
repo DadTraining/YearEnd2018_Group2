@@ -8,7 +8,7 @@ Ship::Ship(cocos2d::Scene * scene)
 {
 
 	mSprite = cocos2d::Sprite::create(SHIP_IMG);
-	scene->addChild(mSprite, 999);
+	scene->addChild(mSprite, 100);
 	mUp = true;
 	mLeft = false;
 	//mSprite->setFlipX(!mLeft);

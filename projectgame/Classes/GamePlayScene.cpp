@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include "MyBodyParser.h"
 #include "ui\UIButton.h"
+#include"PopUpPlay.h"
 
 USING_NS_CC;
 
@@ -55,16 +56,29 @@ bool GamePlayScene::init()
 
 	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	//_backGround->setScaleY(Constants::getVisibleSize().height / _backGround->getContentSize().height);
-	//_backGround->setScaleX(Constants::getVisibleSize().width / _backGround->getContentSize().width);
+	
 
 	addChild(_backGround, -1);
 
-	/*auto _cable = cocos2d::Sprite::create(CABLE_IMG);
-	_cable->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	_cable->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height,1,_cable->getContentSize().height));
-	addChild(_cable, 1);*/
+	
+	
+	auto btnHome = ui::Button::create(BUTTON_HOME_IMG);
+	btnHome->setPosition(cocos2d::Vec2(70, visibleSize.height - 30));
+	addChild(btnHome);
+	btnHome->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			PopupPlay *popUp = PopupPlay::create();
+			this->addChild(popUp, 110);
+			popUp->getLayer()->setVisible(true);
+			break;
+		}
+	});
+	
 
 #pragma region button
 
@@ -143,7 +157,7 @@ bool GamePlayScene::init()
 			button->setPosition(Vec2(Constants::getVisibleSize().width * 0.9, Constants::getVisibleSize().height * 0.95));
 			button->addClickEventListener([=](Ref* event)
 			{
-				item->IncreaseBlood();
+				//item->IncreaseBlood();
 
 			});
 			break;

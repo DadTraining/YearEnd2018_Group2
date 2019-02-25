@@ -22,6 +22,7 @@
 #define BUTTON_RED_IMG_NOR "button/redbutton.png"
 #define BUTTON_WHITE_IMG_NOR "button/whitebutton.png"
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
+#define BUTTON_HOME_IMG "button/home.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
