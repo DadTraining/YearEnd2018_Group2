@@ -1,6 +1,6 @@
 #pragma once
 
-#define SHIP_IMG "Ship_"
+#define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
 #define SHIP_SPEED 5
