@@ -27,7 +27,7 @@
 #include "Popup.h"
 #include "MapLevel.h"
 
-class PopupHome : public Popup
+class PopupPause : public Popup
 {
 private:
 	
@@ -37,8 +37,8 @@ public:
 	virtual void onExit() override;
     
 	
-	void setLevel(int numLevel, int numStars);
+	
 
-    CREATE_FUNC(PopupHome);
+    CREATE_FUNC(PopupPause);
 };
 

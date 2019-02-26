@@ -145,7 +145,7 @@ void Shark::SwimAnimation()
 void Shark::Move()
 {
 	if (mVisible)
-	{
+	{ 
 		auto _pos = mSprite->getPosition();
 		if (mMoveToLeft
 			&& _pos.x > Constants::getVisibleSize().width / 2 - mSpeed)
@@ -207,7 +207,7 @@ void Shark::RunAwayAnimation()
 /*update per frame*/
 void Shark::Update()
 {
-	auto _pos = mSprite->getPosition();
+	//auto _pos = mSprite->getPosition();
 	if (mStatus == " " || mStatus.empty())
 	{
 		Shark::Move();

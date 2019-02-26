@@ -7,12 +7,16 @@
 #include "MyBodyParser.h"
 #include "ui\UIButton.h"
 #include"PopUpPlay.h"
+#include"PopUpPause.h"
+#include"PopUpSetting.h"
+
+
 
 USING_NS_CC;
 
 
 #pragma region Shark
-std::vector<Shark*> sharkList;
+
 int callBackAlive;
 Shark* sk;
 Item * item;
@@ -62,23 +66,42 @@ bool GamePlayScene::init()
 
 	
 	
-	auto btnHome = ui::Button::create(BUTTON_HOME_IMG);
-	btnHome->setPosition(cocos2d::Vec2(70, visibleSize.height - 30));
-	addChild(btnHome);
-	btnHome->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+	auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
+	btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
+	addChild(btnPause);
+	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			PopupPlay *popUp = PopupPlay::create();
-			this->addChild(popUp, 110);
-			popUp->getLayer()->setVisible(true);
+			//this->unscheduleUpdate();
+			cocos2d::Director::getInstance()->pause();
+			PopupPause *popUpPause = PopupPause::create();
+			this->addChild(popUpPause, 110);
+			/*deleteShark();*/
+			popUpPause->getLayer()->setVisible(true);
 			break;
 		}
 	});
-	
+	auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
+	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
+	addChild(btnSettingScene);
+	btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->pause();
+			PopupSetting *popUpSetting = PopupSetting::create();
+			this->addChild(popUpSetting, 110);
+			popUpSetting->getLayer()->setVisible(true);
+			break;
+		}
+	});
 
 #pragma region button
 
@@ -208,7 +231,7 @@ void GamePlayScene::update(float delta)
 
 	for (int i = 0; i < sharkList.size(); i++)
 	{
-		if (sharkList[i]->IsVisible())
+		if (sharkList[i]->IsVisible() && sharkList.at(i) != nullptr)
 		{
 			sharkList[i]->Update();
 		}
@@ -246,6 +269,16 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 		}
 	}
 	return false;
+}
+
+void GamePlayScene::deleteShark()
+{
+	for (int i = 0; i < sharkList.size(); i++)
+	{
+		delete(sharkList[i]);
+	}
+
+	sharkList.clear();
 }
 
 

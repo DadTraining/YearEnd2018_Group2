@@ -49,6 +49,7 @@ bool PopupPlay::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
+			CCLOG("play");
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
 		}

@@ -178,7 +178,6 @@ void MapScene::setListButton()
 				CCLOG("%i", i);
 				mListPlay[i - 1]->getLayer()->setVisible(true);
 				Constants::SetEnableTouchEvent(false);
-				//button->setTouchEnabled(false);
 				break;
 			}
 		});

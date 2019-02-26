@@ -22,7 +22,8 @@
 #define BUTTON_RED_IMG_NOR "button/redbutton.png"
 #define BUTTON_WHITE_IMG_NOR "button/whitebutton.png"
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
-#define BUTTON_HOME_IMG "button/home1.png"
+#define BUTTON_PAUSE_IMG "button/pause1.png"
+#define BUTTON_SETTING_IMG "button/setting.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -134,8 +135,12 @@
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"
+#define BUTTON_HOME "map/home.png"
 #define BUTTON_ACCEPT "map/accept.png"
 #define SETTING "map/setting.png"
+
+
+
 #define BGM "map/BGM.png"
 #define SFX "map/SFX.png"
 #define SLIDE_BAR_BG "map/Slider_Back.png"

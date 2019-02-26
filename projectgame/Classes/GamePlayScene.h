@@ -12,6 +12,7 @@ using namespace std;
 class GamePlayScene : public cocos2d::Scene
 {
 private:
+	std::vector<Shark*> sharkList;
 	Ship * ship;
 	Cable *cable;	
 	Vec2 mLocation;
@@ -34,6 +35,7 @@ public:
 
 	bool CheckColisionSharkWithCable(int sharkTag);
 	
+	void deleteShark();
 	CREATE_FUNC(GamePlayScene);
 };
 

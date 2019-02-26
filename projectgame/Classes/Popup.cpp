@@ -45,7 +45,8 @@ void Popup::setBackground()
 			//disappear();
 			mLayer->setVisible(false);
 			Constants::SetEnableTouchEvent(true);
-			//mLayer->removeFromParentAndCleanup(true);
+			cocos2d::Director::getInstance()->resume();
+			CCLOG("exit");
 			break; 
 	
 		}
