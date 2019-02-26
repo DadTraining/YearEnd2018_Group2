@@ -140,7 +140,7 @@ bool GamePlayScene::init()
 		switch (i)
 		{
 		case 1: //brick
-			button->setPosition(Vec2(visibleSize.width / 3, itemBox->getPosition().y));
+			button->setPosition(Vec2(visibleSize.width / 2.5, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->StunShark(sharkList);
@@ -158,7 +158,7 @@ bool GamePlayScene::init()
 			break;
 
 		case 3: //bomb
-			button->setPosition(Vec2(visibleSize.width *2 / 3, itemBox->getPosition().y));
+			button->setPosition(Vec2(visibleSize.width *2 / 3.35, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				item->KillSharkByBoom(sharkList);
