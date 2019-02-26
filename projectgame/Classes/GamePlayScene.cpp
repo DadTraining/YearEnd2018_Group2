@@ -1,6 +1,7 @@
 #include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
 #include "Shark.h"
+#include "Meat.h"
 #include <vector>
 #include "define.h"	
 #include "Constants.h"
@@ -13,6 +14,7 @@ USING_NS_CC;
 #pragma region Shark
 std::vector<Shark*> sharkList;
 int callBackAlive;
+int countDownMeat;
 Shark* sk;
 Item * item;
 
@@ -58,32 +60,34 @@ bool GamePlayScene::init()
 	
 	addChild(_backGround, -1);
 
+	
 
 #pragma region button
 
 	auto whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR);
 	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
 	whiteButton->addClickEventListener([&](Ref* event) {
-		//ship->ShootColor(BULLET_SHOOT_BLACK);
+		initMeatList(this, sharkList);
+		
 	});
 	addChild(whiteButton, 100);
 
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
-	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8 / 10, whiteButton->getPosition().y));
+	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8.35 / 10, whiteButton->getPosition().y));
 	blueButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
 	addChild(blueButton, 100);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.9 /7, visibleSize.height / 3.75));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.95 /7, visibleSize.height / 3.9));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
 	addChild(redButton, 100);
 
 	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
-	yellowButton->setPosition(cocos2d::Vec2(whiteButton->getPosition().x, visibleSize.height / 3));
+	yellowButton->setPosition(cocos2d::Vec2(whiteButton->getPosition().x, visibleSize.height / 3.5));
 	yellowButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
@@ -177,6 +181,7 @@ bool GamePlayScene::init()
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	
 	this->scheduleUpdate();
 
 	return true;
@@ -191,9 +196,18 @@ void GamePlayScene::update(float delta)
 {
 	//	sk->Update();
 	callBackAlive += 1;
+	
 	if (callBackAlive % SHARK_CALL_BACK_ALIVE == 0)
 	{
 		GamePlayScene::SharkAliveCallBack();
+		
+	}
+
+	countDownMeat++;
+	if (countDownMeat % 85 == 0)
+	{
+		countDownMeat = 1;
+		meatDone();
 	}
 
 	for (int i = 0; i < sharkList.size(); i++)
@@ -211,6 +225,9 @@ void GamePlayScene::update(float delta)
 	ship->Update();
 	item->Update();
 	cable->CheckSharkNearCable(sharkList, ship->GetDirection());
+
+	
+
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -241,6 +258,46 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 		}
 	}
 	return false;
+}
+
+void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
+{
+	countDownMeat = 1;
+	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
+	{
+		Meat *meat = new Meat(this);
+		meat->setPosForMeat(sharkList[i]);
+		meatList.push_back(meat);
+		if (sharkList[i]->IsVisible())
+		{
+			meatList[i]->setVisible(true);
+		}
+	}
+
+	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
+	{
+		if (meatList[i]->IsVisible())
+		{
+			meatList[i]->isEaten(sharkList[i]);
+		}
+	}
+}
+
+void GamePlayScene::meatDone()
+{
+	for (int i = 0; i < meatList.size(); i++)
+	{
+		if (meatList[i]->IsVisible())
+		{
+			meatList[i]->disappear();
+			delete(meatList[i]);
+			sharkList[i]->SetOldStatus();
+			sharkList[i]->SetAlive(true);
+			sharkList[i]->SwimAnimation();
+		}
+	}
+
+	meatList.clear();
 }
 
 

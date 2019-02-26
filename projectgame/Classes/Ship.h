@@ -2,7 +2,6 @@
 #include "cocos2d.h"
 #include "Shark.h"
 #include "Model.h"
-#include "Meat.h"
 #include "Bullet.h"
 #include <vector>
 
@@ -13,6 +12,7 @@ private:
 	bool mLeft;
 	std::vector<Bullet*> listBullet;
 	int mFrameBullet;
+
 public:
 	Ship(cocos2d::Scene * scene);
 	~Ship();

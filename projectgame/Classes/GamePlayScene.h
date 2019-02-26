@@ -1,13 +1,11 @@
 #pragma once
 #include "cocos2d.h"
-#include"Bullet.h"
-#include"Ship.h"
-#include"Item.h"
-#include"Cable.h"
-#include"Shark.h"
-
-
-using namespace std;
+#include "Bullet.h"
+#include "Ship.h"
+#include "Item.h"
+#include "Cable.h"
+#include "Shark.h"
+#include "Meat.h"
 
 class GamePlayScene : public cocos2d::Scene
 {
@@ -17,6 +15,8 @@ private:
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
 	std::vector<ui::Button*> listItem;
+
+	std::vector<Meat*> meatList;
 	
 public:
 	static cocos2d::Scene* createScene();
@@ -33,6 +33,10 @@ public:
 	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
 
 	bool CheckColisionSharkWithCable(int sharkTag);
+
+	//////
+	void initMeatList(Scene *scene, std::vector<Shark*> sharkList);
+	void meatDone();
 	
 	CREATE_FUNC(GamePlayScene);
 };

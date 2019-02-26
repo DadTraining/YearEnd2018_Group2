@@ -166,7 +166,7 @@ void Shark::Move()
 				//Shark::Killed();
 			}
 		}
-
+		
 	}
 }
 
@@ -211,6 +211,7 @@ void Shark::Update()
 	if (mStatus == " " || mStatus.empty())
 	{
 		Shark::Move();
+		
 	}
 	else if (mStatus == SHARK_STATUS_RUNAWAY)
 	{
