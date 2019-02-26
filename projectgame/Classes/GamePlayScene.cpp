@@ -263,7 +263,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
 {
 	countDownMeat = 1;
-	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
+	for (int i = 0; i < cocos2d::RandomHelper::random_int(1, SHARK_MAX_ON_SCREEN); i++)
 	{
 		Meat *meat = new Meat(this);
 		meat->setPosForMeat(sharkList[i]);
@@ -274,7 +274,7 @@ void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
 		}
 	}
 
-	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
+	for (int i = 0; i < meatList.size(); i++)
 	{
 		if (meatList[i]->IsVisible())
 		{
