@@ -180,6 +180,8 @@ bool GamePlayScene::init()
 	cable = new Cable(this);
 	cable->GetRect();
 
+	//////////////////////
+	//catch event collision
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
@@ -206,6 +208,8 @@ void GamePlayScene::update(float delta)
 		
 	}
 
+	/////////////////////
+	//count down time meat appear and disappear
 	countDownMeat++;
 	if (countDownMeat % 85 == 0)
 	{
@@ -213,6 +217,8 @@ void GamePlayScene::update(float delta)
 		meatDone();
 	}
 
+	//////////////////////
+	//update shark
 	for (int i = 0; i < sharkList.size(); i++)
 	{
 		if (sharkList[i]->IsVisible())
@@ -229,6 +235,8 @@ void GamePlayScene::update(float delta)
 	item->Update();
 	cable->CheckSharkNearCable(sharkList, ship->GetDirection());
 	
+	////////////////////////////
+	//count down time button meat
 	countDownButtonMeat++;
 	if (countDownButtonMeat % 300 == 0)
 	{
@@ -249,7 +257,7 @@ void GamePlayScene::SharkAliveCallBack()
 		auto x = sharkList[i]->SpriteIsVisible();
 		if (!x)
 		{
-			//sharkList[i]->SetVisible(true);
+			
 			sharkList[i]->Init();
 			break;
 		}
