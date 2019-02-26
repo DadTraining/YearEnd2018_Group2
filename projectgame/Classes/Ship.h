@@ -2,7 +2,6 @@
 #include "cocos2d.h"
 #include "Shark.h"
 #include "Model.h"
-#include "Meat.h"
 #include "Bullet.h"
 #include <vector>
 

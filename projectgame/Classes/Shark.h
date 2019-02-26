@@ -3,6 +3,7 @@
 #include "Model.h"
 
 
+
 class Shark : public Model
 {
 protected:
@@ -59,6 +60,16 @@ public:
 
 	std::string GetStatus() {
 		return mStatus;
+	}
+
+	float getDelay()
+	{
+		return mDelay;
+	}
+
+	float getmSize()
+	{
+		return mSize;
 	}
 };
 
