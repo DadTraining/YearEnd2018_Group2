@@ -3,6 +3,7 @@
 #include"ui\CocosGUI.h"
 //using namespace cocos2d;
 #include "cocos2d.h"
+
 class Model
 {
 protected:
@@ -29,5 +30,15 @@ public:
 	bool SpriteIsVisible();
 	cocos2d::Animation* CreateAnimation(std::string name, int start, int frames, float delay);
 
-};
+	virtual cocos2d::Rect GetRect();
 
+	void SetTag(int tag) {
+		mSprite->setTag(tag);
+	}
+	bool IsAlive() {
+		return mVisible;
+	}
+
+
+
+};
