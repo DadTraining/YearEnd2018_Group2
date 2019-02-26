@@ -83,7 +83,6 @@ void Meat::setPosForMeat(Shark *shark)
 
 void Meat::isEaten(Shark * shark)
 {
-	//shark->SetOldStatus();
 	shark->SetStatus(SHARK_STATUS_BITE);
 	shark->SetAlive(true);
 	shark->GetSprite()->stopAllActions();

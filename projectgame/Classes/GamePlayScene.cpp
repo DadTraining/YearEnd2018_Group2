@@ -63,7 +63,7 @@ bool GamePlayScene::init()
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
 
-
+	///////////////////
 	auto coin = Sprite::create("button/coin.png");
 	coin->setPosition(cocos2d::Vec2(visibleSize.width*0.97, visibleSize.height*0.95));
 	this->addChild(coin);
@@ -75,6 +75,7 @@ bool GamePlayScene::init()
 	auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
 	btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
 	addChild(btnPause);
+	Constants::AddButtonIntoMapLevel(btnPause);
 	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
 		switch (type)
@@ -88,12 +89,14 @@ bool GamePlayScene::init()
 			this->addChild(popUpPause, 110);
 			/*deleteShark();*/
 			popUpPause->getLayer()->setVisible(true);
+			Constants::SetEnableAllTouchEventOnMapLevel(false);
 			break;
 		}
 	});
 	auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
 	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
 	addChild(btnSettingScene);
+	Constants::AddButtonIntoMapLevel(btnSettingScene);
 	btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
 		switch (type)
@@ -105,6 +108,7 @@ bool GamePlayScene::init()
 			PopupSetting *popUpSetting = PopupSetting::create();
 			this->addChild(popUpSetting, 110);
 			popUpSetting->getLayer()->setVisible(true);
+			Constants::SetEnableAllTouchEventOnMapLevel(false);
 			break;
 		}
 	});
@@ -156,6 +160,7 @@ bool GamePlayScene::init()
 		ship->leftOrRight(true);
 	});
 	addChild(rightButton, 100);
+	///// end
 
 	auto itemBox = Sprite::create(ITEM_BOX);
 	itemBox->setPosition(cocos2d::Vec2(visibleSize.width / 2,
@@ -235,8 +240,11 @@ bool GamePlayScene::init()
 	this->scheduleUpdate();
 	mScore = InfoMap::getScore();
 	mLabelScore = Label::createWithTTF(std::to_string(mScore), "fonts/arial.ttf", 40);
+	mLabelScore->setColor(cocos2d::Color3B::YELLOW);
 	mLabelScore->setPosition(cocos2d::Vec2(visibleSize.width*0.92, visibleSize.height *0.95));
 	this->addChild(mLabelScore, 5);
+
+	Constants::setInMap(false);
 	return true;
 }
 
@@ -320,13 +328,12 @@ void GamePlayScene::SharkAliveCallBack()
 		size = (int)InfoMap::getPhase3();
 	}
 	else
-	{
-		//end game
-		//cocos2d::Director::getInstance()->pause();
+	{		
 		this->unscheduleUpdate();
 
 		// show popup end game include score and star
 		// new class popup next game or goto home
+		
 		WinGame();
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 

@@ -37,6 +37,8 @@ bool MapScene::init()
 		Constants::SetEnableTouchEvent(i, map);
 	}
 
+	Constants::setInMap(true);
+
 	return true;
 }
 
