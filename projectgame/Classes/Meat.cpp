@@ -85,7 +85,7 @@ void Meat::isEaten(Shark * shark)
 {
 	//shark->SetOldStatus();
 	shark->SetStatus(SHARK_STATUS_BITE);
-	shark->SetAlive(false);
+	shark->SetAlive(true);
 	shark->GetSprite()->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(shark->GetColor(), SHARK_BITE_START,
 		SHARK_BITE_FRAME, shark->getDelay()));

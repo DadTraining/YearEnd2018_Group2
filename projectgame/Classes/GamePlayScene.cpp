@@ -119,14 +119,14 @@ bool GamePlayScene::init()
 	setPressWhiteButton(false);
 
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
-	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8.35 / 10, whiteButton->getPosition().y));
+	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8.32 / 10, whiteButton->getPosition().y));
 	blueButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
 	addChild(blueButton, 999);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.9 / 7, visibleSize.height / 3.75));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.95 / 7, visibleSize.height / 3.83));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
@@ -399,7 +399,7 @@ void GamePlayScene::meatDone()
 			meatList[i]->disappear();
 			delete(meatList[i]);
 			sharkList[i]->SetOldStatus();
-			sharkList[i]->SetAlive(true);
+			
 			sharkList[i]->SwimAnimation();
 		}
 	}
