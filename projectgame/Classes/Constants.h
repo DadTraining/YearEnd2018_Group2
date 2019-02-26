@@ -26,5 +26,6 @@ public:
 
 	static void SetPhase(int index);
 	static void ReleaseButton();
+	static bool ListButtonIsEmpty();
 };
 

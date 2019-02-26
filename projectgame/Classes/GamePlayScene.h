@@ -19,7 +19,9 @@ private:
 	std::vector<ui::Button*> listItem;
 	std::vector<Shark*> sharkList;
 	int callBackAlive;
-	int timeLeft;
+	int timeLeft; 
+	double mScore;
+	Label *mLabelScore;
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);

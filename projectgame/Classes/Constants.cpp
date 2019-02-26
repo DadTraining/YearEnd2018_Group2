@@ -63,3 +63,8 @@ void Constants::ReleaseButton()
 	listButton.clear();
 }
 
+bool Constants::ListButtonIsEmpty()
+{
+	return listButton.empty();
+}
+

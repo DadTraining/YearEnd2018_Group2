@@ -39,12 +39,12 @@ Cable::Cable(cocos2d::Scene * scene)
 	auto iconhp = cocos2d::Sprite::create(ICON_HP);
 	iconhp->setPosition(cocos2d::Vec2(visibleSize.width / 16, visibleSize.height / 1.07));
 	iconhp->setScale(0.3);
-	scene->addChild(iconhp, 999);
+	//scene->addChild(iconhp, 999);
 	//loadingbarwhite
 	loadingbar_white = cocos2d::Sprite::create(HP_CABLEWHITE);
 	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
 	loadingbar_white->setScale(0.3);
-	scene->addChild(loadingbar_white, 999);
+	//scene->addChild(loadingbar_white, 999);
 
 	//loading bar
 	loadingBar = ui::LoadingBar::create(HP_CABLERED);
@@ -52,7 +52,8 @@ Cable::Cable(cocos2d::Scene * scene)
 	loadingBar->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
 	loadingBar->setScale(0.3);
 	loadingBar->setPercent(100);
-	scene->addChild(loadingBar, 999);
+	
+	//scene->addChild(loadingBar, 999);
 #pragma endregion
 
 	mHp = 100;
