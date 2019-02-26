@@ -3,7 +3,9 @@
 #include "define.h"
 #include "IntroScene.h"
 #include "HelloWorldScene.h"
+#include "GamePlayScene.h"
 #include "MapScene.h"
+#include "GamePlayScene.h"
 
 
 // #define USE_AUDIO_ENGINE 1

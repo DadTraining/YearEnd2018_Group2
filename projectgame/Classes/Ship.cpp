@@ -3,28 +3,25 @@
 #include"Model.h"
 #include"define.h"
 #include "Constants.h"
+#include "InfoMap.h"
+#include "InfoMap.h"
+
 
 Ship::Ship(cocos2d::Scene * scene)
 {
-	mSprite = cocos2d::Sprite::create();
-	scene->addChild(mSprite, 999);
+
+	mSprite = cocos2d::Sprite::create(SHIP_IMG);
+	scene->addChild(mSprite, 100);
 	mUp = true;
 	mLeft = false;
-	//mSprite->setFlipX(!mLeft);
-	auto listener = EventListenerTouchOneByOne::create();
-	listener->onTouchBegan = CC_CALLBACK_2(Ship::onTouchBegan, this);
-	scene->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, scene);
+	Init();
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{
-		auto b = new Bullet(scene);
-		//b->Init();
-		b->SetTag(100 + i);
+		Bullet* b = new Bullet(scene);
+		b->SetTag(i + 100);
 		listBullet.push_back(b);
 	}
-	Init();
-
-
 
 }
 
@@ -36,21 +33,7 @@ Ship::~Ship()
 
 void Ship::Update()
 {
-	if (mUp) {
-		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y + SHIP_SPEED));
-		if (GetLocation().y >= Constants::getVisibleSize().height * 9 / 10)
-		{
-			mUp = false;
-		}
-	}
-	else
-	{
-		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y - SHIP_SPEED));
-		if (GetLocation().y <= Constants::getVisibleSize().height *3/10)
-		{
-			mUp = true;
-		}
-	}
+	
 	for (int i = 0; i < listBullet.size(); i++)
 	{
 		listBullet.at(i)->Update();
@@ -61,52 +44,52 @@ void Ship::Update()
 void Ship::Init()
 {
 
-	//this->GetSprite()->setScale(SHIP_SCALE);
 	this->SetPosition(cocos2d::Vec2(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 2));
-	auto animate = cocos2d::Animate::create(CreateAnimation(SHIP_IMG, 1, SHIP_FRAME, 0.15));
-	mSprite->runAction(cocos2d::RepeatForever::create(animate));
+	
 }
 
-bool Ship::onTouchBegan(Touch * touch, Event * event)
+void Ship::leftOrRight(bool direction)
 {
-	auto mLocation = touch->getLocation();
-	auto size = Constants::getVisibleSize();
-	if (mLocation.x > size.width / 2 &&
-		mLocation.y > size.height * 2 / 7 &&
-		mLocation.y < size.height * 4 / 5
-		)
+	//direction = true is right
+	if (direction)
 	{
-		mLeft = true;
+		if (!mLeft)
+		{
+			mLeft = true;
+			mSprite->setFlipX(mLeft);
+		}
 	}
-	else if (mLocation.x < size.width / 2 &&
-		mLocation.y > size.height * 2 / 7 &&
-		mLocation.y < size.height * 4 / 5
-		)
+	else
 	{
-		mLeft = false;
-
+		if (mLeft)
+		{
+			mLeft = false;
+			mSprite->setFlipX(mLeft);
+		}
 	}
-	mSprite->setFlipX(mLeft);
-
-	return true;
 }
 
-void Ship::onTouchMoved(Touch * touch, Event * event)
-{
-}
-
-void Ship::onTouchEnded(Touch * touch, Event * event)
-{
-}
 
 void Ship::ShootColor(int color)
 {
+
 	for (int i = 0; i < listBullet.size(); i++) {
 		auto bullet = listBullet.at(i);
 		if (!bullet->IsVisible()) {
 			bullet->Shoot(mLeft);
-			bullet->UpdateLocation(Vec2(mSprite->getPosition()));
+		
+		  if (mLeft) {
+				//bullet->UpdateLocation(Vec2(mSprite->getPosition()+Vec2(50,-15)));
+				bullet->UpdateLocation(Vec2(mSprite->getPosition() + Vec2(mSprite->getContentSize().width*5/13,mSprite->getContentSize().height*-1.5/84 )));
+			}
+			else {
+				//bullet->UpdateLocation(Vec2(mSprite->getPosition()-Vec2(40,4)));
+				bullet->UpdateLocation(Vec2(mSprite->getPosition() - Vec2(mSprite->getContentSize().width * 4 / 13, mSprite->getContentSize().height*4/84)));
+			}
+
+			
 			bullet->SetVisible(true);
+			
 			bullet->Init();
 			bullet->SetColor(color);
 			break;
@@ -116,6 +99,7 @@ void Ship::ShootColor(int color)
 
 void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 {
+
 	auto shark = sharks[sharkTag - 1];
 	auto bullet = listBullet[bulletTag - 100];
 	if (shark->IsAlive() && bullet->IsAlive())
@@ -124,13 +108,32 @@ void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 		{
 			shark->Killed();
 			bullet->SetVisible(false);
+		
 		}
 		else
 		{
 			bullet->SetVisible(false);
 		}
 	}
-	
+
+}
+
+void Ship::SetPositionY(float y)
+{
+	mSprite->setPositionY(y);
+}
+
+void Ship::ShipMove(float posY)
+{
+	float _posY = this->GetLocation().y;
+	if (_posY < posY -10)
+	{
+		this->SetPositionY(_posY + SHIP_SPEED);
+	}
+	else if (_posY  > posY +10 )
+	{
+		this->SetPositionY(_posY - SHIP_SPEED);
+	}
 }
 
 

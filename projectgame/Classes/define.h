@@ -1,13 +1,13 @@
 #pragma once
 
-#define SHIP_IMG "Ship_"
+#define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
-#define SHIP_SPEED 5
+#define SHIP_SPEED 10
 
 
 #define BULLET_IMG "Bullet.png"
-#define BULLET_SPEED 3
+#define BULLET_SPEED 15
 
 // screen
 #define SCREEN_H 720
@@ -21,7 +21,15 @@
 #define BUTTON_BLUE_IMG_NOR "button/bluebutton.png"
 #define BUTTON_RED_IMG_NOR "button/redbutton.png"
 #define BUTTON_WHITE_IMG_NOR "button/whitebutton.png"
+#define BUTTON_LEFT "button/left.png"
+#define BUTTON_RIGHT "button/right.png"
+#define BUTTON_WHITE_IMG_PRE "button/pressbutton.png"
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
+#define BUTTON_PAUSE_IMG "button/pause1.png"
+#define BUTTON_SETTING_IMG "button/setting.png"
+
+#define ITEM_BOX "button/edittest.png"
+#define MEAT "item/meat.png"
 
 // shark
 #define SHARK_BLUE "blueshark_"
@@ -43,9 +51,9 @@
 #define SHARK_SWIM_START 1
 #define SHARK_SWIM_DELAY 0.27
 
-#define SHARK_SIZE_SMALL 1.5
-#define SHARK_SIZE_NORMAL 1.75
-#define SHARK_SIZE_BIG 2
+#define SHARK_SIZE_SMALL 0.75
+#define SHARK_SIZE_NORMAL 1
+#define SHARK_SIZE_BIG 1.25
 
 #define SHARK_DELAY_SMALL 0.13
 #define SHARK_DELAY_NORMAL 0.17
@@ -53,10 +61,10 @@
 
 #define SHARK_POS 100
 
-#define SHARK_SPEED_SMALL 2.5
-#define SHARK_SPEED_NORMAL 1.7
+#define SHARK_SPEED_SMALL 2
+#define SHARK_SPEED_NORMAL 1.5
 #define SHARK_SPEED_BIG 1
-#define SHARK_SPEED_RUNAWAY 13
+#define SHARK_SPEED_RUNAWAY 16
 
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
@@ -69,7 +77,7 @@
 
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_BITE "BITE"
-
+#define SHARK_STATUS_STUN "STUN"
 
 #define BULLET_MAX 15
 #define BULLET_SHOOT_RED 1
@@ -83,15 +91,17 @@
 #define BULLET_SHOOT_BLACK_IMG ""
 #define BULLET_SHOOT_WHITE_IMG ""
 #define BULLET_BODY "bullet"
-#define BULLET_SPEED 12
 
 
 //cable
-#define HP_CABLEWHITE "cable/healthwhite.png"
+#define HP_CABLEWHITE "cable/edithealthwhite.png"
 #define HP_CABLERED "cable/healthred.png"
+#define HP_CABLEGREEN "cable/healthgreen.png"
 #define ICON_HP "cable/iconhealth.png"
-#define SHARK_STATUS_STUN "STUN"
 
+#define HP_RED "cable/red2.png"
+#define HP_GREEN "cable/green2.png"
+#define HP_WHITE "cable/white2.png"
 
 #define ITEM_BOOM_IMAGE "item/3.png"
 #define ITEM_BRICK_IMAGE "item/1.png"
@@ -100,32 +110,17 @@
 
 #define ITEM_SCAlE 0.3
 
-#define LOADINGBAR_BG_IMAGE "item/power_bg.png"
-#define LOADINGBAR_IMAGE "item/power_loading.png"
-
-#define LOADING_BAR_SCALE 0.3
-
-
 #define LOADING_BAR_BACKGROUND "loadingbar/bar_1.png"
 #define LOADING_BAR "loadingbar/bar_2.png"
 #define LOADING_BAR_SCALE_X 0.35
 #define LOADING_BAR_SCALE_Y 0.07
 
 #define BUTTON_PLAY "button/button_play.png"
-#define BUTTON_PLAY_SCALE 0.7
 
 #define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"
 
 
 #define IMG_MAPSCENE "map/map_2.png"
-#define BUTTON_1 "map/1.png"
-#define BUTTON_2  "map/2.png"
-#define BUTTON_3 "map/3.png"
-#define BUTTON_4 "map/4.png"
-#define BUTTON_5 "map/5.png"
-#define BUTTON_6 "map/6.png"
-#define BUTTON_7 "map/7.png"
-#define BUTTON_8 "map/8.png"
 
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
@@ -133,8 +128,12 @@
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"
+#define BUTTON_HOME "map/home.png"
 #define BUTTON_ACCEPT "map/accept.png"
 #define SETTING "map/setting.png"
+
+
+
 #define BGM "map/BGM.png"
 #define SFX "map/SFX.png"
 #define SLIDE_BAR_BG "map/Slider_Back.png"
@@ -145,3 +144,7 @@
 #define POPUP_SCALE_Y 0.51
 
 #define LIST_BUTTON_MAX 16
+
+// target
+#define TARGET_SHARK "target_"
+#define MIN_POSITION 100000

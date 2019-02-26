@@ -1,6 +1,7 @@
 #include "Popup.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
+#include "Constants.h"
 
 bool Popup::init()
 {
@@ -34,8 +35,8 @@ void Popup::setBackground()
 		+ mBackground->getContentSize().height / 22));
 
 	mLayer->addChild(btnExit);
-	btnExit->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType t) {
-		switch (t)
+	btnExit->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			
@@ -43,6 +44,22 @@ void Popup::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			//disappear();
 			mLayer->setVisible(false);
+			if (!Constants::ListButtonIsEmpty())
+			{
+				if (Constants::isInMap())
+				{
+					for (int i = 0; i < Constants::GetListMap().size(); i++)
+					{
+						auto map = Constants::GetListMap().at(i);
+						Constants::SetEnableTouchEvent(i, map->isAllowPlay());
+					}
+				}
+				else
+				{
+					Constants::SetEnableAllTouchEventOnMapLevel(true);
+				}
+			}
+			cocos2d::Director::getInstance()->resume();
 			//mLayer->removeFromParentAndCleanup(true);
 			break; 
 	

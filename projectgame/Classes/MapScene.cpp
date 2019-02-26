@@ -2,9 +2,7 @@
 #include"MapScene.h"
 #include"define.h"
 #include "Constants.h"
-
-
-//Size Constants::getVisibleSize();
+#include "InfoMap.h"
 
 Scene* MapScene::createScene()
 {
@@ -32,25 +30,37 @@ bool MapScene::init()
 	initPopUpLevel();
 
 	setListButton();
+
+	for (int i = 0; i < Constants::GetListMap().size(); i++)
+	{
+		auto map = Constants::GetListMap().at(i)->isAllowPlay();
+		Constants::SetEnableTouchEvent(i, map);
+	}
+
+	Constants::setInMap(true);
+
 	return true;
 }
 
 void MapScene::setListButton()
 {
-	std::string png = ".png", normal, pressed, num = ".1", path = "map/";
-	char c; //get number of picture
+	//std::string png = ".png", normal, pressed, num = ".1", path = "map/";
+	//char c[20] = {0}; //get number of picture
+
+	char normal[20] = { 0 };
+	char pressed[20] = { 0 };
 
 	
 	
-
-	for (int i = 1; i < LIST_BUTTON_MAX; i++)
+	for (int i = 1; i < LIST_BUTTON_MAX + 1; i++)
 	{
 		////////////////
 		//add button to list
-		c = '0' + i;
-		normal = path + c + png;
-		pressed = path + c + num + png;
-		auto button = ui::Button::create(normal, pressed);
+		sprintf(normal, "map/%d.png", i);
+		sprintf(pressed, "map/%d.1.png", i);
+		
+		auto button = ui::Button::create(normal,pressed,pressed);
+		
 		mListButton.push_back(button);
 
 
@@ -112,34 +122,77 @@ void MapScene::setListButton()
 				Constants::getVisibleSize().height / 1.4));
 			break;
 		}
+		case 10:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.7,
+				Constants::getVisibleSize().height / 1.55));
+			break;
+		}
+		case 11:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.65,
+				Constants::getVisibleSize().height / 2.15));
+			break;
+		}
+		case 12:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.87,
+				Constants::getVisibleSize().height / 3.2));
+			break;
+		}
+		case 13:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.49,
+				Constants::getVisibleSize().height / 4.1));
+			break;
+		}
+		case 14:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.31,
+				Constants::getVisibleSize().height / 2.45));
+			break;
+		}
+		case 15:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.23,
+				Constants::getVisibleSize().height / 1.65));
+			break;
+		}
+		case 16:
+		{
+			button->setPosition(Vec2(Constants::getVisibleSize().width / 1.4125,
+				Constants::getVisibleSize().height / 1.3));
+			break;
+		}
 		default:
 			break;
 		}
 
-		this->addChild(button);
-
-
+		this->addChild(button);			
 
 		button->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+			
 			switch (type)
 			{
 			case ui::Widget::TouchEventType::BEGAN:
 				break;
 			case ui::Widget::TouchEventType::ENDED:
-
 				CCLOG("%i", i);
 				mListPlay[i - 1]->getLayer()->setVisible(true);
-				
+				Constants::SetPhase(i - 1);
+				Constants::SetEnableAllTouchEventOnMapLevel(false);
+				//button->setTouchEnabled(false);
 				break;
 			}
 		});
+		Constants::AddButtonIntoMapLevel(button);
 	}
 }
 
 /*Init level*/
 void MapScene::initLevel()
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		MapLevel *level = new MapLevel();
 		level->SetLevel(i + 1);
@@ -155,7 +208,7 @@ void MapScene::initPopUpLevel()
 	//creat popup play
 	
 
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		PopupPlay *popup = PopupPlay::create();
 		this->addChild(popup, 3);
@@ -167,4 +220,12 @@ void MapScene::initPopUpLevel()
 		mListPlay.push_back(popup);
 	}
 
+}
+
+void MapScene::setEnableTouch(bool enable)
+{
+	for (int i = 0; i < btnLevels.size(); i++)
+	{
+		btnLevels[i]->setTouchEnabled(enable);
+	}
 }

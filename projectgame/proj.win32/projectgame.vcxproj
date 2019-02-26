@@ -154,10 +154,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Bullet.cpp" />
     <ClCompile Include="..\Classes\GamePlayScene.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
+    <ClCompile Include="..\Classes\InfoMap.cpp" />
     <ClCompile Include="..\Classes\MapLevel.cpp" />
     <ClCompile Include="..\Classes\MapScene.cpp" />
+    <ClCompile Include="..\Classes\Meat.cpp" />
     <ClCompile Include="..\Classes\Model.cpp" />
     <ClCompile Include="..\Classes\Popup.cpp" />
+    <ClCompile Include="..\Classes\PopupPause.cpp" />
     <ClCompile Include="..\Classes\PopUpPlay.cpp" />
     <ClCompile Include="..\Classes\PopUpSetting.cpp" />
     <ClCompile Include="..\Classes\MyBodyParser.cpp" />
@@ -175,10 +178,13 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\define.h" />
     <ClInclude Include="..\Classes\GamePlayScene.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
+    <ClInclude Include="..\Classes\InfoMap.h" />
     <ClInclude Include="..\Classes\MapLevel.h" />
     <ClInclude Include="..\Classes\MapScene.h" />
+    <ClInclude Include="..\Classes\Meat.h" />
     <ClInclude Include="..\Classes\Model.h" />
     <ClInclude Include="..\Classes\Popup.h" />
+    <ClInclude Include="..\Classes\PopupPause.h" />
     <ClInclude Include="..\Classes\PopUpPlay.h" />
     <ClInclude Include="..\Classes\PopUpSetting.h" />
     <ClInclude Include="..\Classes\Item.h" />

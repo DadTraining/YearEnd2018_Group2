@@ -2,7 +2,7 @@
 #include "define.h"
 #include "Constants.h"
 #include "MyBodyParser.h"
-#include"Cable.h"
+#include "Cable.h"
 
 
 Shark::Shark()
@@ -18,7 +18,7 @@ Shark::Shark(cocos2d::Scene * scene)
 	//Init();	
 	mOldStatus = " ";
 	SetVisible(false);
-	scene->addChild(mSprite,100);
+	scene->addChild(mSprite,99);
 }
 
 Shark::Shark(const Shark * shark)
@@ -28,6 +28,8 @@ Shark::Shark(const Shark * shark)
 
 Shark::~Shark()
 {
+	mSprite->release();
+
 }
 
 void Shark::Damaged()
@@ -36,6 +38,8 @@ void Shark::Damaged()
 
 void Shark::Killed()
 {
+	auto score = InfoMap::getScore();
+	InfoMap::setScore(score + this->mScore);
 	mSprite->stopAllActions();
 	mSprite->setFlippedY(true);
 	mSprite->setPositionZ(-1);
@@ -46,17 +50,17 @@ void Shark::Killed()
 	auto _fIn = cocos2d::FadeIn::create(0.1);
 	auto _spawn = cocos2d::Spawn::create(
 		_move,
-		_fOut,
+		//_fOut,
 		nullptr
 	);
 	auto _vis = cocos2d::CallFunc::create([=]() {
-		mSprite->setFlippedY(false);
+		//mSprite->setFlippedY(false);
 		Model::SetSpriteVisible(false);
 	});
 	auto _sqe = cocos2d::Sequence::create(
 		_spawn,
 		_vis,
-		_fIn,
+		//_fIn,
 		nullptr
 	);
 	mSprite->runAction(_sqe);
@@ -112,7 +116,7 @@ void Shark::Clone()
 void Shark::BiteAnimation()
 {
 	SetStatus(SHARK_STATUS_BITE);
-	//this->SetAlive(false);
+	this->SetAlive(false);
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
 	auto _visi = cocos2d::CallFunc::create([=]() {
@@ -145,7 +149,7 @@ void Shark::SwimAnimation()
 void Shark::Move()
 {
 	if (mVisible)
-	{
+	{ 
 		auto _pos = mSprite->getPosition();
 		if (mMoveToLeft
 			&& _pos.x > Constants::getVisibleSize().width / 2 - mSpeed)
@@ -166,7 +170,7 @@ void Shark::Move()
 				//Shark::Killed();
 			}
 		}
-
+		
 	}
 }
 
@@ -182,7 +186,6 @@ void Shark::UnMove(cocos2d::Vec2 pos)
 
 void Shark::RunAwayAnimation()
 {
-	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_RUN_AWAY_START, SHARK_RUN_AWAY_FRAME, mDelay - 0.05));
 	auto _visi = cocos2d::CallFunc::create([=]() {
 		mSprite->stopAllActions();
@@ -207,10 +210,11 @@ void Shark::RunAwayAnimation()
 /*update per frame*/
 void Shark::Update()
 {
-	auto _pos = mSprite->getPosition();
+	//auto _pos = mSprite->getPosition();
 	if (mStatus == " " || mStatus.empty())
 	{
 		Shark::Move();
+		
 	}
 	else if (mStatus == SHARK_STATUS_RUNAWAY)
 	{
@@ -232,6 +236,11 @@ void Shark::UnUpdate(cocos2d::Vec2 pos)
 /*initialization for shark*/
 void Shark::Init()
 {
+	mSprite->setFlipY(false);
+	mSprite->runAction(
+		cocos2d::FadeIn::create(0.1)
+	);
+	mSprite->stopAllActions();
 	mStatus = " ";
 	mOldStatus = " ";
 	SetVisible(true);
@@ -256,16 +265,19 @@ void Shark::Init()
 	switch (size)
 	{
 	case 1:
+		mScore = 10;
 		mSize = SHARK_SIZE_SMALL;
 		mDelay = SHARK_DELAY_SMALL;
 		mSpeed = SHARK_SPEED_SMALL;
 		break;
 	case 2:
+		mScore = 20;
 		mSize = SHARK_SIZE_NORMAL;
 		mDelay = SHARK_DELAY_NORMAL;
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	case 3:
+		mScore = 30;
 	//	auto sp = cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("blueshark_1.png");
 		mSize = SHARK_SIZE_BIG;
 		mDelay = SHARK_DELAY_BIG;
@@ -289,7 +301,7 @@ void Shark::Init()
 		mMoveToLeft = false; // run from left to right
 	}
 
-	auto posY = cocos2d::random(Constants::getVisibleSize().height*3/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
+	auto posY = cocos2d::random(Constants::getVisibleSize().height*4/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
 	cocos2d::PhysicsBody* spriteBody;
 	Shark::SwimAnimation();
 	auto sharkSize = mSprite->getContentSize().width / 2;
@@ -335,9 +347,4 @@ void Shark::setIsBitten(bool bitten)
 	mIsBitten = bitten;
 }
 
-bool Shark::BittenCable(Cable * cable)
-{
-	cable->Bitten();
-	return false;
-}
 
