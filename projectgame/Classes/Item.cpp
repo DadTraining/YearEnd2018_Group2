@@ -3,6 +3,7 @@
 #include"Model.h"
 #include"define.h"
 #include "Constants.h"
+#include "Cable.h"
 
 
 Item::Item(cocos2d::Scene * scene) : Model()
@@ -53,6 +54,8 @@ void Item::OnClickMenuItem(cocos2d::Ref * sender)
 void Item::IncreaseBlood()
 {
 	//power_loadingBar->setPercent(power_loadingBar->getPercent() + 10);
+	
+	
 }
 
 void Item::StunShark(std::vector<Shark*> sharkList)

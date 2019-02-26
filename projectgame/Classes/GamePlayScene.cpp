@@ -110,6 +110,7 @@ bool GamePlayScene::init()
 	auto itemBox = Sprite::create(ITEM_BOX);
 	itemBox->setPosition(cocos2d::Vec2(visibleSize.width / 2,
 		whiteButton->getPosition().y - visibleSize.height / 50));
+	itemBox->setOpacity(120);
 	addChild(itemBox, 3);
 #pragma endregion
 

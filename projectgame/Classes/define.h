@@ -26,7 +26,7 @@
 #define BUTTON_WHITE_IMG_PRE "button/pressbutton.png"
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
 
-#define ITEM_BOX "button/warning.png"
+#define ITEM_BOX "button/edittest.png"
 #define MEAT "item/meat.png"
 
 // shark
@@ -93,11 +93,14 @@
 
 
 //cable
-#define HP_CABLEWHITE "cable/healthwhite.png"
+#define HP_CABLEWHITE "cable/edithealthwhite.png"
 #define HP_CABLERED "cable/healthred.png"
 #define HP_CABLEGREEN "cable/healthgreen.png"
 #define ICON_HP "cable/iconhealth.png"
 
+#define HP_RED "cable/red2.png"
+#define HP_GREEN "cable/green2.png"
+#define HP_WHITE "cable/white2.png"
 
 #define ITEM_BOOM_IMAGE "item/3.png"
 #define ITEM_BRICK_IMAGE "item/1.png"

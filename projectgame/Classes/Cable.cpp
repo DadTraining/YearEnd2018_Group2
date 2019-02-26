@@ -40,11 +40,12 @@ void Cable::Bitten()
 {
 	mHp -= 5;
 	loadingBarGreen->setPercent(mHp);
-	if (mHp >= 0 && mHp < 20) {
-		loadingBarGreen->loadTexture(HP_CABLERED);
+	if (mHp >= 0 && mHp < 25) {
+		//loadingBarGreen->loadTexture(HP_CABLERED);
+		loadingBarGreen->loadTexture(HP_RED);
 		EffectLoadingBar();
 	}
-
+	
 }
 
 void Cable::Armor()
@@ -65,21 +66,25 @@ void Cable::LoadingBar(cocos2d::Scene * scene)
 {
 	auto visibleSize = Constants::getVisibleSize();
 	//icon HP
-	auto iconhp = cocos2d::Sprite::create(ICON_HP);
-	iconhp->setPosition(cocos2d::Vec2(visibleSize.width / 16, visibleSize.height / 1.07));
+	/*auto iconhp = cocos2d::Sprite::create(ICON_HP);
+	iconhp->setPosition(cocos2d::Vec2(visibleSize.width / 2.6, visibleSize.height / 5));
 	iconhp->setScale(0.3);
-	scene->addChild(iconhp, 999);
+	scene->addChild(iconhp, 999);*/
 	//loadingbarwhite
-	loadingbar_white = cocos2d::Sprite::create(HP_CABLEWHITE);
-	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
-	loadingbar_white->setScale(0.3);
+
+	//loadingbar_white = cocos2d::Sprite::create(HP_CABLEWHITE);
+	loadingbar_white = cocos2d::Sprite::create(HP_WHITE);
+	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 5.35));
+	//loadingbar_white->setScale(0.3);
 	scene->addChild(loadingbar_white, 999);
 
 	//loading bar green
-	loadingBarGreen = ui::LoadingBar::create(HP_CABLEGREEN);
+
+	//loadingBarGreen = ui::LoadingBar::create(HP_CABLEGREEN);
+	loadingBarGreen = ui::LoadingBar::create(HP_GREEN);
 	loadingBarGreen->setDirection(ui::LoadingBar::Direction::LEFT);
-	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 5, visibleSize.height / 1.07));
-	loadingBarGreen->setScale(0.3);
+	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 5.35));
+	//loadingBarGreen->setScale(0.3);
 	loadingBarGreen->setPercent(100);
 	scene->addChild(loadingBarGreen, 999);
 }
@@ -175,10 +180,7 @@ void Cable::EffectLoadingBar()
 	auto sequen_LoadingBar = Sequence::create(fadeOut_LoadingBar, fadeIn_LoadingBar, fadeOut_LoadingBar->clone(), fadeIn_LoadingBar->clone(), nullptr);
 	loadingBarGreen->runAction(sequen_LoadingBar);
 
-	/*auto fadeOut_LoadingBarWhite = FadeOut::create(0.5);
-	auto fadeIn_LoadingBarWhite = FadeIn::create(0.5);
-	auto sequen_LoadingBarWhite = Sequence::create(fadeOut_LoadingBarWhite, fadeIn_LoadingBarWhite, fadeOut_LoadingBarWhite->clone(), fadeIn_LoadingBarWhite->clone());
-	loadingbar_white->runAction(sequen_LoadingBarWhite);*/
+	
 	
 }
 
