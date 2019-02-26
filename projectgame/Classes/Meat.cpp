@@ -89,7 +89,7 @@ void Meat::isEaten(Shark * shark)
 	shark->GetSprite()->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(shark->GetColor(), SHARK_BITE_START,
 		SHARK_BITE_FRAME, shark->getDelay()));
-	auto repeat = cocos2d::Repeat::create(_animate, 3);
+	auto repeat = cocos2d::Repeat::create(_animate, 5);
 	shark->GetSprite()->runAction(repeat);
 }
 

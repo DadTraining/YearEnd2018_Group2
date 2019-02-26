@@ -126,7 +126,7 @@ bool GamePlayScene::init()
 	addChild(blueButton, 999);
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.95 / 7, visibleSize.height / 3.83));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.95 / 7, visibleSize.height / 3.84));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
@@ -264,7 +264,8 @@ void GamePlayScene::update(float delta)
 	/////////////////////
 	//count down time meat appear and disappear
 	countDownMeat++;
-	if (countDownMeat % 85 == 0)
+	meatDeleted();
+	if (countDownMeat % 140 == 0)
 	{
 		countDownMeat = 1;
 		meatDone();
@@ -405,6 +406,17 @@ void GamePlayScene::meatDone()
 	}
 
 	meatList.clear();
+}
+
+void GamePlayScene::meatDeleted()
+{
+	for (int i = 0; i < meatList.size(); i++)
+	{
+		if (meatList[i]->IsVisible() && !sharkList[i]->IsAlive())
+		{
+			meatList[i]->disappear();
+		}
+	}
 }
 
 void GamePlayScene::setPressWhiteButton(bool pres)

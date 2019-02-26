@@ -49,6 +49,7 @@ public:
 	//////
 	void initMeatList(Scene *scene, std::vector<Shark*> sharkList);
 	void meatDone();
+	void meatDeleted();
 
 	void setPressWhiteButton(bool pres);
 	
