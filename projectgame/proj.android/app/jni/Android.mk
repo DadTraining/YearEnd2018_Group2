@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Model.cpp  \
 				   $(LOCAL_PATH)/../../../Classes/InfoMap.cpp  \
 				   $(LOCAL_PATH)/../../../Classes/Popup.cpp \
+				   $(LOCAL_PATH)/../../../Classes/PopupPause.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpPlay.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpSetting.cpp \
 				   $(LOCAL_PATH)/../../../Classes/MapLevel.cpp \

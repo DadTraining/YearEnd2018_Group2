@@ -26,5 +26,8 @@ public:
 
 	static void SetPhase(int index);
 	static void ReleaseButton();
+	static bool ListButtonIsEmpty();
+
+	static void EndGame(int lv, int star, bool pass, int score);
 };
 

@@ -63,3 +63,22 @@ void Constants::ReleaseButton()
 	listButton.clear();
 }
 
+bool Constants::ListButtonIsEmpty()
+{
+	return listButton.empty();
+}
+
+void Constants::EndGame(int lv, int star, bool pass, int score)
+{
+	auto map = listMap.at(lv - 1);
+	map->SetStar(star);
+	map->setPlayPass(pass);
+	map->SetScore(score);
+	if (pass)
+	{
+		listMap.at(lv)->AllowPlay();
+	}
+}
+
+
+

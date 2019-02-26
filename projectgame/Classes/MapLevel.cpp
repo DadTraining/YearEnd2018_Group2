@@ -11,7 +11,7 @@ MapLevel::MapLevel(int lv, int star, int p1, int p2, int p3, int sharkSkin, bool
 	this->sharksSkin = sharkSkin;
 	this->wasPlayPass = PlayPass;
 	this->mScore = score;
-	this->allowPlay = allow;
+	this->mAllowPlay = allow;
 }
 
 MapLevel::MapLevel()
@@ -66,5 +66,15 @@ int MapLevel::GetPhase(int phase)
 			return 0;
 			break;
 	}
+}
+
+void MapLevel::setPlayPass(bool pas)
+{
+	wasPlayPass = pas;
+}
+
+void MapLevel::AllowPlay()
+{
+	mAllowPlay = true;
 }
 

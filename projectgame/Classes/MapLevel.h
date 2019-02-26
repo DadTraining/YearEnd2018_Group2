@@ -12,7 +12,7 @@ protected:
 	int sharksSkin;
 	int mScore;
 	bool wasPlayPass;
-	bool allowPlay;
+	bool mAllowPlay;
 
 public:
 	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin, bool PlayPass, int score,bool allow);
@@ -32,11 +32,14 @@ public:
 		return wasPlayPass;
 	}
 
-	bool AllowPlay() {
-		return allowPlay;
+	bool isAllowPlay() {
+		return mAllowPlay;
 	}
 
 	void SetScore(int score) {
 		mScore = score;
 	}
+	void setPlayPass(bool pas);
+
+	void AllowPlay();
 };

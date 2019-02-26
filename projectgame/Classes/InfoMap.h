@@ -23,6 +23,7 @@ public:
 	static int getPhase1();
 	static int getPhase2();
 	static int getPhase3();
+
 	static int getMapLevel() {
 		return MAP_LEVEL;
 	}

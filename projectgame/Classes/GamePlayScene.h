@@ -36,6 +36,9 @@ public:
 
 	bool CheckColisionSharkWithCable(int sharkTag);
 
+	void WinGame();
+	void LoseGame();
+
 	CREATE_FUNC(GamePlayScene);
 };
 

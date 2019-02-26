@@ -33,7 +33,7 @@ bool MapScene::init()
 
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
-		auto map = Constants::GetListMap().at(i)->AllowPlay();
+		auto map = Constants::GetListMap().at(i)->isAllowPlay();
 		Constants::SetEnableTouchEvent(i, map);
 	}
 

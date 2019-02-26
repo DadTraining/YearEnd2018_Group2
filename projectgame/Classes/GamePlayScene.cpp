@@ -60,7 +60,7 @@ bool GamePlayScene::init()
 
 	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-
+	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
 
 	
@@ -260,15 +260,15 @@ void GamePlayScene::update(float delta)
 void GamePlayScene::SharkAliveCallBack()
 {
 	int size = 0;
-	if (timeLeft < 100)
+	if (timeLeft < 600)
 	{
 		size = (int)InfoMap::getPhase1();
 	}
-	else if (timeLeft < 200)
+	else if (timeLeft < 1200)
 	{
 		size = (int)InfoMap::getPhase2();
 	}
-	else if(timeLeft <800)
+	else if(timeLeft <1800)
 	{
 		size = (int)InfoMap::getPhase3();
 	}
@@ -277,6 +277,10 @@ void GamePlayScene::SharkAliveCallBack()
 		//end game
 		//cocos2d::Director::getInstance()->pause();
 		this->unscheduleUpdate();
+
+		// show popup end game include score and star
+		// new class popup next game or goto home
+		WinGame();
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 
 	}
@@ -307,6 +311,17 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 		}
 	}
 	return false;
+}
+
+void GamePlayScene::WinGame()
+{
+	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
+	InfoMap::setScore(0);
+}
+
+void GamePlayScene::LoseGame()
+{
+
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
