@@ -37,9 +37,12 @@ public:
 	void Loading();
 	void BGMusic();
 
+	void LoadGame();
+
     CREATE_FUNC(IntroScene);
 private:
 	CocosDenshion::SimpleAudioEngine *audio;
+	cocos2d::Size visibleSize;
 
 };
 

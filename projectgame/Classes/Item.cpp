@@ -7,13 +7,8 @@
 
 Item::Item(cocos2d::Scene * scene) : Model()
 { 
-	
-	
-	//LoadingBarPower(scene);
 	mStatusStun = false;
 	mTimeStun = 0;
-
-	
 }
 
 Item::~Item()
@@ -53,22 +48,9 @@ void Item::OnClickMenuItem(cocos2d::Ref * sender)
 
 }
 
-void Item::LoadingBarPower(Scene * scene)
-{
-
-
-	
-}
-
-void Item::CreatItem(Scene * scene)
-{
-	
-}
-
 void Item::IncreaseBlood()
 {
-	
-	power_loadingBar->setPercent(power_loadingBar->getPercent() + 10);
+	//power_loadingBar->setPercent(power_loadingBar->getPercent() + 10);
 }
 
 void Item::StunShark(std::vector<Shark*> sharkList)
@@ -100,6 +82,8 @@ void Item::ChangeStatusStun()
 		mSharkList[i]->SetOldStatus();
 	}
 }
+
+
 
 
 

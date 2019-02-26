@@ -3,7 +3,9 @@
 #include "define.h"
 #include "IntroScene.h"
 #include "HelloWorldScene.h"
+#include "GamePlayScene.h"
 #include "MapScene.h"
+#include "GamePlayScene.h"
 
 
 // #define USE_AUDIO_ENGINE 1
@@ -69,7 +71,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	}
 
 	// turn on display FPS
-	director->setDisplayStats(false);
+	director->setDisplayStats(true);
 
     // set FPS. the default value is 1.0/60 if you don't call this
     director->setAnimationInterval(1.0f /FPS );

@@ -66,14 +66,23 @@
     <ClCompile Include="..\Classes\PopUpSetting.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="..\Classes\Popup.cpp">
-      <Filter>src\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\Classes\MapLevel.cpp">
       <Filter>src\Model</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\MapScene.cpp">
       <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Popup.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PopupPause.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\Meat.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\InfoMap.cpp">
+      <Filter>src\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +141,15 @@
       <Filter>src\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\MapScene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Meat.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\InfoMap.h">
+      <Filter>src\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PopupPause.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,12 +12,14 @@ using namespace std;
 class GamePlayScene : public cocos2d::Scene
 {
 private:
-	Ship * ship;
-	Cable *cable;	
+	Ship* ship;
+	Cable* cable;	
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
 	std::vector<ui::Button*> listItem;
-	
+	std::vector<Shark*> sharkList;
+	int callBackAlive;
+	int timeLeft;
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);
@@ -33,7 +35,7 @@ public:
 	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
 
 	bool CheckColisionSharkWithCable(int sharkTag);
-	
+
 	CREATE_FUNC(GamePlayScene);
 };
 
