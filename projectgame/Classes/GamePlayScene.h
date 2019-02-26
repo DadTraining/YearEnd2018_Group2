@@ -24,6 +24,8 @@ private:
 	int countDownButtonMeat;
 	int countDownMeat;
 	
+	double mScore;
+	Label *mLabelScore;
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);

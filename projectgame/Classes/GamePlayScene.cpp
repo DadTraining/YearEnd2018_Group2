@@ -63,6 +63,12 @@ bool GamePlayScene::init()
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
 
+
+	auto coin = Sprite::create("button/coin.png");
+	coin->setPosition(cocos2d::Vec2(visibleSize.width*0.97, visibleSize.height*0.95));
+	this->addChild(coin);
+	
+	
 	countDownButtonMeat = 1;
 	pressed = 0;
 	
@@ -222,10 +228,13 @@ bool GamePlayScene::init()
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
-	InfoMap::setScore(0);
+	//InfoMap::setScore(0);
 
 	this->scheduleUpdate();
-
+	mScore = InfoMap::getScore();
+	mLabelScore = Label::createWithTTF(std::to_string(mScore), "fonts/arial.ttf", 40);
+	mLabelScore->setPosition(cocos2d::Vec2(visibleSize.width*0.92, visibleSize.height *0.95));
+	this->addChild(mLabelScore, 5);
 	return true;
 }
 
@@ -236,6 +245,10 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
+	
+	CCLOG("%d", InfoMap::getScore());
+	mLabelScore->setString(std::to_string(InfoMap::getScore()));
+
 	timeLeft += 1;
 	//	sk->Update();
 	callBackAlive += 1;
@@ -263,7 +276,7 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
-
+		
 	}
 	ship->Update();
 	mItem->Update();
@@ -333,6 +346,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 			tag->setIsBitten(false);
 			tag->BiteAnimation();
 			cable->EffectCable();
+			
 		}
 	}
 	return false;
