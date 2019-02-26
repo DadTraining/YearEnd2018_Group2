@@ -15,6 +15,7 @@ USING_NS_CC;
 std::vector<Shark*> sharkList;
 int callBackAlive;
 int countDownMeat;
+int countDownButtonMeat;
 Shark* sk;
 Item * item;
 
@@ -60,17 +61,19 @@ bool GamePlayScene::init()
 	
 	addChild(_backGround, -1);
 
-	
+	countDownButtonMeat = 1;
+	pressed = 0;
 
 #pragma region button
 
-	auto whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR);
+	whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR, BUTTON_WHITE_IMG_PRE, BUTTON_BLACK_IMG_NOR);
 	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
 	whiteButton->addClickEventListener([&](Ref* event) {
 		initMeatList(this, sharkList);
-		
+		pressed = 1;
 	});
 	addChild(whiteButton, 100);
+	setPressWhiteButton(false);
 
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8.35 / 10, whiteButton->getPosition().y));
@@ -225,9 +228,18 @@ void GamePlayScene::update(float delta)
 	ship->Update();
 	item->Update();
 	cable->CheckSharkNearCable(sharkList, ship->GetDirection());
-
 	
-
+	countDownButtonMeat++;
+	if (countDownButtonMeat % 300 == 0)
+	{
+		setPressWhiteButton(true);
+	}
+	if (pressed == 1)
+	{
+		setPressWhiteButton(false);
+		countDownButtonMeat = 1;
+		pressed = 0;
+	}
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -300,6 +312,13 @@ void GamePlayScene::meatDone()
 	meatList.clear();
 }
 
+void GamePlayScene::setPressWhiteButton(bool pres)
+{
+	whiteButton->setTouchEnabled(pres);
+	whiteButton->setBright(pres);
+	whiteButton->setEnabled(pres);
+}
+
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
@@ -345,4 +364,6 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	CCLOG("game play : colision");
 	return false;
 }
+
+
 

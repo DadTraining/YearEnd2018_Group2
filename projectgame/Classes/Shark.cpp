@@ -18,7 +18,7 @@ Shark::Shark(cocos2d::Scene * scene)
 	//Init();	
 	mOldStatus = " ";
 	SetVisible(false);
-	scene->addChild(mSprite,100);
+	scene->addChild(mSprite,99);
 }
 
 Shark::Shark(const Shark * shark)

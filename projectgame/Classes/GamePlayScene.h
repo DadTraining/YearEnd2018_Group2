@@ -11,12 +11,14 @@ class GamePlayScene : public cocos2d::Scene
 {
 private:
 	Ship * ship;
-	Cable *cable;	
+	Cable *cable;
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
 	std::vector<ui::Button*> listItem;
 
 	std::vector<Meat*> meatList;
+	cocos2d::ui::Button *whiteButton;
+	int pressed;
 	
 public:
 	static cocos2d::Scene* createScene();
@@ -37,6 +39,8 @@ public:
 	//////
 	void initMeatList(Scene *scene, std::vector<Shark*> sharkList);
 	void meatDone();
+
+	void setPressWhiteButton(bool pres);
 	
 	CREATE_FUNC(GamePlayScene);
 };
