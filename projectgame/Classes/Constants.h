@@ -12,6 +12,7 @@ private:
 	//static cocos2d::Size mSize;
 	static cocos2d::Vector<cocos2d::ui::Button*> listButton;
 	static std::vector<MapLevel*> listMap;
+	static bool inMap;
 
 public:
 	static cocos2d::Size getVisibleSize();
@@ -29,5 +30,9 @@ public:
 	static bool ListButtonIsEmpty();
 
 	static void EndGame(int lv, int star, bool pass, int score);
+
+	static void setInMap(bool in);
+	static bool isInMap();
+
 };
 

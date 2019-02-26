@@ -38,7 +38,8 @@ void Shark::Damaged()
 
 void Shark::Killed()
 {
-	InfoMap::setScore(InfoMap::getScore() + this->mScore);
+	auto score = InfoMap::getScore();
+	InfoMap::setScore(score + this->mScore);
 	mSprite->stopAllActions();
 	mSprite->setFlippedY(true);
 	mSprite->setPositionZ(-1);

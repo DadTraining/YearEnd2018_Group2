@@ -46,10 +46,17 @@ void Popup::setBackground()
 			mLayer->setVisible(false);
 			if (!Constants::ListButtonIsEmpty())
 			{
-				for (int i = 0; i < Constants::GetListMap().size(); i++)
+				if (Constants::isInMap())
 				{
-					auto map = Constants::GetListMap().at(i);
-					Constants::SetEnableTouchEvent(i, map->isAllowPlay());
+					for (int i = 0; i < Constants::GetListMap().size(); i++)
+					{
+						auto map = Constants::GetListMap().at(i);
+						Constants::SetEnableTouchEvent(i, map->isAllowPlay());
+					}
+				}
+				else
+				{
+					Constants::SetEnableAllTouchEventOnMapLevel(true);
 				}
 			}
 			cocos2d::Director::getInstance()->resume();
