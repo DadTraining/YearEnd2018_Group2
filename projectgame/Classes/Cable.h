@@ -9,7 +9,7 @@ class Cable : public Model
 {
 private:	
 	cocos2d::Sprite* loadingbar_white;
-	ui::LoadingBar * loadingBar;
+	ui::LoadingBar * loadingBarGreen;
 	cocos2d::Sprite* mTargetSprite;
 	int mHp;
 
@@ -22,6 +22,7 @@ public:
 	virtual void Update();
 	virtual void Init();
 	void EffectCable();
+	void EffectLoadingBar();
 	
 	void TargetAnimation();
 	void CheckSharkNearCable(std::vector<Shark*> sharks,Ship* ship);

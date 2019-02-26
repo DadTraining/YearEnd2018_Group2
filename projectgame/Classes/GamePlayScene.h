@@ -18,10 +18,11 @@ private:
 	std::vector<Shark*> sharkList;
 	int callBackAlive;
 	int timeLeft;
-
 	std::vector<Meat*> meatList;
 	cocos2d::ui::Button *whiteButton;
 	int pressed;
+	int countDownButtonMeat;
+	int countDownMeat;
 	
 public:
 	static cocos2d::Scene* createScene();

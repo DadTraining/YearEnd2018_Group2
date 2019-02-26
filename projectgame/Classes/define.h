@@ -91,7 +91,6 @@
 #define BULLET_SHOOT_BLACK_IMG ""
 #define BULLET_SHOOT_WHITE_IMG ""
 #define BULLET_BODY "bullet"
-#define BULLET_SPEED 12
 
 
 //cable

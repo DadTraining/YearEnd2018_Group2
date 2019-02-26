@@ -63,9 +63,6 @@ bool GamePlayScene::init()
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
 
-	
-	addChild(_backGround, -1);
-
 	countDownButtonMeat = 1;
 	pressed = 0;
 	
@@ -269,8 +266,8 @@ void GamePlayScene::update(float delta)
 
 	}
 	ship->Update();
-	item->Update();
-	cable->CheckSharkNearCable(sharkList, ship->GetDirection());
+	mItem->Update();
+	cable->CheckSharkNearCable(sharkList, ship);
 	
 	countDownButtonMeat++;
 	if (countDownButtonMeat % 300 == 0)
@@ -343,6 +340,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
+	meatDone();
 	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
 	InfoMap::setScore(0);
 }

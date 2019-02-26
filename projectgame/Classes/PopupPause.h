@@ -35,9 +35,6 @@ public:
 
     virtual bool init() override;
 	virtual void onExit() override;
-    
-	
-	
 
     CREATE_FUNC(PopupPause);
 };

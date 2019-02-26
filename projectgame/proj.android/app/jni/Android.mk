@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpSetting.cpp \
 				   $(LOCAL_PATH)/../../../Classes/MapLevel.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Ship.cpp \
+				   $(LOCAL_PATH)/../../../Classes/Meat.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Cable.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Bullet.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Shark.cpp \
