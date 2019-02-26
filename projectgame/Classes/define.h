@@ -27,6 +27,7 @@
 #define BUTTON_BLACK_IMG_NOR "button/blackbutton.png"
 #define BUTTON_PAUSE_IMG "button/pause1.png"
 #define BUTTON_SETTING_IMG "button/setting.png"
+#define BUTTON_REPLAY_IMG "button/replay.png"
 
 #define ITEM_BOX "button/edittest.png"
 #define MEAT "item/meat.png"

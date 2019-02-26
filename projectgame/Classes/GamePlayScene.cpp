@@ -63,10 +63,12 @@ bool GamePlayScene::init()
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
 
-	///////////////////
-	auto coin = Sprite::create("button/coin.png");
-	coin->setPosition(cocos2d::Vec2(visibleSize.width*0.97, visibleSize.height*0.95));
-	this->addChild(coin);
+	/////////////////// COIN 
+	auto coin = Sprite::create("coin/money.png");
+	coin->setAnchorPoint(cocos2d::Vec2(1, 1));
+	coin->setPosition(cocos2d::Vec2(visibleSize.width, visibleSize.height));
+	//coin->setOpacity(150);
+	this->addChild(coin,998);
 	
 	
 	countDownButtonMeat = 1;
@@ -240,9 +242,9 @@ bool GamePlayScene::init()
 	this->scheduleUpdate();
 	mScore = InfoMap::getScore();
 	mLabelScore = Label::createWithTTF(std::to_string(mScore), "fonts/arial.ttf", 40);
-	mLabelScore->setColor(cocos2d::Color3B::YELLOW);
-	mLabelScore->setPosition(cocos2d::Vec2(visibleSize.width*0.92, visibleSize.height *0.95));
-	this->addChild(mLabelScore, 5);
+	mLabelScore->setColor(cocos2d::Color3B::GREEN);
+	mLabelScore->setPosition(cocos2d::Vec2(visibleSize.width*0.87, visibleSize.height *0.945));
+	this->addChild(mLabelScore, 999);
 
 	Constants::setInMap(false);
 	return true;
@@ -330,12 +332,14 @@ void GamePlayScene::SharkAliveCallBack()
 	else
 	{		
 		this->unscheduleUpdate();
-
+		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// show popup end game include score and star
 		// new class popup next game or goto home
-		
+
+		Constants::ReleaseButton();
 		WinGame();
-		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+
+		//Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 
 	}
 

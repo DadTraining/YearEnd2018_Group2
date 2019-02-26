@@ -44,7 +44,7 @@ bool PopupPause::init()
 
 	///////////////
 	//Button play
-	auto btnPlay = ui::Button::create(BUTTON_MAP_PLAY);
+	auto btnPlay = ui::Button::create(BUTTON_REPLAY_IMG);
 	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
 		+ mBackground->getContentSize().height / 22));
 
@@ -77,6 +77,7 @@ bool PopupPause::init()
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
+			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(MapScene::createScene());
 			break;
 
