@@ -4,6 +4,8 @@
 #include"define.h"
 #include "Constants.h"
 #include "InfoMap.h"
+#include "InfoMap.h"
+
 
 Ship::Ship(cocos2d::Scene * scene)
 {
@@ -12,11 +14,14 @@ Ship::Ship(cocos2d::Scene * scene)
 	scene->addChild(mSprite, 999);
 	mUp = true;
 	mLeft = false;
-
-	
 	Init();
 
-
+	for (int i = 0; i < BULLET_MAX; i++)
+	{
+		Bullet* b = new Bullet(scene);
+		b->SetTag(i + 100);
+		listBullet.push_back(b);
+	}
 
 }
 
@@ -28,22 +33,7 @@ Ship::~Ship()
 
 void Ship::Update()
 {
-	/*if (mUp) {
-		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y + SHIP_SPEED));
-		if (GetLocation().y >= Constants::getVisibleSize().height * 9 / 10)
-		{
-			mUp = false;
-		}
-	}
-	else
-	{
-		mSprite->setPosition(cocos2d::Vec2(GetLocation().x, GetLocation().y - SHIP_SPEED));
-		if (GetLocation().y <= Constants::getVisibleSize().height *3/10)
-		{
-			mUp = true;
-		}
-	}*/
-	auto listBullet = InfoMap::getBulletList();
+	
 	for (int i = 0; i < listBullet.size(); i++)
 	{
 		listBullet.at(i)->Update();
@@ -55,8 +45,7 @@ void Ship::Init()
 {
 
 	this->SetPosition(cocos2d::Vec2(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 2));
-	//auto animate = cocos2d::Animate::create(CreateAnimation(SHIP_IMG, 1, SHIP_FRAME, 0.15));
-	//mSprite->runAction(cocos2d::RepeatForever::create(animate));
+	
 }
 
 void Ship::leftOrRight(bool direction)
@@ -83,7 +72,6 @@ void Ship::leftOrRight(bool direction)
 
 void Ship::ShootColor(int color)
 {
-	auto listBullet = InfoMap::getBulletList();
 
 	for (int i = 0; i < listBullet.size(); i++) {
 		auto bullet = listBullet.at(i);
@@ -111,7 +99,6 @@ void Ship::ShootColor(int color)
 
 void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 {
-	auto listBullet = InfoMap::getBulletList();
 
 	auto shark = sharks[sharkTag - 1];
 	auto bullet = listBullet[bulletTag - 100];
@@ -121,6 +108,7 @@ void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 		{
 			shark->Killed();
 			bullet->SetVisible(false);
+		
 		}
 		else
 		{

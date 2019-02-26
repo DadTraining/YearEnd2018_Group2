@@ -10,7 +10,6 @@
 
 USING_NS_CC;
 
-cocos2d::Size visibleSize;
 
 Scene* IntroScene::createScene()
 {
@@ -72,14 +71,6 @@ void IntroScene::BGMusic()
 
 void IntroScene::LoadGame()
 {
-	//init shark
-	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
-	{
-		Shark* s = new Shark(this);
-		s->SetTag(1 + i);
-		InfoMap::AddShark(s);
-	}
-
 	MapLevel *m1 = new MapLevel(1, 0, 3, 5, 7, 0, false, 0, true);
 	Constants::AddMapIntoList(m1);
 	MapLevel *m2 = new MapLevel(2, 0, 4, 6, 8, 0, false, 0, false);
@@ -113,13 +104,6 @@ void IntroScene::LoadGame()
 	MapLevel *m16 = new MapLevel(16, 0, 6, 8, 10, 10, false, 0, false);
 	Constants::AddMapIntoList(m16);
 
-	//init bullet list
-	for (int i = 0; i < BULLET_MAX; i++)
-	{
-		auto b = new Bullet(this);
-		b->SetTag(100 + i);
-		InfoMap::AddBullet(b);
-	}
 }
 
 /*Create LoadingBar*/

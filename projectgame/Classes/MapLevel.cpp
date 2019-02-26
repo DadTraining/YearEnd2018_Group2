@@ -10,7 +10,7 @@ MapLevel::MapLevel(int lv, int star, int p1, int p2, int p3, int sharkSkin, bool
 	this->sharksPharse3 = p3;
 	this->sharksSkin = sharkSkin;
 	this->wasPlayPass = PlayPass;
-	this->score = score;
+	this->mScore = score;
 	this->allowPlay = allow;
 }
 

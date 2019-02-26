@@ -11,11 +11,10 @@ class Item : public Model
 {
 private:
 	int mTimeStun;
-	bool mStatusStun;
 	int mScoreSpend;
-
-	Sprite * power_bg;
-	cocos2d::ui::LoadingBar *power_loadingBar;
+	bool mStatusStun;
+	Sprite* power_bg;
+	cocos2d::ui::LoadingBar* power_loadingBar;
 	std::vector<Shark*> mSharkList;
 
 public:

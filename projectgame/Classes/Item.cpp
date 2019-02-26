@@ -9,8 +9,6 @@ Item::Item(cocos2d::Scene * scene) : Model()
 { 
 	mStatusStun = false;
 	mTimeStun = 0;
-
-	
 }
 
 Item::~Item()

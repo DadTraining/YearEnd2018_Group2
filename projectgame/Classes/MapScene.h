@@ -14,6 +14,7 @@ private:
 	std::vector<cocos2d::ui::Button*> mListButton;
 	std::vector<MapLevel*> mListLevel;
 	std::vector<PopupPlay*> mListPlay;
+	std::vector<ui::Button*> btnLevels;
 public:
 	
 	static cocos2d::Scene* createScene();

@@ -10,7 +10,7 @@ protected:
 	int sharksPharse2;
 	int sharksPharse3;
 	int sharksSkin;
-	int score;
+	int mScore;
 	bool wasPlayPass;
 	bool allowPlay;
 
@@ -34,5 +34,9 @@ public:
 
 	bool AllowPlay() {
 		return allowPlay;
+	}
+
+	void SetScore(int score) {
+		mScore = score;
 	}
 };

@@ -12,6 +12,8 @@ private:
 	bool mUp;
 	bool mLeft;
 	int mFrameBullet;
+	std::vector<Bullet*> listBullet;
+
 public:
 	Ship(cocos2d::Scene * scene);
 	~Ship();

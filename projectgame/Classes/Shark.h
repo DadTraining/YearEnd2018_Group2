@@ -13,7 +13,7 @@ protected:
 	std::string mColor;
 	int mTotalColor;
 	float mSpeed;
-	int mDamage;
+	int mScore;
 	std::string mStatus;
 	std::string mOldStatus;
 

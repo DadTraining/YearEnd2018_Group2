@@ -3,8 +3,8 @@
 int InfoMap::SHARK_PHASE_1ST = 0;
 int InfoMap::SHARK_PHASE_2ND = 0;
 int InfoMap::SHARK_PHASE_3RD = 0;
-std::vector<Shark*> InfoMap::listShark;
-std::vector<Bullet*> InfoMap::listBullet;
+int InfoMap::MAP_LEVEL = 0;
+int InfoMap::SCORE = 0;
 
 
 int InfoMap::getPhase1()
@@ -22,25 +22,11 @@ int InfoMap::getPhase3()
 	return SHARK_PHASE_3RD;
 }
 
-void InfoMap::AddShark(Shark * shark)
+void InfoMap::setScore(int score)
 {
-	listShark.push_back(shark);
+	SCORE = score;
 }
 
-std::vector<Shark*> InfoMap::getSharkList()
-{
-	return listShark;
-}
-
-void InfoMap::AddBullet(Bullet * bullet)
-{
-	listBullet.push_back(bullet);
-}
-
-std::vector<Bullet*> InfoMap::getBulletList()
-{
-	return listBullet;
-}
 
 
 

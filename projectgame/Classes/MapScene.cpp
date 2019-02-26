@@ -4,13 +4,6 @@
 #include "Constants.h"
 #include "InfoMap.h"
 
-
-//Size Constants::getVisibleSize();
-#pragma region declare
-std::vector<ui::Button*> btnLevels;
-#pragma endregion
-
-
 Scene* MapScene::createScene()
 {
 	return MapScene::create();
@@ -40,8 +33,8 @@ bool MapScene::init()
 
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
-		auto map = Constants::GetListMap().at(i);
-		Constants::SetEnableTouchEvent(i, map->AllowPlay());
+		auto map = Constants::GetListMap().at(i)->AllowPlay();
+		Constants::SetEnableTouchEvent(i, map);
 	}
 
 	return true;
@@ -184,6 +177,7 @@ void MapScene::setListButton()
 			case ui::Widget::TouchEventType::ENDED:
 				CCLOG("%i", i);
 				mListPlay[i - 1]->getLayer()->setVisible(true);
+				Constants::SetPhase(i - 1);
 				Constants::SetEnableAllTouchEventOnMapLevel(false);
 				//button->setTouchEnabled(false);
 				break;

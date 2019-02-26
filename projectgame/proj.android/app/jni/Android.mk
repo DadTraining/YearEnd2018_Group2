@@ -17,6 +17,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/MyBodyParser.cpp \
                    $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Model.cpp  \
+				   $(LOCAL_PATH)/../../../Classes/InfoMap.cpp  \
 				   $(LOCAL_PATH)/../../../Classes/Popup.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpPlay.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpSetting.cpp \

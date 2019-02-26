@@ -6,9 +6,7 @@
 using namespace cocos2d;
 
 #pragma region declare
-cocos2d::Sprite* loadingbar_white;
-ui::LoadingBar * loadingBar;
-cocos2d::Sprite* mTargetSprite;
+
 #pragma endregion
 
 

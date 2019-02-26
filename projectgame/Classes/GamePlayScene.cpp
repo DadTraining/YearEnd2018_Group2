@@ -1,28 +1,26 @@
 #include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
 #include "Shark.h"
+#include "HelloWorldScene.h"
 #include <vector>
 #include "define.h"	
 #include "Constants.h"
 #include "MyBodyParser.h"
 #include "ui\UIButton.h"
 #include "InfoMap.h"
+#include "MapScene.h"
 
 USING_NS_CC;
 
 
 #pragma region Shark
-
-int callBackAlive;
-int timeLeft;
-Item * item;
-
+Item* mItem;
 #pragma endregion
 
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -120,8 +118,16 @@ bool GamePlayScene::init()
 	callBackAlive = 0;
 	ship = new Ship(this);
 	//ship->SetVisible(false);
-	item = new Item(this);
-	auto sharkList = InfoMap::getSharkList();
+	mItem = new Item(this);
+
+	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
+	{
+		Shark* s = new Shark(this);
+		s->SetTag(i + 1);
+		sharkList.push_back(s);
+	}
+
+
 	for (int i = 1; i <= 3; i++)
 	{
 		std::string path = "item/", png = ".png", name;
@@ -136,7 +142,7 @@ bool GamePlayScene::init()
 			button->setPosition(Vec2(visibleSize.width / 3, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
-				item->StunShark(sharkList);
+				mItem->StunShark(sharkList);
 
 			});
 			break;
@@ -145,7 +151,7 @@ bool GamePlayScene::init()
 			button->setPosition(Vec2(visibleSize.width / 2, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
-				item->IncreaseBlood();
+				mItem->IncreaseBlood();
 
 			});
 			break;
@@ -154,7 +160,7 @@ bool GamePlayScene::init()
 			button->setPosition(Vec2(visibleSize.width * 2 / 3, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
-				item->KillSharkByBoom(sharkList);
+				mItem->KillSharkByBoom(sharkList);
 			});
 			break;
 		default:
@@ -171,6 +177,8 @@ bool GamePlayScene::init()
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	InfoMap::setScore(0);
+
 	this->scheduleUpdate();
 
 	return true;
@@ -184,7 +192,6 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 void GamePlayScene::update(float delta)
 {
 	timeLeft += 1;
-	auto sharkList = InfoMap::getSharkList();
 	//	sk->Update();
 	callBackAlive += 1;
 	if (callBackAlive % SHARK_CALL_BACK_ALIVE == 0)
@@ -205,29 +212,32 @@ void GamePlayScene::update(float delta)
 
 	}
 	ship->Update();
-	item->Update();
+	mItem->Update();
 	cable->CheckSharkNearCable(sharkList, ship);
 }
 
 void GamePlayScene::SharkAliveCallBack()
 {
-	auto sharkList = InfoMap::getSharkList();
-	int size;
-	if (timeLeft < 400)
+	int size = 0;
+	if (timeLeft < 100)
 	{
-		size = (int)InfoMap::getPhase1;
+		size = (int)InfoMap::getPhase1();
 	}
-	else if (timeLeft < 800)
+	else if (timeLeft < 200)
 	{
-		size = (int)InfoMap::getPhase2;
+		size = (int)InfoMap::getPhase2();
 	}
-	else if(timeLeft <1200)
+	else if(timeLeft <800)
 	{
-		size = (int)InfoMap::getPhase3;
+		size = (int)InfoMap::getPhase3();
 	}
 	else
 	{
 		//end game
+		//cocos2d::Director::getInstance()->pause();
+		this->unscheduleUpdate();
+		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+
 	}
 
 	for (int i = 0; i < size; i++)
@@ -244,7 +254,6 @@ void GamePlayScene::SharkAliveCallBack()
 
 bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 {
-	auto sharkList = InfoMap::getSharkList();
 	for (int i = 0; i < sharkList.size(); i++)
 	{
 		auto tag = sharkList[i];
@@ -259,7 +268,6 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 	return false;
 }
 
-
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
 
@@ -269,7 +277,6 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 
 bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 {
-	auto sharkList = InfoMap::getSharkList();
 	auto shapeA = contact.getShapeA()->getBody()->getNode();
 	auto shapeB = contact.getShapeB()->getBody()->getNode();
 	auto a = shapeA->getTag();

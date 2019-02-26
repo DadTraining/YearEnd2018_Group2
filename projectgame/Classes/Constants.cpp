@@ -23,6 +23,7 @@ void Constants::AddButtonIntoMapLevel(cocos2d::ui::Button * btn)
 void Constants::SetEnableTouchEvent(int index, bool enable)
 {
 	listButton.at(index)->setTouchEnabled(enable);
+	listButton.at(index)->setBright(enable);
 	listButton.at(index)->setEnabled(enable);
 }
 
@@ -42,5 +43,23 @@ std::vector<MapLevel*> Constants::GetListMap()
 void Constants::AddMapIntoList(MapLevel * map)
 {
 	listMap.push_back(map);
+}
+
+
+
+void Constants::SetPhase(int index)
+{
+	auto map = listMap.at(index);
+	InfoMap::setSharPhases(
+		map->GetPhase(1),
+		map->GetPhase(2),
+		map->GetPhase(3)
+	);
+	InfoMap::setMapLevel(index);
+}
+
+void Constants::ReleaseButton()
+{
+	listButton.clear();
 }
 

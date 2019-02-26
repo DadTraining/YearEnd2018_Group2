@@ -3,6 +3,7 @@
 #include "ui/CocosGUI.h"
 #include "MapLevel.h"
 #include <vector>
+#include "InfoMap.h"
 
 
 class Constants 
@@ -22,5 +23,8 @@ public:
 
 	static  std::vector<MapLevel*> GetListMap();
 	static void AddMapIntoList(MapLevel* map);
+
+	static void SetPhase(int index);
+	static void ReleaseButton();
 };
 

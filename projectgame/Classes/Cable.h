@@ -8,7 +8,9 @@
 class Cable : public Model
 {
 private:	
-
+	cocos2d::Sprite* loadingbar_white;
+	ui::LoadingBar * loadingBar;
+	cocos2d::Sprite* mTargetSprite;
 	int mHp;
 
 public:

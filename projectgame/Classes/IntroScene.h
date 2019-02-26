@@ -42,6 +42,7 @@ public:
     CREATE_FUNC(IntroScene);
 private:
 	CocosDenshion::SimpleAudioEngine *audio;
+	cocos2d::Size visibleSize;
 
 };
 

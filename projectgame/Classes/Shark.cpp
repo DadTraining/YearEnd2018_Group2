@@ -28,6 +28,8 @@ Shark::Shark(const Shark * shark)
 
 Shark::~Shark()
 {
+	mSprite->release();
+
 }
 
 void Shark::Damaged()
@@ -36,6 +38,7 @@ void Shark::Damaged()
 
 void Shark::Killed()
 {
+	InfoMap::setScore(InfoMap::getScore() + this->mScore);
 	mSprite->stopAllActions();
 	mSprite->setFlippedY(true);
 	mSprite->setPositionZ(-1);
@@ -260,16 +263,19 @@ void Shark::Init()
 	switch (size)
 	{
 	case 1:
+		mScore = 600;
 		mSize = SHARK_SIZE_SMALL;
 		mDelay = SHARK_DELAY_SMALL;
 		mSpeed = SHARK_SPEED_SMALL;
 		break;
 	case 2:
+		mScore = 1500;
 		mSize = SHARK_SIZE_NORMAL;
 		mDelay = SHARK_DELAY_NORMAL;
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	case 3:
+		mScore = 4000;
 	//	auto sp = cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("blueshark_1.png");
 		mSize = SHARK_SIZE_BIG;
 		mDelay = SHARK_DELAY_BIG;
