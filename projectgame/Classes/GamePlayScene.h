@@ -15,6 +15,7 @@ private:
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
 	std::vector<ui::Button*> listItem;
+	std::vector<ui::Button*> mSettingPause;
 	std::vector<Shark*> sharkList;
 	int callBackAlive;
 	int timeLeft;
@@ -51,7 +52,7 @@ public:
 	void meatDone();
 
 	void setPressWhiteButton(bool pres);
-	
+	void SetEnableAllTouchEventOnScene(bool enable);
 	CREATE_FUNC(GamePlayScene);
 };
 

@@ -179,7 +179,7 @@ void MapScene::setListButton()
 				mListPlay[i - 1]->getLayer()->setVisible(true);
 				Constants::SetPhase(i - 1);
 				Constants::SetEnableAllTouchEventOnMapLevel(false);
-				//button->setTouchEnabled(false);
+	
 				break;
 			}
 		});

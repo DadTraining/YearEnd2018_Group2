@@ -35,6 +35,8 @@ void Constants::SetEnableAllTouchEventOnMapLevel(bool enable)
 	}
 }
 
+
+
 std::vector<MapLevel*> Constants::GetListMap()
 {
 	return listMap;

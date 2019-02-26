@@ -12,6 +12,7 @@
 #include"PopUpSetting.h"
 #include "InfoMap.h"
 #include "MapScene.h"
+#include"Constants.h"
 
 
 
@@ -72,42 +73,98 @@ bool GamePlayScene::init()
 	countDownButtonMeat = 1;
 	pressed = 0;
 	
-	auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
-	btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
-	addChild(btnPause);
-	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+	//auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
+	//btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
+	//addChild(btnPause);
+	//btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
-		switch (type)
+	//	switch (type)
+	//	{
+	//	case ui::Widget::TouchEventType::BEGAN:
+	//		break;
+	//	case ui::Widget::TouchEventType::ENDED:
+	//		//this->unscheduleUpdate();
+	//		cocos2d::Director::getInstance()->pause();
+	//		
+	//		PopupPause *popUpPause = PopupPause::create();
+	//		this->addChild(popUpPause, 110);
+	//		popUpPause->getLayer()->setVisible(true);
+	//		break;
+	//	}
+	//});
+	//auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
+	//btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
+	//addChild(btnSettingScene);
+	//btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+
+	//	switch (type)
+	//	{
+	//	case ui::Widget::TouchEventType::BEGAN:
+	//		break;
+	//	case ui::Widget::TouchEventType::ENDED:
+	//		cocos2d::Director::getInstance()->pause();
+	//		PopupSetting *popUpSetting = PopupSetting::create();
+	//		this->addChild(popUpSetting, 110);
+	//		popUpSetting->getLayer()->setVisible(true);
+	//		break;
+	//	}
+	//});
+
+
+	for (int i = 1; i <= 2; i++)
+	{
+		auto btn = ui::Button::create();
+		mSettingPause.push_back(btn);
+		
+		switch (i)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case 1:
+			btn = ui::Button::create(BUTTON_PAUSE_IMG);
+			btn->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
+			btn->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+
+						switch (type)
+						{
+						case ui::Widget::TouchEventType::BEGAN:
+							break;
+						case ui::Widget::TouchEventType::ENDED:
+							
+							cocos2d::Director::getInstance()->pause();
+							PopupPause *popUpPause = PopupPause::create();
+							this->addChild(popUpPause, 110);
+							popUpPause->getLayer()->setVisible(true);
+							GamePlayScene::SetEnableAllTouchEventOnScene(false);
+							break;
+						}
+					});
 			break;
-		case ui::Widget::TouchEventType::ENDED:
-			//this->unscheduleUpdate();
-			cocos2d::Director::getInstance()->pause();
-			PopupPause *popUpPause = PopupPause::create();
-			this->addChild(popUpPause, 110);
-			/*deleteShark();*/
-			popUpPause->getLayer()->setVisible(true);
+		case 2:
+			btn = ui::Button::create(BUTTON_SETTING_IMG);
+			btn->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
+			btn->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+
+						switch (type)
+						{
+						case ui::Widget::TouchEventType::BEGAN:
+							break;
+						case ui::Widget::TouchEventType::ENDED:
+							cocos2d::Director::getInstance()->pause();
+							PopupSetting *popUpSetting = PopupSetting::create();
+							this->addChild(popUpSetting, 110);
+							popUpSetting->getLayer()->setVisible(true);
+							GamePlayScene::SetEnableAllTouchEventOnScene(false);
+							break;
+						}
+					});
+			break;
+		default:
 			break;
 		}
-	});
-	auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
-	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
-	addChild(btnSettingScene);
-	btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+		
+		addChild(btn);
+		
 
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->pause();
-			PopupSetting *popUpSetting = PopupSetting::create();
-			this->addChild(popUpSetting, 110);
-			popUpSetting->getLayer()->setVisible(true);
-			break;
-		}
-	});
+	}
 
 	whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR, BUTTON_WHITE_IMG_PRE, BUTTON_BLACK_IMG_NOR);
 	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
@@ -456,5 +513,11 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	return false;
 }
 
-
+void GamePlayScene::SetEnableAllTouchEventOnScene(bool enable)
+{
+	for (int i = 0; i < mSettingPause.size(); i++)
+	{
+		mSettingPause.at(i)->setTouchEnabled(enable);
+	}
+}
 

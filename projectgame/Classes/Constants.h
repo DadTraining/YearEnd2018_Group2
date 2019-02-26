@@ -11,6 +11,7 @@ class Constants
 private:
 	//static cocos2d::Size mSize;
 	static cocos2d::Vector<cocos2d::ui::Button*> listButton;
+	static cocos2d::Vector<cocos2d::ui::Button*> SettingPause;
 	static std::vector<MapLevel*> listMap;
 
 public:
@@ -20,6 +21,7 @@ public:
 	static void AddButtonIntoMapLevel(cocos2d::ui::Button* btn);
 	static void SetEnableTouchEvent(int index,bool enable);
 	static void SetEnableAllTouchEventOnMapLevel(bool enable);
+	
 
 	static  std::vector<MapLevel*> GetListMap();
 	static void AddMapIntoList(MapLevel* map);
