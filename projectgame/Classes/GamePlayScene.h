@@ -6,6 +6,7 @@
 #include "Cable.h"
 #include "Shark.h"
 #include "Meat.h"
+#include"PopUpEndGame.h"
 
 class GamePlayScene : public cocos2d::Scene
 {
@@ -23,6 +24,9 @@ private:
 	int pressed;
 	int countDownButtonMeat;
 	int countDownMeat;
+	std::vector<MapLevel*> mListLevelEndGame;
+	std::vector<PopupEndGame*> mListPlayEndGame;
+	
 	
 	double mScore;
 	Label *mLabelScore;
@@ -52,7 +56,9 @@ public:
 	void meatDeleted();
 
 	void setPressWhiteButton(bool pres);
-	
+	void showEndGame();
+	void initLevelEndGame();
+	void PopUpLevelEndGame();
 	CREATE_FUNC(GamePlayScene);
 };
 

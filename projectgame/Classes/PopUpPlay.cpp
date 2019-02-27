@@ -48,6 +48,7 @@ bool PopupPlay::init()
 		case ui::Widget::TouchEventType::ENDED:
 			PopupSetting *popup = PopupSetting::create();
 			this->addChild(popup, 3);
+			//mLayer->setVisible(false);
 			break;
 		}
 	});

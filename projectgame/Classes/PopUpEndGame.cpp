@@ -11,46 +11,51 @@ bool PopupEndGame::init()
 {
 	Popup::init();
 	Popup::setBackground();
-
-	///////////////
-	//Button home
-	auto btnHome = ui::Button::create(BUTTON_MAP_PLAY);
-	btnHome->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-								+ mBackground->getContentSize().height / 22));
 	
-	mLayer->addChild(btnHome, 1);
-	btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+	///////////////
+	
+	////////////////
+	//Button replay
+	auto btnNextLevel = ui::Button::create(BUTTON_REPLAY_IMG);
+	btnNextLevel->setPosition(Vec2(- mBackground->getContentSize().width / 7,
+		-mBackground->getContentSize().height / 4
+		+ mBackground->getContentSize().height / 22));
+
+	btnNextLevel->setScale(0.75);
+	mLayer->addChild(btnNextLevel, 1);
+	btnNextLevel->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
 		switch (t)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->resume();
+
+			PopupSetting *popup = PopupSetting::create();
+			this->addChild(popup, 3);
+			break;
+		}
+	});
+	//Button next
+	auto btnReplay = ui::Button::create(BUTTON_MAP_PLAY);
+	btnReplay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
+		+ mBackground->getContentSize().height / 22));
+
+	mLayer->addChild(btnReplay, 1);
+	btnReplay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+		switch (t)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->resume();
 			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
 		}
 	});
 
-	////////////////
-	//Button next level
-	auto btnSetting = ui::Button::create(BUTTON_SETTING);
-	btnSetting->setPosition(Vec2(- mBackground->getContentSize().width / 7, 
-		-mBackground->getContentSize().height / 4
-		+ mBackground->getContentSize().height / 22));
-
-	btnSetting->setScale(0.75);
-	mLayer->addChild(btnSetting, 1);
-	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			PopupSetting *popup = PopupSetting::create();
-			this->addChild(popup, 3);
-			break;
-		}
-	});
 	return true;
 }
 
@@ -76,3 +81,9 @@ void PopupEndGame::setLevel(int numLevel, int numStars)
 	star->setScale(0.5);
 	mLayer->addChild(star);
 }
+
+
+	
+
+
+	

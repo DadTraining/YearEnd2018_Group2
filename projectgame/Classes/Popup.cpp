@@ -52,6 +52,7 @@ void Popup::setBackground()
 					{
 						auto map = Constants::GetListMap().at(i);
 						Constants::SetEnableTouchEvent(i, map->isAllowPlay());
+						
 					}
 				}
 				else
@@ -60,7 +61,9 @@ void Popup::setBackground()
 				}
 			}
 			cocos2d::Director::getInstance()->resume();
-			//mLayer->removeFromParentAndCleanup(true);
+			
+		
+		
 			break; 
 	
 		}

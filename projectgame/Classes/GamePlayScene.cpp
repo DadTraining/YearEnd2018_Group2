@@ -12,6 +12,7 @@
 #include"PopUpSetting.h"
 #include "InfoMap.h"
 #include "MapScene.h"
+#include"PopUpEndGame.h"
 
 
 
@@ -79,23 +80,20 @@ bool GamePlayScene::init()
 	addChild(btnPause);
 	Constants::AddButtonIntoMapLevel(btnPause);
 	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
-
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			//this->unscheduleUpdate();
 			cocos2d::Director::getInstance()->pause();
-			PopupPause *popUpPause = PopupPause::create();
-			this->addChild(popUpPause, 110);
-			/*deleteShark();*/
-			popUpPause->getLayer()->setVisible(true);
+			PopupSetting *popUpSetting = PopupSetting::create();
+			this->addChild(popUpSetting, 110);
+			popUpSetting->getLayer()->setVisible(true);
 			Constants::SetEnableAllTouchEventOnMapLevel(false);
 			break;
 		}
 	});
-	auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
+	/*auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
 	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
 	addChild(btnSettingScene);
 	Constants::AddButtonIntoMapLevel(btnSettingScene);
@@ -113,7 +111,7 @@ bool GamePlayScene::init()
 			Constants::SetEnableAllTouchEventOnMapLevel(false);
 			break;
 		}
-	});
+	});*/
 
 	whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR, BUTTON_WHITE_IMG_PRE, BUTTON_BLACK_IMG_NOR);
 	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
@@ -175,7 +173,6 @@ bool GamePlayScene::init()
 
 	callBackAlive = 0;
 	ship = new Ship(this);
-	//ship->SetVisible(false);
 	mItem = new Item(this);
 
 	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
@@ -247,6 +244,7 @@ bool GamePlayScene::init()
 	this->addChild(mLabelScore, 999);
 
 	Constants::setInMap(false);
+	//initPopUpLevelEndGame();
 	return true;
 }
 
@@ -335,7 +333,9 @@ void GamePlayScene::SharkAliveCallBack()
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// show popup end game include score and star
 		// new class popup next game or goto home
-
+	
+		//PopUpLevelEndGame();
+		//showEndGame();
 		Constants::ReleaseButton();
 		WinGame();
 
@@ -437,9 +437,49 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 	whiteButton->setEnabled(pres);
 }
 
+void GamePlayScene::showEndGame()
+{
+	
+	cocos2d::Director::getInstance()->pause();
+	/*PopupEndGame *popUpEnd = PopupEndGame::create();
+	this->addChild(popUpEnd, 110);
+	popUpEnd->getLayer()->setVisible(true);*/
+	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
+	this->addChild(popUpEnd, 110);
+	popUpEnd->getLayer()->setVisible(true);
+	}
+
+//void GamePlayScene::initLevelEndGame()
+//{
+//	for (int i = 0; i < 16; i++)
+//	{
+//		MapLevel *level = new MapLevel();
+//		level->SetLevel(i + 1);
+//		level->SetStar(0);
+//		mListLevelEndGame.push_back(level);
+//	}
+//}
+
+void GamePlayScene::PopUpLevelEndGame()
+{
+	for (int i = 0; i < 16; i++)
+	{
+		PopupEndGame *popupEndGame = PopupEndGame::create();
+		this->addChild(popupEndGame, 3);
+
+		popupEndGame->getLayer()->setVisible(false);
+
+
+		//popupEndGame->setLevel(mListLevelEndGame[i]->GetLevel(), mListLevelEndGame[i]->GetStar());
+		mListPlayEndGame.push_back(popupEndGame);
+	}
+}
+
+
+
 void GamePlayScene::LoseGame()
 {
-
+	
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)

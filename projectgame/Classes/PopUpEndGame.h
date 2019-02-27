@@ -3,6 +3,7 @@
 #include "Popup.h"
 #include "MapLevel.h"
 
+
 class PopupEndGame : public Popup
 {
 private:
@@ -14,7 +15,7 @@ public:
     
 	
 	void setLevel(int numLevel, int numStars);
-
+	
     CREATE_FUNC(PopupEndGame);
 };
 
