@@ -20,6 +20,7 @@ USING_NS_CC;
 
 #pragma region Shark
 Item* mItem;
+
 #pragma endregion
 
 Scene* GamePlayScene::createScene()
@@ -203,6 +204,8 @@ bool GamePlayScene::init()
 			button->addClickEventListener([=](Ref* event)
 			{
 				//item->IncreaseBlood();
+				//mHP->IncreaseHP();
+				mCable->IncreaseHP();
 
 			});
 			break;
@@ -221,8 +224,8 @@ bool GamePlayScene::init()
 
 	}
 
-	cable = new Cable(this);
-	cable->GetRect();
+	mCable = new Cable(this);
+	mCable->GetRect();
 
 	auto contactListener = EventListenerPhysicsContact::create();
 	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
@@ -280,7 +283,7 @@ void GamePlayScene::update(float delta)
 	}
 	ship->Update();
 	mItem->Update();
-	cable->CheckSharkNearCable(sharkList, ship);
+	mCable->CheckSharkNearCable(sharkList, ship);
 	
 	countDownButtonMeat++;
 	if (countDownButtonMeat % 300 == 0)
@@ -293,6 +296,10 @@ void GamePlayScene::update(float delta)
 		countDownButtonMeat = 1;
 		pressed = 0;
 	}
+
+	mCable->Update();
+
+
 }
 
 void GamePlayScene::SharkAliveCallBack()
@@ -342,10 +349,10 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 		auto tag = sharkList[i];
 		if (tag->GetSprite()->getTag() == sharkTag && tag->IsBitten())
 		{
-			cable->Bitten();
+			mCable->Bitten();
 			tag->setIsBitten(false);
 			tag->BiteAnimation();
-			cable->EffectCable();
+			mCable->EffectCable();
 			
 		}
 	}

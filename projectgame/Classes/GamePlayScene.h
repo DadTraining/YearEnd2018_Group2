@@ -11,11 +11,11 @@ class GamePlayScene : public cocos2d::Scene
 {
 private:
 	Ship* ship;
-	Cable* cable;	
+	Cable* mCable;	
 	Vec2 mLocation;
 	cocos2d::PhysicsWorld* mPhysicsWorld;
 	std::vector<ui::Button*> listItem;
-	std::vector<Shark*> sharkList;
+	std::vector<Shark*> sharkList;	
 	int callBackAlive;
 	int timeLeft;
 	std::vector<Meat*> meatList;
