@@ -1,5 +1,8 @@
 #pragma once
 
+#define FONT_SCORE "fonts/casual.ttf"
+#define COIN "button/coin.png"
+
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
@@ -148,3 +151,8 @@
 // target
 #define TARGET_SHARK "target_"
 #define MIN_POSITION 100000
+
+//loading time
+#define LOADING_TIME_BG "item/time_bg.png"
+#define LOADING_TIME "item/time_loading.png"
+#define TIME "item/clock.png"
