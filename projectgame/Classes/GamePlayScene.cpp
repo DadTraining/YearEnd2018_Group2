@@ -161,17 +161,9 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		break;
 	default:
 		//end game
-		//cocos2d::Director::getInstance()->pause();
 		this->unscheduleUpdate();
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// show popup end game include score and star
-		// new class popup next game or goto home
-
-		//PopUpLevelEndGame();
-		//showEndGame();
-		Constants::ReleaseButton();
 		WinGame();
-		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+		
 		break;
 	}
 
@@ -206,9 +198,11 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
-	meatDone();
+	//meatDone();
 	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
+	showEndGame();
 	InfoMap::setScore(0);
+
 }
 
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
@@ -271,14 +265,28 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 
 void GamePlayScene::showEndGame()
 {
-
-	cocos2d::Director::getInstance()->pause();
-	/*PopupEndGame *popUpEnd = PopupEndGame::create();
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);*/
-	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);
+	   // initLevelEndGame();
+		PopupEndGame *popup = PopupEndGame::create();
+		
+		popup->getLayer()->setVisible(true);
+		int star = 0;
+		auto score = InfoMap::getScore();
+		if (InfoMap::getScore() > 300)
+		{
+			star = 3;
+		}
+		else if (InfoMap::getScore() > 200)
+		{
+			star = 2;
+		}
+		else
+		{
+			star = 1;
+		}
+		popup->setLevel(InfoMap::getMapLevel(),star);
+		
+	    this->addChild(popup, 999);
+	
 }
 
 void GamePlayScene::ShowScore()
@@ -509,6 +517,7 @@ void GamePlayScene::setTimeLoading()
 
 		if (loadingTime->getPercent() == 100)
 		{
+		
 			SharkAliveCallBack(4);
 		}
 	});
@@ -597,5 +606,13 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	return false;
 }
 
-
-
+void GamePlayScene::initLevelEndGame()
+{
+	for (int i = 0; i < 16; i++)
+	{
+		MapLevel *level = new MapLevel();
+		level->SetLevel(i);
+		level->SetStar(0);
+		mListLevelEnd.push_back(level);
+	}
+}

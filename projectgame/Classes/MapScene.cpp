@@ -213,7 +213,7 @@ void MapScene::initPopUpLevel()
 
 		popup->getLayer()->setVisible(false);
 
-		//popup->setVisible(false);
+		
 		popup->setLevel(mListLevel[i]->GetLevel(), mListLevel[i]->GetStar());
 		mListPlay.push_back(popup);
 	}

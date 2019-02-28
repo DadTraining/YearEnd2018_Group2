@@ -32,6 +32,8 @@ private:
 	std::vector<PopupEndGame*> mListPlayEndGame;
 	double mScore;
 	Label* mLabelScore;
+	std::vector<MapLevel*> mListLevelEnd;
+	std::vector<PopupEndGame*> mListPlayEnd;
 
 public:
 	static cocos2d::Scene* createScene();
@@ -75,6 +77,8 @@ public:
 	void SetItemBox();
 	void InitShark();
 	void SetPauseGame();
+	void initLevelEndGame();
+	
 
 	CREATE_FUNC(GamePlayScene);
 };

@@ -15,7 +15,7 @@ public:
     
 	
 	void setLevel(int numLevel, int numStars);
-	
+	virtual void HandlTouch() override;
     CREATE_FUNC(PopupEndGame);
 };
 

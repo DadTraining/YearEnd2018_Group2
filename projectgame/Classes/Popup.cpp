@@ -42,6 +42,7 @@ void Popup::setBackground()
 			
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
+			
 			HandlTouch();
 			break; 
 	

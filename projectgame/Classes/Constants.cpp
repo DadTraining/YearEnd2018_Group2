@@ -77,7 +77,10 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 	map->SetScore(score);
 	if (pass)
 	{
-		listMap.at(lv)->AllowPlay();
+		if (lv<16)
+		{
+			listMap.at(lv)->AllowPlay();
+		}
 	}
 }
 

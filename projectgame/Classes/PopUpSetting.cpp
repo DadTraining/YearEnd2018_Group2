@@ -91,31 +91,7 @@ bool PopupSetting::init()
 	}
 	
 	
-	
-	///////////////
-	//Add label mBgm and mSfx
-	
-	////////////////
-	//Add button replay
-	/*auto btnPlay = ui::Button::create(BUTTON_REPLAY_IMG);
-	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-		+ mBackground->getContentSize().height / 22));
 
-	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->resume();
-			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
-			break;
-		}
-	});*/
-
-	////////////////
-	//Button home
 	
 	return true;
 }
