@@ -36,6 +36,8 @@ public:
     virtual bool init() override;
 	virtual void onExit() override;
 
+	virtual void HandlTouch() override;
+
     CREATE_FUNC(PopupPause);
 };
 

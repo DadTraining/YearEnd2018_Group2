@@ -36,6 +36,8 @@ public:
 	void SharkAliveCallBack();
 
 	bool onTouchBegan(Touch *touch, Event *event);
+	void onTouchMoved(Touch *touch, Event *event);
+	void onTouchEnded(Touch *touch, Event *event);
 	bool onContactBegin(PhysicsContact& contact);
 
 	void SetPhysicsWorld(cocos2d::PhysicsWorld* world) { mPhysicsWorld = world; }
@@ -52,6 +54,9 @@ public:
 	void meatDeleted();
 
 	void setPressWhiteButton(bool pres);
+
+	void DoClone(Shark* aliveShark);
+	Shark* SharkAlive(int tag);
 	
 	CREATE_FUNC(GamePlayScene);
 };

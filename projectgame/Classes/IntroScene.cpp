@@ -71,7 +71,7 @@ void IntroScene::BGMusic()
 
 void IntroScene::LoadGame()
 {
-	MapLevel *m1 = new MapLevel(1, 0, 3, 5, 7, 0, false, 0, true);
+	MapLevel *m1 = new MapLevel(1, 0, 1, 1, 1, 0, false, 0, true);
 	Constants::AddMapIntoList(m1);
 	MapLevel *m2 = new MapLevel(2, 0, 4, 6, 8, 0, false, 0, false);
 	Constants::AddMapIntoList(m2);

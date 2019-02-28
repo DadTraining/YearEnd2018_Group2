@@ -35,9 +35,10 @@ public:
 	virtual void onExit() override;
 	void sliderBGM();
 	void sliderSFX();
+	
+	virtual void HandlTouch() override;
 
-    
-    CREATE_FUNC(PopupSetting);
+	CREATE_FUNC(PopupSetting);
 
 private:
 	cocos2d::Sprite *mSfx, *mBgm;

@@ -124,3 +124,10 @@ void PopupSetting::sliderSFX()
 		}
 	});
 }
+
+void PopupSetting::HandlTouch()
+{
+	Constants::SetEnableAllTouchEventOnMapLevel(true);
+	mLayer->setVisible(false);
+	cocos2d::Director::getInstance()->resume();
+}

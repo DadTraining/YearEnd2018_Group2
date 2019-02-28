@@ -42,25 +42,7 @@ void Popup::setBackground()
 			
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
-			//disappear();
-			mLayer->setVisible(false);
-			if (!Constants::ListButtonIsEmpty())
-			{
-				if (Constants::isInMap())
-				{
-					for (int i = 0; i < Constants::GetListMap().size(); i++)
-					{
-						auto map = Constants::GetListMap().at(i);
-						Constants::SetEnableTouchEvent(i, map->isAllowPlay());
-					}
-				}
-				else
-				{
-					Constants::SetEnableAllTouchEventOnMapLevel(true);
-				}
-			}
-			cocos2d::Director::getInstance()->resume();
-			//mLayer->removeFromParentAndCleanup(true);
+			HandlTouch();
 			break; 
 	
 		}
@@ -78,5 +60,13 @@ void Popup::disappear()
 cocos2d::Layer* Popup::getLayer()
 {
 	return mLayer;
+}
+
+void Popup::HandlTouch()
+{
+	//disappear();
+	//CCLOG("abcxyz");
+	mLayer->setVisible(false);
+	cocos2d::Director::getInstance()->resume();
 }
 

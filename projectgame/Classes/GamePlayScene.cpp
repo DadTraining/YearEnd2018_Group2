@@ -25,7 +25,7 @@ Item* mItem;
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
@@ -68,12 +68,12 @@ bool GamePlayScene::init()
 	coin->setAnchorPoint(cocos2d::Vec2(1, 1));
 	coin->setPosition(cocos2d::Vec2(visibleSize.width, visibleSize.height));
 	//coin->setOpacity(150);
-	this->addChild(coin,998);
-	
-	
+	this->addChild(coin, 998);
+
+
 	countDownButtonMeat = 1;
 	pressed = 0;
-	
+
 	auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
 	btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
 	addChild(btnPause);
@@ -147,21 +147,12 @@ bool GamePlayScene::init()
 
 	////////////////////////
 	//left and right button
-	auto leftButton = ui::Button::create(BUTTON_LEFT);
-	leftButton->setPosition(cocos2d::Vec2(visibleSize.width - whiteButton->getPosition().x,
-		whiteButton->getPosition().y));
-	leftButton->addClickEventListener([&](Ref* event) {
-		ship->leftOrRight(false);
-	});
-	addChild(leftButton, 100);
-
-	auto rightButton = ui::Button::create(BUTTON_RIGHT);
-	rightButton->setPosition(cocos2d::Vec2(leftButton->getPosition().x + visibleSize.width / 10,
-		whiteButton->getPosition().y));
-	rightButton->addClickEventListener([&](Ref* event) {
-		ship->leftOrRight(true);
-	});
-	addChild(rightButton, 100);
+	auto listennerTouch = cocos2d::EventListenerTouchOneByOne::create();
+	listennerTouch->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan,this);
+	listennerTouch->onTouchMoved = CC_CALLBACK_2(GamePlayScene::onTouchMoved, this);
+	listennerTouch->onTouchEnded = CC_CALLBACK_2(GamePlayScene::onTouchEnded, this);
+	listennerTouch->setSwallowTouches(true);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listennerTouch, this);
 	///// end
 
 	auto itemBox = Sprite::create(ITEM_BOX);
@@ -215,7 +206,7 @@ bool GamePlayScene::init()
 			break;
 
 		case 3: //bomb
-			button->setPosition(Vec2(visibleSize.width *2 / 3.35, itemBox->getPosition().y));
+			button->setPosition(Vec2(visibleSize.width * 2 / 3.35, itemBox->getPosition().y));
 			button->addClickEventListener([=](Ref* event)
 			{
 				mItem->KillSharkByBoom(sharkList);
@@ -257,18 +248,18 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-	
-	CCLOG("%d", InfoMap::getScore());
+
+	//	CCLOG("%d", InfoMap::getScore());
 	mLabelScore->setString(std::to_string(InfoMap::getScore()));
 
 	timeLeft += 1;
 	//	sk->Update();
 	callBackAlive += 1;
-	
+
 	if (callBackAlive % SHARK_CALL_BACK_ALIVE == 0)
 	{
 		GamePlayScene::SharkAliveCallBack();
-		
+
 	}
 
 	/////////////////////
@@ -293,12 +284,12 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
-		
+
 	}
 	ship->Update();
 	mItem->Update();
 	cable->CheckSharkNearCable(sharkList, ship);
-	
+
 	////////////////////////////
 	//count down time button meat
 	countDownButtonMeat++;
@@ -325,22 +316,19 @@ void GamePlayScene::SharkAliveCallBack()
 	{
 		size = (int)InfoMap::getPhase2();
 	}
-	else if(timeLeft <1800)
+	else if (timeLeft < 1800)
 	{
 		size = (int)InfoMap::getPhase3();
 	}
 	else
-	{		
+	{
 		this->unscheduleUpdate();
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// show popup end game include score and star
 		// new class popup next game or goto home
-
 		Constants::ReleaseButton();
 		WinGame();
-
-		//Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
-
+		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 	}
 
 	for (int i = 0; i < size; i++)
@@ -348,7 +336,7 @@ void GamePlayScene::SharkAliveCallBack()
 		auto x = sharkList[i]->SpriteIsVisible();
 		if (!x)
 		{
-			
+
 			sharkList[i]->Init();
 			break;
 		}
@@ -366,7 +354,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 			tag->setIsBitten(false);
 			tag->BiteAnimation();
 			cable->EffectCable();
-			
+
 		}
 	}
 	return false;
@@ -411,7 +399,7 @@ void GamePlayScene::meatDone()
 			meatList[i]->disappear();
 			delete(meatList[i]);
 			sharkList[i]->SetOldStatus();
-			
+
 			sharkList[i]->SwimAnimation();
 		}
 	}
@@ -437,6 +425,33 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 	whiteButton->setEnabled(pres);
 }
 
+void GamePlayScene::DoClone(Shark * aliveShark)
+{
+	for (int i = sharkList.size() - 1; i >= 0; i--)
+	{
+		if (!sharkList[i]->SpriteIsVisible())
+		{
+			sharkList[i]->Clone(aliveShark);
+			//sharkList[i]->SetVisible(true);
+			return;
+		}
+	}
+}
+
+Shark * GamePlayScene::SharkAlive(int tag)
+{
+	for (int i = 0; i < sharkList.size(); i++)
+	{
+		if (sharkList[i]->GetSprite()->getTag() == tag)
+		{
+			return sharkList[i];
+		}
+	}
+	return nullptr;
+}
+
+
+
 void GamePlayScene::LoseGame()
 {
 
@@ -444,8 +459,26 @@ void GamePlayScene::LoseGame()
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
-
+	auto location = touch->getLocation();
+	if (
+		location.y > Constants::getVisibleSize().height / 3.5
+		&& location.y < Constants::getVisibleSize().height - SHARK_ZONE_TOP
+		&& location.x < Constants::getVisibleSize().width / 2
+		)
+	{
+		return true;
+	}
 	return false;
+}
+
+void GamePlayScene::onTouchMoved(Touch * touch, Event * event)
+{
+	
+}
+
+void GamePlayScene::onTouchEnded(Touch * touch, Event * event)
+{
+	ship->leftOrRight(ship->GetDirection());
 }
 
 
@@ -453,37 +486,48 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 {
 	auto shapeA = contact.getShapeA()->getBody()->getNode();
 	auto shapeB = contact.getShapeB()->getBody()->getNode();
-	auto a = shapeA->getTag();
-	auto b = shapeB->getTag();
-	if (shapeA->getTag() == 0 && shapeB->getTag() != 0 ||
-		shapeA->getTag() != 0 && shapeB->getTag() == 0
+	auto objectA = shapeA->getTag();
+	auto objectB = shapeB->getTag();
+	if (objectA == 0 && objectB != 0 ||
+		objectA != 0 && objectB == 0
 		)
 	{
 		//CCLOG("bitten");
-		if (shapeA->getTag() != 0)
+		if (objectA != 0)
 		{
-			CheckColisionSharkWithCable(shapeA->getTag());
+			CheckColisionSharkWithCable(objectA);
 		}
 		else
 		{
-			CheckColisionSharkWithCable(shapeB->getTag());
+			CheckColisionSharkWithCable(objectB);
 		}
 
 	}
-	else if (shapeA->getTag() >= 100 && shapeB->getTag() > 0 && shapeB->getTag() < 100 ||
-		shapeB->getTag() >= 100 && shapeA->getTag() > 0 && shapeA->getTag() < 100
+	else if (objectA >= 100 && objectB > 0 && objectB < 100 ||
+		objectB >= 100 && objectA > 0 && objectA < 100
 		)
 	{
-		if (shapeA->getTag() >= 100)
+		bool _result = true;
+		if (objectA >= 100)
 		{
-			ship->Collision(sharkList, shapeB->getTag(), shapeA->getTag());
+			_result = ship->Collision(sharkList, objectB, objectA);
+			if (!_result)
+			{
+				//DoClone(SharkAlive(objectB));
+				SharkAlive(objectB)->Angry();
+			}
 		}
 		else
 		{
-			ship->Collision(sharkList, shapeA->getTag(), shapeB->getTag());
+			_result = ship->Collision(sharkList, objectA, objectB);
+			if (!_result)
+			{
+				//DoClone(SharkAlive(objectA));
+				SharkAlive(objectA)->Angry();
+			}
 		}
 	}
-	CCLOG("game play : colision");
+	//CCLOG("game play : colision");
 	return false;
 }
 

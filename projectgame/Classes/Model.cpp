@@ -29,6 +29,18 @@ bool Model::IsVisible()
 	return mVisible;
 }
 
+void Model::SetTag(int tag)
+{
+	mSprite->setTag(tag);
+
+}
+
+bool Model::IsAlive()
+{
+	return mVisible;
+
+}
+
 cocos2d::Vec2 Model::GetPosition() {
 	return GetSprite()->getPosition();
 }

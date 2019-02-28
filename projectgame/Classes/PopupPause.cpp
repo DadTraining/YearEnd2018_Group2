@@ -90,4 +90,11 @@ void PopupPause::onExit()
 	Popup::onExit();
 }
 
+void PopupPause::HandlTouch()
+{
+	Constants::SetEnableAllTouchEventOnMapLevel(true);
+	mLayer->setVisible(false);
+	cocos2d::Director::getInstance()->resume();
+}
+
 

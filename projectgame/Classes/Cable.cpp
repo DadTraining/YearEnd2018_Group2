@@ -152,7 +152,11 @@ void Cable::CheckSharkNearCable(std::vector<Shark*> sharks, Ship* ship)
 			}
 		}
 	}
-	if (_minPos < MIN_POSITION && sh != nullptr)
+	if (
+		_minPos < MIN_POSITION 
+		&& sh != nullptr
+		//&& sh->GetStatus() != SHARK_STATUS_RUNAWAY_ANIMATION
+		)
 	{
 		SetTarget(sh->GetLocation(), true);
 		ship->ShipMove(sh->GetLocation().y);

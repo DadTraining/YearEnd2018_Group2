@@ -50,23 +50,16 @@ void Ship::Init()
 
 void Ship::leftOrRight(bool direction)
 {
-	//direction = true is right
-	if (direction)
+	mLeft = !direction;
+	if (mLeft)
 	{
-		if (!mLeft)
-		{
-			mLeft = true;
-			mSprite->setFlipX(mLeft);
-		}
+		CCLOG("True");
 	}
 	else
 	{
-		if (mLeft)
-		{
-			mLeft = false;
-			mSprite->setFlipX(mLeft);
-		}
+		CCLOG("false");
 	}
+	mSprite->setFlipX(mLeft);
 }
 
 
@@ -97,7 +90,7 @@ void Ship::ShootColor(int color)
 	}
 }
 
-void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
+bool Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 {
 
 	auto shark = sharks[sharkTag - 1];
@@ -107,14 +100,16 @@ void Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 		if (shark->GetColor() == bullet->GetColor())
 		{
 			shark->Killed();
-			bullet->SetVisible(false);
-		
+			bullet->SetVisible(false);	
+			return true;
 		}
 		else
 		{
 			bullet->SetVisible(false);
+			return false;
 		}
 	}
+	return true;
 
 }
 

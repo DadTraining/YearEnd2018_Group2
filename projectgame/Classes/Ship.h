@@ -24,7 +24,7 @@ public:
 
 	void ShootColor(int color);
 
-	void Collision(std::vector<Shark*> sharks,int sharkTag,int bulletTag);
+	bool Collision(std::vector<Shark*> sharks,int sharkTag,int bulletTag);
 
 	bool GetDirection() {
 		return mLeft;

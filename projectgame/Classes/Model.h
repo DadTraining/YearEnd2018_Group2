@@ -15,13 +15,11 @@ public:
 	Model();
 	virtual ~Model();
 
-	cocos2d::Sprite* GetSprite();
 	void SetSprite(cocos2d::Sprite* sprite);
 
 	virtual void Update() = 0;
 	virtual void Init() = 0;
 	cocos2d::Vec2 GetLocation();
-	cocos2d::Vec2 GetPosition();
 	void SetPosition(cocos2d::Vec2 mPos);
 	void SetVisible(bool vis);
 	bool IsVisible();
@@ -31,13 +29,12 @@ public:
 	cocos2d::Animation* CreateAnimation(std::string name, int start, int frames, float delay);
 
 	virtual cocos2d::Rect GetRect();
+	void SetTag(int tag);
 
-	void SetTag(int tag) {
-		mSprite->setTag(tag);
-	}
-	bool IsAlive() {
-		return mVisible;
-	}
+	bool IsAlive();
+	cocos2d::Sprite* GetSprite();
+	cocos2d::Vec2 GetPosition();
+
 
 
 

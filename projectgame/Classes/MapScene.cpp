@@ -177,11 +177,9 @@ void MapScene::setListButton()
 			case ui::Widget::TouchEventType::BEGAN:
 				break;
 			case ui::Widget::TouchEventType::ENDED:
-				CCLOG("%i", i);
 				mListPlay[i - 1]->getLayer()->setVisible(true);
 				Constants::SetPhase(i - 1);
 				Constants::SetEnableAllTouchEventOnMapLevel(false);
-				//button->setTouchEnabled(false);
 				break;
 			}
 		});

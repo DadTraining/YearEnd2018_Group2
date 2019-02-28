@@ -76,3 +76,15 @@ void PopupPlay::setLevel(int numLevel, int numStars)
 	star->setScale(0.5);
 	mLayer->addChild(star);
 }
+
+void PopupPlay::HandlTouch()
+{
+	for (int i = 0; i < Constants::GetListMap().size(); i++)
+	{
+		auto map = Constants::GetListMap().at(i);
+		Constants::SetEnableTouchEvent(i, map->isAllowPlay());
+	}
+	mLayer->setVisible(false);
+	cocos2d::Director::getInstance()->resume();
+
+}

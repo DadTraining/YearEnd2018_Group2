@@ -15,6 +15,8 @@ public:
 	
 	cocos2d::Layer* getLayer();
 
+	virtual void HandlTouch();
+
 	CREATE_FUNC(Popup);
 
 };
