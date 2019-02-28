@@ -19,7 +19,7 @@ USING_NS_CC;
 
 
 #pragma region Shark
-Item* mItem;
+
 #pragma endregion
 
 Scene* GamePlayScene::createScene()

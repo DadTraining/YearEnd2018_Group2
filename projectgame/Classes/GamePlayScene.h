@@ -10,7 +10,8 @@
 class GamePlayScene : public cocos2d::Scene
 {
 private:
-	Size visibleSize;
+	Item* mItem;
+	cocos2d::Size visibleSize;
 	Ship* ship;
 	Cable* cable;	
 	Vec2 mLocation;

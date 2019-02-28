@@ -34,7 +34,7 @@ void Item::Update()
 		{
 			mStatusStun = false;
 			mTimeStun = 0;
-			ChangeStatusStun();
+			//ChangeStatusStun();
 		}
 	}
 }

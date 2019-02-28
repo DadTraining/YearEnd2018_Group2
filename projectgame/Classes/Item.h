@@ -3,9 +3,8 @@
 #include "Model.h"
 #include"Constants.h"
 #include"ui\CocosGUI.h"
-#include"GamePlayScene.h"
 #include"Shark.h"
-#include<vector>
+#include <vector>
 using namespace cocos2d;
 class Item : public Model
 {
