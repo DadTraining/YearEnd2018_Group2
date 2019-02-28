@@ -2,6 +2,7 @@
 
 #define FONT_SCORE "fonts/casual.ttf"
 #define COIN "button/coin.png"
+#define STAR "map/iconstars.png"
 
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1

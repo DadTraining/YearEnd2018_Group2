@@ -30,7 +30,9 @@ bool MapScene::init()
 	initPopUpLevel();
 
 	setListButton();
-
+	coin();
+	star();
+	
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
 		auto map = Constants::GetListMap().at(i)->isAllowPlay();
@@ -226,4 +228,62 @@ void MapScene::setEnableTouch(bool enable)
 	{
 		btnLevels[i]->setTouchEnabled(enable);
 	}
+}
+
+void MapScene::coin()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	//icon coin
+    mCoin =cocos2d:: Sprite::create(COIN);
+	mCoin->setAnchorPoint(Vec2(0, 1));
+	mCoin->setPosition(cocos2d::Vec2(visibleSize.width / 45, visibleSize.height / 1.015));
+	this->addChild(mCoin);
+	//lable coin
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_SCORE;
+	labelConfig.fontSize = 31;
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mcoin = InfoMap::getScore();	
+	
+	auto mLableCoin=Label::createWithTTF(labelConfig, std::to_string(mcoin));
+	mLableCoin->setAnchorPoint(Vec2(0, 1));
+	mLableCoin->setPosition(cocos2d::Vec2(visibleSize.width / 15, visibleSize.height / 1.03));
+	mLableCoin->enableGlow(Color4B::BLUE);
+	this->addChild(mLableCoin);
+
+
+}
+
+void MapScene::star()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	//icon star
+    mStar = cocos2d::Sprite::create(STAR);
+	mStar->setAnchorPoint(Vec2(0, 1));
+	mStar->setPosition(cocos2d::Vec2(visibleSize.width / 7.2, visibleSize.height / 1.01));
+	mStar->setScale(0.5);
+	this->addChild(mStar);
+
+	// lable star
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_SCORE;
+	labelConfig.fontSize = 31;
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	//mstar = InfoMap::getScore();
+	mstar = 000000;
+	auto mLableStar = Label::createWithTTF(labelConfig, std::to_string(mstar));
+	mLableStar->setAnchorPoint(Vec2(0, 1));
+	mLableStar->setPosition(cocos2d::Vec2(visibleSize.width / 5.4, visibleSize.height / 1.03));
+	mLableStar->enableGlow(Color4B::BLUE);
+	this->addChild(mLableStar);
+
 }

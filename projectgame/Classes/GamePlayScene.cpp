@@ -95,7 +95,7 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-
+	
 	//	CCLOG("%d", InfoMap::getScore());
 	mLabelScore->setString(std::to_string(InfoMap::getScore()));
 
