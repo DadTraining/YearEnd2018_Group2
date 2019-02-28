@@ -35,7 +35,7 @@ Cable::Cable(cocos2d::Scene * scene)
 #pragma region loadingbar
 
 	//auto visibleSize = Constants::getVisibleSize();
-	
+	mHp = 100;
 	//loadingbarwhite
 	loadingbar_white = cocos2d::Sprite::create(HP_WHITE);
 	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 5.35));
@@ -46,17 +46,18 @@ Cable::Cable(cocos2d::Scene * scene)
 	loadingBarGreen = ui::LoadingBar::create(HP_GREEN);
 	loadingBarGreen->setDirection(ui::LoadingBar::Direction::LEFT);
 	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 5.35));
-	loadingBarGreen->setPercent(100);
+	loadingBarGreen->setPercent(mHp);
 	scene->addChild(loadingBarGreen, 999);
 #pragma endregion
 
-	mHp = 100;
+	
 
 	mTargetSprite = cocos2d::Sprite::create("target/target_1.png");
 	mTargetSprite->setVisible(false);
 	//mTargetSprite->setPosition(300, 300);
 	scene->addChild(mTargetSprite, 999);
 	TargetAnimation();
+
 }
 
 Cable::~Cable()
@@ -66,13 +67,13 @@ Cable::~Cable()
 
 void Cable::Bitten()
 {
-	mHp -= 5;
+	mHp -= 10;
 	loadingBarGreen->setPercent(mHp);
-	if (mHp >= 0 && mHp < 25)
+	if (mHp < 25)
 	{
-		loadingBarGreen->loadTexture(HP_RED);
-		EffectLoadingBar();
+      EffectLoadingBar();
 	}
+	
 	//log("%d", mHp);
 }
 
@@ -83,6 +84,16 @@ void Cable::Armor()
 
 void Cable::Update()
 {
+	if ( mHp < 25)
+	{
+		loadingBarGreen->loadTexture(HP_RED);
+		//EffectLoadingBar();
+	}
+	if(mHp>=25)
+	{
+		loadingBarGreen->loadTexture(HP_GREEN); 		
+	}
+//	CCLOG("%d", mHp);
 
 }
 
@@ -99,9 +110,6 @@ void Cable::EffectCable()
 	auto fadein = FadeIn::create(0.1);
 	auto sequen = Sequence::create(fadeOut, fadein, fadeOut->clone(), fadein->clone(), nullptr);
 	mSprite->runAction(sequen);
-	//srand(time(NULL));
-
-
 }
 
 void Cable::EffectLoadingBar()
@@ -110,8 +118,25 @@ void Cable::EffectLoadingBar()
 	auto fadeIn_LoadingBar = FadeIn::create(0.5);
 	auto sequen_LoadingBar = Sequence::create(fadeOut_LoadingBar, fadeIn_LoadingBar, fadeOut_LoadingBar->clone(), fadeIn_LoadingBar->clone(), nullptr);
 	loadingBarGreen->runAction(sequen_LoadingBar);
+}
 
-
+void Cable::IncreaseHP()
+{	
+	if (mHp >= 0 && mHp <=80)
+	{
+		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 20);
+		mHp += 20;
+	}
+	if (mHp == 90)
+	{
+		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 10);
+		mHp += 10;
+	}
+	if (mHp == 100)
+	{
+		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 0);
+		mHp +=0;
+	}
 }
 
 void Cable::TargetAnimation()
