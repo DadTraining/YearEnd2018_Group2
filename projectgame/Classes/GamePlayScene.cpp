@@ -158,6 +158,7 @@ bool GamePlayScene::init()
 		ship->leftOrRight(true);
 	});
 	addChild(rightButton, 100);
+	///// end
 
 	auto itemBox = Sprite::create(ITEM_BOX);
 	itemBox->setPosition(cocos2d::Vec2(visibleSize.width / 2,
@@ -264,6 +265,8 @@ bool GamePlayScene::init()
 	////////////
 	//loading time
 	setTimeLoading();
+
+	Constants::setInMap(false);
 	return true;
 }
 
@@ -342,6 +345,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 
 		// show popup end game include score and star
 		// new class popup next game or goto home
+		
 		WinGame();
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 		break;

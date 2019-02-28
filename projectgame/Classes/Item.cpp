@@ -78,7 +78,10 @@ void Item::KillSharkByBoom(std::vector<Shark*> sharkList)
 {
 	for (int i = 0; i < sharkList.size(); i++)
 	{
-		sharkList[i]->Killed();
+		if (sharkList[i]->IsAlive())
+		{
+			sharkList[i]->Killed();
+		}
 	}
 	
 }

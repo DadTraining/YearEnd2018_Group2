@@ -2,6 +2,7 @@
 
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
+bool Constants::inMap;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -79,6 +80,18 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 		listMap.at(lv)->AllowPlay();
 	}
 }
+
+void Constants::setInMap(bool in)
+{
+	inMap = in;
+}
+
+bool Constants::isInMap()
+{
+	return inMap;
+}
+
+
 
 
 
