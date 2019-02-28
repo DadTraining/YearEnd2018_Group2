@@ -50,9 +50,9 @@ bool GamePlayScene::init()
 	{
 		return false;
 	}
-	timeLeft = 0;
+	
 
-	auto static visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
+	visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
 	MyBodyParser::getInstance()->parseJsonFile(SHARK_BODY_PARSER);
 
@@ -62,22 +62,37 @@ bool GamePlayScene::init()
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
-
-	/////////////////// COIN 
-	auto coin = Sprite::create("coin/money.png");
-	coin->setAnchorPoint(cocos2d::Vec2(1, 1));
-	coin->setPosition(cocos2d::Vec2(visibleSize.width, visibleSize.height));
-	//coin->setOpacity(150);
-	this->addChild(coin, 998);
-
-
+	
 	countDownButtonMeat = 1;
 	pressed = 0;
+	
+	////////////////////////////////////////////////////
+	//setting and pause button
+	btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
+	btnSettingScene->setAnchorPoint(Vec2(1, 1));
+	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width - 15, visibleSize.height - 30));
+	addChild(btnSettingScene);
+	btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
-	auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
-	btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->pause();
+			PopupSetting *popUpSetting = PopupSetting::create();
+			this->addChild(popUpSetting, 110);
+			popUpSetting->getLayer()->setVisible(true);
+			break;
+		}
+	});
+
+	btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
+	btnSettingScene->setAnchorPoint(Vec2(1, 0.5));
+	btnPause->setPosition(cocos2d::Vec2(btnSettingScene->getPosition().x 
+		- btnSettingScene->getContentSize().width - 35, 
+		btnSettingScene->getPosition().y ));
 	addChild(btnPause);
-	Constants::AddButtonIntoMapLevel(btnPause);
 	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
 
 		switch (type)
@@ -91,29 +106,10 @@ bool GamePlayScene::init()
 			this->addChild(popUpPause, 110);
 			/*deleteShark();*/
 			popUpPause->getLayer()->setVisible(true);
-			Constants::SetEnableAllTouchEventOnMapLevel(false);
 			break;
 		}
 	});
-	auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
-	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
-	addChild(btnSettingScene);
-	Constants::AddButtonIntoMapLevel(btnSettingScene);
-	btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
-
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->pause();
-			PopupSetting *popUpSetting = PopupSetting::create();
-			this->addChild(popUpSetting, 110);
-			popUpSetting->getLayer()->setVisible(true);
-			Constants::SetEnableAllTouchEventOnMapLevel(false);
-			break;
-		}
-	});
+	
 
 	whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR, BUTTON_WHITE_IMG_PRE, BUTTON_BLACK_IMG_NOR);
 	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
@@ -160,6 +156,14 @@ bool GamePlayScene::init()
 		whiteButton->getPosition().y - visibleSize.height / 50));
 	itemBox->setOpacity(120);
 	addChild(itemBox, 3);
+
+	////////////////////////////
+	//sprite coin
+	auto coin = Sprite::create(COIN);
+	coin->setAnchorPoint(Vec2(0, 0.5));
+	coin->setPosition(cocos2d::Vec2(15, btnSettingScene->getPosition().y));
+	this->addChild(coin, 5);
+
 #pragma endregion
 
 	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
@@ -232,10 +236,26 @@ bool GamePlayScene::init()
 
 	this->scheduleUpdate();
 	mScore = InfoMap::getScore();
-	mLabelScore = Label::createWithTTF(std::to_string(mScore), "fonts/arial.ttf", 40);
-	mLabelScore->setColor(cocos2d::Color3B::GREEN);
-	mLabelScore->setPosition(cocos2d::Vec2(visibleSize.width*0.87, visibleSize.height *0.945));
-	this->addChild(mLabelScore, 999);
+
+	///////////////////////////////
+	//label score
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_SCORE;
+	labelConfig.fontSize = 31;
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 13,
+							coin->getPosition().y - 5));
+	mLabelScore->enableGlow(Color4B::BLUE);
+	this->addChild(mLabelScore, 5);
+
+	////////////
+	//loading time
+	setTimeLoading();
 
 	Constants::setInMap(false);
 	return true;
@@ -251,16 +271,6 @@ void GamePlayScene::update(float delta)
 
 	//	CCLOG("%d", InfoMap::getScore());
 	mLabelScore->setString(std::to_string(InfoMap::getScore()));
-
-	timeLeft += 1;
-	//	sk->Update();
-	callBackAlive += 1;
-
-	if (callBackAlive % SHARK_CALL_BACK_ALIVE == 0)
-	{
-		GamePlayScene::SharkAliveCallBack();
-
-	}
 
 	/////////////////////
 	//count down time meat appear and disappear
@@ -305,23 +315,23 @@ void GamePlayScene::update(float delta)
 	}
 }
 
-void GamePlayScene::SharkAliveCallBack()
+void GamePlayScene::SharkAliveCallBack(int phase)
 {
 	int size = 0;
-	if (timeLeft < 600)
+	switch (phase)
 	{
+	case 1:
 		size = (int)InfoMap::getPhase1();
-	}
-	else if (timeLeft < 1200)
-	{
+		break;
+	case 2:
 		size = (int)InfoMap::getPhase2();
-	}
-	else if (timeLeft < 1800)
-	{
+		break;
+	case 3:
 		size = (int)InfoMap::getPhase3();
-	}
-	else
-	{
+		break;
+	default:
+		//end game
+		//cocos2d::Director::getInstance()->pause();
 		this->unscheduleUpdate();
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// show popup end game include score and star
@@ -329,8 +339,9 @@ void GamePlayScene::SharkAliveCallBack()
 		Constants::ReleaseButton();
 		WinGame();
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+		break;
 	}
-
+	
 	for (int i = 0; i < size; i++)
 	{
 		auto x = sharkList[i]->SpriteIsVisible();
@@ -450,7 +461,61 @@ Shark * GamePlayScene::SharkAlive(int tag)
 	return nullptr;
 }
 
+/*loading time*/
+void GamePlayScene::setTimeLoading()
+{
+	auto loadingTimeBG = Sprite::create(LOADING_TIME_BG);
+	loadingTimeBG->setAnchorPoint(Vec2(1, 0.5));
+	loadingTimeBG->setPosition(Vec2(btnPause->getPosition().x - 70,
+		btnPause->getPosition().y));
+	this->addChild(loadingTimeBG, 99);
 
+	auto loadingTime = ui::LoadingBar::create(LOADING_TIME);
+	loadingTime->setAnchorPoint(Vec2(1, 0.5));
+	loadingTime->setPercent(0);
+	loadingTime->setPosition(loadingTimeBG->getPosition());
+	this->addChild(loadingTime, 99);
+
+	auto clock = Sprite::create(TIME);
+	clock->setPosition(Vec2(loadingTimeBG->getPosition().x - loadingTimeBG->getContentSize().width
+		, loadingTimeBG->getPosition().y));
+	this->addChild(clock, 100);
+
+	auto updateLoadingBar = CallFunc::create([=]() {
+
+		int percent = (int) loadingTime->getPercent();
+		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 100
+			, clock->getPosition().y));
+		if (loadingTime->getPercent() < 100)
+		{
+			loadingTime->setPercent(loadingTime->getPercent() + 1);
+		}
+
+		if (loadingTime->getPercent() <= 33)
+		{
+			SharkAliveCallBack(1);
+		}
+
+		if (loadingTime->getPercent() > 33 && loadingTime->getPercent() <= 66)
+		{
+			SharkAliveCallBack(2);
+		}
+
+		if (loadingTime->getPercent() > 66 && loadingTime->getPercent() <= 99)
+		{
+			SharkAliveCallBack(3);
+		}
+
+		if (loadingTime->getPercent() == 100)
+		{
+			SharkAliveCallBack(4);
+		}
+	});
+
+	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.45f));
+	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
+	loadingTime->runAction(repeatLoad);
+}
 
 void GamePlayScene::LoseGame()
 {

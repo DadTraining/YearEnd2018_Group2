@@ -10,6 +10,7 @@
 class GamePlayScene : public cocos2d::Scene
 {
 private:
+	Size visibleSize;
 	Ship* ship;
 	Cable* cable;	
 	Vec2 mLocation;
@@ -17,9 +18,10 @@ private:
 	std::vector<ui::Button*> listItem;
 	std::vector<Shark*> sharkList;
 	int callBackAlive;
-	int timeLeft;
 	std::vector<Meat*> meatList;
 	cocos2d::ui::Button *whiteButton;
+	cocos2d::ui::Button *btnSettingScene;
+	cocos2d::ui::Button *btnPause;
 	int pressed;
 	int countDownButtonMeat;
 	int countDownMeat;
@@ -33,7 +35,7 @@ public:
 
 	void update(float delta) override;
 	// implement the "static create()" method manually
-	void SharkAliveCallBack();
+	void SharkAliveCallBack(int phase);
 
 	bool onTouchBegan(Touch *touch, Event *event);
 	void onTouchMoved(Touch *touch, Event *event);
@@ -57,6 +59,10 @@ public:
 
 	void DoClone(Shark* aliveShark);
 	Shark* SharkAlive(int tag);
+	
+
+	//////////////////
+	void setTimeLoading();
 	
 	CREATE_FUNC(GamePlayScene);
 };
