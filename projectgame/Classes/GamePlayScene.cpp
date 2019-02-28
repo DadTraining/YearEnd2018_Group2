@@ -342,7 +342,7 @@ void GamePlayScene::ButtonShoot()
 
 	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
 	redButton->setAnchorPoint(cocos2d::Vec2(1, 0));
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 40 + blueButton->getContentSize().height));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 35 + blueButton->getContentSize().height));
 	redButton->addClickEventListener([&](Ref* event) {
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
