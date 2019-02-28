@@ -141,7 +141,8 @@ void GamePlayScene::update(float delta)
 	}
 
 	mCable->Update();
-
+	
+	LoseGame();
 
 }
 
@@ -160,18 +161,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		size = (int)InfoMap::getPhase3();
 		break;
 	default:
-		//end game
-		//cocos2d::Director::getInstance()->pause();
-		this->unscheduleUpdate();
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// show popup end game include score and star
-		// new class popup next game or goto home
-
-		//PopUpLevelEndGame();
-		//showEndGame();
-		Constants::ReleaseButton();
 		WinGame();
-		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 		break;
 	}
 
@@ -206,9 +196,12 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
+	this->unscheduleUpdate();
+	Constants::ReleaseButton();
 	meatDone();
 	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
 	InfoMap::setScore(0);
+	Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 }
 
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
@@ -271,11 +264,7 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 
 void GamePlayScene::showEndGame()
 {
-
 	cocos2d::Director::getInstance()->pause();
-	/*PopupEndGame *popUpEnd = PopupEndGame::create();
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);*/
 	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
 	this->addChild(popUpEnd, 110);
 	popUpEnd->getLayer()->setVisible(true);
@@ -444,7 +433,6 @@ void GamePlayScene::DoClone(Shark * aliveShark)
 		if (!sharkList[i]->SpriteIsVisible())
 		{
 			sharkList[i]->Clone(aliveShark);
-			//sharkList[i]->SetVisible(true);
 			return;
 		}
 	}
@@ -520,7 +508,13 @@ void GamePlayScene::setTimeLoading()
 
 void GamePlayScene::LoseGame()
 {
-
+	if (mCable->GetHP() <= 0)
+	{
+		///// show game lose
+		this->unscheduleUpdate();
+		Constants::ReleaseButton();
+		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+	}
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)

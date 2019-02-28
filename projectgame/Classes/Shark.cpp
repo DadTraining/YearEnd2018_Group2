@@ -69,10 +69,13 @@ void Shark::Killed()
 
 void Shark::Angry()
 {
-	if (mStatus != SHARK_STATUS_ANGRY)
+	if (mStatus != SHARK_STATUS_ANGRY )
 	{
-		mSpeed *= 5;
-		mStatus = SHARK_STATUS_ANGRY;
+		if (mStatus != SHARK_STATUS_BITE)
+		{
+			mSpeed *= 5;
+			mStatus = SHARK_STATUS_ANGRY;
+		}
 	}
 }
 
@@ -150,7 +153,7 @@ void Shark::Clone(Shark * shark)
 void Shark::BiteAnimation()
 {
 	SetStatus(SHARK_STATUS_BITE);
-	this->SetAlive(false);
+	//this->SetAlive(true);
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
 	auto _visi = cocos2d::CallFunc::create([=]() {
