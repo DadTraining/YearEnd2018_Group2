@@ -15,6 +15,9 @@ public:
 	
 	cocos2d::Layer* getLayer();
 
+	/*
+		this function handle event touch exit button. can override in its children
+	*/
 	virtual void HandlTouch();
 
 	CREATE_FUNC(Popup);

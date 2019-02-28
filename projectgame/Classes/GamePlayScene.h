@@ -6,11 +6,13 @@
 #include "Cable.h"
 #include "Shark.h"
 #include "Meat.h"
-#include"PopUpEndGame.h"
+#include "PopUpEndGame.h"
 
 class GamePlayScene : public cocos2d::Scene
 {
+
 private:
+	Item *mItem;
 	Size visibleSize;
 	Ship* ship;
 	Cable* mCable;	
@@ -28,10 +30,9 @@ private:
 	int countDownMeat;
 	std::vector<MapLevel*> mListLevelEndGame;
 	std::vector<PopupEndGame*> mListPlayEndGame;
-	
-	
 	double mScore;
-	Label *mLabelScore;
+	Label* mLabelScore;
+
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);
@@ -53,7 +54,6 @@ public:
 	void WinGame();
 	void LoseGame();
 
-
 	//////
 	void initMeatList(Scene *scene, std::vector<Shark*> sharkList);
 	void meatDone();
@@ -69,8 +69,13 @@ public:
 	void setTimeLoading();
 	
 	void showEndGame();
-	void initLevelEndGame();
-	void PopUpLevelEndGame();
+	void ShowScore();
+	void RegisterEvent();
+	void ButtonShoot();
+	void SetItemBox();
+	void InitShark();
+	void SetPauseGame();
+
 	CREATE_FUNC(GamePlayScene);
 };
 

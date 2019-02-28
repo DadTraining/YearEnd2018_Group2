@@ -47,7 +47,6 @@ void Popup::setBackground()
 	
 		}
 	});
-
 }
 
 void Popup::disappear()

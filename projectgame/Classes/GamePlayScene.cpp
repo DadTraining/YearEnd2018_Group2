@@ -14,33 +14,21 @@
 #include "MapScene.h"
 #include"PopUpEndGame.h"
 
-
-
-USING_NS_CC;
-
-
-#pragma region Shark
-Item* mItem;
-
+#pragma region declare 
 #pragma endregion
+
+
 
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
-	scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
+	//scene->getPhysicsWorld()->setDebugDrawMask(cocos2d::PhysicsWorld::DEBUGDRAW_ALL);
 
 	auto layer = GamePlayScene::create();
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	scene->addChild(layer);
 	return scene;
-}
-
-// Print useful error message instead of segfaulting when files are not there.
-static void problemLoading(const char* filename)
-{
-	printf("Error while loading: %s\n", filename);
-	printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
 // on "init" you need to initialize your instance
@@ -52,11 +40,13 @@ bool GamePlayScene::init()
 	{
 		return false;
 	}
-	
+
 
 	visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
 	MyBodyParser::getInstance()->parseJsonFile(SHARK_BODY_PARSER);
+
+	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
@@ -64,206 +54,37 @@ bool GamePlayScene::init()
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
-	
+
+	InfoMap::setScore(0);
 	countDownButtonMeat = 1;
 	pressed = 0;
-	
-	auto btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
-	btnPause->setPosition(cocos2d::Vec2(visibleSize.width*0.03, visibleSize.height*0.95));
-	addChild(btnPause);
-	Constants::AddButtonIntoMapLevel(btnPause);
-	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->pause();
-			PopupSetting *popUpSetting = PopupSetting::create();
-			this->addChild(popUpSetting, 110);
-			popUpSetting->getLayer()->setVisible(true);
-			Constants::SetEnableAllTouchEventOnMapLevel(false);
-			break;
-		}
-	});
-	/*auto btnSettingScene = ui::Button::create(BUTTON_SETTING_IMG);
-	btnSettingScene->setPosition(cocos2d::Vec2(visibleSize.width*0.075, visibleSize.height*0.95));
-	addChild(btnSettingScene);
-	Constants::AddButtonIntoMapLevel(btnSettingScene);
-	btnSettingScene->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
-
-	btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
-	btnSettingScene->setAnchorPoint(Vec2(1, 0.5));
-	btnPause->setPosition(cocos2d::Vec2(btnSettingScene->getPosition().x 
-		- btnSettingScene->getContentSize().width - 35, 
-		btnSettingScene->getPosition().y ));
-	addChild(btnPause);
-	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
-
-		switch (type)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			//this->unscheduleUpdate();
-			cocos2d::Director::getInstance()->pause();
-			PopupPause *popUpPause = PopupPause::create();
-			this->addChild(popUpPause, 110);
-			/*deleteShark();*/
-			popUpPause->getLayer()->setVisible(true);
-			break;
-		}
-	});*/
-
-	whiteButton = ui::Button::create(BUTTON_WHITE_IMG_NOR, BUTTON_WHITE_IMG_PRE, BUTTON_BLACK_IMG_NOR);
-	whiteButton->setPosition(cocos2d::Vec2(visibleSize.width * 9.25 / 10, visibleSize.height * 1.25 / 10));
-	whiteButton->addClickEventListener([&](Ref* event) {
-		initMeatList(this, sharkList);
-		pressed = 1;
-	});
-	addChild(whiteButton, 100);
-	setPressWhiteButton(false);
-
-	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
-	blueButton->setPosition(cocos2d::Vec2(visibleSize.width * 8.32 / 10, whiteButton->getPosition().y));
-	blueButton->addClickEventListener([&](Ref* event) {
-		ship->ShootColor(BULLET_SHOOT_BLUE);
-	});
-	addChild(blueButton, 999);
-
-	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
-	redButton->setPosition(cocos2d::Vec2(visibleSize.width * 5.95 / 7, visibleSize.height / 3.84));
-	redButton->addClickEventListener([&](Ref* event) {
-		ship->ShootColor(BULLET_SHOOT_RED);
-	});
-	addChild(redButton, 999);
-
-	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
-	yellowButton->setPosition(cocos2d::Vec2(whiteButton->getPosition().x, visibleSize.height / 3.5));
-	yellowButton->addClickEventListener([&](Ref* event) {
-		ship->ShootColor(BULLET_SHOOT_YELLOW);
-	});
-	addChild(yellowButton, 999);
-
-	////////////////////////
-	//left and right button
-	auto listennerTouch = cocos2d::EventListenerTouchOneByOne::create();
-	listennerTouch->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan,this);
-	listennerTouch->onTouchMoved = CC_CALLBACK_2(GamePlayScene::onTouchMoved, this);
-	listennerTouch->onTouchEnded = CC_CALLBACK_2(GamePlayScene::onTouchEnded, this);
-	listennerTouch->setSwallowTouches(true);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(listennerTouch, this);
-	///// end
-
-	auto itemBox = Sprite::create(ITEM_BOX);
-	itemBox->setPosition(cocos2d::Vec2(visibleSize.width / 2,
-		whiteButton->getPosition().y - visibleSize.height / 50));
-	itemBox->setOpacity(120);
-	addChild(itemBox, 3);
-
-	////////////////////////////
-	//sprite coin
-	auto coin = Sprite::create(COIN);
-	coin->setAnchorPoint(Vec2(0, 0.5));
-	coin->setPosition(cocos2d::Vec2(15, btnSettingScene->getPosition().y));
-	this->addChild(coin, 5);
-
-#pragma endregion
-
-	cocos2d::SpriteFrameCache::getInstance()->addSpriteFramesWithFile("shark/sprites.plist", "shark/sprites.png");
 
 	callBackAlive = 0;
 	ship = new Ship(this);
 	mItem = new Item(this);
 
-	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
-	{
-		Shark* s = new Shark(this);
-		s->SetTag(i + 1);
-		sharkList.push_back(s);
-	}
+	InitShark();
+	SetPauseGame();
+	ButtonShoot();
+	SetItemBox();
 
-
-	for (int i = 1; i <= 3; i++)
-	{
-		std::string path = "item/", png = ".png", name;
-		char c = '0' + i;
-		name = path + c + png;
-		auto button = ui::Button::create(name);
-		listItem.push_back(button);
-
-		switch (i)
-		{
-		case 1: //brick
-			button->setPosition(Vec2(visibleSize.width / 2.5, itemBox->getPosition().y));
-			button->addClickEventListener([=](Ref* event)
-			{
-				mItem->StunShark(sharkList);
-
-			});
-			break;
-
-		case 2: //hp
-			button->setPosition(Vec2(visibleSize.width / 2, itemBox->getPosition().y));
-			button->addClickEventListener([=](Ref* event)
-			{
-				//item->IncreaseBlood();
-				//mHP->IncreaseHP();
-				mCable->IncreaseHP();
-
-			});
-			break;
-
-		case 3: //bomb
-			button->setPosition(Vec2(visibleSize.width * 2 / 3.35, itemBox->getPosition().y));
-			button->addClickEventListener([=](Ref* event)
-			{
-				mItem->KillSharkByBoom(sharkList);
-			});
-			break;
-		default:
-			break;
-		}
-		this->addChild(button, 4);
-
-	}
 
 	mCable = new Cable(this);
 	mCable->GetRect();
 
 	//////////////////////
-	//catch event collision
-	auto contactListener = EventListenerPhysicsContact::create();
-	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+	RegisterEvent();
 
-	//InfoMap::setScore(0);
-
-	this->scheduleUpdate();
-	mScore = InfoMap::getScore();
-
-	///////////////////////////////
-	//label score
-	TTFConfig labelConfig;
-	labelConfig.fontFilePath = FONT_SCORE;
-	labelConfig.fontSize = 31;
-	labelConfig.glyphs = GlyphCollection::DYNAMIC;
-	labelConfig.outlineSize = 2;
-	labelConfig.customGlyphs = nullptr;
-	labelConfig.distanceFieldEnabled = false;
-
-	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
-	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 13,
-							coin->getPosition().y - 5));
-	mLabelScore->enableGlow(Color4B::BLUE);
-	this->addChild(mLabelScore, 5);
-
+	//
+	ShowScore();
 	////////////
 	//loading time
 	setTimeLoading();
 
 	Constants::setInMap(false);
 	//initPopUpLevelEndGame();
+
+	this->scheduleUpdate();
 	return true;
 }
 
@@ -300,22 +121,21 @@ void GamePlayScene::update(float delta)
 		{
 			sharkList[i]->Update();
 		}
-
 	}
 	ship->Update();
 	mItem->Update();
-	cable->CheckSharkNearCable(sharkList, ship);
+	mCable->CheckSharkNearCable(sharkList, ship);
 
 	////////////////////////////
 	//count down time button meat
 	countDownButtonMeat++;
 	if (countDownButtonMeat % 300 == 0)
 	{
-		setPressWhiteButton(true);
+		//setPressWhiteButton(true);
 	}
 	if (pressed == 1)
 	{
-		setPressWhiteButton(false);
+		//	setPressWhiteButton(false);
 		countDownButtonMeat = 1;
 		pressed = 0;
 	}
@@ -346,7 +166,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// show popup end game include score and star
 		// new class popup next game or goto home
-	
+
 		//PopUpLevelEndGame();
 		//showEndGame();
 		Constants::ReleaseButton();
@@ -354,7 +174,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 		break;
 	}
-	
+
 	for (int i = 0; i < size; i++)
 	{
 		auto x = sharkList[i]->SpriteIsVisible();
@@ -377,7 +197,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 			mCable->Bitten();
 			tag->setIsBitten(false);
 			tag->BiteAnimation();
-			cable->EffectCable();
+			mCable->EffectCable();
 
 		}
 	}
@@ -451,7 +271,7 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 
 void GamePlayScene::showEndGame()
 {
-	
+
 	cocos2d::Director::getInstance()->pause();
 	/*PopupEndGame *popUpEnd = PopupEndGame::create();
 	this->addChild(popUpEnd, 110);
@@ -459,7 +279,163 @@ void GamePlayScene::showEndGame()
 	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
 	this->addChild(popUpEnd, 110);
 	popUpEnd->getLayer()->setVisible(true);
+}
+
+void GamePlayScene::ShowScore()
+{
+
+	////////////////////////////
+	//sprite coin
+	auto coin = Sprite::create(COIN);
+	coin->setAnchorPoint(Vec2(0, 1));
+	coin->setPosition(cocos2d::Vec2(15, btnPause->getPosition().y));
+	this->addChild(coin, 5);
+
+
+	mScore = InfoMap::getScore();
+
+	///////////////////////////////
+	//label score
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_SCORE;
+	labelConfig.fontSize = 31;
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
+	mLabelScore->setAnchorPoint(Vec2(0, 1));
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 13,
+		coin->getPosition().y - 5));
+	mLabelScore->enableGlow(Color4B::BLUE);
+	this->addChild(mLabelScore, 5);
+
+}
+
+void GamePlayScene::RegisterEvent()
+{
+	//////////////////////
+	//catch event collision
+	auto contactListener = EventListenerPhysicsContact::create();
+	contactListener->onContactBegin = CC_CALLBACK_1(GamePlayScene::onContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+
+	auto listennerTouch = cocos2d::EventListenerTouchOneByOne::create();
+	listennerTouch->onTouchBegan = CC_CALLBACK_2(GamePlayScene::onTouchBegan, this);
+	listennerTouch->onTouchMoved = CC_CALLBACK_2(GamePlayScene::onTouchMoved, this);
+	listennerTouch->onTouchEnded = CC_CALLBACK_2(GamePlayScene::onTouchEnded, this);
+	listennerTouch->setSwallowTouches(true);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(listennerTouch, this);
+}
+
+void GamePlayScene::ButtonShoot()
+{
+
+	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
+	blueButton->setAnchorPoint(cocos2d::Vec2(1, 0));
+	blueButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 20));
+	blueButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_BLUE);
+	});
+	addChild(blueButton, 999);
+
+	auto redButton = ui::Button::create(BUTTON_RED_IMG_NOR);
+	redButton->setAnchorPoint(cocos2d::Vec2(1, 0));
+	redButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 40 + blueButton->getContentSize().height));
+	redButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_RED);
+	});
+	addChild(redButton, 999);
+
+	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
+	yellowButton->setAnchorPoint(cocos2d::Vec2(1, 0));
+	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width - 40 - blueButton->getContentSize().width, 20));
+	yellowButton->addClickEventListener([&](Ref* event) {
+		ship->ShootColor(BULLET_SHOOT_YELLOW);
+	});
+	addChild(yellowButton, 999);
+}
+
+void GamePlayScene::SetItemBox()
+{
+	auto itemBox = Sprite::create(ITEM_BOX);
+	/// set position
+	itemBox->setAnchorPoint(cocos2d::Vec2(0.2, 0));
+	itemBox->setPosition(35, 5);
+	itemBox->setOpacity(120);
+	addChild(itemBox, 3);
+	auto _x = itemBox->getContentSize().width;
+	for (int i = 1; i <= 3; i++)
+	{
+		std::string path = "item/", png = ".png", name;
+		char c = '0' + i;
+		name = path + c + png;
+		auto button = ui::Button::create(name);
+		button->setAnchorPoint(cocos2d::Vec2(0, 0));
+		listItem.push_back(button);
+		switch (i)
+		{
+		case 1: //brick
+			button->setPosition(Vec2(45, itemBox->getPosition().y + 35));
+			button->addClickEventListener([=](Ref* event)
+			{
+				mItem->StunShark(sharkList);
+			});
+			break;
+		case 2: //hp
+			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 27));
+			button->addClickEventListener([=](Ref* event)
+			{
+				mCable->IncreaseHP();
+			});
+			break;
+		case 3: //bomb
+			button->setPosition(Vec2((_x * 2 / 4 ), itemBox->getPosition().y + 27));
+			button->addClickEventListener([=](Ref* event)
+			{
+				mItem->KillSharkByBoom(sharkList);
+			});
+			break;
+		}
+		this->addChild(button, 4);
 	}
+}
+
+void GamePlayScene::InitShark()
+{
+	for (int i = 0; i < SHARK_MAX_ON_SCREEN; i++)
+	{
+		Shark* s = new Shark(this);
+		s->SetTag(i + 1);
+		sharkList.push_back(s);
+	}
+}
+
+void GamePlayScene::SetPauseGame()
+{
+
+	btnPause = ui::Button::create(BUTTON_PAUSE_IMG);
+	btnPause->setAnchorPoint(Vec2(1, 1));
+	btnPause->setPosition(cocos2d::Vec2(visibleSize.width - 15,
+		visibleSize.height * 0.98));
+	addChild(btnPause, 99);
+	Constants::AddButtonIntoMapLevel(btnPause);
+	btnPause->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->pause();
+			PopupSetting *popUpSetting = PopupSetting::create();
+			this->addChild(popUpSetting, 110);
+			popUpSetting->getLayer()->setVisible(true);
+			Constants::SetEnableAllTouchEventOnMapLevel(false);
+			break;
+		}
+	});
+}
 
 void GamePlayScene::DoClone(Shark * aliveShark)
 {
@@ -491,8 +467,8 @@ void GamePlayScene::setTimeLoading()
 {
 	auto loadingTimeBG = Sprite::create(LOADING_TIME_BG);
 	loadingTimeBG->setAnchorPoint(Vec2(1, 0.5));
-	loadingTimeBG->setPosition(Vec2(btnPause->getPosition().x - 70,
-		btnPause->getPosition().y));
+	loadingTimeBG->setPosition(Vec2(btnPause->getPosition().x - visibleSize.width / 13,
+		btnPause->getPosition().y - btnPause->getContentSize().height / 2));
 	this->addChild(loadingTimeBG, 99);
 
 	auto loadingTime = ui::LoadingBar::create(LOADING_TIME);
@@ -508,7 +484,7 @@ void GamePlayScene::setTimeLoading()
 
 	auto updateLoadingBar = CallFunc::create([=]() {
 
-		int percent = (int) loadingTime->getPercent();
+		int percent = (int)loadingTime->getPercent();
 		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 100
 			, clock->getPosition().y));
 		if (loadingTime->getPercent() < 100)
@@ -544,14 +520,14 @@ void GamePlayScene::setTimeLoading()
 
 void GamePlayScene::LoseGame()
 {
-	
+
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 {
 	auto location = touch->getLocation();
 	if (
-		location.y > Constants::getVisibleSize().height / 3.5
+		location.y > Constants::getVisibleSize().height / 5
 		&& location.y < Constants::getVisibleSize().height - SHARK_ZONE_TOP
 		&& location.x < Constants::getVisibleSize().width / 2
 		)
@@ -563,7 +539,7 @@ bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
 
 void GamePlayScene::onTouchMoved(Touch * touch, Event * event)
 {
-	
+
 }
 
 void GamePlayScene::onTouchEnded(Touch * touch, Event * event)

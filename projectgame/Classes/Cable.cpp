@@ -38,14 +38,16 @@ Cable::Cable(cocos2d::Scene * scene)
 	mHp = 100;
 	//loadingbarwhite
 	loadingbar_white = cocos2d::Sprite::create(HP_WHITE);
-	loadingbar_white->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 5.35));
+	loadingbar_white->setAnchorPoint(cocos2d::Vec2(0,0.5));
+	loadingbar_white->setPosition(cocos2d::Vec2(15, visibleSize.height / 5.35));
 	
 	scene->addChild(loadingbar_white, 999);
 
 	//loading bar green
 	loadingBarGreen = ui::LoadingBar::create(HP_GREEN);
 	loadingBarGreen->setDirection(ui::LoadingBar::Direction::LEFT);
-	loadingBarGreen->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 5.35));
+	loadingBarGreen->setAnchorPoint(cocos2d::Vec2(0,0.5));
+	loadingBarGreen->setPosition(cocos2d::Vec2(loadingbar_white->getPosition()));
 	loadingBarGreen->setPercent(mHp);
 	scene->addChild(loadingBarGreen, 999);
 #pragma endregion
@@ -55,7 +57,7 @@ Cable::Cable(cocos2d::Scene * scene)
 	mTargetSprite = cocos2d::Sprite::create("target/target_1.png");
 	mTargetSprite->setVisible(false);
 	//mTargetSprite->setPosition(300, 300);
-	scene->addChild(mTargetSprite, 999);
+	scene->addChild(mTargetSprite,101);
 	TargetAnimation();
 
 }
