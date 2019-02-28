@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpSetting.h"
 #include "define.h"
+#include"MapScene.h"
 
 
 USING_NS_CC;
@@ -13,51 +14,109 @@ bool PopupSetting::init()
 
 	///////////////
 	//Add label setting
-	auto setting = cocos2d::Sprite::create(SETTING);
-	setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
-	mLayer->addChild(setting);
-	setting->setScale(0.75);
+	if (!Constants::isInMap())
+	{
+		auto setting = cocos2d::Sprite::create(PAUSE);
+		setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
+		mLayer->addChild(setting);
+		mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
+		setting->setScale(0.75);
+		mSfx = cocos2d::Sprite::create(SFX);
+		mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
+			setting->getPosition().y - mBackground->getContentSize().height / 8));
+		mLayer->addChild(mSfx);
+		mSfx->setScale(0.75);
+
+		mBgm = cocos2d::Sprite::create(BGM);
+		mBgm->setPosition(Vec2(mSfx->getPosition().x,
+			mSfx->getPosition().y - mBackground->getContentSize().height / 10));
+		mLayer->addChild(mBgm);
+		mBgm->setScale(0.75);
+
+		////////////////
+		//Add slider of mBgm and mSfx
+		sliderBGM();
+		sliderSFX();
+
+		////////////////////
+		auto btnHome = ui::Button::create(BUTTON_HOME);
+		btnHome->setPosition(Vec2(-mBackground->getContentSize().width / 7,
+			-mBackground->getContentSize().height / 4
+			+ mBackground->getContentSize().height / 22));
+
+		btnHome->setScale(0.75);
+		mLayer->addChild(btnHome, 1);
+		btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+			switch (t)
+			{
+			case cocos2d::ui::Widget::TouchEventType::BEGAN:
+				break;
+			case cocos2d::ui::Widget::TouchEventType::ENDED:
+				cocos2d::Director::getInstance()->resume();
+				Constants::ReleaseButton();
+				Director::getInstance()->replaceScene(MapScene::createScene());
+				break;
+
+			}
+		});
+	    
+
+	}
+	else
+	{
+		auto setting = cocos2d::Sprite::create(SETTING);
+		setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
+		mLayer->addChild(setting);
+		mSfx = cocos2d::Sprite::create(SFX);
+		mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
+			setting->getPosition().y - mBackground->getContentSize().height / 8));
+		mLayer->addChild(mSfx);
+		mSfx->setScale(0.75);
+
+		mBgm = cocos2d::Sprite::create(BGM);
+		mBgm->setPosition(Vec2(mSfx->getPosition().x,
+			mSfx->getPosition().y - mBackground->getContentSize().height / 10));
+		mLayer->addChild(mBgm);
+		mBgm->setScale(0.75);
+
+		////////////////
+		//Add slider of mBgm and mSfx
+		sliderBGM();
+		sliderSFX();
+
+		///////////////////////////////////
+	
+
+
+	}
+	
+	
 	
 	///////////////
 	//Add label mBgm and mSfx
-	mSfx = cocos2d::Sprite::create(SFX);
-	mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
-		setting->getPosition().y - mBackground->getContentSize().height / 8));
-	mLayer->addChild(mSfx);
-	mSfx->setScale(0.75);
-
-	mBgm = cocos2d::Sprite::create(BGM);
-	mBgm->setPosition(Vec2(mSfx->getPosition().x, 
-		mSfx->getPosition().y - mBackground->getContentSize().height / 10));
-	mLayer->addChild(mBgm);
-	mBgm->setScale(0.75);
-
-	////////////////
-	//Add slider of mBgm and mSfx
-	sliderBGM();
-	sliderSFX();
 	
 	////////////////
-	//Add button accept
-	auto btnAccept = cocos2d::ui::Button::create(BUTTON_ACCEPT);
-	btnAccept->setScale(0.75);
-	btnAccept->setPosition(cocos2d::Vec2(-mBackground->getContentSize().width / 7,
-		-mBackground->getContentSize().height / 4
+	//Add button replay
+	/*auto btnPlay = ui::Button::create(BUTTON_REPLAY_IMG);
+	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
 		+ mBackground->getContentSize().height / 22));
 
-	mLayer->addChild(btnAccept);
-	btnAccept->addTouchEventListener([&](Ref* sender, cocos2d::ui::Widget::TouchEventType t) {
+	mLayer->addChild(btnPlay, 1);
+	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
 		switch (t)
 		{
-		case cocos2d::ui::Widget::TouchEventType::BEGAN:
-			
+		case ui::Widget::TouchEventType::BEGAN:
 			break;
-		case cocos2d::ui::Widget::TouchEventType::ENDED:
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->resume();
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
-
 		}
-	});
+	});*/
 
+	////////////////
+	//Button home
+	
 	return true;
 }
 

@@ -138,6 +138,8 @@
 #define BUTTON_HOME "map/home.png"
 #define BUTTON_ACCEPT "map/accept.png"
 #define SETTING "map/setting.png"
+#define PAUSE "map/pause.png"
+
 
 
 
