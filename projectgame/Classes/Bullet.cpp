@@ -23,7 +23,6 @@ void Bullet::Init()
 	auto spriteBody = MyBodyParser::getInstance()->bodyFormJson(mSprite, BULLET_BODY, cocos2d::PhysicsMaterial(1, 1, 0));
 	if (spriteBody != nullptr)
 	{
-		CCLOG("bullet");
 		spriteBody->setDynamic(false);
 		mSprite->setPhysicsBody(spriteBody);
 		mSprite->getPhysicsBody()->setCategoryBitmask(0x01);

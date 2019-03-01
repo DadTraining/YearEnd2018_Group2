@@ -33,6 +33,8 @@ private:
 	double mScore;
 	Label* mLabelScore;
 
+	int mSharksSkin;
+
 public:
 	static cocos2d::Scene* createScene();
 	void menuCloseCallback(cocos2d::Ref* pSender);

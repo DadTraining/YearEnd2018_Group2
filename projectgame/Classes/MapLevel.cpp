@@ -78,3 +78,8 @@ void MapLevel::AllowPlay()
 	mAllowPlay = true;
 }
 
+int MapLevel::GetSharksSkin()
+{
+	return sharksSkin;
+}
+

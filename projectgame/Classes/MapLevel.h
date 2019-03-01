@@ -42,4 +42,5 @@ public:
 	void setPlayPass(bool pas);
 
 	void AllowPlay();
+	int GetSharksSkin();
 };

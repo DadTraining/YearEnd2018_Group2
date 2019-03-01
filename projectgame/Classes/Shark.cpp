@@ -14,10 +14,15 @@ Shark::Shark(cocos2d::Scene * scene)
 {
 
 	mSprite = cocos2d::Sprite::create("shark/shark.png");
-	SetStatus(" ");
-	mOldStatus = " ";
+	SetStatus(SHARK_STATUS_NORMAL);
+	mOldStatus = SHARK_STATUS_NORMAL;
 	SetVisible(false);
-	scene->addChild(mSprite,99);
+	scene->addChild(mSprite, 99);
+	color_1st = cocos2d::Sprite::create(SHARK_COLOR_BLACK);
+	color_2nd = cocos2d::Sprite::create(SHARK_COLOR_BLACK);
+	Shark::setShowColorVisible();
+	scene->addChild(color_1st, 101);
+	scene->addChild(color_2nd, 101);
 
 	AddStun(scene);
 	//Init();
@@ -25,7 +30,7 @@ Shark::Shark(cocos2d::Scene * scene)
 
 Shark::Shark(const Shark * shark)
 {
-	
+
 }
 
 
@@ -40,14 +45,14 @@ void Shark::DamagedElectronic()
 {
 	mSprite->stopAllActions();
 	mStatus = SHARK_STATUS_DAMAGED_BY_ELECTRONIC;
-	auto animate = cocos2d::Animate::create(Model::CreateAnimation(SHARK_BE_DAMAGE_BY_ELECTRONIC, 1, 3, 0.05));
+	auto animate = cocos2d::Animate::create(Model::CreateAnimation(SHARK_BE_DAMAGE_BY_ELECTRONIC, 1, 3, 0.075));
 	auto callback = cocos2d::CallFunc::create([=]() {
 		mStatus = mOldStatus;
-		Shark::Killed(); 
+		Shark::Killed();
 	});
 
 	auto seq = cocos2d::Sequence::create(
-		cocos2d::Repeat::create(animate,4),
+		cocos2d::Repeat::create(animate, 3),
 		callback,
 		nullptr
 	);
@@ -90,6 +95,7 @@ void Shark::Killed()
 	mSprite->setFlippedY(true);
 	mSprite->setPositionZ(-1);
 	SetAlive(false);
+	Shark::setShowColorVisible();
 	auto _sct = cocos2d::ScaleTo::create(1, 0);
 	auto _move = cocos2d::MoveTo::create(2, cocos2d::Vec2(mSprite->getPosition().x, SCREEN_H));
 	auto _fOut = cocos2d::FadeOut::create(2);
@@ -114,11 +120,17 @@ void Shark::Killed()
 
 void Shark::Angry()
 {
-	if (mStatus != SHARK_STATUS_ANGRY )
+	if (mStatus == SHARK_STATUS_NORMAL)
 	{
-		if (mStatus != SHARK_STATUS_BITE)
+		auto location = Shark::GetLocation().x;
+		if (Shark::GetDirection() && location - mSpeed * 13 > Constants::getVisibleSize().width / 2)
 		{
-			mSpeed *= 5;
+			mSpeed *= 10;
+			mStatus = SHARK_STATUS_ANGRY;
+		}
+		else if (!Shark::GetDirection() && location + mSpeed * 13 < Constants::getVisibleSize().width / 2)
+		{
+			mSpeed *= 10;
 			mStatus = SHARK_STATUS_ANGRY;
 		}
 	}
@@ -136,11 +148,11 @@ void Shark::RunAway()
 	if (mMoveToLeft)
 	{
 		_pos.x += mSpeed * SHARK_SPEED_RUNAWAY;
-		if (_pos.x > Constants::getVisibleSize().width )
+		if (_pos.x > Constants::getVisibleSize().width)
 		{
 			SetVisible(false);
-			mStatus = " ";
-			mOldStatus = " ";
+			mStatus = SHARK_STATUS_NORMAL;
+			mOldStatus = SHARK_STATUS_NORMAL;
 			mSprite->stopAllActions();
 		}
 
@@ -151,7 +163,8 @@ void Shark::RunAway()
 		if (_pos.x < 0)
 		{
 			SetVisible(false);
-			mStatus = " "; mOldStatus = " ";
+			mStatus = SHARK_STATUS_NORMAL;
+			mOldStatus = SHARK_STATUS_NORMAL;
 			mSprite->stopAllActions();
 		}
 	}
@@ -189,7 +202,7 @@ void Shark::Clone(Shark * shark)
 		mPos.x -= _x;
 	}
 	mSprite->setPosition(mPos);
-	
+
 }
 
 
@@ -199,6 +212,7 @@ void Shark::BiteAnimation()
 {
 	SetStatus(SHARK_STATUS_BITE);
 	//this->SetAlive(true);
+	mSpeed = 1.5;
 	mSprite->stopAllActions();
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_BITE_START, SHARK_BITE_FRAME, mDelay));
 	auto _visi = cocos2d::CallFunc::create([=]() {
@@ -230,14 +244,14 @@ void Shark::SwimAnimation()
 void Shark::Move()
 {
 	if (mVisible)
-	{ 
+	{
 		auto _pos = mSprite->getPosition();
 		if (mMoveToLeft
 			&& _pos.x > Constants::getVisibleSize().width / 2 - mSpeed)
 		{
 			_pos.x -= mSpeed;
 			mSprite->setPosition(_pos);
-			
+
 		}
 		else if (!mMoveToLeft
 			&& _pos.x < Constants::getVisibleSize().width / 2 + mSpeed)
@@ -251,7 +265,7 @@ void Shark::Move()
 				//Shark::Killed();
 			}
 		}
-		
+
 	}
 }
 
@@ -262,13 +276,14 @@ void Shark::UnMove(cocos2d::Vec2 pos)
 		mSprite->stopAllActions();
 		mSprite->setPosition(pos);
 	}
-	
+
 }
 
 void Shark::RunAwayAnimation()
 {
 	mSprite->stopAllActions();
 	//CCLOG("%s", mStatus);
+	Shark::SetAlive(false);
 	mStatus = SHARK_STATUS_RUNAWAY_ANIMATION;
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_RUN_AWAY_START, SHARK_RUN_AWAY_FRAME, mDelay - 0.05));
 	auto _visi = cocos2d::CallFunc::create([=]() {
@@ -295,22 +310,24 @@ void Shark::RunAwayAnimation()
 void Shark::Update()
 {
 	//auto _pos = mSprite->getPosition();
-	if (mStatus == " " || mStatus.empty()|| mStatus == SHARK_STATUS_ANGRY)
+	if (mStatus == SHARK_STATUS_NORMAL || mStatus.empty() || mStatus == SHARK_STATUS_ANGRY)
 	{
 		Shark::Move();
-		
 	}
 	else if (mStatus == SHARK_STATUS_RUNAWAY)
 	{
 		Shark::RunAway();
 		//Cable::Bitten();
 	}
-	else if(mStatus == SHARK_STATUS_STUN)
+	else if (mStatus == SHARK_STATUS_STUN)
 	{
-		
+
 	}
 
-	
+	if (mTotalColor != 1)
+	{
+		SetPositionCheckColor();
+	}
 
 }
 
@@ -328,25 +345,22 @@ void Shark::Init()
 		cocos2d::FadeIn::create(0.1)
 	);
 	mSprite->stopAllActions();
-	mStatus = " ";
-	mOldStatus = " ";
+	mStatus = SHARK_STATUS_NORMAL;
+	mOldStatus = SHARK_STATUS_NORMAL;
 	SetVisible(true);
+
+
 	setIsBitten(true);
 	//set color
-	int color = cocos2d::random(1, 3);
-	switch (color)
+	if (mTotalColor == 1)
 	{
-	case 1:
-		mColor = SHARK_BLUE;
-		break;
-	case 2:
-		mColor = SHARK_RED;
-		break;
-	case 3:
-		mColor = SHARK_YELLOW;
-		break;
+		SharkSingleSkin();
 	}
-
+	else
+	{
+		SharkMultiSkin();
+		Shark::setShowColorVisible();
+	}
 	//set size
 	int size = cocos2d::random(1, 3);
 	switch (size)
@@ -387,12 +401,12 @@ void Shark::Init()
 		mMoveToLeft = false; // run from left to right
 	}
 
-	auto posY = cocos2d::random(Constants::getVisibleSize().height*4/10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
+	auto posY = cocos2d::random(Constants::getVisibleSize().height * 4 / 10, Constants::getVisibleSize().height - SHARK_ZONE_TOP);
 	Shark::SwimAnimation();
 	auto sharkSize = mSprite->getContentSize().width / 2;
 	if (mMoveToLeft)
 	{
-		mPos = cocos2d::Vec2(Constants::getVisibleSize().width  + sharkSize, posY);
+		mPos = cocos2d::Vec2(Constants::getVisibleSize().width + sharkSize, posY);
 	}
 	else
 	{
@@ -400,7 +414,7 @@ void Shark::Init()
 	}
 	mSprite->setPosition(mPos);
 	mSprite->setFlipX(mMoveToLeft);
-	
+
 	SetPhysicsBody();
 
 }
@@ -408,7 +422,7 @@ void Shark::Init()
 void Shark::SetStatus(std::string status)
 {
 	this->mStatus = status;
-
+	this->mOldStatus = status;
 }
 
 std::string Shark::GetColor()
@@ -490,6 +504,139 @@ void Shark::SetPhysicsBody()
 		mSprite->getPhysicsBody()->setContactTestBitmask(true);
 	}
 }
+
+void Shark::SharkSingleSkin()
+{
+	int color = cocos2d::random(1, 3);
+	switch (color)
+	{
+	case 1:
+		mColor = SHARK_BLUE;
+		break;
+	case 2:
+		mColor = SHARK_RED;
+		break;
+	case 3:
+		mColor = SHARK_YELLOW;
+		break;
+	}
+
+}
+
+void Shark::SetNumSkinForShark(int num)
+{
+	mTotalColor = num;
+}
+
+void Shark::SharkMultiSkin()
+{
+	mTotalColor = 2;
+	mTotalDuplicate = 0;
+	int color = cocos2d::random(1, 3);
+	switch (color)
+	{
+	case 1:
+		mColor = SHARK_ORANGE;
+		mColor_1st = SHARK_YELLOW;
+		mColor_2nd = SHARK_RED;
+		break;
+	case 2:
+		mColor = SHARK_GREEN;
+		mColor_1st = SHARK_YELLOW;
+		mColor_2nd = SHARK_BLUE;
+		break;
+	case 3:
+		mColor = SHARK_PURPLE;
+		mColor_1st = SHARK_BLUE;
+		mColor_2nd = SHARK_RED;
+		break;
+	}
+	color_1st->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("black.png"));
+	color_2nd->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("black.png"));
+
+}
+
+bool Shark::CheckColor(std::string color)
+{
+	if (mTotalColor == 1)
+	{
+		return mColor == color;
+	}
+	else
+	{
+		if (mColor_1st == color || mColor_2nd == color)
+		{
+			std::string _name;
+
+			if (color == SHARK_YELLOW)
+			{
+				_name = "yellow.png";
+			}
+			else if (color == SHARK_BLUE)
+			{
+				_name = "blue.png";
+			}
+			else if (color == SHARK_RED)
+			{
+				_name = "red.png";
+			}
+
+			if (mTotalDuplicate == 0)
+			{
+				color_1st->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(_name));
+				mTotalDuplicate += 1;
+			}
+			else
+			{
+				color_2nd->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(_name));
+				mTotalDuplicate += 1;
+			}
+			return true;
+		}
+		return false;
+	}
+}
+
+void Shark::SetPositionCheckColor()
+{
+	color_1st->setPosition(
+		Shark::GetLocation().x,
+		Shark::GetLocation().y - Shark::GetSprite()->getContentSize().height / 2 - 3
+	);
+	if (mMoveToLeft)
+	{
+		color_2nd->setPosition(
+			color_1st->getPosition().x - color_1st->getContentSize().width,
+			color_1st->getPosition().y
+		);
+	}
+	else
+	{
+		color_2nd->setPosition(
+			color_1st->getPosition().x + color_1st->getContentSize().width,
+			color_1st->getPosition().y
+		);
+	}
+}
+
+bool Shark::EnoughColor()
+{
+	if (this->mTotalDuplicate == 2)
+	{
+		return true;
+	}
+	return false;
+}
+
+void Shark::setShowColorVisible()
+{
+	color_1st->setVisible(this->IsVisible());
+	color_2nd->setVisible(this->IsVisible());
+}
+
+
+
+
 
 void Shark::CallBackStatus()
 {

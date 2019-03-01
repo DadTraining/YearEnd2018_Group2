@@ -49,6 +49,12 @@
 #define SHARK_BODY_SPRITE_LEFT "leftshark"
 #define SHARK_BODY_SPRITE_RIGHT "rightshark"
 #define SHARK_BODY_PARSER "bodyphysics.json"
+#define SHARK_MARK "item/mark.png"
+#define SHARK_COLOR_BLACK "color/black.png"
+#define SHARK_COLOR_BLUE "color/blue1.png"
+#define SHARK_COLOR_RED "color/red1.png"
+#define SHARK_COLOR_YELLOW "color/yellow1.png"
+
 
 #define SHARK_REAL_SIZE 70
 
@@ -88,6 +94,7 @@
 #define SHARK_STATUS_BITE "BITE"
 #define SHARK_STATUS_STUN "stun_"
 #define SHARK_STATUS_ANGRY "ANGRY"
+#define SHARK_STATUS_NORMAL "NORMAL"
 
 #define SHARK_STATUS_DAMAGED_BY_ELECTRONIC "ELECTRONIC"
 

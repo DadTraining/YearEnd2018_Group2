@@ -13,18 +13,24 @@ protected:
 	bool mIsBitten;
 	bool mMoveToLeft;
 	int mTotalColor;
+	int mTotalDuplicate;
 	int mScore;
 	std::string mColor;
+	std::string mColor_1st;
+	std::string mColor_2nd;
 	std::string mStatus;
 	std::string mOldStatus;
 	cocos2d::Sprite* mStunSprite;
+	cocos2d::Sprite* color_1st;
+	cocos2d::Sprite* color_2nd;
+
+
 public:
 	
 	Shark();
 	Shark(cocos2d::Scene* scene);
 	Shark(const Shark * shark);
 	virtual ~Shark();
-
 	void DamagedElectronic();
 	void StunAnimation();
 	void Killed();
@@ -44,7 +50,6 @@ public:
 	void SetStatus(std::string status);
 	void CallBackStatus();
 	void setIsBitten(bool bitten);
-
 	bool IsBitten();
 	std::string GetColor();
 	bool GetDirection();
@@ -57,8 +62,14 @@ public:
 	int GetScore();
 	void SetStun(bool vis);
 	void AddStun(cocos2d::Scene* scene);
-
-
 	void SetPhysicsBody();
+	void SharkSingleSkin();
+	void SetNumSkinForShark(int num);
+	void SharkMultiSkin();
+	bool CheckColor(std::string color);
+	void SetPositionCheckColor();
+	bool EnoughColor();
+	void setShowColorVisible();
+
 };
 

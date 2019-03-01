@@ -60,7 +60,8 @@ void Constants::SetPhase(int index)
 	InfoMap::setSharPhases(
 		map->GetPhase(1),
 		map->GetPhase(2),
-		map->GetPhase(3)
+		map->GetPhase(3),
+		map->GetSharksSkin()
 	);
 	InfoMap::setMapLevel(index);
 }

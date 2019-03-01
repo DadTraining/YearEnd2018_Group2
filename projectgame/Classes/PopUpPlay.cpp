@@ -26,7 +26,7 @@ bool PopupPlay::init()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			Constants::ReleaseButton();
-			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1.5, GamePlayScene::createScene()));
 			break;
 		}
 	});

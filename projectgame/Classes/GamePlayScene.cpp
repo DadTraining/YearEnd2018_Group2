@@ -55,7 +55,7 @@ bool GamePlayScene::init()
 	InfoMap::setScore(0);
 	countDownButtonMeat = 1;
 	pressed = 0;
-
+	mSharksSkin = InfoMap::getSharkSkin();
 	callBackAlive = 0;
 	ship = new Ship(this);
 	mItem = new Item(this);
@@ -138,7 +138,7 @@ void GamePlayScene::update(float delta)
 	}
 
 	mCable->Update();
-	
+
 	LoseGame();
 
 }
@@ -167,8 +167,26 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		auto x = sharkList[i]->SpriteIsVisible();
 		if (!x)
 		{
-
-			sharkList[i]->Init();
+			if (mSharksSkin>0)
+			{
+				auto rand = cocos2d::random(1, 10);
+				if (rand % 2 == 0)
+				{
+					sharkList[i]->SetNumSkinForShark(1);
+					sharkList[i]->Init();
+				}
+				else
+				{
+					sharkList[i]->SetNumSkinForShark(2);
+					sharkList[i]->Init();
+					mSharksSkin -= 1;
+				}
+			}
+			else
+			{
+				sharkList[i]->SetNumSkinForShark(1);
+				sharkList[i]->Init();
+			}
 			break;
 		}
 	}
@@ -275,7 +293,7 @@ void GamePlayScene::ShowScore()
 	auto coin = Sprite::create(COIN);
 	coin->setAnchorPoint(Vec2(0, 1));
 	coin->setPosition(cocos2d::Vec2(15, btnPause->getPosition().y));
-	this->addChild(coin,999);
+	this->addChild(coin, 999);
 
 
 	mScore = InfoMap::getScore();
@@ -289,7 +307,7 @@ void GamePlayScene::ShowScore()
 	labelConfig.outlineSize = 2;
 	labelConfig.customGlyphs = nullptr;
 	labelConfig.distanceFieldEnabled = false;
-	
+
 	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
 	mLabelScore->setAnchorPoint(Vec2(0, 1));
 	mLabelScore->setAlignment(cocos2d::TextHAlignment::RIGHT);
@@ -378,7 +396,7 @@ void GamePlayScene::SetItemBox()
 			});
 			break;
 		case 3: //bomb
-			button->setPosition(Vec2((_x * 2 / 4 ), itemBox->getPosition().y + 35));
+			button->setPosition(Vec2((_x * 2 / 4), itemBox->getPosition().y + 35));
 			button->addClickEventListener([=](Ref* event)
 			{
 				mItem->KillSharkByBoom(sharkList);
@@ -463,18 +481,32 @@ void GamePlayScene::setTimeLoading()
 	loadingTimeBG->setAnchorPoint(Vec2(1, 0.5));
 	loadingTimeBG->setPosition(Vec2(btnPause->getPosition().x - visibleSize.width / 13,
 		btnPause->getPosition().y - btnPause->getContentSize().height / 2));
-	this->addChild(loadingTimeBG, 99);
+	this->addChild(loadingTimeBG, 998);
 
 	auto loadingTime = ui::LoadingBar::create(LOADING_TIME);
 	loadingTime->setAnchorPoint(Vec2(1, 0.5));
 	loadingTime->setPercent(0);
 	loadingTime->setPosition(loadingTimeBG->getPosition());
-	this->addChild(loadingTime, 99);
+	this->addChild(loadingTime, 998);
+
+	auto mark1 = cocos2d::Sprite::create(SHARK_MARK);
+	mark1->setPosition(Vec2(
+		loadingTime->getPosition().x - loadingTime->getContentSize().width / 3,
+		loadingTime->getPosition().y
+	));
+	this->addChild(mark1, 999);
+
+	auto mark2 = cocos2d::Sprite::create(SHARK_MARK);
+	mark2->setPosition(Vec2(
+		loadingTime->getPosition().x - loadingTime->getContentSize().width *2 / 3,
+		loadingTime->getPosition().y
+	));
+	this->addChild(mark2, 999);
 
 	auto clock = Sprite::create(TIME);
 	clock->setPosition(Vec2(loadingTimeBG->getPosition().x - loadingTimeBG->getContentSize().width
 		, loadingTimeBG->getPosition().y));
-	this->addChild(clock, 100);
+	this->addChild(clock, 998);
 
 	auto updateLoadingBar = CallFunc::create([=]() {
 
@@ -509,7 +541,12 @@ void GamePlayScene::setTimeLoading()
 
 	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.45f));
 	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
-	loadingTime->runAction(repeatLoad);
+	auto seq = cocos2d::Sequence::create(
+		DelayTime::create(2.0f),
+		repeatLoad,
+		nullptr
+	);
+	loadingTime->runAction(seq);
 }
 
 void GamePlayScene::LoseGame()
@@ -558,7 +595,6 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 		objectA != 0 && objectB == 0
 		)
 	{
-		//CCLOG("bitten");
 		if (objectA != 0)
 		{
 			CheckColisionSharkWithCable(objectA);
