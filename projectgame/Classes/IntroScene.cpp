@@ -154,7 +154,6 @@ void IntroScene::Loading()
 				case ui::Widget::TouchEventType::ENDED:
 				{
 					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
-					bgmMap->stopBackgroundMusic();
 					break;
 				}
 
