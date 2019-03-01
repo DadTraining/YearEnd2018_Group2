@@ -171,8 +171,9 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		//showEndGame();
 		Constants::ReleaseButton();
 		WinGame();
+		//CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
-		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+		
 		break;
 	}
 
