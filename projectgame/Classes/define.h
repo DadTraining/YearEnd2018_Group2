@@ -3,6 +3,9 @@
 #define FONT_SCORE "fonts/casual.ttf"
 #define FONT_LEVEL "fonts/ALGER.ttf"
 #define COIN "button/coin.png"
+#define STAR "map/iconstars.png"
+#define SHOP "button/home.png"
+#define BACKGROUNDSHOP "button/backgroudshop.png"
 #define LEVEL "map/levelingame.png"
 
 #define SHIP_IMG "ship/Ship.png"
