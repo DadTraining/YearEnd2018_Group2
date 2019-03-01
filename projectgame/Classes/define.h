@@ -36,7 +36,11 @@
 #define MEAT "item/meat.png"
 
 // shark
+
+
+#define SHARK_BE_DAMAGE_BY_ELECTRONIC "sharkbone_"
 #define SHARK_BLUE "blueshark_"
+
 #define SHARK_GREEN "greenshark_"
 #define SHARK_ORANGE "orangeshark_"
 #define SHARK_RED "redshark_"
@@ -82,8 +86,10 @@
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_RUNAWAY_ANIMATION "RUNAWAY_ANIMATION"
 #define SHARK_STATUS_BITE "BITE"
-#define SHARK_STATUS_STUN "STUN"
+#define SHARK_STATUS_STUN "stun_"
 #define SHARK_STATUS_ANGRY "ANGRY"
+
+#define SHARK_STATUS_DAMAGED_BY_ELECTRONIC "ELECTRONIC"
 
 
 #define BULLET_MAX 15
@@ -114,6 +120,7 @@
 #define ITEM_BRICK_IMAGE "item/1.png"
 #define ITEM_HP_IMAGE "item/2.png"
 #define ITEM_HP1_IMAGE "item/hp1.png"
+#define ITEM_ELECTRIC_IMAGE "item/electricgun.png"
 
 #define ITEM_SCAlE 0.3
 
@@ -162,3 +169,7 @@
 #define LOADING_TIME_BG "item/time_bg.png"
 #define LOADING_TIME "item/time_loading.png"
 #define TIME "item/clock.png"
+
+#define COST_BUY_BREACK 200
+#define COST_BUY_HP 100
+#define COST_BUY_BOOM 350

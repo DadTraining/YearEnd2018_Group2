@@ -50,10 +50,7 @@ bool GamePlayScene::init()
 
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
-	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	//_backGround->setOpacity(0.1);
-	addChild(_backGround, -1);
+	RandomBackGround();
 
 	InfoMap::setScore(0);
 	countDownButtonMeat = 1;
@@ -235,7 +232,7 @@ void GamePlayScene::meatDone()
 		{
 			meatList[i]->disappear();
 			delete(meatList[i]);
-			sharkList[i]->SetOldStatus();
+			sharkList[i]->CallBackStatus();
 
 			sharkList[i]->SwimAnimation();
 		}
@@ -278,7 +275,7 @@ void GamePlayScene::ShowScore()
 	auto coin = Sprite::create(COIN);
 	coin->setAnchorPoint(Vec2(0, 1));
 	coin->setPosition(cocos2d::Vec2(15, btnPause->getPosition().y));
-	this->addChild(coin, 5);
+	this->addChild(coin,999);
 
 
 	mScore = InfoMap::getScore();
@@ -292,13 +289,14 @@ void GamePlayScene::ShowScore()
 	labelConfig.outlineSize = 2;
 	labelConfig.customGlyphs = nullptr;
 	labelConfig.distanceFieldEnabled = false;
-
+	
 	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
 	mLabelScore->setAnchorPoint(Vec2(0, 1));
-	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 13,
-		coin->getPosition().y - 5));
+	mLabelScore->setAlignment(cocos2d::TextHAlignment::RIGHT);
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + coin->getContentSize().width + 10,
+		coin->getPosition().y - 7));
 	mLabelScore->enableGlow(Color4B::BLUE);
-	this->addChild(mLabelScore, 5);
+	this->addChild(mLabelScore, 999);
 
 }
 
@@ -373,14 +371,14 @@ void GamePlayScene::SetItemBox()
 			});
 			break;
 		case 2: //hp
-			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 27));
+			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 25));
 			button->addClickEventListener([=](Ref* event)
 			{
 				mCable->IncreaseHP();
 			});
 			break;
 		case 3: //bomb
-			button->setPosition(Vec2((_x * 2 / 4 ), itemBox->getPosition().y + 27));
+			button->setPosition(Vec2((_x * 2 / 4 ), itemBox->getPosition().y + 35));
 			button->addClickEventListener([=](Ref* event)
 			{
 				mItem->KillSharkByBoom(sharkList);
@@ -424,6 +422,14 @@ void GamePlayScene::SetPauseGame()
 			break;
 		}
 	});
+}
+
+void GamePlayScene::RandomBackGround()
+{
+	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
+	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	//_backGround->setOpacity(0.1);
+	addChild(_backGround, -1);
 }
 
 void GamePlayScene::DoClone(Shark * aliveShark)

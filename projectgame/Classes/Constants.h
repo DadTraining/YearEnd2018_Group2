@@ -14,6 +14,12 @@ private:
 	static std::vector<MapLevel*> listMap;
 	static bool inMap;
 
+	static int breack;
+	static int hp;
+	static int boom;
+	static int Coin;
+	static int star;
+
 public:
 	static cocos2d::Size getVisibleSize();
 	static float setScaleSprite(float whichSize,float expectSize, float realSize);
@@ -33,6 +39,16 @@ public:
 
 	static void setInMap(bool in);
 	static bool isInMap();
+
+	static bool BuyBooms();
+	static bool BuyBreacks();
+	static bool BuyHps();
+	static int GetBooms();
+	static int GetHps();
+	static int GetBreacks();
+	static void SetCoin(int coins);
+	static int GetCoin();
+
 
 };
 

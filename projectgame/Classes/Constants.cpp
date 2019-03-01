@@ -1,8 +1,14 @@
 #include "Constants.h"
+#include "define.h"
 
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
 bool Constants::inMap;
+ int Constants::breack;
+ int Constants::hp;
+ int Constants::boom;
+ int Constants::Coin;
+ int Constants::star;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -77,7 +83,11 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 	map->SetScore(score);
 	if (pass)
 	{
-		listMap.at(lv)->AllowPlay();
+		if (lv<16)
+		{
+			listMap.at(lv)->AllowPlay();
+			Constants::SetCoin(Constants::GetCoin() + score);
+		}
 	}
 }
 
@@ -89,6 +99,62 @@ void Constants::setInMap(bool in)
 bool Constants::isInMap()
 {
 	return inMap;
+}
+
+bool Constants::BuyBooms()
+{
+	if (Constants::GetCoin() > COST_BUY_BOOM)
+	{
+		boom += 1;
+		return true;
+	}
+	return false;
+}
+
+bool Constants::BuyBreacks()
+{
+	if (Constants::GetCoin() > COST_BUY_BREACK)
+	{
+		breack += 3;
+		return true;
+	}
+	return false;
+
+}
+
+bool Constants::BuyHps()
+{
+	if (Constants::GetCoin() > COST_BUY_HP)
+	{
+		hp += 3;
+		return true;
+	}
+	return false;
+}
+
+int Constants::GetBooms()
+{
+	return boom;
+}
+
+int Constants::GetHps()
+{
+	return hp;
+}
+
+int Constants::GetBreacks()
+{
+	return breack;
+}
+
+void Constants::SetCoin(int coins)
+{
+	Coin = coins;
+}
+
+int Constants::GetCoin()
+{
+	return Coin;
 }
 
 

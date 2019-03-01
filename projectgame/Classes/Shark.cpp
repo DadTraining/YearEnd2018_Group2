@@ -18,6 +18,8 @@ Shark::Shark(cocos2d::Scene * scene)
 	mOldStatus = " ";
 	SetVisible(false);
 	scene->addChild(mSprite,99);
+
+	AddStun(scene);
 	//Init();
 }
 
@@ -33,8 +35,51 @@ Shark::~Shark()
 
 }
 
-void Shark::Damaged()
+
+void Shark::DamagedElectronic()
 {
+	mSprite->stopAllActions();
+	mStatus = SHARK_STATUS_DAMAGED_BY_ELECTRONIC;
+	auto animate = cocos2d::Animate::create(Model::CreateAnimation(SHARK_BE_DAMAGE_BY_ELECTRONIC, 1, 3, 0.05));
+	auto callback = cocos2d::CallFunc::create([=]() {
+		mStatus = mOldStatus;
+		Shark::Killed(); 
+	});
+
+	auto seq = cocos2d::Sequence::create(
+		cocos2d::Repeat::create(animate,4),
+		callback,
+		nullptr
+	);
+	mSprite->runAction(seq);
+}
+
+void Shark::StunAnimation()
+{
+	if (Model::SpriteIsVisible())
+	{
+		Shark::SetStun(true);
+		if (mMoveToLeft)
+		{
+			mStunSprite->setAnchorPoint(cocos2d::Vec2(1, 0.2));
+		}
+		else
+		{
+			mStunSprite->setAnchorPoint(cocos2d::Vec2(0, 0.2));
+		}
+		mStunSprite->setPosition(this->GetLocation());
+		auto animate = cocos2d::Animate::create(Model::CreateAnimation(SHARK_STATUS_STUN, 1, 4, 0.15));
+		auto callback = cocos2d::CallFunc::create([=]() {
+			Shark::SetStun(false);
+		});
+
+		auto seq = cocos2d::Sequence::create(
+			cocos2d::Repeat::create(animate, 2),
+			callback,
+			nullptr
+		);
+		mStunSprite->runAction(seq);
+	}
 }
 
 void Shark::Killed()
@@ -260,16 +305,19 @@ void Shark::Update()
 		Shark::RunAway();
 		//Cable::Bitten();
 	}
-	else if(mStatus == SHARK_STATUS_BITE)
+	else if(mStatus == SHARK_STATUS_STUN)
 	{
-
+		
 	}
+
+	
 
 }
 
 void Shark::UnUpdate(cocos2d::Vec2 pos)
 {
 	this->mStatus = SHARK_STATUS_STUN;
+	Shark::StunAnimation();
 }
 
 /*initialization for shark*/
@@ -411,6 +459,18 @@ int Shark::GetScore()
 	return mScore;
 }
 
+void Shark::SetStun(bool vis)
+{
+	mStunSprite->setVisible(vis);
+}
+
+void Shark::AddStun(cocos2d::Scene* scene)
+{
+	mStunSprite = cocos2d::Sprite::create();
+	Shark::SetStun(false);
+	scene->addChild(mStunSprite, 101);
+}
+
 void Shark::SetPhysicsBody()
 {
 	cocos2d::PhysicsBody* spriteBody;
@@ -431,7 +491,7 @@ void Shark::SetPhysicsBody()
 	}
 }
 
-void Shark::SetOldStatus()
+void Shark::CallBackStatus()
 {
 	mStatus = mOldStatus;
 }

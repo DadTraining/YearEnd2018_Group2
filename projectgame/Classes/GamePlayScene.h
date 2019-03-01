@@ -76,6 +76,8 @@ public:
 	void InitShark();
 	void SetPauseGame();
 
+	void RandomBackGround();
+
 	CREATE_FUNC(GamePlayScene);
 };
 

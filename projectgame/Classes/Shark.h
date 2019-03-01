@@ -17,7 +17,7 @@ protected:
 	std::string mColor;
 	std::string mStatus;
 	std::string mOldStatus;
-
+	cocos2d::Sprite* mStunSprite;
 public:
 	
 	Shark();
@@ -25,7 +25,8 @@ public:
 	Shark(const Shark * shark);
 	virtual ~Shark();
 
-	void Damaged();
+	void DamagedElectronic();
+	void StunAnimation();
 	void Killed();
 	void Angry();
 	void Normal();
@@ -41,7 +42,7 @@ public:
 	void UnUpdate(cocos2d::Vec2 pos);
 	virtual void Init();
 	void SetStatus(std::string status);
-	void SetOldStatus();
+	void CallBackStatus();
 	void setIsBitten(bool bitten);
 
 	bool IsBitten();
@@ -54,6 +55,9 @@ public:
 	float GetSpeed();
 	int GetTotalColor();
 	int GetScore();
+	void SetStun(bool vis);
+	void AddStun(cocos2d::Scene* scene);
+
 
 	void SetPhysicsBody();
 };
