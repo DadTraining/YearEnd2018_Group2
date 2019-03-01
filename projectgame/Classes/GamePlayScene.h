@@ -31,7 +31,10 @@ private:
 	std::vector<MapLevel*> mListLevelEndGame;
 	std::vector<PopupEndGame*> mListPlayEndGame;
 	double mScore;
+	int mLevel;
 	Label* mLabelScore;
+	Label* mLabelLevel;
+
 	std::vector<MapLevel*> mListLevelEnd;
 	std::vector<PopupEndGame*> mListPlayEnd;
 
@@ -72,6 +75,7 @@ public:
 	
 	void showEndGame();
 	void ShowScore();
+	void ShowLevel();
 	void RegisterEvent();
 	void ButtonShoot();
 	void SetItemBox();

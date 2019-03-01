@@ -14,7 +14,7 @@ bool PopupEndGame::init()
 	Popup::init();
 	Popup::setBackground();
 	//Button replay
-	auto btnRePlay = ui::Button::create(BUTTON_REPLAY_IMG);
+	auto btnRePlay = ui::Button::create(BUTTON_MAP_REPLAY);
 	btnRePlay->setPosition(Vec2(- mBackground->getContentSize().width / 7,
 		-mBackground->getContentSize().height / 4
 		+ mBackground->getContentSize().height / 22));
@@ -34,7 +34,7 @@ bool PopupEndGame::init()
 		}
 	});
 	//Button next
-	auto btnNextLV = ui::Button::create(BUTTON_MAP_PLAY);
+	auto btnNextLV = ui::Button::create(BUTTON_MAP_NEXTLV);
 	btnNextLV->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
 		+ mBackground->getContentSize().height / 22));
 
@@ -45,7 +45,6 @@ bool PopupEndGame::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			CCLOG("%d", InfoMap::getMapLevel());
 			cocos2d::Director::getInstance()->resume();
 			Constants::SetPhase(InfoMap::getMapLevel());
 			Constants::ReleaseButton();

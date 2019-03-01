@@ -77,6 +77,8 @@ bool GamePlayScene::init()
 
 	//
 	ShowScore();
+	//
+	ShowLevel();
 	////////////
 	//loading time
 	setTimeLoading();
@@ -97,7 +99,7 @@ void GamePlayScene::update(float delta)
 {
 
 	//	CCLOG("%d", InfoMap::getScore());
-	mLabelScore->setString(std::to_string(InfoMap::getScore()));
+    mLabelScore->setString(std::to_string(InfoMap::getScore()));
 
 	/////////////////////
 	//count down time meat appear and disappear
@@ -297,7 +299,7 @@ void GamePlayScene::ShowScore()
 	//sprite coin
 	auto coin = Sprite::create(COIN);
 	coin->setAnchorPoint(Vec2(0, 1));
-	coin->setPosition(cocos2d::Vec2(15, btnPause->getPosition().y));
+	coin->setPosition(cocos2d::Vec2(visibleSize.width*0.35, btnPause->getPosition().y));
 	this->addChild(coin, 5);
 
 
@@ -315,11 +317,43 @@ void GamePlayScene::ShowScore()
 
 	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
 	mLabelScore->setAnchorPoint(Vec2(0, 1));
-	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 13,
-		coin->getPosition().y - 5));
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 17,
+		coin->getPosition().y*0.99));
 	mLabelScore->enableGlow(Color4B::BLUE);
 	this->addChild(mLabelScore, 5);
 
+}
+
+void GamePlayScene::ShowLevel()
+{
+	////////////////////////////
+	//sprite coin
+	auto level = Sprite::create(LEVEL);
+	level->setAnchorPoint(Vec2(0, 1));
+	level->setPosition(visibleSize.width*0.02, btnPause->getPosition().y);
+	this->addChild(level, 5);
+
+
+	mLevel = InfoMap::getMapLevel();
+
+	///////////////////////////////
+	//label level
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_LEVEL;
+	labelConfig.fontSize = 65;
+	
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mLabelLevel = Label::createWithTTF(labelConfig, std::to_string(mLevel));
+	mLabelLevel->setColor(Color3B::WHITE);
+	mLabelLevel->setAnchorPoint(Vec2(0, 1));
+	mLabelLevel->setPosition(cocos2d::Vec2(level->getPosition().x + visibleSize.width / 8.5,
+		level->getPosition().y*1.015 ));
+	mLabelLevel->enableGlow(Color4B::BLUE);
+	this->addChild(mLabelLevel, 5);
 }
 
 void GamePlayScene::RegisterEvent()
