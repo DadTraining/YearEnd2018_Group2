@@ -74,6 +74,8 @@ bool GamePlayScene::init()
 
 	//
 	ShowScore();
+	//
+	ShowLevel();
 	////////////
 	//loading time
 	setTimeLoading();
@@ -94,7 +96,7 @@ void GamePlayScene::update(float delta)
 {
 
 	//	CCLOG("%d", InfoMap::getScore());
-	mLabelScore->setString(std::to_string(InfoMap::getScore()));
+    mLabelScore->setString(std::to_string(InfoMap::getScore()));
 
 	/////////////////////
 	//count down time meat appear and disappear
@@ -212,11 +214,11 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 void GamePlayScene::WinGame()
 {
 	this->unscheduleUpdate();
-	Constants::ReleaseButton();
-	meatDone();
+	//meatDone();
 	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
+	showEndGame();
 	InfoMap::setScore(0);
-	Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+
 }
 
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
@@ -279,10 +281,28 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 
 void GamePlayScene::showEndGame()
 {
-	cocos2d::Director::getInstance()->pause();
-	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);
+	   // initLevelEndGame();
+		PopupEndGame *popup = PopupEndGame::create();
+		
+		popup->getLayer()->setVisible(true);
+		int star = 0;
+		auto score = InfoMap::getScore();
+		if (InfoMap::getScore() > 300)
+		{
+			star = 3;
+		}
+		else if (InfoMap::getScore() > 200)
+		{
+			star = 2;
+		}
+		else
+		{
+			star = 1;
+		}
+		popup->setLevel(InfoMap::getMapLevel(),star);
+		
+	    this->addChild(popup, 999);
+	
 }
 
 void GamePlayScene::ShowScore()
@@ -292,7 +312,7 @@ void GamePlayScene::ShowScore()
 	//sprite coin
 	auto coin = Sprite::create(COIN);
 	coin->setAnchorPoint(Vec2(0, 1));
-	coin->setPosition(cocos2d::Vec2(15, btnPause->getPosition().y));
+	coin->setPosition(cocos2d::Vec2(visibleSize.width*0.35, btnPause->getPosition().y));
 	this->addChild(coin, 999);
 
 
@@ -310,12 +330,45 @@ void GamePlayScene::ShowScore()
 
 	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
 	mLabelScore->setAnchorPoint(Vec2(0, 1));
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 17,
+		coin->getPosition().y*0.99));
 	mLabelScore->setAlignment(cocos2d::TextHAlignment::RIGHT);
-	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + coin->getContentSize().width + 10,
-		coin->getPosition().y - 7));
+
 	mLabelScore->enableGlow(Color4B::BLUE);
 	this->addChild(mLabelScore, 999);
 
+}
+
+void GamePlayScene::ShowLevel()
+{
+	////////////////////////////
+	//sprite coin
+	auto level = Sprite::create(LEVEL);
+	level->setAnchorPoint(Vec2(0, 1));
+	level->setPosition(visibleSize.width*0.02, btnPause->getPosition().y);
+	this->addChild(level, 5);
+
+
+	mLevel = InfoMap::getMapLevel();
+
+	///////////////////////////////
+	//label level
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_LEVEL;
+	labelConfig.fontSize = 65;
+	
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mLabelLevel = Label::createWithTTF(labelConfig, std::to_string(mLevel));
+	mLabelLevel->setColor(Color3B::WHITE);
+	mLabelLevel->setAnchorPoint(Vec2(0, 1));
+	mLabelLevel->setPosition(cocos2d::Vec2(level->getPosition().x + visibleSize.width / 8.5,
+		level->getPosition().y*1.015 ));
+	mLabelLevel->enableGlow(Color4B::BLUE);
+	this->addChild(mLabelLevel, 5);
 }
 
 void GamePlayScene::RegisterEvent()
@@ -535,6 +588,7 @@ void GamePlayScene::setTimeLoading()
 
 		if (loadingTime->getPercent() == 100)
 		{
+		
 			SharkAliveCallBack(4);
 		}
 	});
@@ -633,5 +687,13 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	return false;
 }
 
-
-
+void GamePlayScene::initLevelEndGame()
+{
+	for (int i = 0; i < 16; i++)
+	{
+		MapLevel *level = new MapLevel();
+		level->SetLevel(i);
+		level->SetStar(0);
+		mListLevelEnd.push_back(level);
+	}
+}

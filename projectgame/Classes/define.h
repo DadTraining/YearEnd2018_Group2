@@ -1,7 +1,9 @@
 #pragma once
 
 #define FONT_SCORE "fonts/casual.ttf"
+#define FONT_LEVEL "fonts/ALGER.ttf"
 #define COIN "button/coin.png"
+#define LEVEL "map/levelingame.png"
 
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
@@ -146,6 +148,8 @@
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
 #define BUTTON_MAP_PLAY "map/play.png"
+#define BUTTON_MAP_NEXTLV "map/nextlv.png"
+#define BUTTON_MAP_REPLAY "map/replay.png"
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"

@@ -31,7 +31,12 @@ private:
 	std::vector<MapLevel*> mListLevelEndGame;
 	std::vector<PopupEndGame*> mListPlayEndGame;
 	double mScore;
+	int mLevel;
 	Label* mLabelScore;
+	Label* mLabelLevel;
+
+	std::vector<MapLevel*> mListLevelEnd;
+	std::vector<PopupEndGame*> mListPlayEnd;
 
 	int mSharksSkin;
 
@@ -72,11 +77,14 @@ public:
 	
 	void showEndGame();
 	void ShowScore();
+	void ShowLevel();
 	void RegisterEvent();
 	void ButtonShoot();
 	void SetItemBox();
 	void InitShark();
 	void SetPauseGame();
+	void initLevelEndGame();
+	
 
 	void RandomBackGround();
 
