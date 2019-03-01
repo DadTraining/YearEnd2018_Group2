@@ -31,6 +31,7 @@ public:
 	void setEnableTouch(bool enable);
 	void coin();
 	void star();
+	void shoppe();
 	CREATE_FUNC(MapScene);
 	
 };

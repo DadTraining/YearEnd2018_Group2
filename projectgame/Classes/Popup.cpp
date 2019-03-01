@@ -11,6 +11,7 @@ bool Popup::init()
 	mLayer->setAnchorPoint(cocos2d::Vec2(0.5, 0.5));
 	mLayer->setPosition(SCREEN_W / 2, SCREEN_H / 2);
 	addChild(mLayer);
+
 	return true;
 }
 

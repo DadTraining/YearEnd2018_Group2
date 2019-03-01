@@ -3,6 +3,8 @@
 #define FONT_SCORE "fonts/casual.ttf"
 #define COIN "button/coin.png"
 #define STAR "map/iconstars.png"
+#define SHOP "button/home.png"
+#define BACKGROUNDSHOP "button/backgroudshop.png"
 
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1

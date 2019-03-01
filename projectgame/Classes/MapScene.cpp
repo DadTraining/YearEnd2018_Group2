@@ -3,6 +3,7 @@
 #include"define.h"
 #include "Constants.h"
 #include "InfoMap.h"
+#include "PopUpShop.h"
 
 Scene* MapScene::createScene()
 {
@@ -32,6 +33,7 @@ bool MapScene::init()
 	setListButton();
 	coin();
 	star();
+	shoppe();
 	
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
@@ -286,4 +288,26 @@ void MapScene::star()
 	mLableStar->enableGlow(Color4B::BLUE);
 	this->addChild(mLableStar);
 
+}
+
+void MapScene::shoppe()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	//button shop
+	auto btnShop = ui::Button::create(SHOP);
+	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 , visibleSize.height / 1.05));
+	
+	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
+		switch (t)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:	
+			//PopUpShop*popupshop = PopUpShop::create();
+			//this->addChild(popupshop);
+			PopUpShop* popupshop = new PopUpShop(this);
+			break;
+		}
+	});
+	this->addChild(btnShop);
 }

@@ -87,6 +87,9 @@
     <ClCompile Include="..\Classes\PopUpEndGame.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\PopUpShop.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -156,6 +159,9 @@
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PopUpEndGame.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PopUpShop.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
   </ItemGroup>
