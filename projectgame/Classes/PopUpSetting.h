@@ -33,6 +33,7 @@ public:
 
     virtual bool init() override;
 	virtual void onExit() override;
+	void setContent();
 	void sliderBGM();
 	void sliderSFX();
 	
@@ -41,7 +42,7 @@ public:
 	CREATE_FUNC(PopupSetting);
 
 private:
-	cocos2d::Sprite *mSfx, *mBgm;
+	cocos2d::Sprite *mSfx, *mBgm, *mLabel;
 	int mPercentSFX, mPercentBGM;
 	
 };

@@ -9,31 +9,10 @@ bool PopupSetting::init()
 	Popup::init();
 	Popup::setBackground();
 
-	///////////////
-	//Add label setting
 	if (!Constants::isInMap())
 	{
-		auto setting = cocos2d::Sprite::create(PAUSE);
-		setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
-		mLayer->addChild(setting);
-		mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
-		setting->setScale(0.75);
-		mSfx = cocos2d::Sprite::create(SFX);
-		mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
-			setting->getPosition().y - mBackground->getContentSize().height / 8));
-		mLayer->addChild(mSfx);
-		mSfx->setScale(0.75);
-
-		mBgm = cocos2d::Sprite::create(BGM);
-		mBgm->setPosition(Vec2(mSfx->getPosition().x,
-			mSfx->getPosition().y - mBackground->getContentSize().height / 10));
-		mLayer->addChild(mBgm);
-		mBgm->setScale(0.75);
-
-		////////////////
-		//Add slider of mBgm and mSfx
-		sliderBGM();
-		sliderSFX();
+		mLabel = cocos2d::Sprite::create(PAUSE);
+		setContent();
 
 		////////////////////
 		auto btnHome = ui::Button::create(BUTTON_HOME);
@@ -56,70 +35,45 @@ bool PopupSetting::init()
 
 			}
 		});
-	    
+
 
 	}
 	else
 	{
-		auto setting = cocos2d::Sprite::create(SETTING);
-		setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
-		mLayer->addChild(setting);
-		mSfx = cocos2d::Sprite::create(SFX);
-		mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
-			setting->getPosition().y - mBackground->getContentSize().height / 8));
-		mLayer->addChild(mSfx);
-		mSfx->setScale(0.75);
-
-		mBgm = cocos2d::Sprite::create(BGM);
-		mBgm->setPosition(Vec2(mSfx->getPosition().x,
-			mSfx->getPosition().y - mBackground->getContentSize().height / 10));
-		mLayer->addChild(mBgm);
-		mBgm->setScale(0.75);
-
-		////////////////
-		//Add slider of mBgm and mSfx
-		sliderBGM();
-		sliderSFX();
-
-		///////////////////////////////////
-	
-
-
+		mLabel = cocos2d::Sprite::create(SETTING);
+		setContent();
 	}
-	
-	
-	
-	///////////////
-	//Add label mBgm and mSfx
-	
-	////////////////
-	//Add button replay
-	/*auto btnPlay = ui::Button::create(BUTTON_REPLAY_IMG);
-	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-		+ mBackground->getContentSize().height / 22));
-
-	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->resume();
-			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
-			break;
-		}
-	});*/
 
 	////////////////
-	//Button home
-	
+	//Add slider of mBgm and mSfx
+	sliderBGM();
+	sliderSFX();
+	CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM);
 	return true;
 }
 
 void PopupSetting::onExit()
 {
 	Popup::onExit();
+}
+
+void PopupSetting::setContent()
+{
+	mLabel->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
+	mLayer->addChild(mLabel);
+	mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
+	mLabel->setScale(0.75);
+	mSfx = cocos2d::Sprite::create(SFX);
+	mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
+		mLabel->getPosition().y - mBackground->getContentSize().height / 8));
+	mLayer->addChild(mSfx);
+	mSfx->setScale(0.75);
+
+	mBgm = cocos2d::Sprite::create(BGM);
+	mBgm->setPosition(Vec2(mSfx->getPosition().x,
+		mSfx->getPosition().y - mBackground->getContentSize().height / 10));
+	mLayer->addChild(mBgm);
+	mBgm->setScale(0.75);
 }
 
 /*Add Slider*/
@@ -144,7 +98,7 @@ void PopupSetting::sliderBGM()
 		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
 		{
 			cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
-			float mPercentBGM = (float) _slider->getPercent();
+			float mPercentBGM = (float)_slider->getPercent();
 			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM);
 			break;
 		}
@@ -152,7 +106,6 @@ void PopupSetting::sliderBGM()
 			break;
 		}
 	});
-	
 }
 
 void PopupSetting::sliderSFX()

@@ -32,6 +32,7 @@ private:
 	std::vector<PopupEndGame*> mListPlayEndGame;
 	double mScore;
 	Label* mLabelScore;
+	ui::LoadingBar *loadingTime;
 
 public:
 	static cocos2d::Scene* createScene();

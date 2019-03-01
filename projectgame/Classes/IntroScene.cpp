@@ -167,7 +167,7 @@ void IntroScene::Loading()
 	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.1f));
 	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
 	loadingBar->runAction(repeatLoad);
-
+	
 }
 
 

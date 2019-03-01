@@ -80,6 +80,8 @@ bool GamePlayScene::init()
 	////////////
 	//loading time
 	setTimeLoading();
+	
+	
 
 	Constants::setInMap(false);
 	//initPopUpLevelEndGame();
@@ -437,6 +439,7 @@ void GamePlayScene::SetPauseGame()
 			break;
 		}
 	});
+	
 }
 
 void GamePlayScene::DoClone(Shark * aliveShark)
@@ -473,7 +476,7 @@ void GamePlayScene::setTimeLoading()
 		btnPause->getPosition().y - btnPause->getContentSize().height / 2));
 	this->addChild(loadingTimeBG, 99);
 
-	auto loadingTime = ui::LoadingBar::create(LOADING_TIME);
+	loadingTime = ui::LoadingBar::create(LOADING_TIME);
 	loadingTime->setAnchorPoint(Vec2(1, 0.5));
 	loadingTime->setPercent(0);
 	loadingTime->setPosition(loadingTimeBG->getPosition());
@@ -517,7 +520,9 @@ void GamePlayScene::setTimeLoading()
 
 	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.45f));
 	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
+	repeatLoad->setTag(200);
 	loadingTime->runAction(repeatLoad);
+	
 }
 
 void GamePlayScene::LoseGame()
