@@ -5,6 +5,7 @@
 #include "MapScene.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
+#include"InfoMap.h"
 
 USING_NS_CC;
 
@@ -27,8 +28,8 @@ bool PopupEndGame::init()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
-			PopupSetting *popup = PopupSetting::create();
-			this->addChild(popup, 3);
+			Constants::ReleaseButton();
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
 		}
 	});
@@ -44,9 +45,22 @@ bool PopupEndGame::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			//cocos2d::Director::getInstance()->resume();
+			CCLOG("%d", InfoMap::getMapLevel());
+			cocos2d::Director::getInstance()->resume();
+			Constants::SetPhase(InfoMap::getMapLevel());
 			Constants::ReleaseButton();
-			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
+			auto callback = cocos2d::CallFunc::create([=]() {
+				Director::getInstance()->replaceScene(TransitionFadeTR::create(0, MapScene::createScene()));
+			});
+			auto callback2 = cocos2d::CallFunc::create([=]() {
+				Director::getInstance()->replaceScene(TransitionFadeTR::create(1.5, GamePlayScene::createScene()));
+			});
+			auto seq = cocos2d::Sequence::create(
+				callback,
+				callback2,
+				nullptr
+			);
+			this->runAction(seq);
 			break;
 		}
 	});
@@ -81,8 +95,8 @@ void PopupEndGame::HandlTouch()
 {
 	Constants::ReleaseButton();
 	Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
-	
 
+}
 
 	
 

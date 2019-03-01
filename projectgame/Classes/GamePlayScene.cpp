@@ -161,7 +161,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		break;
 	default:
 		//end game
-		this->unscheduleUpdate();
+		
 		WinGame();
 		
 		break;
@@ -198,6 +198,7 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
+	this->unscheduleUpdate();
 	//meatDone();
 	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
 	showEndGame();
