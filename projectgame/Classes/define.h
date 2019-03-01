@@ -124,8 +124,8 @@
 
 #define BUTTON_PLAY "button/button_play.png"
 
-#define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"
-
+#define MUSIC_BACKGROUND_PLAY "sound/AdventureInTheOcean.mp3"
+#define MUSIC_BACKGROUND_MAP "sound/Netherplace.mp3"
 
 #define IMG_MAPSCENE "map/map_2.png"
 

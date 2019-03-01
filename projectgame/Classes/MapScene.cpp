@@ -16,7 +16,6 @@ bool MapScene::init()
 		return false;
 	}
 
-
 	//Constants::getVisibleSize() = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	auto background = Sprite::create(IMG_MAPSCENE);
@@ -38,7 +37,7 @@ bool MapScene::init()
 	}
 
 	Constants::setInMap(true);
-
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
 	return true;
 }
 

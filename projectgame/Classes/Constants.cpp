@@ -91,6 +91,16 @@ bool Constants::isInMap()
 	return inMap;
 }
 
+//void Constants::loadBackgroundMusic()
+//{
+//	bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
+//	bgmPlay = CocosDenshion::SimpleAudioEngine::getInstance();
+//
+//	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
+//	bgmPlay->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
+//}
+
+
 
 
 

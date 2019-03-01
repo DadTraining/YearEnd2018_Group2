@@ -31,6 +31,7 @@ bool IntroScene::init()
 
 	Page();
 	Loading();
+	
 	BGMusic();
 	LoadGame();
 	return true;
@@ -61,12 +62,14 @@ void IntroScene::Page()
 
 }
 
-/*Creat Background Music*/
+/*Create Background Music*/
 void IntroScene::BGMusic()
 {
-	audio = CocosDenshion::SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic(MUSIC_BACKGROUND, true);
-
+	bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
+	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
+	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
+	bgmMap->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+	//bgmMap->setBackgroundMusicVolume(0.5f);
 }
 
 void IntroScene::LoadGame()
@@ -150,8 +153,8 @@ void IntroScene::Loading()
 					break;
 				case ui::Widget::TouchEventType::ENDED:
 				{
-					audio->stopBackgroundMusic();
 					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+					bgmMap->stopBackgroundMusic();
 					break;
 				}
 

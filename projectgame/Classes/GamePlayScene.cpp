@@ -172,6 +172,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		Constants::ReleaseButton();
 		WinGame();
 		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 		break;
 	}
 

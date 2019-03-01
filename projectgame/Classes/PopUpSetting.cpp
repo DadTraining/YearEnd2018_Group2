@@ -2,10 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "PopUpSetting.h"
 #include "define.h"
-#include"MapScene.h"
-
-
-USING_NS_CC;
+#include "MapScene.h"
 
 bool PopupSetting::init()
 {
@@ -128,8 +125,9 @@ void PopupSetting::onExit()
 /*Add Slider*/
 void PopupSetting::sliderBGM()
 {
-	
+	int mPercentBGM;
 	auto sliderB = cocos2d::ui::Slider::create();
+	sliderB->setPercent(50);
 	sliderB->loadBarTexture(SLIDE_BAR_BG);
 	sliderB->loadSlidBallTextureNormal(SLIDE_ROUND);
 	sliderB->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
@@ -140,25 +138,28 @@ void PopupSetting::sliderBGM()
 		mBgm->getPosition().y));
 	mLayer->addChild(sliderB);
 
-	sliderB->addEventListener([&](Ref* sender, cocos2d::ui::Slider::EventType type) {
+	sliderB->addEventListener([=](Ref* sender, cocos2d::ui::Slider::EventType type) {
 		switch (type)
 		{
 		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
 		{
 			cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
-			mPercentBGM = _slider->getPercent();
+			float mPercentBGM = (float) _slider->getPercent();
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM);
 			break;
 		}
 		default:
 			break;
 		}
 	});
+	
 }
 
 void PopupSetting::sliderSFX()
 {
 
 	auto sliderS = cocos2d::ui::Slider::create();
+	sliderS->setPercent(50);
 	sliderS->loadBarTexture(SLIDE_BAR_BG);
 	sliderS->loadSlidBallTextureNormal(SLIDE_ROUND);
 	sliderS->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
