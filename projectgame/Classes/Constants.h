@@ -17,8 +17,8 @@ private:
 	static int breack;
 	static int hp;
 	static int boom;
-	static int Coin;
-	static int star;
+	static int totalCoin;
+	static int totalStar;
 
 public:
 	static cocos2d::Size getVisibleSize();
@@ -46,8 +46,10 @@ public:
 	static int GetBooms();
 	static int GetHps();
 	static int GetBreacks();
-	static void SetCoin(int coins);
-	static int GetCoin();
+	static void SetTotalCoin(int coins);
+	static int GetTotalCoin();
+	static int GetTotalStar();
+	static void SetTotalStar(int star);
 
 
 };

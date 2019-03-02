@@ -19,8 +19,8 @@ bool PopupPlay::init()
 								+ mBackground->getContentSize().height / 22));
 	
 	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
@@ -40,8 +40,8 @@ bool PopupPlay::init()
 
 	btnSetting->setScale(0.75);
 	mLayer->addChild(btnSetting, 1);
-	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;

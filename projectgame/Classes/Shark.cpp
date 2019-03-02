@@ -352,15 +352,7 @@ void Shark::Init()
 
 	setIsBitten(true);
 	//set color
-	if (mTotalColor == 1)
-	{
-		SharkSingleSkin();
-	}
-	else
-	{
-		SharkMultiSkin();
-		Shark::setShowColorVisible();
-	}
+	
 	//set size
 	int size = cocos2d::random(1, 3);
 	switch (size)
@@ -372,24 +364,34 @@ void Shark::Init()
 		mSpeed = SHARK_SPEED_SMALL;
 		break;
 	case 2:
-		mScore = 20;
+		mScore = 25;
 		mSize = SHARK_SIZE_NORMAL;
 		mDelay = SHARK_DELAY_NORMAL;
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	case 3:
-		mScore = 30;
+		mScore = 50;
 		mSize = SHARK_SIZE_BIG;
 		mDelay = SHARK_DELAY_BIG;
 		mSpeed = SHARK_SPEED_BIG;
 		break;
 	default:
+		mScore = 20;
 		mSize = SHARK_SIZE_NORMAL;
 		mDelay = SHARK_DELAY_NORMAL;
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	}
 
+	if (mTotalColor == 1)
+	{
+		SharkSingleSkin();
+	}
+	else
+	{
+		SharkMultiSkin();
+		Shark::setShowColorVisible();
+	}
 	//set position
 	auto posX = cocos2d::random(1, 2);
 	if (posX == 1)
@@ -530,6 +532,7 @@ void Shark::SetNumSkinForShark(int num)
 
 void Shark::SharkMultiSkin()
 {
+	mScore += 15;
 	mTotalColor = 2;
 	mTotalDuplicate = 0;
 	int color = cocos2d::random(1, 3);

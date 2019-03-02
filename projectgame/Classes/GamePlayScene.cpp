@@ -7,12 +7,12 @@
 #include "Constants.h"
 #include "MyBodyParser.h"
 #include "ui\UIButton.h"
-#include"PopUpPlay.h"
-#include"PopUpPause.h"
-#include"PopUpSetting.h"
+#include "PopUpPlay.h"
+#include "PopUpPause.h"
+#include "PopUpSetting.h"
 #include "InfoMap.h"
 #include "MapScene.h"
-#include"PopUpEndGame.h"
+#include "PopUpEndGame.h"
 
 #pragma region declare 
 #pragma endregion
@@ -215,7 +215,6 @@ void GamePlayScene::WinGame()
 {
 	this->unscheduleUpdate();
 	//meatDone();
-	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
 	showEndGame();
 	InfoMap::setScore(0);
 
@@ -282,7 +281,7 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 void GamePlayScene::showEndGame()
 {
 	   // initLevelEndGame();
-		PopupEndGame *popup = PopupEndGame::create();
+		PopupEndGame* popup = PopupEndGame::create();
 		
 		popup->getLayer()->setVisible(true);
 		int star = 0;
@@ -299,8 +298,8 @@ void GamePlayScene::showEndGame()
 		{
 			star = 1;
 		}
-		popup->setLevel(InfoMap::getMapLevel(),star);
-		
+		Constants::EndGame(InfoMap::getMapLevel(), star, true, InfoMap::getScore());
+		popup->SetLevel(InfoMap::getMapLevel(),star);		
 	    this->addChild(popup, 999);
 	
 }
@@ -312,9 +311,8 @@ void GamePlayScene::ShowScore()
 	//sprite coin
 	auto coin = Sprite::create(COIN);
 	coin->setAnchorPoint(Vec2(0, 1));
-	coin->setPosition(cocos2d::Vec2(visibleSize.width*0.35, btnPause->getPosition().y));
+	coin->setPosition(cocos2d::Vec2(visibleSize.width/4, btnPause->getPosition().y));
 	this->addChild(coin, 999);
-
 
 	mScore = InfoMap::getScore();
 
@@ -330,8 +328,8 @@ void GamePlayScene::ShowScore()
 
 	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
 	mLabelScore->setAnchorPoint(Vec2(0, 1));
-	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 17,
-		coin->getPosition().y*0.99));
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + coin->getContentSize().width + 10,
+		coin->getPosition().y - 10));
 	mLabelScore->setAlignment(cocos2d::TextHAlignment::RIGHT);
 
 	mLabelScore->enableGlow(Color4B::BLUE);

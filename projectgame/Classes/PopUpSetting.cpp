@@ -46,8 +46,8 @@ bool PopupSetting::init()
 
 		btnHome->setScale(0.75);
 		mLayer->addChild(btnHome, 1);
-		btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-			switch (t)
+		btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+			switch (touch)
 			{
 			case cocos2d::ui::Widget::TouchEventType::BEGAN:
 				break;

@@ -29,12 +29,21 @@
 using namespace cocos2d;
 using namespace std;
 
-class PopUpShop
+class PopUpShop : public cocos2d::Node
 {
 private:
 	cocos2d::Layer* mLayer;
+	cocos2d::Sprite *mBackground;
+	Size visibleSize;
 
 public:
-	PopUpShop(cocos2d::Scene* createScene);   
+	virtual bool init();
+	virtual void onExit();
+	void setBackground();
+	void disappear();
+
+	cocos2d::Layer* getLayer();
 	virtual void HandlTouch();
+
+	CREATE_FUNC(PopUpShop);
 };

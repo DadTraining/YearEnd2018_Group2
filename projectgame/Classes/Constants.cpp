@@ -7,8 +7,8 @@ bool Constants::inMap;
  int Constants::breack;
  int Constants::hp;
  int Constants::boom;
- int Constants::Coin;
- int Constants::star;
+ int Constants::totalCoin;
+ int Constants::totalStar;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -87,8 +87,9 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 		if (lv<16)
 		{
 			listMap.at(lv)->AllowPlay();
-			Constants::SetCoin(Constants::GetCoin() + score);
 		}
+		Constants::SetTotalCoin(Constants::GetTotalCoin() + score);
+		Constants::SetTotalStar(Constants::GetTotalStar() + star);
 	}
 }
 
@@ -104,7 +105,7 @@ bool Constants::isInMap()
 
 bool Constants::BuyBooms()
 {
-	if (Constants::GetCoin() > COST_BUY_BOOM)
+	if (Constants::GetTotalCoin() > COST_BUY_BOOM)
 	{
 		boom += 1;
 		return true;
@@ -114,7 +115,7 @@ bool Constants::BuyBooms()
 
 bool Constants::BuyBreacks()
 {
-	if (Constants::GetCoin() > COST_BUY_BREACK)
+	if (Constants::GetTotalCoin() > COST_BUY_BREACK)
 	{
 		breack += 3;
 		return true;
@@ -125,7 +126,7 @@ bool Constants::BuyBreacks()
 
 bool Constants::BuyHps()
 {
-	if (Constants::GetCoin() > COST_BUY_HP)
+	if (Constants::GetTotalCoin() > COST_BUY_HP)
 	{
 		hp += 3;
 		return true;
@@ -148,14 +149,24 @@ int Constants::GetBreacks()
 	return breack;
 }
 
-void Constants::SetCoin(int coins)
+void Constants::SetTotalCoin(int coins)
 {
-	Coin = coins;
+	totalCoin = coins;
 }
 
-int Constants::GetCoin()
+int Constants::GetTotalCoin()
 {
-	return Coin;
+	return totalCoin;
+}
+
+int Constants::GetTotalStar()
+{
+	return totalStar;
+}
+
+void Constants::SetTotalStar(int star)
+{
+	totalStar = star;
 }
 
 
