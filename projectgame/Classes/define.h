@@ -5,6 +5,7 @@
 #define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
 #define LEVEL "map/levelingame.png"
+#define LOSE_GAME "map/losegame.png"
 
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1

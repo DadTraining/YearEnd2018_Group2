@@ -214,5 +214,10 @@ void Cable::SetTarget(cocos2d::Vec2 pos, bool vis)
 	}
 }
 
+int Cable::GetHP()
+{
+	return mHp;
+}
+
 
 

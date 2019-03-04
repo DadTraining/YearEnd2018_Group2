@@ -13,6 +13,7 @@
 #include "InfoMap.h"
 #include "MapScene.h"
 #include"PopUpEndGame.h"
+#include"PopUpLoseGame.h"
 
 #pragma region declare 
 #pragma endregion
@@ -97,7 +98,10 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-
+	if (mCable->GetHP()<=0)
+	{
+		LoseGame();
+	}
 	//	CCLOG("%d", InfoMap::getScore());
     mLabelScore->setString(std::to_string(InfoMap::getScore()));
 
@@ -166,6 +170,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		
 		WinGame();
 		
+		
 		break;
 	}
 
@@ -200,11 +205,15 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
-	this->unscheduleUpdate();
-	//meatDone();
-	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
-	showEndGame();
-	InfoMap::setScore(0);
+	if (mCable->GetHP() > 0)
+	{
+		this->unscheduleUpdate();
+		Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
+		showEndGame();
+		InfoMap::setScore(0);
+	}
+	
+	
 
 }
 
@@ -565,7 +574,13 @@ void GamePlayScene::setTimeLoading()
 
 void GamePlayScene::LoseGame()
 {
-
+	this->unscheduleUpdate();
+	PopupLoseGame *popupLose = PopupLoseGame::create();
+	this->addChild(popupLose,999);
+	popupLose->getLayer()->setVisible(true);
+	Constants::SetEnableAllTouchEventOnMapLevel(false);
+	
+	InfoMap::setScore(0);
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)

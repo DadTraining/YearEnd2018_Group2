@@ -27,5 +27,6 @@ public:
 	void TargetAnimation();
 	void CheckSharkNearCable(std::vector<Shark*> sharks,Ship* ship);
 	void SetTarget(cocos2d::Vec2 pos, bool vis);
+	int GetHP();
 
 };

@@ -161,6 +161,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Model.cpp" />
     <ClCompile Include="..\Classes\Popup.cpp" />
     <ClCompile Include="..\Classes\PopUpEndGame.cpp" />
+    <ClCompile Include="..\Classes\PopUpLoseGame.cpp" />
     <ClCompile Include="..\Classes\PopupPause.cpp" />
     <ClCompile Include="..\Classes\PopUpPlay.cpp" />
     <ClCompile Include="..\Classes\PopUpSetting.cpp" />
@@ -187,6 +188,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Model.h" />
     <ClInclude Include="..\Classes\Popup.h" />
     <ClInclude Include="..\Classes\PopUpEndGame.h" />
+    <ClInclude Include="..\Classes\PopUpLoseGame.h" />
     <ClInclude Include="..\Classes\PopupPause.h" />
     <ClInclude Include="..\Classes\PopUpPlay.h" />
     <ClInclude Include="..\Classes\PopUpSetting.h" />

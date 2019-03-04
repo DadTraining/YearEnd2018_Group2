@@ -47,6 +47,7 @@ bool SkinGame::IsIssue()
 	return mIssue;
 }
 
+
 void SkinGame::SetIssue(bool issue)
 {
 	this->mIssue = issue;
