@@ -35,6 +35,9 @@ private:
 	cocos2d::Layer* mLayer;
 	cocos2d::Sprite *mBackground;
 	Size visibleSize;
+	int mStun;
+	int mHealth;
+	int mElection;
 
 public:
 	virtual bool init();
