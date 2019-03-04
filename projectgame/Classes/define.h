@@ -22,7 +22,9 @@
 #define SCREEN_W 1280
 #define FPS 40
 
-#define BACKGROUND_IMG "background/background_1.png"
+#define BACKGROUND_IMG_1 "background/background_1.png"
+#define BACKGROUND_IMG_2 "background/background_2.png"
+#define BACKGROUND_IMG_3 "background/background_3.png"
 #define CABLE_IMG "cable/cable_1.png"
 
 #define BUTTON_YELLOW_IMG_NOR "button/yellowbutton.png"
@@ -131,7 +133,7 @@
 #define ITEM_BOOM_IMAGE "item/3.png"
 #define ITEM_BRICK_IMAGE "item/1.png"
 #define ITEM_HP_IMAGE "item/2.png"
-#define ITEM_HP1_IMAGE "item/hp1.png"
+#define ITEM_HP1_IMAGE "item/toolrepair.png"
 #define ITEM_ELECTRIC_IMAGE "item/electricgun.png"
 
 #define ITEM_SCAlE 0.3
@@ -187,3 +189,5 @@
 #define COST_BUY_BREACK 200
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
+
+#define DATA_BASE_NAME "databaseshark.sql"

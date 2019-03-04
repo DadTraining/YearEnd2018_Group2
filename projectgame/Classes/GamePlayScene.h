@@ -84,7 +84,6 @@ public:
 	void InitShark();
 	void SetPauseGame();
 	void initLevelEndGame();
-	
 
 	void RandomBackGround();
 

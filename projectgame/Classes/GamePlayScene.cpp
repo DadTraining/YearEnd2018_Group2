@@ -495,7 +495,25 @@ void GamePlayScene::SetPauseGame()
 
 void GamePlayScene::RandomBackGround()
 {
-	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
+	cocos2d::Sprite* _backGround;
+	auto _id = cocos2d::random(1, 3);
+	switch (_id)
+	{
+	case 1:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_1);
+		break;
+	case 2:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_2);
+
+		break;
+	case 3:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_3);
+
+		break;
+	default:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_1);
+		break;
+	}
 	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
 	//_backGround->setOpacity(0.1);
 	addChild(_backGround, -1);
@@ -695,3 +713,4 @@ void GamePlayScene::initLevelEndGame()
 		mListLevelEnd.push_back(level);
 	}
 }
+
