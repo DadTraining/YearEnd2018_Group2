@@ -128,6 +128,7 @@
 #define MUSIC_BACKGROUND_PLAY "sound/AdventureInTheOcean.mp3"
 #define MUSIC_BACKGROUND_MAP "sound/Netherplace.mp3"
 #define SFX_BUTTON_BULLET "sound/Pop-sound-effect.mp3"
+#define SFX_BUTTON "sound/button4.wav"
 
 #define IMG_MAPSCENE "map/map_2.png"
 

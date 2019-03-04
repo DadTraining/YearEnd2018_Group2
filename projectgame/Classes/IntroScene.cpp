@@ -69,6 +69,7 @@ void IntroScene::BGMusic()
 	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
 	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
 	bgmMap->preloadEffect(SFX_BUTTON_BULLET);
+	bgmMap->preloadEffect(SFX_BUTTON);
 	bgmMap->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
 	//bgmMap->setBackgroundMusicVolume(0.5f);
 }
@@ -154,6 +155,7 @@ void IntroScene::Loading()
 					break;
 				case ui::Widget::TouchEventType::ENDED:
 				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 					break;
 				}

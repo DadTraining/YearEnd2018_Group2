@@ -465,6 +465,7 @@ void GamePlayScene::SetPauseGame()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->pause();
