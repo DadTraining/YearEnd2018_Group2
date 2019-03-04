@@ -67,7 +67,7 @@ bool GamePlayScene::init()
 	SetPauseGame();
 	ButtonShoot();
 	SetItemBox();
-
+	setCountItem();
 
 	mCable = new Cable(this);
 	mCable->GetRect();
@@ -272,6 +272,7 @@ void GamePlayScene::showEndGame()
 		PopupEndGame *popup = PopupEndGame::create();
 		
 		popup->getLayer()->setVisible(true);
+		Constants::SetEnableAllTouchEventOnMapLevel(false);
 		int star = 0;
 		auto score = InfoMap::getScore();
 		if (InfoMap::getScore() > 300)
@@ -650,4 +651,34 @@ void GamePlayScene::initLevelEndGame()
 		level->SetStar(0);
 		mListLevelEnd.push_back(level);
 	}
+}
+
+void GamePlayScene::setCountItem()
+{
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_COUNT_ITEM;
+	labelConfig.fontSize = 25;
+	//labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	//labelConfig.outlineSize = 1;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	auto mLabelCountBomb = Label::createWithTTF(labelConfig, std::to_string(mCountBomb));
+	mLabelCountBomb->setColor(Color3B::BLACK);
+	mLabelCountBomb->setPosition(cocos2d::Vec2(visibleSize.width*0.1,visibleSize.height*0.13));
+	
+	this->addChild(mLabelCountBomb, 5);
+	auto mLabelCountHP = Label::createWithTTF(labelConfig, std::to_string(mCountHP));
+	mLabelCountHP->setColor(Color3B::BLACK);
+	mLabelCountHP->setPosition(cocos2d::Vec2(visibleSize.width*0.2, visibleSize.height*0.13));
+	
+	this->addChild(mLabelCountHP, 5);
+
+
+	auto mLabelCounGunE = Label::createWithTTF(labelConfig, std::to_string(mCountGunE));
+	mLabelCounGunE->setColor(Color3B::BLACK);
+	mLabelCounGunE->setPosition(cocos2d::Vec2(visibleSize.width*0.31, visibleSize.height*0.13));
+	
+	this->addChild(mLabelCounGunE, 5);
+
 }

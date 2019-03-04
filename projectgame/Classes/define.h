@@ -2,6 +2,7 @@
 
 #define FONT_SCORE "fonts/casual.ttf"
 #define FONT_LEVEL "fonts/ALGER.ttf"
+#define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
 #define LEVEL "map/levelingame.png"
 
