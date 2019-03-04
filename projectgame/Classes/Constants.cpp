@@ -3,6 +3,7 @@
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
 bool Constants::inMap;
+bool Constants::pause;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -90,17 +91,6 @@ bool Constants::isInMap()
 {
 	return inMap;
 }
-
-//void Constants::loadBackgroundMusic()
-//{
-//	bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
-//	bgmPlay = CocosDenshion::SimpleAudioEngine::getInstance();
-//
-//	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
-//	bgmPlay->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
-//}
-
-
 
 
 

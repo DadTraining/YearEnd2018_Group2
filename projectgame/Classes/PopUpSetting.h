@@ -26,6 +26,7 @@
 #include "cocos2d.h"
 #include "Popup.h"
 #include "ui\CocosGUI.h"
+#include "Constants.h"
 
 class PopupSetting : public Popup
 {
@@ -36,6 +37,8 @@ public:
 	void setContent();
 	void sliderBGM();
 	void sliderSFX();
+	void checkboxBGM();
+	void checkboxSFX();
 	
 	virtual void HandlTouch() override;
 
@@ -43,7 +46,9 @@ public:
 
 private:
 	cocos2d::Sprite *mSfx, *mBgm, *mLabel;
-	int mPercentSFX, mPercentBGM;
-	
+	float mPercentSFX, mPercentBGM;
+	float delta;
+	bool onBGM;
+	cocos2d::ui::CheckBox *checkboxBOn, *checkboxSOn;
 };
 

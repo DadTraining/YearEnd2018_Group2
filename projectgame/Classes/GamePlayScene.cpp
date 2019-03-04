@@ -17,8 +17,6 @@
 #pragma region declare 
 #pragma endregion
 
-
-
 Scene* GamePlayScene::createScene()
 {
 	auto scene = cocos2d::Scene::createWithPhysics();
@@ -28,6 +26,8 @@ Scene* GamePlayScene::createScene()
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	scene->addChild(layer);
+
+	scene->setTag(333);
 	return scene;
 }
 
@@ -41,6 +41,7 @@ bool GamePlayScene::init()
 		return false;
 	}
 
+	//pause = false;
 
 	visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
@@ -79,6 +80,7 @@ bool GamePlayScene::init()
 	ShowScore();
 	////////////
 	//loading time
+	countDownTime = 0;
 	setTimeLoading();
 	
 	
@@ -87,6 +89,7 @@ bool GamePlayScene::init()
 	//initPopUpLevelEndGame();
 
 	this->scheduleUpdate();
+	
 	return true;
 }
 
@@ -144,7 +147,38 @@ void GamePlayScene::update(float delta)
 
 	mCable->Update();
 
+	///////////////////////////////
+	//count down time loading
+	countDownTime++;
+	if (countDownTime % FPS == 0)
+	{
+		float percent = (float) 20 / 9;
+		loadingTime->setPercent(loadingTime->getPercent() + percent);
+		
+		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 45
+			, clock->getPosition().y));
+	}
 
+	if (countDownTime < 600)
+	{
+		SharkAliveCallBack(1);
+	}
+
+	if (countDownTime >= 600 && countDownTime < 1200)
+	{
+		SharkAliveCallBack(2);
+	}
+
+	if (countDownTime >= 1200 && countDownTime < 1800)
+	{
+		SharkAliveCallBack(3);
+	}
+
+	if (countDownTime == 1800)
+	{
+		countDownTime = 0;
+		SharkAliveCallBack(4);
+	}
 }
 
 void GamePlayScene::SharkAliveCallBack(int phase)
@@ -163,14 +197,15 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		break;
 	default:
 		//end game
-		//cocos2d::Director::getInstance()->pause();
-		this->unscheduleUpdate();
+		cocos2d::Director::getInstance()->pause();
+		
 		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		// show popup end game include score and star
 		// new class popup next game or goto home
 
 		//PopUpLevelEndGame();
 		//showEndGame();
+		
 		Constants::ReleaseButton();
 		WinGame();
 		//CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
@@ -277,9 +312,7 @@ void GamePlayScene::showEndGame()
 {
 
 	cocos2d::Director::getInstance()->pause();
-	/*PopupEndGame *popUpEnd = PopupEndGame::create();
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);*/
+	
 	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
 	this->addChild(popUpEnd, 110);
 	popUpEnd->getLayer()->setVisible(true);
@@ -432,6 +465,7 @@ void GamePlayScene::SetPauseGame()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->pause();
+			
 			PopupSetting *popUpSetting = PopupSetting::create();
 			this->addChild(popUpSetting, 110);
 			popUpSetting->getLayer()->setVisible(true);
@@ -470,59 +504,22 @@ Shark * GamePlayScene::SharkAlive(int tag)
 /*loading time*/
 void GamePlayScene::setTimeLoading()
 {
-	auto loadingTimeBG = Sprite::create(LOADING_TIME_BG);
+	loadingTimeBG = Sprite::create(LOADING_TIME_BG);
 	loadingTimeBG->setAnchorPoint(Vec2(1, 0.5));
 	loadingTimeBG->setPosition(Vec2(btnPause->getPosition().x - visibleSize.width / 13,
 		btnPause->getPosition().y - btnPause->getContentSize().height / 2));
 	this->addChild(loadingTimeBG, 99);
 
 	loadingTime = ui::LoadingBar::create(LOADING_TIME);
-	loadingTime->setAnchorPoint(Vec2(1, 0.5));
 	loadingTime->setPercent(0);
+	loadingTime->setAnchorPoint(Vec2(1, 0.5));
 	loadingTime->setPosition(loadingTimeBG->getPosition());
 	this->addChild(loadingTime, 99);
 
-	auto clock = Sprite::create(TIME);
+	clock = Sprite::create(TIME);
 	clock->setPosition(Vec2(loadingTimeBG->getPosition().x - loadingTimeBG->getContentSize().width
 		, loadingTimeBG->getPosition().y));
 	this->addChild(clock, 100);
-
-	auto updateLoadingBar = CallFunc::create([=]() {
-
-		int percent = (int)loadingTime->getPercent();
-		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 100
-			, clock->getPosition().y));
-		if (loadingTime->getPercent() < 100)
-		{
-			loadingTime->setPercent(loadingTime->getPercent() + 1);
-		}
-
-		if (loadingTime->getPercent() <= 33)
-		{
-			SharkAliveCallBack(1);
-		}
-
-		if (loadingTime->getPercent() > 33 && loadingTime->getPercent() <= 66)
-		{
-			SharkAliveCallBack(2);
-		}
-
-		if (loadingTime->getPercent() > 66 && loadingTime->getPercent() <= 99)
-		{
-			SharkAliveCallBack(3);
-		}
-
-		if (loadingTime->getPercent() == 100)
-		{
-			SharkAliveCallBack(4);
-		}
-	});
-
-	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.45f));
-	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
-	repeatLoad->setTag(200);
-	loadingTime->runAction(repeatLoad);
-	
 }
 
 void GamePlayScene::LoseGame()

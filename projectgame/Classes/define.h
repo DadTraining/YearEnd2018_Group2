@@ -162,3 +162,10 @@
 #define LOADING_TIME_BG "item/time_bg.png"
 #define LOADING_TIME "item/time_loading.png"
 #define TIME "item/clock.png"
+
+//checkbox
+#define BOX_TICK "checkbox/b_1.png"
+#define BOX "checkbox/b_3.png"
+#define OFF "checkbox/off.png"
+#define ON "checkbox/on.png"
+#define ONOFFSTATE "checkbox/blabla.png"

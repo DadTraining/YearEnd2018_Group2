@@ -16,7 +16,7 @@ private:
 	static std::vector<MapLevel*> listMap;
 	//in gameplay
 	static bool inMap;
-
+	static bool pause;
 	
 
 public:
@@ -42,9 +42,6 @@ public:
 
 	static void setInMap(bool in);
 	static bool isInMap();
-
-	/////////////////////////
-	//static void loadBackgroundMusic();
-
+	
 };
 
