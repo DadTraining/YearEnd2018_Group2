@@ -96,6 +96,9 @@
     <ClCompile Include="..\Classes\sqlite3.c">
       <Filter>src\DA</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\DbContext.cpp">
+      <Filter>src\DA</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -171,6 +174,9 @@
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\sqlite3.h">
+      <Filter>src\DA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DbContext.h">
       <Filter>src\DA</Filter>
     </ClInclude>
   </ItemGroup>
