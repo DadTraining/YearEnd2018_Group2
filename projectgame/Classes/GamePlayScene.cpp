@@ -477,7 +477,7 @@ void GamePlayScene::SetItemBox()
 			}
 			button->addClickEventListener([=](Ref* event)
 			{
-				if (mItem->KillSharkByBoom(sharkList))
+				if (!mItem->KillSharkByBoom(sharkList))
 				{
 					button->setEnabled(false);
 				}
