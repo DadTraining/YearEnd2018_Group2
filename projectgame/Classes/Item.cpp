@@ -28,7 +28,7 @@ void Item::Update()
 {
 	if (mStatusStun) {
 		mTimeStun++;
-		if (mTimeStun % 70==0)
+		if (mTimeStun % 50==0)
 		{
 			mStatusStun = false;
 			mTimeStun = 0;
@@ -71,7 +71,7 @@ void Item::KillSharkByBoom(std::vector<Shark*> sharkList)
 	{
 		if (sharkList[i]->IsAlive())
 		{
-			sharkList[i]->Killed();
+			sharkList[i]->DamagedElectronic();
 		}
 	}
 }
@@ -80,7 +80,7 @@ void Item::ChangeStatusStun()
 {
 	for (int i = 0; i < mSharkList.size(); i++)
 	{
-		mSharkList[i]->SetOldStatus();
+		mSharkList[i]->CallBackStatus();
 	}
 }
 

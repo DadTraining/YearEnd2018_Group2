@@ -217,7 +217,7 @@ void MapScene::initPopUpLevel()
 
 		popup->getLayer()->setVisible(false);
 
-		//popup->setVisible(false);
+		
 		popup->setLevel(mListLevel[i]->GetLevel(), mListLevel[i]->GetStar());
 		mListPlay.push_back(popup);
 	}
@@ -250,7 +250,7 @@ void MapScene::coin()
 	labelConfig.customGlyphs = nullptr;
 	labelConfig.distanceFieldEnabled = false;
 
-	mcoin = InfoMap::getScore();	
+	mcoin = Constants::GetTotalCoin();
 	
 	auto mLableCoin=Label::createWithTTF(labelConfig, std::to_string(mcoin));
 	mLableCoin->setAnchorPoint(Vec2(0, 1));
@@ -280,8 +280,8 @@ void MapScene::star()
 	labelConfig.customGlyphs = nullptr;
 	labelConfig.distanceFieldEnabled = false;
 
-	//mstar = InfoMap::getScore();
-	mstar = 000000;
+	mstar = Constants::GetTotalStar();
+	//mstar = 000000;
 	auto mLableStar = Label::createWithTTF(labelConfig, std::to_string(mstar));
 	mLableStar->setAnchorPoint(Vec2(0, 1));
 	mLableStar->setPosition(cocos2d::Vec2(visibleSize.width / 5.4, visibleSize.height / 1.03));
@@ -297,15 +297,16 @@ void MapScene::shoppe()
 	auto btnShop = ui::Button::create(SHOP);
 	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 , visibleSize.height / 1.05));
 	
-	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:	
 			//PopUpShop*popupshop = PopUpShop::create();
 			//this->addChild(popupshop);
-			PopUpShop* popupshop = new PopUpShop(this);
+			PopUpShop* popupshop = PopUpShop::create();
+			this->addChild(popupshop);
 			break;
 		}
 	});

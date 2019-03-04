@@ -51,14 +51,6 @@ void Ship::Init()
 void Ship::leftOrRight(bool direction)
 {
 	mLeft = !direction;
-	if (mLeft)
-	{
-		CCLOG("True");
-	}
-	else
-	{
-		CCLOG("false");
-	}
 	mSprite->setFlipX(mLeft);
 }
 
@@ -72,11 +64,9 @@ void Ship::ShootColor(int color)
 			bullet->Shoot(mLeft);
 		
 		  if (mLeft) {
-				//bullet->UpdateLocation(Vec2(mSprite->getPosition()+Vec2(50,-15)));
 				bullet->UpdateLocation(Vec2(mSprite->getPosition() + Vec2(mSprite->getContentSize().width*5/13,mSprite->getContentSize().height*-1.5/84 )));
 			}
 			else {
-				//bullet->UpdateLocation(Vec2(mSprite->getPosition()-Vec2(40,4)));
 				bullet->UpdateLocation(Vec2(mSprite->getPosition() - Vec2(mSprite->getContentSize().width * 4 / 13, mSprite->getContentSize().height*4/84)));
 			}
 
@@ -97,10 +87,20 @@ bool Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 	auto bullet = listBullet[bulletTag - 100];
 	if (shark->IsAlive() && bullet->IsAlive())
 	{
-		if (shark->GetColor() == bullet->GetColor())
+		auto result = shark->CheckColor(bullet->GetColor());
+		if (result && shark->GetTotalColor() == 1)
 		{
 			shark->Killed();
 			bullet->SetVisible(false);	
+			return true;
+		}
+		else if(result && shark->GetTotalColor() != 1)
+		{
+			bullet->SetVisible(false);
+			if (shark->EnoughColor())
+			{
+				shark->Killed();
+			}
 			return true;
 		}
 		else

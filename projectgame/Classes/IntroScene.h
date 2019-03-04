@@ -25,6 +25,7 @@
 #pragma once
 #include "SimpleAudioEngine.h"
 #include "cocos2d.h"
+#include "sqlite3.h"
 
 class IntroScene : public cocos2d::Scene
 {
@@ -36,7 +37,7 @@ public:
 	void Page();
 	void Loading();
 	void BGMusic();
-
+	void AddDataBase();
 	void LoadGame();
 
     CREATE_FUNC(IntroScene);

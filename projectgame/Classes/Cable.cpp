@@ -124,7 +124,7 @@ void Cable::EffectLoadingBar()
 
 void Cable::IncreaseHP()
 {	
-	if (mHp >= 0 && mHp <=80)
+	/*if (mHp >= 0 && mHp <=80)
 	{
 		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 20);
 		mHp += 20;
@@ -138,7 +138,13 @@ void Cable::IncreaseHP()
 	{
 		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 0);
 		mHp +=0;
+	}*/
+	mHp += 20;
+	if (mHp>100)
+	{
+		mHp = 100;
 	}
+	loadingBarGreen->setPercent(mHp);
 }
 
 void Cable::TargetAnimation()
@@ -206,6 +212,11 @@ void Cable::SetTarget(cocos2d::Vec2 pos, bool vis)
 	{
 		CCLOG("fail set sprite target");
 	}
+}
+
+int Cable::GetHP()
+{
+	return mHp;
 }
 
 

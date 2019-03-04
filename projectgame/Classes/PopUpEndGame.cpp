@@ -2,8 +2,10 @@
 #include "SimpleAudioEngine.h"
 #include "PopupEndGame.h"
 #include "PopUpSetting.h"
+#include "MapScene.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
+#include"InfoMap.h"
 
 USING_NS_CC;
 
@@ -11,47 +13,53 @@ bool PopupEndGame::init()
 {
 	Popup::init();
 	Popup::setBackground();
-	
-	///////////////
-	
-	////////////////
 	//Button replay
-	auto btnNextLevel = ui::Button::create(BUTTON_REPLAY_IMG);
-	btnNextLevel->setPosition(Vec2(- mBackground->getContentSize().width / 7,
+	auto btnRePlay = ui::Button::create(BUTTON_MAP_REPLAY);
+	btnRePlay->setPosition(Vec2(- mBackground->getContentSize().width / 7,
 		-mBackground->getContentSize().height / 4
 		+ mBackground->getContentSize().height / 22));
 
-	btnNextLevel->setScale(0.75);
-	mLayer->addChild(btnNextLevel, 1);
-	btnNextLevel->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnRePlay->setScale(0.75);
+	mLayer->addChild(btnRePlay, 1);
+	btnRePlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->resume();
-
-			PopupSetting *popup = PopupSetting::create();
-			this->addChild(popup, 3);
-			break;
-		}
-	});
-	//Button next
-	auto btnReplay = ui::Button::create(BUTTON_MAP_PLAY);
-	btnReplay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-		+ mBackground->getContentSize().height / 22));
-
-	mLayer->addChild(btnReplay, 1);
-	btnReplay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
 			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
+			break;
+		}
+	});
+	//Button next
+	auto btnNextLV = ui::Button::create(BUTTON_MAP_NEXTLV);
+	btnNextLV->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
+		+ mBackground->getContentSize().height / 22));
+
+	mLayer->addChild(btnNextLV, 1);
+	btnNextLV->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->resume();
+			Constants::SetPhase(InfoMap::getMapLevel());
+			Constants::ReleaseButton();
+			auto callback = cocos2d::CallFunc::create([=]() {
+				Director::getInstance()->replaceScene(TransitionFadeTR::create(0, MapScene::createScene()));
+			});
+			auto callback2 = cocos2d::CallFunc::create([=]() {
+				Director::getInstance()->replaceScene(TransitionFadeTR::create(1.5, GamePlayScene::createScene()));
+			});
+			auto seq = cocos2d::Sequence::create(
+				callback,
+				callback2,
+				nullptr
+			);
+			this->runAction(seq);
 			break;
 		}
 	});
@@ -65,7 +73,7 @@ void PopupEndGame::onExit()
 }
 
 /*Set level popup*/
-void PopupEndGame::setLevel(int numLevel, int numStars)
+void PopupEndGame::SetLevel(int numLevel, int numStars)
 {
 	std::string png = ".png", stars = "stars", path = "map/", l = "Level", le, st;
 	char cLevel[20] = { 0 };
@@ -82,6 +90,12 @@ void PopupEndGame::setLevel(int numLevel, int numStars)
 	mLayer->addChild(star);
 }
 
+void PopupEndGame::HandlTouch()
+{
+	Constants::ReleaseButton();
+	Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+
+}
 
 	
 
