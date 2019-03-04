@@ -1,7 +1,7 @@
 #include "MapLevel.h"
 #include "define.h"
 
-MapLevel::MapLevel(int lv, int star, int p1, int p2, int p3, int sharkSkin, bool PlayPass, int score, bool allow)
+MapLevel::MapLevel(int lv, int star, int p1, int p2, int p3, int sharkSkin, int score, bool PlayPass, bool allow)
 {
 	this->mLevel = lv;
 	this->mStar = star;
@@ -81,5 +81,10 @@ void MapLevel::AllowPlay()
 int MapLevel::GetSharksSkin()
 {
 	return sharksSkin;
+}
+
+int MapLevel::GetScore()
+{
+	return mScore;
 }
 

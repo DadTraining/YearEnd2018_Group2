@@ -34,7 +34,7 @@ bool IntroScene::init()
 	Page();
 	Loading();
 	BGMusic();
-	LoadGame();
+	//LoadGame();
 	AddDataBase();
 	return true;
 }
@@ -79,11 +79,18 @@ void IntroScene::AddDataBase()
 		DbContext::InsertData();
 	}
 
+	auto listMap = DbContext::GetAllMapLevel();
+
+	for (int i = 0; i < listMap.size(); i++)
+	{
+		Constants::AddMapIntoList(listMap.at(i));
+	}
+
 }
 
 void IntroScene::LoadGame()
 {
-	MapLevel *m1 = new MapLevel(1, 0, 3, 5, 7, 0, false, 0, true);
+	/*MapLevel *m1 = new MapLevel(1, 0, 3, 5, 7, 0, false, 0, true);
 	Constants::AddMapIntoList(m1);
 	MapLevel *m2 = new MapLevel(2, 0, 4, 6, 8, 0, false, 0, false);
 	Constants::AddMapIntoList(m2);
@@ -114,7 +121,7 @@ void IntroScene::LoadGame()
 	MapLevel *m15 = new MapLevel(15, 0, 6, 8, 10, 10, false, 0, false);
 	Constants::AddMapIntoList(m15);
 	MapLevel *m16 = new MapLevel(16, 0, 6, 8, 10, 11, false, 0, false);
-	Constants::AddMapIntoList(m16);
+	Constants::AddMapIntoList(m16);*/
 
 }
 

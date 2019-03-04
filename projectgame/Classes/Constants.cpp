@@ -1,5 +1,6 @@
 #include "Constants.h"
 #include "define.h"
+#include "DbContext.h"
 
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
@@ -88,8 +89,9 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 		{
 			listMap.at(lv)->AllowPlay();
 		}
-		Constants::SetTotalCoin(Constants::GetTotalCoin() + score);
-		Constants::SetTotalStar(Constants::GetTotalStar() + star);
+		DbContext::UpdateDataMap(lv, star, score);
+		//Constants::SetTotalCoin(Constants::GetTotalCoin() + score);
+		//Constants::SetTotalStar(Constants::GetTotalStar() + star);
 	}
 }
 
@@ -156,11 +158,21 @@ void Constants::SetTotalCoin(int coins)
 
 int Constants::GetTotalCoin()
 {
+	totalCoin = 0;
+	for (int i = 0; i < listMap.size(); i++)
+	{
+		totalCoin += listMap.at(i)->GetScore();
+	}
 	return totalCoin;
 }
 
 int Constants::GetTotalStar()
 {
+	totalStar = 0;
+	for (int i = 0; i < listMap.size(); i++)
+	{
+		totalStar += listMap.at(i)->GetStar();
+	}
 	return totalStar;
 }
 
