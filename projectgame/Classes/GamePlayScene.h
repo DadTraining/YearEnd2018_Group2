@@ -34,9 +34,9 @@ private:
 	int mLevel;
 	Label* mLabelScore;
 	Label* mLabelLevel;
-	int  mCountBomb;
-	int  mCountHP;
-	int  mCountGunE;
+	Label*  mLabelCountBrick;
+	Label*  mCountHP;
+	Label*  mCountGunE;
 	std::vector<MapLevel*> mListLevelEnd;
 	std::vector<PopupEndGame*> mListPlayEnd;
 

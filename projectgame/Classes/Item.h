@@ -26,8 +26,8 @@ public:
 	void OnClickMenuItem(cocos2d::Ref *sender);
 	
 	void IncreaseBlood();
-	void StunShark(std::vector<Shark*> sharkList);
-	void KillSharkByBoom(std::vector<Shark*> sharkList);
+	bool StunShark(std::vector<Shark*> sharkList);
+	bool KillSharkByBoom(std::vector<Shark*> sharkList);
 	void ChangeStatusStun();
 
 };

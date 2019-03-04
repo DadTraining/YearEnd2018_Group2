@@ -31,7 +31,7 @@ bool DbContext::CreateTable()
 			"create table tbSkin(id integer primary key autoincrement,path text,allowuse boolean,isuse boolean)"
 			, nullptr, nullptr, nullptr);
 		int result2 = sqlite3_exec(_dataBase,
-			"create table tbItem(id integer primary key autoincrement,itembreack integer,itemtool integer,itemelectric integer)"
+			"create table tbItem(id integer primary key autoincrement,itembrick integer,itemtool integer,itemelectric integer)"
 			, nullptr, nullptr, nullptr);
 		if (result == 0 && result1 == 0 && result2 ==0)
 		{
@@ -189,11 +189,11 @@ int DbContext::GetItem(int index)
 
 void DbContext::UpdateItem(int index, int items)
 {
-	std::string sql = "Update tbItem SET";
+	std::string sql = "Update tbItem SET ";
 	switch (index)
 	{
 	case 1:
-		sql.append("itembreack = " + std::to_string(items));
+		sql.append("itembrick = " + std::to_string(items));
 		break;
 	case 2:
 		sql.append("itemtool = " + std::to_string(items));
@@ -204,7 +204,7 @@ void DbContext::UpdateItem(int index, int items)
 	default:
 		break;
 	}
-	sql.append("where id = 1");
+	sql.append(" where id = 1");
 
 	DbContext::OpenConnect();
 	sqlite3_exec(_dataBase, sql.c_str(), NULL, NULL, NULL);

@@ -14,7 +14,7 @@ private:
 	static std::vector<MapLevel*> listMap;
 	static bool inMap;
 
-	static int breack;
+	static int brick;
 	static int hp;
 	static int boom;
 	static int totalCoin;
@@ -45,13 +45,17 @@ public:
 	static bool BuyHps();
 	static int GetBooms();
 	static int GetHps();
-	static int GetBreacks();
+	static int GetBricks();
+	static void SetBooms(int num);
+	static void SetHps(int num);
+	static void SetBricks(int num);
 	static void RefreshItem();
 
 	static void SetTotalCoin(int coins);
 	static int GetTotalCoin();
 	static int GetTotalStar();
 	static void SetTotalStar(int star);
+	
 
 
 };

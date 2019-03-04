@@ -11,7 +11,7 @@ Item::Item()
 }
 
 Item::Item(cocos2d::Scene * scene)
-{ 
+{
 	mStatusStun = false;
 	mTimeStun = 0;
 }
@@ -28,7 +28,7 @@ void Item::Update()
 {
 	if (mStatusStun) {
 		mTimeStun++;
-		if (mTimeStun % 50==0)
+		if (mTimeStun % 50 == 0)
 		{
 			mStatusStun = false;
 			mTimeStun = 0;
@@ -52,21 +52,35 @@ void Item::IncreaseBlood()
 {
 }
 
-void Item::StunShark(std::vector<Shark*> sharkList)
+bool Item::StunShark(std::vector<Shark*> sharkList)
 {
+	if (Constants::GetBricks() <= 0)
+	{
+		return false;
+	}
 	mSharkList = sharkList;
 	for (int i = 0; i < sharkList.size(); i++)
 	{
-			for (int j = 0; j < 8; j++)
-			{
-				sharkList[i]->UnUpdate(sharkList[i]->GetPosition());
-			}
+		for (int j = 0; j < 8; j++)
+		{
+			sharkList[i]->UnUpdate(sharkList[i]->GetPosition());
+		}
 	}
 	mStatusStun = true;
+	Constants::SetBricks(Constants::GetBricks() - 1);
+	if (Constants::GetBricks() <= 0)
+	{
+		return false;
+	}
+	return true;
 }
 
-void Item::KillSharkByBoom(std::vector<Shark*> sharkList)
+bool Item::KillSharkByBoom(std::vector<Shark*> sharkList)
 {
+	if (Constants::GetBooms() <= 0)
+	{
+		return false;
+	}
 	for (int i = 0; i < sharkList.size(); i++)
 	{
 		if (sharkList[i]->IsAlive())
@@ -74,6 +88,12 @@ void Item::KillSharkByBoom(std::vector<Shark*> sharkList)
 			sharkList[i]->DamagedElectronic();
 		}
 	}
+	Constants::SetBooms(Constants::GetBooms() - 1);
+	if (Constants::GetBooms() <= 0)
+	{
+		return false;
+	}
+	return true;
 }
 
 void Item::ChangeStatusStun()

@@ -5,7 +5,7 @@
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
 bool Constants::inMap;
- int Constants::breack;
+ int Constants::brick;
  int Constants::hp;
  int Constants::boom;
  int Constants::totalCoin;
@@ -90,9 +90,10 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 			listMap.at(lv)->AllowPlay();
 		}
 		DbContext::UpdateDataMap(lv, star, score);
-		//Constants::SetTotalCoin(Constants::GetTotalCoin() + score);
-		//Constants::SetTotalStar(Constants::GetTotalStar() + star);
 	}
+	DbContext::UpdateItem(1, Constants::GetBricks());
+	DbContext::UpdateItem(2, Constants::GetHps());
+	DbContext::UpdateItem(3, Constants::GetBooms());
 }
 
 void Constants::setInMap(bool in)
@@ -119,7 +120,7 @@ bool Constants::BuyBreacks()
 {
 	if (Constants::GetTotalCoin() > COST_BUY_BREACK)
 	{
-		breack += 3;
+		brick += 3;
 		return true;
 	}
 	return false;
@@ -146,14 +147,31 @@ int Constants::GetHps()
 	return hp;
 }
 
-int Constants::GetBreacks()
+int Constants::GetBricks()
 {
-	return breack;
+	return brick;
+}
+
+void Constants::SetBooms(int num)
+{
+	boom = num;
+}
+
+void Constants::SetHps(int num)
+{
+	hp = num;
+}
+
+void Constants::SetBricks(int num)
+{
+	brick = num;
 }
 
 void Constants::RefreshItem()
 {
-
+	brick = DbContext::GetItem(1);
+	hp = DbContext::GetItem(2);
+	boom = DbContext::GetItem(3);
 }
 
 void Constants::SetTotalCoin(int coins)

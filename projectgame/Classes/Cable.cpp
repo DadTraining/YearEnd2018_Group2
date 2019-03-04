@@ -122,29 +122,24 @@ void Cable::EffectLoadingBar()
 	loadingBarGreen->runAction(sequen_LoadingBar);
 }
 
-void Cable::IncreaseHP()
+bool Cable::IncreaseHP()
 {	
-	/*if (mHp >= 0 && mHp <=80)
+	if (Constants::GetHps()<=0)
 	{
-		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 20);
-		mHp += 20;
+		return false;
 	}
-	if (mHp == 90)
-	{
-		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 10);
-		mHp += 10;
-	}
-	if (mHp == 100)
-	{
-		loadingBarGreen->setPercent(loadingBarGreen->getPercent() + 0);
-		mHp +=0;
-	}*/
 	mHp += 20;
 	if (mHp>100)
 	{
 		mHp = 100;
 	}
 	loadingBarGreen->setPercent(mHp);
+	Constants::SetHps(Constants::GetHps() - 1);
+	if (Constants::GetHps() <= 0)
+	{
+		return false;
+	}
+	return true;
 }
 
 void Cable::TargetAnimation()
