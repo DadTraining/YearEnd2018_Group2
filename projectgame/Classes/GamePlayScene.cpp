@@ -440,7 +440,7 @@ void GamePlayScene::SetItemBox()
 			});
 			break;
 		case 2: //hp
-			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 25));
+			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 35));
 			button->addClickEventListener([=](Ref* event)
 			{
 				mCable->IncreaseHP();

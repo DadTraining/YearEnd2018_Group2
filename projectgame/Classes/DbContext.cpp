@@ -163,4 +163,52 @@ bool DbContext::UpdateDataMap(int id, int star, int score)
 	return false;
 }
 
+int DbContext::GetItem(int index)
+{
+	int _x;
+	DbContext::OpenConnect();
+	sqlite3_stmt* stmt = nullptr;
+
+	sqlite3_prepare_v2(_dataBase, "SELECT * FROM tbItem", -1, &stmt, nullptr);
+
+	while (true)
+	{
+		int result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW)
+		{
+			_x = sqlite3_column_int(stmt, index);
+		}
+		else
+		{
+			break;
+		}
+	}
+	DbContext::CloseConnect();
+	return _x;
+}
+
+void DbContext::UpdateItem(int index, int items)
+{
+	std::string sql = "Update tbItem SET";
+	switch (index)
+	{
+	case 1:
+		sql.append("itembreack = " + std::to_string(items));
+		break;
+	case 2:
+		sql.append("itemtool = " + std::to_string(items));
+		break;
+	case 3:
+		sql.append("itemelectric = " + std::to_string(items));
+		break;
+	default:
+		break;
+	}
+	sql.append("where id = 1");
+
+	DbContext::OpenConnect();
+	sqlite3_exec(_dataBase, sql.c_str(), NULL, NULL, NULL);
+	DbContext::CloseConnect();
+}
+
 

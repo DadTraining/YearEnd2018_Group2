@@ -19,4 +19,7 @@ public:
 
 	static bool UpdateDataMap(int id, int star, int score);
 
+	static int GetItem(int index);
+
+	static void UpdateItem(int index,int items);
 };

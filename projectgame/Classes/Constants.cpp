@@ -151,6 +151,11 @@ int Constants::GetBreacks()
 	return breack;
 }
 
+void Constants::RefreshItem()
+{
+
+}
+
 void Constants::SetTotalCoin(int coins)
 {
 	totalCoin = coins;

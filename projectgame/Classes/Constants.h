@@ -46,6 +46,8 @@ public:
 	static int GetBooms();
 	static int GetHps();
 	static int GetBreacks();
+	static void RefreshItem();
+
 	static void SetTotalCoin(int coins);
 	static int GetTotalCoin();
 	static int GetTotalStar();
