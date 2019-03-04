@@ -99,6 +99,9 @@
     <ClCompile Include="..\Classes\DbContext.cpp">
       <Filter>src\DA</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SkinGame.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="..\Classes\DbContext.h">
       <Filter>src\DA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SkinGame.h">
+      <Filter>src\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

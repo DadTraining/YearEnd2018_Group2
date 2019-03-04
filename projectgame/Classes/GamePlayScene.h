@@ -34,7 +34,9 @@ private:
 	int mLevel;
 	Label* mLabelScore;
 	Label* mLabelLevel;
-
+	int  mCountBomb;
+	int  mCountHP;
+	int  mCountGunE;
 	std::vector<MapLevel*> mListLevelEnd;
 	std::vector<PopupEndGame*> mListPlayEnd;
 
@@ -84,6 +86,8 @@ public:
 	void InitShark();
 	void SetPauseGame();
 	void initLevelEndGame();
+	void setCountItem();
+	
 
 	void RandomBackGround();
 

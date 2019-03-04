@@ -2,6 +2,7 @@
 
 #define FONT_SCORE "fonts/casual.ttf"
 #define FONT_LEVEL "fonts/ALGER.TTF"
+#define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
 #define STAR "map/iconstars.png"
 #define SHOP "button/home.png"
