@@ -14,6 +14,8 @@ protected:
 	bool wasPlayPass;
 	bool mAllowPlay;
 
+	cocos2d::Vec2 mPos;
+
 public:
 	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin,  int score, bool PlayPass, bool allow);
 	MapLevel();
@@ -44,4 +46,7 @@ public:
 	void AllowPlay();
 	int GetSharksSkin();
 	int GetScore();
+
+	void SetPosition(cocos2d::Vec2 pos);
+	void ShowStar(cocos2d::Scene* scene);
 };

@@ -33,7 +33,10 @@ bool DbContext::CreateTable()
 		int result2 = sqlite3_exec(_dataBase,
 			"create table tbItem(id integer primary key autoincrement,itembrick integer,itemtool integer,itemelectric integer)"
 			, nullptr, nullptr, nullptr);
-		if (result == 0 && result1 == 0 && result2 ==0)
+		int result3 = sqlite3_exec(_dataBase,
+			"create table tbScore(id integer primary key autoincrement,score integer)"
+			, nullptr, nullptr, nullptr);
+		if (result == 0 && result1 == 0 && result2 ==0 && result3 == 0)
 		{
 			return true;
 		}
@@ -44,10 +47,10 @@ bool DbContext::CreateTable()
 bool DbContext::InsertData()
 {
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,1,3,3,5,7,0,600,1,1)"
+		"insert into tbMapLevel values (null,1,0,3,5,7,0,0,0,1)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,2,0,4,6,8,0,0,0,1)"
+		"insert into tbMapLevel values (null,2,0,4,6,8,0,0,0,0)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
 		"insert into tbMapLevel values (null,3,0,5,7,9,0,0,0,0)"
@@ -102,6 +105,11 @@ bool DbContext::InsertData()
 	sqlite3_exec(_dataBase,
 		"insert into tbItem values (null,3,3,3)"
 		, nullptr, nullptr, nullptr);
+
+	sqlite3_exec(_dataBase,
+		"insert into tbScore values (null,1000)"
+		, nullptr, nullptr, nullptr);
+
 	DbContext::CloseConnect();
 	return false;
 }
@@ -208,6 +216,40 @@ void DbContext::UpdateItem(int index, int items)
 
 	DbContext::OpenConnect();
 	sqlite3_exec(_dataBase, sql.c_str(), NULL, NULL, NULL);
+	DbContext::CloseConnect();
+}
+
+int DbContext::GetScore()
+{
+	int _x;
+	DbContext::OpenConnect();
+	sqlite3_stmt* stmt = nullptr;
+
+	sqlite3_prepare_v2(_dataBase, "SELECT * FROM tbScore", -1, &stmt, nullptr);
+
+	while (true)
+	{
+		int result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW)
+		{
+			_x = sqlite3_column_int(stmt, 1);
+		}
+		else
+		{
+			break;
+		}
+	}
+	DbContext::CloseConnect();
+	return _x;
+}
+
+void DbContext::UpdateScore(int score)
+{
+	std::string sql1 = "Update tbScore SET ";
+	sql1.append("score=" + std::to_string(score));
+	sql1.append(" Where id = 1");
+	DbContext::OpenConnect();
+	sqlite3_exec(_dataBase, sql1.c_str(), NULL, NULL, NULL);
 	DbContext::CloseConnect();
 }
 

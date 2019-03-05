@@ -263,13 +263,9 @@ void GamePlayScene::WinGame()
 	if (mCable->GetHP() > 0)
 	{
 		this->unscheduleUpdate();
-		Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
 		showEndGame();
 		InfoMap::setScore(0);
 	}
-	
-	
-
 }
 
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
@@ -339,7 +335,7 @@ void GamePlayScene::showEndGame()
 	Constants::SetEnableAllTouchEventOnMapLevel(false);
 	int star = 0;
 	auto score = InfoMap::getScore();
-	if (InfoMap::getScore() > 300)
+	if (InfoMap::getScore() > 400)
 	{
 		star = 3;
 	}
@@ -445,7 +441,10 @@ void GamePlayScene::ButtonShoot()
 	blueButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 20));
 	blueButton->addClickEventListener([&](Ref* event) {
-		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
+		if (Constants::getOnSFX())
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
+		}
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
 	addChild(blueButton, 999);
@@ -454,7 +453,10 @@ void GamePlayScene::ButtonShoot()
 	redButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	redButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 35 + blueButton->getContentSize().height));
 	redButton->addClickEventListener([&](Ref* event) {
-		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
+		if (Constants::getOnSFX())
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
+		}
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
 	addChild(redButton, 999);
@@ -463,7 +465,10 @@ void GamePlayScene::ButtonShoot()
 	yellowButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width - 40 - blueButton->getContentSize().width, 20));
 	yellowButton->addClickEventListener([&](Ref* event) {
-		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
+		if (Constants::getOnSFX())
+		{
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
+		}
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
 	addChild(yellowButton, 999);
@@ -560,7 +565,10 @@ void GamePlayScene::SetPauseGame()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+			if (Constants::getOnSFX())
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+			}
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->pause();

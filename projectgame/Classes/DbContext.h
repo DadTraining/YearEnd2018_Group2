@@ -21,5 +21,13 @@ public:
 
 	static int GetItem(int index);
 
+
+	/*
+		index : 1 is brick
+				2 is tool repair
+				3 is electric
+	*/
 	static void UpdateItem(int index,int items);
+	static int GetScore();
+	static void UpdateScore(int score);
 };

@@ -88,3 +88,36 @@ int MapLevel::GetScore()
 	return mScore;
 }
 
+
+void MapLevel::SetPosition(cocos2d::Vec2 pos)
+{
+	mPos = pos;
+}
+
+void MapLevel::ShowStar(cocos2d::Scene * scene)
+{
+	std::string _name;
+	switch (mStar)
+	{
+	case 0:
+		_name = MAPSCENE_ZERO_STAR;
+		break;
+	case 1:
+		_name = MAPSCENE_ONE_STAR;
+
+		break;
+	case 2:
+		_name = MAPSCENE_TWO_STAR;
+
+		break;
+	case 3:
+		_name = MAPSCENE_THREE_STAR;
+
+		break;
+	}
+
+	auto sprite = cocos2d::Sprite::create(_name);
+	sprite->setPosition(mPos);
+	scene->addChild(sprite);
+}
+

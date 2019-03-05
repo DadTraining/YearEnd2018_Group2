@@ -33,7 +33,7 @@ Ship::~Ship()
 
 void Ship::Update()
 {
-	
+
 	for (int i = 0; i < listBullet.size(); i++)
 	{
 		listBullet.at(i)->Update();
@@ -45,7 +45,7 @@ void Ship::Init()
 {
 
 	this->SetPosition(cocos2d::Vec2(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 2));
-	
+
 }
 
 void Ship::leftOrRight(bool direction)
@@ -62,17 +62,17 @@ void Ship::ShootColor(int color)
 		auto bullet = listBullet.at(i);
 		if (!bullet->IsVisible()) {
 			bullet->Shoot(mLeft);
-		
-		  if (mLeft) {
-				bullet->UpdateLocation(Vec2(mSprite->getPosition() + Vec2(mSprite->getContentSize().width*5/13,mSprite->getContentSize().height*-1.5/84 )));
+
+			if (mLeft) {
+				bullet->UpdateLocation(Vec2(mSprite->getPosition() + Vec2(mSprite->getContentSize().width * 5 / 13, mSprite->getContentSize().height*-1.5 / 84)));
 			}
 			else {
-				bullet->UpdateLocation(Vec2(mSprite->getPosition() - Vec2(mSprite->getContentSize().width * 4 / 13, mSprite->getContentSize().height*4/84)));
+				bullet->UpdateLocation(Vec2(mSprite->getPosition() - Vec2(mSprite->getContentSize().width * 4 / 13, mSprite->getContentSize().height * 4 / 84)));
 			}
 
-			
+
 			bullet->SetVisible(true);
-			
+
 			bullet->Init();
 			bullet->SetColor(color);
 			break;
@@ -91,10 +91,10 @@ bool Ship::Collision(std::vector<Shark*> sharks, int sharkTag, int bulletTag)
 		if (result && shark->GetTotalColor() == 1)
 		{
 			shark->Killed();
-			bullet->SetVisible(false);	
+			bullet->SetVisible(false);
 			return true;
 		}
-		else if(result && shark->GetTotalColor() != 1)
+		else if (result && shark->GetTotalColor() != 1)
 		{
 			bullet->SetVisible(false);
 			if (shark->EnoughColor())
@@ -121,11 +121,11 @@ void Ship::SetPositionY(float y)
 void Ship::ShipMove(float posY)
 {
 	float _posY = this->GetLocation().y;
-	if (_posY < posY -10)
+	if (_posY < posY - SHIP_SPEED)
 	{
 		this->SetPositionY(_posY + SHIP_SPEED);
 	}
-	else if (_posY  > posY +10 )
+	else if (_posY > posY + SHIP_SPEED)
 	{
 		this->SetPositionY(_posY - SHIP_SPEED);
 	}
