@@ -25,6 +25,7 @@ bool PopupEndGame::init()
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
@@ -43,6 +44,7 @@ bool PopupEndGame::init()
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();

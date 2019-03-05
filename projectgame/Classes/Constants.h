@@ -4,6 +4,8 @@
 #include "MapLevel.h"
 #include <vector>
 #include "InfoMap.h"
+#include "SimpleAudioEngine.h"
+#include "define.h"
 
 
 class Constants 
@@ -12,7 +14,10 @@ private:
 	//static cocos2d::Size mSize;
 	static cocos2d::Vector<cocos2d::ui::Button*> listButton;
 	static std::vector<MapLevel*> listMap;
+	//in gameplay
 	static bool inMap;
+	static bool pause;
+	
 
 	static int brick;
 	static int hp;
@@ -21,6 +26,10 @@ private:
 	static int totalStar;
 
 public:
+	//background music
+	/*static CocosDenshion::SimpleAudioEngine *bgmMap;
+	static CocosDenshion::SimpleAudioEngine *bgmPlay;*/
+
 	static cocos2d::Size getVisibleSize();
 	static float setScaleSprite(float whichSize,float expectSize, float realSize);
 

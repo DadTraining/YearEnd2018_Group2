@@ -23,10 +23,15 @@ bool PopupPlay::init()
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			Constants::ReleaseButton();
-			Director::getInstance()->replaceScene(TransitionFadeTR::create(1.5, GamePlayScene::createScene()));
+			CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
+			CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_PLAY, true);
+			
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
 		}
 	});
@@ -44,6 +49,7 @@ bool PopupPlay::init()
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			PopupSetting *popup = PopupSetting::create();

@@ -10,6 +10,7 @@ bool Constants::inMap;
  int Constants::boom;
  int Constants::totalCoin;
  int Constants::totalStar;
+bool Constants::pause;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -203,7 +204,6 @@ void Constants::SetTotalStar(int star)
 {
 	totalStar = star;
 }
-
 
 
 

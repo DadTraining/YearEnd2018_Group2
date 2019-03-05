@@ -79,6 +79,7 @@ bool PopupPause::init()
 			cocos2d::Director::getInstance()->resume();
 			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(MapScene::createScene());
+			CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 			break;
 
 		}

@@ -146,8 +146,11 @@
 
 #define BUTTON_PLAY "button/button_play.png"
 
-#define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"
-
+//bgm and sfx
+#define MUSIC_BACKGROUND_PLAY "sound/AdventureInTheOcean.mp3"
+#define MUSIC_BACKGROUND_MAP "sound/Netherplace.mp3"
+#define SFX_BUTTON_BULLET "sound/Pop-sound-effect.mp3"
+#define SFX_BUTTON "sound/button4.wav"
 
 #define IMG_MAPSCENE "map/map_2.png"
 
@@ -185,6 +188,14 @@
 //loading time
 #define LOADING_TIME_BG "item/time_bg.png"
 #define LOADING_TIME "item/time_loading.png"
+#define TIME "item/clock.png"
+
+//checkbox
+#define BOX_TICK "checkbox/b_1.png"
+#define BOX "checkbox/b_3.png"
+#define OFF "checkbox/off.png"
+#define ON "checkbox/on.png"
+#define ONOFFSTATE "checkbox/blabla.png"
 #define TIME "item/clock.png"
 
 #define COST_BUY_BREACK 200

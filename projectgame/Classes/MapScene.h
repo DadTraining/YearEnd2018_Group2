@@ -4,6 +4,7 @@
 #include "PopUpPlay.h"
 #include "Popup.h"
 #include "ui\CocosGUI.h"
+#include "SimpleAudioEngine.h"
 #include "GamePlayScene.h"
 
 using namespace cocos2d;

@@ -40,13 +40,14 @@ void Popup::setBackground()
 		switch (touch)
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
-			
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			
 			HandlTouch();
-			break; 
-	
+
+			break;
+
 		}
 	});
 }
@@ -65,9 +66,6 @@ cocos2d::Layer* Popup::getLayer()
 
 void Popup::HandlTouch()
 {
-	//disappear();
-	//CCLOG("abcxyz");
 	mLayer->setVisible(false);
 	cocos2d::Director::getInstance()->resume();
 }
-

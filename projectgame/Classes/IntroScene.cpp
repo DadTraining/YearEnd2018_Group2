@@ -33,6 +33,7 @@ bool IntroScene::init()
 
 	Page();
 	Loading();
+	
 	BGMusic();
 	//LoadGame();
 	AddDataBase();
@@ -64,12 +65,16 @@ void IntroScene::Page()
 
 }
 
-/*Creat Background Music*/
+/*Create Background Music*/
 void IntroScene::BGMusic()
 {
-	audio = CocosDenshion::SimpleAudioEngine::getInstance();
-	audio->playBackgroundMusic(MUSIC_BACKGROUND, true);
-
+	bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
+	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
+	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
+	bgmMap->preloadEffect(SFX_BUTTON_BULLET);
+	bgmMap->preloadEffect(SFX_BUTTON);
+	bgmMap->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+	//bgmMap->setBackgroundMusicVolume(0.5f);
 }
 
 void IntroScene::AddDataBase()
@@ -169,7 +174,7 @@ void IntroScene::Loading()
 					break;
 				case ui::Widget::TouchEventType::ENDED:
 				{
-					audio->stopBackgroundMusic();
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 					break;
 				}
@@ -184,7 +189,7 @@ void IntroScene::Loading()
 	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.1f));
 	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
 	loadingBar->runAction(repeatLoad);
-
+	
 }
 
 

@@ -28,11 +28,15 @@ private:
 	int pressed;
 	int countDownButtonMeat;
 	int countDownMeat;
+	int countDownTime;
 	std::vector<MapLevel*> mListLevelEndGame;
 	std::vector<PopupEndGame*> mListPlayEndGame;
 	double mScore;
 	int mLevel;
 	Label* mLabelScore;
+	ui::LoadingBar *loadingTime;
+	cocos2d::Sprite *clock;
+	cocos2d::Sprite *loadingTimeBG;
 	Label* mLabelLevel;
 	Label*  mLabelCountBrick;
 	Label*  mCountHP;
