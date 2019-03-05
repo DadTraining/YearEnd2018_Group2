@@ -10,16 +10,17 @@ bool PopupSetting::init()
 	Popup::setBackground();
 	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
 	{
-		onBGM = true;
+		Constants::setOnBGM(true);
 	}
-	else onBGM = false;
+	else Constants::setOnBGM(false);
 
 	if (!Constants::isInMap())
 	{
+
 		mLabel = cocos2d::Sprite::create(PAUSE);
 		setContent();
-		checkboxBGM();
-		checkboxSFX();
+		/*checkboxBGM();
+		checkboxSFX();*/
 		////////////////////
 		auto btnHome = ui::Button::create(BUTTON_HOME);
 		btnHome->setPosition(Vec2(-mBackground->getContentSize().width / 7,
@@ -32,6 +33,10 @@ bool PopupSetting::init()
 			switch (touch)
 			{
 			case cocos2d::ui::Widget::TouchEventType::BEGAN:
+				if (Constants::getOnSFX())
+				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+				}
 				break;
 			case cocos2d::ui::Widget::TouchEventType::ENDED:
 				cocos2d::Director::getInstance()->resume();
@@ -48,14 +53,16 @@ bool PopupSetting::init()
 	{
 		mLabel = cocos2d::Sprite::create(SETTING);
 		setContent();
+
 		////////////////
 		//Add slider of mBgm and mSfx
-		sliderBGM();
+		/*sliderBGM();
 		sliderSFX();
-		mPercentBGM = 50;
-		CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM / 100);
+		
+		CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(Constants::getPercentBGM() / 100);*/
 	}
-
+	checkboxBGM();
+	checkboxSFX();
 	return true;
 }
 
@@ -66,13 +73,12 @@ void PopupSetting::onExit()
 
 void PopupSetting::setContent()
 {
-
 	mLabel->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
 	mLayer->addChild(mLabel);
 	mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
 	mLabel->setScale(0.75);
 	mSfx = cocos2d::Sprite::create(SFX);
-	mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
+	mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 8,
 		mLabel->getPosition().y - mBackground->getContentSize().height / 8));
 	mLayer->addChild(mSfx);
 	mSfx->setScale(0.75);
@@ -84,66 +90,75 @@ void PopupSetting::setContent()
 	mBgm->setScale(0.75);
 }
 
-/*Add Slider*/
-void PopupSetting::sliderBGM()
-{
-	auto sliderB = cocos2d::ui::Slider::create();
-	sliderB->setPercent(50);
-	sliderB->loadBarTexture(SLIDE_BAR_BG);
-	sliderB->loadSlidBallTextureNormal(SLIDE_ROUND);
-	sliderB->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
-	sliderB->setAnchorPoint(Vec2(0, 0.5));
-	sliderB->setScale(0.45);
-
-	sliderB->setPosition(Vec2(mBgm->getPosition().x + mBackground->getContentSize().width / 12,
-		mBgm->getPosition().y));
-	mLayer->addChild(sliderB);
-
-	sliderB->addEventListener([=](Ref* sender, cocos2d::ui::Slider::EventType type) {
-		switch (type)
-		{
-		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
-		{
-			cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
-			mPercentBGM = (float)_slider->getPercent();
-			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM / 100);
-			break;
-		}
-		default:
-			break;
-		}
-	});
-}
-
-void PopupSetting::sliderSFX()
-{
-
-	auto sliderS = cocos2d::ui::Slider::create();
-	sliderS->setPercent(50);
-	sliderS->loadBarTexture(SLIDE_BAR_BG);
-	sliderS->loadSlidBallTextureNormal(SLIDE_ROUND);
-	sliderS->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
-	sliderS->setAnchorPoint(Vec2(0, 0.5));
-	sliderS->setScale(0.45);
-
-	sliderS->setPosition(Vec2(mSfx->getPosition().x + mBackground->getContentSize().width / 12,
-		mSfx->getPosition().y));
-	mLayer->addChild(sliderS);
-
-	sliderS->addEventListener([&](Ref* sender, cocos2d::ui::Slider::EventType type) {
-		switch (type)
-		{
-		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
-		{
-			cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
-			mPercentSFX = _slider->getPercent();
-			break;
-		}
-		default:
-			break;
-		}
-	});
-}
+///*Add Slider*/
+//void PopupSetting::sliderBGM()
+//{
+//	auto sliderB = cocos2d::ui::Slider::create();
+//	sliderB->setPercent(Constants::getPercentBGM() / 100);
+//	sliderB->loadBarTexture(SLIDE_BAR_BG);
+//	sliderB->loadSlidBallTextureNormal(SLIDE_ROUND);
+//	sliderB->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
+//	sliderB->setAnchorPoint(Vec2(0, 0.5));
+//	sliderB->setScale(0.45);
+//
+//	sliderB->setPosition(Vec2(mBgm->getPosition().x + mBackground->getContentSize().width / 12,
+//		mBgm->getPosition().y));
+//	mLayer->addChild(sliderB);
+//
+//	sliderB->addEventListener([=](Ref* sender, cocos2d::ui::Slider::EventType type) {
+//		switch (type)
+//		{
+//		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
+//		{
+//			cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
+//			Constants::setPercentBGM((float)_slider->getPercent());
+//			if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+//			{
+//				CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(Constants::getPercentBGM() / 100);
+//			}
+//			break;
+//		}
+//		default:
+//			break;
+//		}
+//	});
+//
+//	if (Constants::getPercentBGM() == 0)
+//	{
+//		Constants::setOnBGM(false);
+//		CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+//	}
+//}
+//
+//void PopupSetting::sliderSFX()
+//{
+//
+//	auto sliderS = cocos2d::ui::Slider::create();
+//	sliderS->setPercent(50);
+//	sliderS->loadBarTexture(SLIDE_BAR_BG);
+//	sliderS->loadSlidBallTextureNormal(SLIDE_ROUND);
+//	sliderS->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
+//	sliderS->setAnchorPoint(Vec2(0, 0.5));
+//	sliderS->setScale(0.45);
+//
+//	sliderS->setPosition(Vec2(mSfx->getPosition().x + mBackground->getContentSize().width / 12,
+//		mSfx->getPosition().y));
+//	mLayer->addChild(sliderS);
+//
+//	sliderS->addEventListener([&](Ref* sender, cocos2d::ui::Slider::EventType type) {
+//		switch (type)
+//		{
+//		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
+//		{
+//			/*cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
+//			mPercentSFX = _slider->getPercent();*/
+//			break;
+//		}
+//		default:
+//			break;
+//		}
+//	});
+//}
 
 void PopupSetting::checkboxBGM()
 {
@@ -151,30 +166,30 @@ void PopupSetting::checkboxBGM()
 	checkboxBOn->setPosition(Vec2(mBgm->getPosition().x + mBackground->getContentSize().width / 8,
 		mBgm->getPosition().y));
 	mLayer->addChild(checkboxBOn);
-	checkboxBOn->setSelected(onBGM);
+	checkboxBOn->setSelected(Constants::getOnBGM());
 
 	auto on = cocos2d::Sprite::create(ONOFFSTATE);
 	on->setPosition(Vec2(checkboxBOn->getPosition().x + mBackground->getContentSize().width / 8,
 		mBgm->getPosition().y));
 	mLayer->addChild(on);
 
-		checkboxBOn->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
-			switch (type)
+	checkboxBOn->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Constants::changeOnBGM();
+			if (!Constants::getOnBGM())
 			{
-			case ui::Widget::TouchEventType::BEGAN:
-				break;
-			case ui::Widget::TouchEventType::ENDED:
-				onBGM = !onBGM;
-				if (!onBGM)
-				{
-					CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-				}
-				else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-				break;
-			default:
-				break;
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 			}
-		});
+			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			break;
+		default:
+			break;
+		}
+	});
 }
 
 void PopupSetting::checkboxSFX()
@@ -183,7 +198,7 @@ void PopupSetting::checkboxSFX()
 	checkboxSOn->setPosition(Vec2(mSfx->getPosition().x + mBackground->getContentSize().width / 8,
 		mSfx->getPosition().y));
 	mLayer->addChild(checkboxSOn);
-	checkboxSOn->setSelected(onBGM);
+	checkboxSOn->setSelected(Constants::getOnSFX());
 
 	auto on = cocos2d::Sprite::create(ONOFFSTATE);
 	on->setPosition(Vec2(checkboxSOn->getPosition().x + mBackground->getContentSize().width / 8,
@@ -196,12 +211,16 @@ void PopupSetting::checkboxSFX()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			/*onBGM = !onBGM;
-			if (!onBGM)
+			Constants::changeOnSFX();
+			if (!Constants::getOnSFX())
 			{
-				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
 			}
-			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();*/
+			else if (Constants::isInMap())
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->resumeEffect(0);
+			}
+			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
 			break;
 		default:
 			break;
@@ -215,6 +234,6 @@ void PopupSetting::HandlTouch()
 	mLayer->setVisible(false);
 	int tag = cocos2d::Director::getInstance()->getRunningScene()->getTag();
 	cocos2d::log("%d", tag);
-	
+
 	cocos2d::Director::getInstance()->resume();
 }

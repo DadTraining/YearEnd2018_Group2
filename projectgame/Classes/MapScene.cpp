@@ -42,8 +42,10 @@ bool MapScene::init()
 	}
 
 	Constants::setInMap(true);
+
 	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+	
 	return true;
 }
 
@@ -181,7 +183,10 @@ void MapScene::setListButton()
 			switch (type)
 			{
 			case ui::Widget::TouchEventType::BEGAN:
-				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+				if (Constants::getOnSFX())
+				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+				}
 				break;
 			case ui::Widget::TouchEventType::ENDED:
 				mListPlay[i - 1]->getLayer()->setVisible(true);

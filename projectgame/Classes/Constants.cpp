@@ -11,6 +11,8 @@ int Constants::boom;
 int Constants::totalCoin;
 int Constants::totalStar;
 bool Constants::pause;
+bool Constants::onBGM = true;
+bool Constants::onSFX = true;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -209,6 +211,34 @@ void Constants::SetTotalStar(int star)
 	totalStar = star;
 }
 
+void Constants::setOnBGM(bool on)
+{
+	onBGM = on;
+}
 
+void Constants::changeOnBGM()
+{
+	onBGM = !onBGM;
+}
+
+bool Constants::getOnBGM()
+{
+	return onBGM;
+}
+
+void Constants::setOnSFX(bool on)
+{
+	onSFX = on;
+}
+
+void Constants::changeOnSFX()
+{
+	onSFX = !onSFX;
+}
+
+bool Constants::getOnSFX()
+{
+	return onSFX;
+}
 
 
