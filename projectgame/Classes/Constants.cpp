@@ -57,14 +57,17 @@ void Constants::AddMapIntoList(MapLevel * map)
 
 void Constants::SetPhase(int index)
 {
-	auto map = listMap.at(index);
-	InfoMap::setSharPhases(
-		map->GetPhase(1),
-		map->GetPhase(2),
-		map->GetPhase(3),
-		map->GetSharksSkin()
-	);
-	InfoMap::setMapLevel(index);
+	if (index < 16)
+	{
+		auto map = listMap.at(index);
+		InfoMap::setSharPhases(
+			map->GetPhase(1),
+			map->GetPhase(2),
+			map->GetPhase(3),
+			map->GetSharksSkin()
+		);
+		InfoMap::setMapLevel(index);
+	}
 }
 
 void Constants::ReleaseButton()
@@ -113,7 +116,10 @@ bool Constants::BuyBooms()
 	{
 		boom += 1;
 		DbContext::UpdateItem(3, boom);
+
 		Constants::SetTotalCoin(totalCoin - COST_BUY_BOOM);
+		DbContext::UpdateScore(totalCoin);
+
 		return true;
 	}
 	return false;
@@ -218,6 +224,7 @@ void Constants::setOnBGM(bool on)
 void Constants::changeOnBGM()
 {
 	onBGM = !onBGM;
+	DbContext::UpdateSound(onSFX ? 1 : 0, onBGM ? 1 : 0);
 }
 
 bool Constants::getOnBGM()
@@ -233,6 +240,7 @@ void Constants::setOnSFX(bool on)
 void Constants::changeOnSFX()
 {
 	onSFX = !onSFX;
+	DbContext::UpdateSound(onSFX ? 1 : 0, onBGM ? 1 : 0);
 }
 
 bool Constants::getOnSFX()

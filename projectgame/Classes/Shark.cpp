@@ -358,19 +358,19 @@ void Shark::Init()
 	switch (size)
 	{
 	case 1:
-		mScore = 10;
+		mScore = 5;
 		mSize = SHARK_SIZE_SMALL;
 		mDelay = SHARK_DELAY_SMALL;
 		mSpeed = SHARK_SPEED_SMALL;
 		break;
 	case 2:
-		mScore = 25;
+		mScore = 10;
 		mSize = SHARK_SIZE_NORMAL;
 		mDelay = SHARK_DELAY_NORMAL;
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	case 3:
-		mScore = 50;
+		mScore = 15;
 		mSize = SHARK_SIZE_BIG;
 		mDelay = SHARK_DELAY_BIG;
 		mSpeed = SHARK_SPEED_BIG;
@@ -532,9 +532,10 @@ void Shark::SetNumSkinForShark(int num)
 
 void Shark::SharkMultiSkin()
 {
-	mScore += 15;
+	mScore += 10;
 	mTotalColor = 2;
 	mTotalDuplicate = 0;
+	mSpeed += 0.2;
 	int color = cocos2d::random(1, 3);
 	switch (color)
 	{
@@ -554,6 +555,7 @@ void Shark::SharkMultiSkin()
 		mColor_2nd = SHARK_RED;
 		break;
 	}
+
 	color_1st->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("black.png"));
 	color_2nd->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName("black.png"));
 

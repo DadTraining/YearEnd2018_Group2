@@ -184,7 +184,19 @@ void PopupSetting::checkboxBGM()
 			{
 				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 			}
-			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			else
+			{
+				//CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+				if (Constants::isInMap())
+				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+				}
+				else
+				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_PLAY, true);
+
+				}
+			}
 			break;
 		default:
 			break;

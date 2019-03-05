@@ -29,5 +29,6 @@ public:
 	void SetTarget(cocos2d::Vec2 pos, bool vis);
 	int GetHP();
 
+	void BrokenAnimation(float delay);
 
 };

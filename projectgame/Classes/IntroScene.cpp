@@ -33,10 +33,10 @@ bool IntroScene::init()
 
 	Page();
 	Loading();
-	
+	AddDataBase();
 	BGMusic();
 	//LoadGame();
-	AddDataBase();
+	
 	return true;
 }
 
@@ -70,12 +70,15 @@ void IntroScene::Page()
 /*Create Background Music*/
 void IntroScene::BGMusic()
 {
-	bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
-	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
-	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
-	bgmMap->preloadEffect(SFX_BUTTON_BULLET);
-	bgmMap->preloadEffect(SFX_BUTTON);
-	bgmMap->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+	if (Constants::getOnBGM())
+	{
+		bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
+		bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
+		bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
+		bgmMap->preloadEffect(SFX_BUTTON_BULLET);
+		bgmMap->preloadEffect(SFX_BUTTON);
+		bgmMap->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+	}
 	//bgmMap->setBackgroundMusicVolume(0.5f);
 }
 
@@ -94,43 +97,12 @@ void IntroScene::AddDataBase()
 	}
 
 	Constants::SetTotalCoin(DbContext::GetScore());
+	Constants::setOnSFX(DbContext::GetSound(1)==1? true:false);
+	Constants::setOnBGM(DbContext::GetSound(2)==1? true:false);
 }
 
 void IntroScene::LoadGame()
 {
-	/*MapLevel *m1 = new MapLevel(1, 0, 3, 5, 7, 0, false, 0, true);
-	Constants::AddMapIntoList(m1);
-	MapLevel *m2 = new MapLevel(2, 0, 4, 6, 8, 0, false, 0, false);
-	Constants::AddMapIntoList(m2);
-	MapLevel *m3 = new MapLevel(3, 0, 5, 7, 9, 1, false, 0, false);
-	Constants::AddMapIntoList(m3);
-	MapLevel *m4 = new MapLevel(4, 0, 4, 6, 8, 2, false, 0, false);
-	Constants::AddMapIntoList(m4);
-	MapLevel *m5 = new MapLevel(5, 0, 5, 7, 9, 3, false, 0, false);
-	Constants::AddMapIntoList(m5);
-	MapLevel *m6 = new MapLevel(6, 0, 5, 7, 9, 4, false, 0, false);
-	Constants::AddMapIntoList(m6);
-	MapLevel *m7 = new MapLevel(7, 0, 5, 7, 9, 5, false, 0, false);
-	Constants::AddMapIntoList(m7);
-	MapLevel *m8 = new MapLevel(8, 0, 6, 8, 10, 3, false, 0, false);
-	Constants::AddMapIntoList(m8);
-	MapLevel *m9 = new MapLevel(9, 0, 6, 8, 10, 4, false, 0, false);
-	Constants::AddMapIntoList(m9);
-	MapLevel *m10 = new MapLevel(10, 0, 6, 8, 10, 5, false, 0, false);
-	Constants::AddMapIntoList(m10);
-	MapLevel *m11 = new MapLevel(11, 0, 6, 8, 10, 6, false, 0, false);
-	Constants::AddMapIntoList(m11);
-	MapLevel *m12 = new MapLevel(12, 0, 6, 8, 10, 7, false, 0, false);
-	Constants::AddMapIntoList(m12);
-	MapLevel *m13 = new MapLevel(13, 0, 6, 8, 10, 8, false, 0, false);
-	Constants::AddMapIntoList(m13);
-	MapLevel *m14 = new MapLevel(14, 0, 6, 8, 10, 9, false, 0, false);
-	Constants::AddMapIntoList(m14);
-	MapLevel *m15 = new MapLevel(15, 0, 6, 8, 10, 10, false, 0, false);
-	Constants::AddMapIntoList(m15);
-	MapLevel *m16 = new MapLevel(16, 0, 6, 8, 10, 11, false, 0, false);
-	Constants::AddMapIntoList(m16);*/
-
 }
 
 /*Create LoadingBar*/

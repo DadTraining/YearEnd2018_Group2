@@ -30,4 +30,10 @@ public:
 	static void UpdateItem(int index,int items);
 	static int GetScore();
 	static void UpdateScore(int score);
+	/*
+		index = 1 is sound effect
+		index = 2 is background music
+	*/
+	static int GetSound(int index);
+	static void UpdateSound(int sf, int bg);
 };

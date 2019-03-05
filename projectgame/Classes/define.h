@@ -88,10 +88,10 @@
 
 #define SHARK_POS 100
 
-#define SHARK_SPEED_SMALL 2
-#define SHARK_SPEED_NORMAL 1.5
-#define SHARK_SPEED_BIG 1
-#define SHARK_SPEED_RUNAWAY 16
+#define SHARK_SPEED_SMALL 2.3
+#define SHARK_SPEED_NORMAL 1.9
+#define SHARK_SPEED_BIG 1.5
+#define SHARK_SPEED_RUNAWAY 13
 
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
@@ -127,6 +127,7 @@
 
 
 //cable
+#define CABLE_BROKEN "cable_"
 #define HP_CABLEWHITE "cable/edithealthwhite.png"
 #define HP_CABLERED "cable/healthred.png"
 #define HP_CABLEGREEN "cable/healthgreen.png"
