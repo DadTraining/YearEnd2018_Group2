@@ -70,7 +70,6 @@ void MapScene::setListButton()
 
 		mListButton.push_back(button);
 
-
 		///////////////////
 		//set position for button
 		cocos2d::Vec2 pos;
@@ -238,6 +237,12 @@ void MapScene::coin()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 
+	//frames coin
+	auto mFramesCoin = cocos2d::Sprite::create(BUTTON_FRAMES);
+	mFramesCoin->setPosition(cocos2d::Vec2(visibleSize.width / 11, visibleSize.height / 1.05));
+	this->addChild(mFramesCoin);
+
+
 	//icon coin
 	auto mCoin = cocos2d::Sprite::create(COIN);
 	mCoin->setAnchorPoint(Vec2(0, 1));
@@ -262,10 +267,15 @@ void MapScene::coin()
 void MapScene::star()
 {
 	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	//frames
+	auto mFramesStar = cocos2d::Sprite::create(BUTTON_FRAMES_STAR);
+	mFramesStar->setPosition(cocos2d::Vec2(visibleSize.width / 4.2, visibleSize.height / 1.05));
+	this->addChild(mFramesStar);
 	//icon star
 	auto mStar = cocos2d::Sprite::create(STAR);
 	mStar->setAnchorPoint(Vec2(0, 1));
-	mStar->setPosition(cocos2d::Vec2(visibleSize.width / 7.2, visibleSize.height / 1.01));
+	mStar->setPosition(cocos2d::Vec2(visibleSize.width / 5.3, visibleSize.height / 1.01));
 	mStar->setScale(0.5);
 	this->addChild(mStar);
 
@@ -281,7 +291,7 @@ void MapScene::star()
 	//mstar = 000000;
 	auto mLableStar = Label::createWithTTF(labelConfig, std::to_string(Constants::GetTotalStar()));
 	mLableStar->setAnchorPoint(Vec2(0, 1));
-	mLableStar->setPosition(cocos2d::Vec2(visibleSize.width / 5.4, visibleSize.height / 1.03));
+	mLableStar->setPosition(cocos2d::Vec2(visibleSize.width / 4.2, visibleSize.height / 1.03));
 	mLableStar->enableGlow(Color4B::BLUE);
 	this->addChild(mLableStar);
 

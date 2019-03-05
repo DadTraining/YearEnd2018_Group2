@@ -51,17 +51,19 @@ void IntroScene::Page()
 	pageView->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + visibleSize.height / 7));
 	this->addChild(pageView);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 1; i < 4; i++)
 	{
+		char normal[20] = { 0 };
+		sprintf(normal, "intro/%d.png", i);
 		auto layout = ui::Layout::create();
 		layout->setContentSize(pageView->getContentSize());
-		auto sprite = Sprite::create("HelloWorld.png");
+	    auto sprite = Sprite::create(normal);
 		sprite->setPosition(Vec2(layout->getSize().width / 2, layout->getSize().height / 2));
 		layout->addChild(sprite);
 		pageView->addPage(layout);
 
 	}
-	pageView->scrollToItem(3);
+    pageView->scrollToItem(3);
 
 }
 
