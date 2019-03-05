@@ -46,7 +46,7 @@ public:
 
 private:
 	cocos2d::Sprite *mSfx, *mBgm, *mLabel;
-	float mPercentSFX, mPercentBGM;
+	
 	float delta;
 	cocos2d::ui::CheckBox *checkboxBOn, *checkboxSOn;
 };

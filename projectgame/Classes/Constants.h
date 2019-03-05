@@ -16,7 +16,7 @@ private:
 	static std::vector<MapLevel*> listMap;
 	//in gameplay
 	static bool inMap;
-	static bool onBGM;
+	static bool onBGM, onSFX;
 	
 
 public:
@@ -46,5 +46,6 @@ public:
 	static void setOnBGM(bool on);
 	static void changeOnBGM();
 	static bool getOnBGM();
+
 };
 

@@ -37,8 +37,10 @@ bool MapScene::init()
 	}
 
 	Constants::setInMap(true);
+
 	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
+	
 	return true;
 }
 
