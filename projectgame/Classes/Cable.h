@@ -29,6 +29,5 @@ public:
 	void SetTarget(cocos2d::Vec2 pos, bool vis);
 	int GetHP();
 
-	int GetHP();
 
 };
