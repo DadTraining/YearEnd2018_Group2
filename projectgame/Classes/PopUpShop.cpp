@@ -4,20 +4,8 @@
 #include "PopUpSetting.h"
 #include "define.h"
 #include "ui\CocosGUI.h"
-#include"Model.h"
-#include"MapScene.h"
+#include "Model.h"
 
-
-
-
-//PopUpShop::PopUpShop(cocos2d::Scene * createScene)
-//{
-//	// layer 
-//	mLayer = cocos2d::Layer::create();
-//	mLayer->setAnchorPoint(cocos2d::Vec2(0.5, 0.5));
-//	mLayer->setPosition(SCREEN_W /200, SCREEN_H / 200);
-//	createScene->addChild(mLayer);
-//}
 
 bool PopUpShop::init()
 {
@@ -123,7 +111,9 @@ void PopUpShop::setBackground()
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			break;
-		case cocos2d::ui::Widget::TouchEventType::ENDED:			
+		case cocos2d::ui::Widget::TouchEventType::ENDED:	
+			Constants::BuyBricks();
+			
 			break;
 
 		}
@@ -140,6 +130,7 @@ void PopUpShop::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
+			Constants::BuyHps();
 			break;
 
 		}
@@ -157,6 +148,7 @@ void PopUpShop::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
+			Constants::BuyBooms();
 			break;
 
 		}

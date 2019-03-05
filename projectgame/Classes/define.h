@@ -14,7 +14,7 @@
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
-#define SHIP_SPEED 10
+#define SHIP_SPEED 15
 
 
 #define BULLET_IMG "Bullet.png"
@@ -200,8 +200,13 @@
 #define ONOFFSTATE "checkbox/blabla.png"
 #define TIME "item/clock.png"
 
-#define COST_BUY_BREACK 200
+#define COST_BUY_BRICK 200
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
 
 #define DATA_BASE_NAME "databaseshark.sql"
+
+#define MAPSCENE_ZERO_STAR "map_star/0star.png"
+#define MAPSCENE_ONE_STAR "map_star/1star.png"
+#define MAPSCENE_TWO_STAR "map_star/2star.png"
+#define MAPSCENE_THREE_STAR "map_star/3star.png"

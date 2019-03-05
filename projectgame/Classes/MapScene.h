@@ -17,10 +17,10 @@ private:
 	std::vector<MapLevel*> mListLevel;
 	std::vector<PopupPlay*> mListPlay;
 	std::vector<ui::Button*> btnLevels;
-	cocos2d::Sprite* mCoin;
+	/*cocos2d::Sprite* mCoin;
 	cocos2d::Sprite* mStar;
-	int mcoin;
-	int mstar;
+	
+	int mstar;*/
 public:
 	
 	static cocos2d::Scene* createScene();

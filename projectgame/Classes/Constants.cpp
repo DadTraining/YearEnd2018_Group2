@@ -54,8 +54,6 @@ void Constants::AddMapIntoList(MapLevel * map)
 	listMap.push_back(map);
 }
 
-
-
 void Constants::SetPhase(int index)
 {
 	auto map = listMap.at(index);
@@ -91,6 +89,7 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 			listMap.at(lv)->AllowPlay();
 		}
 		DbContext::UpdateDataMap(lv, star, score);
+		DbContext::UpdateScore(Constants::GetTotalCoin() + score);
 	}
 	DbContext::UpdateItem(1, Constants::GetBricks());
 	DbContext::UpdateItem(2, Constants::GetHps());
@@ -112,16 +111,21 @@ bool Constants::BuyBooms()
 	if (Constants::GetTotalCoin() > COST_BUY_BOOM)
 	{
 		boom += 1;
+		DbContext::UpdateItem(3, boom);
+		Constants::SetTotalCoin(totalCoin - COST_BUY_BOOM);
 		return true;
 	}
 	return false;
 }
 
-bool Constants::BuyBreacks()
+bool Constants::BuyBricks()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_BREACK)
+	if (Constants::GetTotalCoin() > COST_BUY_BRICK)
 	{
 		brick += 3;
+		DbContext::UpdateItem(1, brick);
+		Constants::SetTotalCoin(totalCoin - COST_BUY_BRICK);
+		DbContext::UpdateScore(totalCoin);
 		return true;
 	}
 	return false;
@@ -133,6 +137,10 @@ bool Constants::BuyHps()
 	if (Constants::GetTotalCoin() > COST_BUY_HP)
 	{
 		hp += 3;
+		Constants::SetTotalCoin(totalCoin - COST_BUY_HP);
+
+		DbContext::UpdateItem(2, hp);
+
 		return true;
 	}
 	return false;
@@ -182,11 +190,7 @@ void Constants::SetTotalCoin(int coins)
 
 int Constants::GetTotalCoin()
 {
-	totalCoin = 0;
-	for (int i = 0; i < listMap.size(); i++)
-	{
-		totalCoin += listMap.at(i)->GetScore();
-	}
+	totalCoin = DbContext::GetScore();
 	return totalCoin;
 }
 

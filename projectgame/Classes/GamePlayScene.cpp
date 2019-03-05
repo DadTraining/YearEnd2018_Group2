@@ -263,13 +263,9 @@ void GamePlayScene::WinGame()
 	if (mCable->GetHP() > 0)
 	{
 		this->unscheduleUpdate();
-		Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
 		showEndGame();
 		InfoMap::setScore(0);
 	}
-	
-	
-
 }
 
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
@@ -339,7 +335,7 @@ void GamePlayScene::showEndGame()
 	Constants::SetEnableAllTouchEventOnMapLevel(false);
 	int star = 0;
 	auto score = InfoMap::getScore();
-	if (InfoMap::getScore() > 300)
+	if (InfoMap::getScore() > 400)
 	{
 		star = 3;
 	}

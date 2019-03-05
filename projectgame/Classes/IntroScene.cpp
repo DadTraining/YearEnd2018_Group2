@@ -91,6 +91,7 @@ void IntroScene::AddDataBase()
 		Constants::AddMapIntoList(listMap.at(i));
 	}
 
+	Constants::SetTotalCoin(DbContext::GetScore());
 }
 
 void IntroScene::LoadGame()

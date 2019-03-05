@@ -50,7 +50,7 @@ public:
 	static bool isInMap();
 
 	static bool BuyBooms();
-	static bool BuyBreacks();
+	static bool BuyBricks();
 	static bool BuyHps();
 	static int GetBooms();
 	static int GetHps();
