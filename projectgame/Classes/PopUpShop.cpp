@@ -164,6 +164,10 @@ void PopUpShop::setBackground()
 		}
 	});
 	mBackground->addChild(btnBuyGun);
+
+	//
+	CountInShop();
+
 }
 
 void PopUpShop::disappear()
@@ -182,6 +186,34 @@ void PopUpShop::HandlTouch()
 	mLayer->setVisible(false);
 	
 	
+}
+
+void PopUpShop::CountInShop()
+{
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_LEVEL;
+	labelConfig.fontSize = 25;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	/// boom is brick
+	mCountBrick = Label::createWithTTF(labelConfig, std::to_string(1));
+	mCountBrick->setAlignment(TextHAlignment::CENTER);
+	mCountBrick->setColor(Color3B::BLACK);
+	mCountBrick->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.3, mBackground->getContentSize().height*0.35));
+	mBackground->addChild(mCountBrick, 999);
+
+	mCountHP = Label::createWithTTF(labelConfig, std::to_string(1));
+	mCountHP->setAlignment(TextHAlignment::CENTER);
+	mCountHP->setColor(Color3B::BLACK);
+	mCountHP->setPosition(cocos2d::Vec2(visibleSize.width*0.519, visibleSize.height*0.45));
+	//mBackground->addChild(mCountHP, 999);
+
+	mCountGunE = Label::createWithTTF(labelConfig, std::to_string(1));
+	mCountGunE->setAlignment(TextHAlignment::CENTER);
+	mCountGunE->setColor(Color3B::BLACK);
+	mCountGunE->setPosition(cocos2d::Vec2(visibleSize.width*0.615, visibleSize.height*0.45));
+	//mBackground->addChild(mCountGunE, 999);
 }
 
 

@@ -7,6 +7,7 @@
 #include "InfoMap.h"
 #include "Constants.h"
 #include "DbContext.h"
+#include "ShopScene.h"
 
 
 
@@ -175,7 +176,7 @@ void IntroScene::Loading()
 				case ui::Widget::TouchEventType::ENDED:
 				{
 					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
-					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, ShopScene::createScene()));
 					break;
 				}
 
