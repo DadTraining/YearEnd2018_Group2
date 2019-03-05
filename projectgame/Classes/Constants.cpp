@@ -4,6 +4,7 @@ cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
 bool Constants::inMap;
 bool Constants::onBGM = true;
+bool Constants::onSFX = true;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -107,6 +108,19 @@ bool Constants::getOnBGM()
 	return onBGM;
 }
 
+void Constants::setOnSFX(bool on)
+{
+	onSFX = on;
+}
 
+void Constants::changeOnSFX()
+{
+	onSFX = !onSFX;
+}
+
+bool Constants::getOnSFX()
+{
+	return onSFX;
+}
 
 

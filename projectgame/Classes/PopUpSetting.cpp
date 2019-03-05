@@ -33,6 +33,10 @@ bool PopupSetting::init()
 			switch (t)
 			{
 			case cocos2d::ui::Widget::TouchEventType::BEGAN:
+				if (Constants::getOnSFX())
+				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+				}
 				break;
 			case cocos2d::ui::Widget::TouchEventType::ENDED:
 				cocos2d::Director::getInstance()->resume();
@@ -194,7 +198,7 @@ void PopupSetting::checkboxSFX()
 	checkboxSOn->setPosition(Vec2(mSfx->getPosition().x + mBackground->getContentSize().width / 8,
 		mSfx->getPosition().y));
 	mLayer->addChild(checkboxSOn);
-	//checkboxSOn->setSelected(onBGM);
+	checkboxSOn->setSelected(Constants::getOnSFX());
 
 	auto on = cocos2d::Sprite::create(ONOFFSTATE);
 	on->setPosition(Vec2(checkboxSOn->getPosition().x + mBackground->getContentSize().width / 8,
@@ -207,12 +211,16 @@ void PopupSetting::checkboxSFX()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			/*onBGM = !onBGM;
-			if (!onBGM)
+			Constants::changeOnSFX();
+			if (!Constants::getOnSFX())
 			{
-				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopAllEffects();
 			}
-			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();*/
+			else if (Constants::isInMap())
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->resumeEffect(0);
+			}
+			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeAllEffects();
 			break;
 		default:
 			break;

@@ -39,7 +39,10 @@ void Popup::setBackground()
 		switch (touch)
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
-			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+			if (Constants::getOnSFX())
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
+			}
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:
 			HandlTouch();

@@ -47,5 +47,8 @@ public:
 	static void changeOnBGM();
 	static bool getOnBGM();
 
+	static void setOnSFX(bool on);
+	static void changeOnSFX();
+	static bool getOnSFX();
 };
 
