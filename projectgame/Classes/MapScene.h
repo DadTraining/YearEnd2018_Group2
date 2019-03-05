@@ -4,6 +4,8 @@
 #include "PopUpPlay.h"
 #include "Popup.h"
 #include "ui\CocosGUI.h"
+#include "SimpleAudioEngine.h"
+#include "GamePlayScene.h"
 
 using namespace cocos2d;
 using namespace std;
@@ -15,6 +17,10 @@ private:
 	std::vector<MapLevel*> mListLevel;
 	std::vector<PopupPlay*> mListPlay;
 	std::vector<ui::Button*> btnLevels;
+	cocos2d::Sprite* mCoin;
+	cocos2d::Sprite* mStar;
+	int mcoin;
+	int mstar;
 public:
 	
 	static cocos2d::Scene* createScene();
@@ -24,5 +30,9 @@ public:
 	void initLevel();
 	void initPopUpLevel();
 	void setEnableTouch(bool enable);
+	void coin();
+	void star();
+	void shoppe();
 	CREATE_FUNC(MapScene);
+	
 };

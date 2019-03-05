@@ -15,7 +15,7 @@ protected:
 	bool mAllowPlay;
 
 public:
-	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin, bool PlayPass, int score,bool allow);
+	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin,  int score, bool PlayPass, bool allow);
 	MapLevel();
 	MapLevel(cocos2d::Scene* scene,int lv, int st);
 	virtual ~MapLevel();
@@ -42,4 +42,6 @@ public:
 	void setPlayPass(bool pas);
 
 	void AllowPlay();
+	int GetSharksSkin();
+	int GetScore();
 };

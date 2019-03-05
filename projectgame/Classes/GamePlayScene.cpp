@@ -7,17 +7,16 @@
 #include "Constants.h"
 #include "MyBodyParser.h"
 #include "ui\UIButton.h"
-#include"PopUpPlay.h"
-#include"PopUpPause.h"
-#include"PopUpSetting.h"
+#include "PopUpPlay.h"
+#include "PopUpPause.h"
+#include "PopUpSetting.h"
 #include "InfoMap.h"
 #include "MapScene.h"
 #include"PopUpEndGame.h"
+#include"PopUpLoseGame.h"
 
 #pragma region declare 
 #pragma endregion
-
-
 
 Scene* GamePlayScene::createScene()
 {
@@ -28,6 +27,8 @@ Scene* GamePlayScene::createScene()
 	layer->SetPhysicsWorld(scene->getPhysicsWorld());
 
 	scene->addChild(layer);
+
+	scene->setTag(333);
 	return scene;
 }
 
@@ -41,6 +42,7 @@ bool GamePlayScene::init()
 		return false;
 	}
 
+	//pause = false;
 
 	visibleSize = cocos2d::Director::getInstance()->getVisibleSize();
 
@@ -50,24 +52,20 @@ bool GamePlayScene::init()
 
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
-	auto _backGround = cocos2d::Sprite::create(BACKGROUND_IMG);
-	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	//_backGround->setOpacity(0.1);
-	addChild(_backGround, -1);
+	RandomBackGround();
 
 	InfoMap::setScore(0);
 	countDownButtonMeat = 1;
 	pressed = 0;
-
+	mSharksSkin = InfoMap::getSharkSkin();
 	callBackAlive = 0;
 	ship = new Ship(this);
 	mItem = new Item(this);
-
+	Constants::RefreshItem();
 	InitShark();
 	SetPauseGame();
 	ButtonShoot();
 	SetItemBox();
-
 
 	mCable = new Cable(this);
 	mCable->GetRect();
@@ -75,16 +73,27 @@ bool GamePlayScene::init()
 	//////////////////////
 	RegisterEvent();
 
+	/////
+
 	//
 	ShowScore();
+	//
+	ShowLevel();
 	////////////
 	//loading time
+	countDownTime = 0;
 	setTimeLoading();
+	
+	
 
 	Constants::setInMap(false);
 	//initPopUpLevelEndGame();
 
+	/////////
+	setCountItem();
+
 	this->scheduleUpdate();
+	
 	return true;
 }
 
@@ -95,10 +104,15 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-
+	if (mCable->GetHP()<=0)
+	{
+		LoseGame();
+	}
 	//	CCLOG("%d", InfoMap::getScore());
 	mLabelScore->setString(std::to_string(InfoMap::getScore()));
-
+	mLabelCountBrick->setString(std::to_string(Constants::GetBricks()));
+	mCountHP->setString(std::to_string(Constants::GetHps()));
+	mCountGunE->setString(std::to_string(Constants::GetBooms()));
 	/////////////////////
 	//count down time meat appear and disappear
 	countDownMeat++;
@@ -142,7 +156,38 @@ void GamePlayScene::update(float delta)
 
 	mCable->Update();
 
+	///////////////////////////////
+	//count down time loading
+	countDownTime++;
+	if (countDownTime % FPS == 0)
+	{
+		float percent = (float) 20 / 9;
+		loadingTime->setPercent(loadingTime->getPercent() + percent);
+		
+		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 45
+			, clock->getPosition().y));
+	}
 
+	if (countDownTime < 600)
+	{
+		SharkAliveCallBack(1);
+	}
+
+	if (countDownTime >= 600 && countDownTime < 1200)
+	{
+		SharkAliveCallBack(2);
+	}
+
+	if (countDownTime >= 1200 && countDownTime < 1800)
+	{
+		SharkAliveCallBack(3);
+	}
+
+	if (countDownTime == 1800)
+	{
+		countDownTime = 0;
+		SharkAliveCallBack(4);
+	}
 }
 
 void GamePlayScene::SharkAliveCallBack(int phase)
@@ -160,18 +205,9 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		size = (int)InfoMap::getPhase3();
 		break;
 	default:
-		//end game
-		//cocos2d::Director::getInstance()->pause();
-		this->unscheduleUpdate();
-		////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		// show popup end game include score and star
-		// new class popup next game or goto home
-
-		//PopUpLevelEndGame();
-		//showEndGame();
-		Constants::ReleaseButton();
 		WinGame();
-		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+		
+		
 		break;
 	}
 
@@ -180,8 +216,26 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		auto x = sharkList[i]->SpriteIsVisible();
 		if (!x)
 		{
-
-			sharkList[i]->Init();
+			if (mSharksSkin > 0)
+			{
+				auto rand = cocos2d::random(1, 10);
+				if (rand % 2 == 0)
+				{
+					sharkList[i]->SetNumSkinForShark(1);
+					sharkList[i]->Init();
+				}
+				else
+				{
+					sharkList[i]->SetNumSkinForShark(2);
+					sharkList[i]->Init();
+					mSharksSkin -= 1;
+				}
+			}
+			else
+			{
+				sharkList[i]->SetNumSkinForShark(1);
+				sharkList[i]->Init();
+			}
 			break;
 		}
 	}
@@ -206,9 +260,16 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
-	meatDone();
-	Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
-	InfoMap::setScore(0);
+	if (mCable->GetHP() > 0)
+	{
+		this->unscheduleUpdate();
+		Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
+		showEndGame();
+		InfoMap::setScore(0);
+	}
+	
+	
+
 }
 
 void GamePlayScene::initMeatList(Scene *scene, std::vector<Shark*> sharkList)
@@ -242,7 +303,7 @@ void GamePlayScene::meatDone()
 		{
 			meatList[i]->disappear();
 			delete(meatList[i]);
-			sharkList[i]->SetOldStatus();
+			sharkList[i]->CallBackStatus();
 
 			sharkList[i]->SwimAnimation();
 		}
@@ -271,14 +332,29 @@ void GamePlayScene::setPressWhiteButton(bool pres)
 
 void GamePlayScene::showEndGame()
 {
+	// initLevelEndGame();
+	PopupEndGame* popup = PopupEndGame::create();
 
-	cocos2d::Director::getInstance()->pause();
-	/*PopupEndGame *popUpEnd = PopupEndGame::create();
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);*/
-	PopupEndGame *popUpEnd = mListPlayEndGame[InfoMap::getMapLevel()];
-	this->addChild(popUpEnd, 110);
-	popUpEnd->getLayer()->setVisible(true);
+	popup->getLayer()->setVisible(true);
+	Constants::SetEnableAllTouchEventOnMapLevel(false);
+	int star = 0;
+	auto score = InfoMap::getScore();
+	if (InfoMap::getScore() > 300)
+	{
+		star = 3;
+	}
+	else if (InfoMap::getScore() > 200)
+	{
+		star = 2;
+	}
+	else
+	{
+		star = 1;
+	}
+	Constants::EndGame(InfoMap::getMapLevel(), star, true, InfoMap::getScore());
+	popup->SetLevel(InfoMap::getMapLevel(), star);
+	this->addChild(popup, 999);
+
 }
 
 void GamePlayScene::ShowScore()
@@ -288,9 +364,8 @@ void GamePlayScene::ShowScore()
 	//sprite coin
 	auto coin = Sprite::create(COIN);
 	coin->setAnchorPoint(Vec2(0, 1));
-	coin->setPosition(cocos2d::Vec2(15, btnPause->getPosition().y));
-	this->addChild(coin, 5);
-
+	coin->setPosition(cocos2d::Vec2(visibleSize.width / 4, btnPause->getPosition().y));
+	this->addChild(coin, 999);
 
 	mScore = InfoMap::getScore();
 
@@ -306,11 +381,45 @@ void GamePlayScene::ShowScore()
 
 	mLabelScore = Label::createWithTTF(labelConfig, std::to_string(mScore));
 	mLabelScore->setAnchorPoint(Vec2(0, 1));
-	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + visibleSize.width / 13,
-		coin->getPosition().y - 5));
-	mLabelScore->enableGlow(Color4B::BLUE);
-	this->addChild(mLabelScore, 5);
+	mLabelScore->setPosition(cocos2d::Vec2(coin->getPosition().x + coin->getContentSize().width + 10,
+		coin->getPosition().y - 10));
+	mLabelScore->setAlignment(cocos2d::TextHAlignment::RIGHT);
 
+	mLabelScore->enableGlow(Color4B::BLUE);
+	this->addChild(mLabelScore, 999);
+
+}
+
+void GamePlayScene::ShowLevel()
+{
+	////////////////////////////
+	//sprite coin
+	auto level = Sprite::create(LEVEL);
+	level->setAnchorPoint(Vec2(0, 1));
+	level->setPosition(visibleSize.width*0.02, btnPause->getPosition().y);
+	this->addChild(level, 5);
+
+
+	mLevel = InfoMap::getMapLevel();
+
+	///////////////////////////////
+	//label level
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_LEVEL;
+	labelConfig.fontSize = 65;
+
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mLabelLevel = Label::createWithTTF(labelConfig, std::to_string(mLevel));
+	mLabelLevel->setColor(Color3B::WHITE);
+	mLabelLevel->setAnchorPoint(Vec2(0, 1));
+	mLabelLevel->setPosition(cocos2d::Vec2(level->getPosition().x + visibleSize.width / 8.5,
+		level->getPosition().y*1.015));
+	mLabelLevel->enableGlow(Color4B::BLUE);
+	this->addChild(mLabelLevel, 5);
 }
 
 void GamePlayScene::RegisterEvent()
@@ -336,6 +445,7 @@ void GamePlayScene::ButtonShoot()
 	blueButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 20));
 	blueButton->addClickEventListener([&](Ref* event) {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
 		ship->ShootColor(BULLET_SHOOT_BLUE);
 	});
 	addChild(blueButton, 999);
@@ -344,6 +454,7 @@ void GamePlayScene::ButtonShoot()
 	redButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	redButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 35 + blueButton->getContentSize().height));
 	redButton->addClickEventListener([&](Ref* event) {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
 	addChild(redButton, 999);
@@ -352,6 +463,7 @@ void GamePlayScene::ButtonShoot()
 	yellowButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	yellowButton->setPosition(cocos2d::Vec2(visibleSize.width - 40 - blueButton->getContentSize().width, 20));
 	yellowButton->addClickEventListener([&](Ref* event) {
+		CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON_BULLET, false);
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
 	addChild(yellowButton, 999);
@@ -363,38 +475,61 @@ void GamePlayScene::SetItemBox()
 	/// set position
 	itemBox->setAnchorPoint(cocos2d::Vec2(0.2, 0));
 	itemBox->setPosition(35, 5);
-	itemBox->setOpacity(120);
+	itemBox->setOpacity(140);
 	addChild(itemBox, 3);
 	auto _x = itemBox->getContentSize().width;
 	for (int i = 1; i <= 3; i++)
 	{
-		std::string path = "item/", png = ".png", name;
+		std::string path = "item/", png = ".png", name,_disName;
 		char c = '0' + i;
 		name = path + c + png;
-		auto button = ui::Button::create(name);
+		_disName = path + c + "." + c + png;
+		auto button = ui::Button::create(name,name,_disName);
+		
 		button->setAnchorPoint(cocos2d::Vec2(0, 0));
 		listItem.push_back(button);
 		switch (i)
 		{
 		case 1: //brick
-			button->setPosition(Vec2(45, itemBox->getPosition().y + 35));
+			button->setPosition(Vec2(45, itemBox->getPosition().y + 25));
+			if (Constants::GetBricks()<=0)
+			{
+				button->setEnabled(false);
+			}
 			button->addClickEventListener([=](Ref* event)
 			{
-				mItem->StunShark(sharkList);
+				if (!mItem->StunShark(sharkList))
+				{
+					button->setEnabled(false);
+				}
 			});
 			break;
 		case 2: //hp
-			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 27));
+			button->setPosition(Vec2(_x / 3.5, itemBox->getPosition().y + 25));
+			if (Constants::GetHps() <= 0)
+			{
+				button->setEnabled(false);
+			}
 			button->addClickEventListener([=](Ref* event)
 			{
-				mCable->IncreaseHP();
+				if (!mCable->IncreaseHP())
+				{
+					button->setEnabled(false);
+				}
 			});
 			break;
 		case 3: //bomb
-			button->setPosition(Vec2((_x * 2 / 4 ), itemBox->getPosition().y + 27));
+			button->setPosition(Vec2((_x * 2 / 4), itemBox->getPosition().y + 25));
+			if (Constants::GetBooms() <= 0)
+			{
+				button->setEnabled(false);
+			}
 			button->addClickEventListener([=](Ref* event)
 			{
-				mItem->KillSharkByBoom(sharkList);
+				if (!mItem->KillSharkByBoom(sharkList))
+				{
+					button->setEnabled(false);
+				}
 			});
 			break;
 		}
@@ -425,9 +560,11 @@ void GamePlayScene::SetPauseGame()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->pause();
+			
 			PopupSetting *popUpSetting = PopupSetting::create();
 			this->addChild(popUpSetting, 110);
 			popUpSetting->getLayer()->setVisible(true);
@@ -435,6 +572,33 @@ void GamePlayScene::SetPauseGame()
 			break;
 		}
 	});
+	
+}
+
+void GamePlayScene::RandomBackGround()
+{
+	cocos2d::Sprite* _backGround;
+	auto _id = cocos2d::random(1, 3);
+	switch (_id)
+	{
+	case 1:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_1);
+		break;
+	case 2:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_2);
+
+		break;
+	case 3:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_3);
+
+		break;
+	default:
+		_backGround = cocos2d::Sprite::create(BACKGROUND_IMG_1);
+		break;
+	}
+	_backGround->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	//_backGround->setOpacity(0.1);
+	addChild(_backGround, -1);
 }
 
 void GamePlayScene::DoClone(Shark * aliveShark)
@@ -444,7 +608,6 @@ void GamePlayScene::DoClone(Shark * aliveShark)
 		if (!sharkList[i]->SpriteIsVisible())
 		{
 			sharkList[i]->Clone(aliveShark);
-			//sharkList[i]->SetVisible(true);
 			return;
 		}
 	}
@@ -465,62 +628,48 @@ Shark * GamePlayScene::SharkAlive(int tag)
 /*loading time*/
 void GamePlayScene::setTimeLoading()
 {
-	auto loadingTimeBG = Sprite::create(LOADING_TIME_BG);
+	loadingTimeBG = Sprite::create(LOADING_TIME_BG);
 	loadingTimeBG->setAnchorPoint(Vec2(1, 0.5));
 	loadingTimeBG->setPosition(Vec2(btnPause->getPosition().x - visibleSize.width / 13,
 		btnPause->getPosition().y - btnPause->getContentSize().height / 2));
-	this->addChild(loadingTimeBG, 99);
+	this->addChild(loadingTimeBG, 998);
 
-	auto loadingTime = ui::LoadingBar::create(LOADING_TIME);
-	loadingTime->setAnchorPoint(Vec2(1, 0.5));
+	loadingTime = ui::LoadingBar::create(LOADING_TIME);
 	loadingTime->setPercent(0);
+	loadingTime->setAnchorPoint(Vec2(1, 0.5));
 	loadingTime->setPosition(loadingTimeBG->getPosition());
-	this->addChild(loadingTime, 99);
+	this->addChild(loadingTime, 998);
 
-	auto clock = Sprite::create(TIME);
+	auto mark1 = cocos2d::Sprite::create(SHARK_MARK);
+	mark1->setPosition(Vec2(
+		loadingTime->getPosition().x - loadingTime->getContentSize().width / 3,
+		loadingTime->getPosition().y
+	));
+	this->addChild(mark1, 999);
+
+	auto mark2 = cocos2d::Sprite::create(SHARK_MARK);
+	mark2->setPosition(Vec2(
+		loadingTime->getPosition().x - loadingTime->getContentSize().width * 2 / 3,
+		loadingTime->getPosition().y
+	));
+	this->addChild(mark2, 999);
+
+	clock = Sprite::create(TIME);
 	clock->setPosition(Vec2(loadingTimeBG->getPosition().x - loadingTimeBG->getContentSize().width
 		, loadingTimeBG->getPosition().y));
-	this->addChild(clock, 100);
+	this->addChild(clock, 998);
 
-	auto updateLoadingBar = CallFunc::create([=]() {
-
-		int percent = (int)loadingTime->getPercent();
-		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 100
-			, clock->getPosition().y));
-		if (loadingTime->getPercent() < 100)
-		{
-			loadingTime->setPercent(loadingTime->getPercent() + 1);
-		}
-
-		if (loadingTime->getPercent() <= 33)
-		{
-			SharkAliveCallBack(1);
-		}
-
-		if (loadingTime->getPercent() > 33 && loadingTime->getPercent() <= 66)
-		{
-			SharkAliveCallBack(2);
-		}
-
-		if (loadingTime->getPercent() > 66 && loadingTime->getPercent() <= 99)
-		{
-			SharkAliveCallBack(3);
-		}
-
-		if (loadingTime->getPercent() == 100)
-		{
-			SharkAliveCallBack(4);
-		}
-	});
-
-	auto sequenceRunUpdateLoadingBar = Sequence::createWithTwoActions(updateLoadingBar, DelayTime::create(0.45f));
-	auto repeatLoad = Repeat::create(sequenceRunUpdateLoadingBar, 100);
-	loadingTime->runAction(repeatLoad);
 }
 
 void GamePlayScene::LoseGame()
 {
-
+	this->unscheduleUpdate();
+	PopupLoseGame *popupLose = PopupLoseGame::create();
+	this->addChild(popupLose,999);
+	popupLose->getLayer()->setVisible(true);
+	Constants::SetEnableAllTouchEventOnMapLevel(false);
+	
+	InfoMap::setScore(0);
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
@@ -558,7 +707,6 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 		objectA != 0 && objectB == 0
 		)
 	{
-		//CCLOG("bitten");
 		if (objectA != 0)
 		{
 			CheckColisionSharkWithCable(objectA);
@@ -597,5 +745,44 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 	return false;
 }
 
+void GamePlayScene::initLevelEndGame()
+{
+	for (int i = 0; i < 16; i++)
+	{
+		MapLevel *level = new MapLevel();
+		level->SetLevel(i);
+		level->SetStar(0);
+		mListLevelEnd.push_back(level);
+	}
+}
 
+void GamePlayScene::setCountItem()
+{
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_LEVEL;
+	labelConfig.fontSize = 25;
+	//labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	//labelConfig.outlineSize = 1;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
 
+	/// boom is brick
+	mLabelCountBrick = Label::createWithTTF(labelConfig, std::to_string(Constants::GetBricks()));
+	mLabelCountBrick->setAlignment(TextHAlignment::CENTER);
+	mLabelCountBrick->setColor(Color3B::BLACK);
+	mLabelCountBrick->setPosition(cocos2d::Vec2(visibleSize.width*0.0905, visibleSize.height*0.061));
+	this->addChild(mLabelCountBrick, 999);
+
+	mCountHP = Label::createWithTTF(labelConfig, std::to_string(Constants::GetHps()));
+	mCountHP->setAlignment(TextHAlignment::CENTER);
+	mCountHP->setColor(Color3B::BLACK);
+	mCountHP->setPosition(cocos2d::Vec2(visibleSize.width*0.198, visibleSize.height*0.061));
+	this->addChild(mCountHP, 999);
+
+	mCountGunE = Label::createWithTTF(labelConfig, std::to_string(Constants::GetBooms()));
+	mCountGunE->setAlignment(TextHAlignment::CENTER);
+	mCountGunE->setColor(Color3B::BLACK);
+	mCountGunE->setPosition(cocos2d::Vec2(visibleSize.width*0.306, visibleSize.height*0.061));
+	this->addChild(mCountGunE, 999);
+
+}

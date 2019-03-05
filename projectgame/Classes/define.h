@@ -1,7 +1,15 @@
 #pragma once
 
 #define FONT_SCORE "fonts/casual.ttf"
+#define FONT_LEVEL "fonts/ALGER.TTF"
+#define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
+#define STAR "map/iconstars.png"
+#define SHOP "button/home.png"
+#define BACKGROUNDSHOP "button/backgroudshop1.png"
+#define LEVEL "map/levelingame.png"
+#define LOSE_GAME "map/losegame.png"
+#define BUTTON_BUY "button/buy.png"
 
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
@@ -17,7 +25,9 @@
 #define SCREEN_W 1280
 #define FPS 40
 
-#define BACKGROUND_IMG "background/background_1.png"
+#define BACKGROUND_IMG_1 "background/background_1.png"
+#define BACKGROUND_IMG_2 "background/background_2.png"
+#define BACKGROUND_IMG_3 "background/background_3.png"
 #define CABLE_IMG "cable/cable_1.png"
 
 #define BUTTON_YELLOW_IMG_NOR "button/yellowbutton.png"
@@ -36,7 +46,11 @@
 #define MEAT "item/meat.png"
 
 // shark
+
+
+#define SHARK_BE_DAMAGE_BY_ELECTRONIC "sharkbone_"
 #define SHARK_BLUE "blueshark_"
+
 #define SHARK_GREEN "greenshark_"
 #define SHARK_ORANGE "orangeshark_"
 #define SHARK_RED "redshark_"
@@ -45,6 +59,12 @@
 #define SHARK_BODY_SPRITE_LEFT "leftshark"
 #define SHARK_BODY_SPRITE_RIGHT "rightshark"
 #define SHARK_BODY_PARSER "bodyphysics.json"
+#define SHARK_MARK "item/mark.png"
+#define SHARK_COLOR_BLACK "color/black.png"
+#define SHARK_COLOR_BLUE "color/blue1.png"
+#define SHARK_COLOR_RED "color/red1.png"
+#define SHARK_COLOR_YELLOW "color/yellow1.png"
+
 
 #define SHARK_REAL_SIZE 70
 
@@ -82,8 +102,11 @@
 #define SHARK_STATUS_RUNAWAY "RUNAWAY"
 #define SHARK_STATUS_RUNAWAY_ANIMATION "RUNAWAY_ANIMATION"
 #define SHARK_STATUS_BITE "BITE"
-#define SHARK_STATUS_STUN "STUN"
+#define SHARK_STATUS_STUN "stun_"
 #define SHARK_STATUS_ANGRY "ANGRY"
+#define SHARK_STATUS_NORMAL "NORMAL"
+
+#define SHARK_STATUS_DAMAGED_BY_ELECTRONIC "ELECTRONIC"
 
 
 #define BULLET_MAX 15
@@ -113,7 +136,8 @@
 #define ITEM_BOOM_IMAGE "item/3.png"
 #define ITEM_BRICK_IMAGE "item/1.png"
 #define ITEM_HP_IMAGE "item/2.png"
-#define ITEM_HP1_IMAGE "item/hp1.png"
+#define ITEM_HP1_IMAGE "item/toolrepair.png"
+#define ITEM_ELECTRIC_IMAGE "item/electricgun.png"
 
 #define ITEM_SCAlE 0.3
 
@@ -124,14 +148,19 @@
 
 #define BUTTON_PLAY "button/button_play.png"
 
-#define MUSIC_BACKGROUND "sound/AdventureInTheOcean.mp3"
-
+//bgm and sfx
+#define MUSIC_BACKGROUND_PLAY "sound/AdventureInTheOcean.mp3"
+#define MUSIC_BACKGROUND_MAP "sound/Netherplace.mp3"
+#define SFX_BUTTON_BULLET "sound/Pop-sound-effect.mp3"
+#define SFX_BUTTON "sound/button4.wav"
 
 #define IMG_MAPSCENE "map/map_2.png"
 
 #define BUTTON_11 "map/1.1.png"
 #define DIALOG_MAP "map/tb.png"
 #define BUTTON_MAP_PLAY "map/play.png"
+#define BUTTON_MAP_NEXTLV "map/nextlv.png"
+#define BUTTON_MAP_REPLAY "map/replay.png"
 #define IMG_STAR "map/2stars.png"
 #define BUTTON_EXIT "map/cancel.png"
 #define BUTTON_SETTING "map/settings.png"
@@ -162,3 +191,17 @@
 #define LOADING_TIME_BG "item/time_bg.png"
 #define LOADING_TIME "item/time_loading.png"
 #define TIME "item/clock.png"
+
+//checkbox
+#define BOX_TICK "checkbox/b_1.png"
+#define BOX "checkbox/b_3.png"
+#define OFF "checkbox/off.png"
+#define ON "checkbox/on.png"
+#define ONOFFSTATE "checkbox/blabla.png"
+#define TIME "item/clock.png"
+
+#define COST_BUY_BREACK 200
+#define COST_BUY_HP 100
+#define COST_BUY_BOOM 350
+
+#define DATA_BASE_NAME "databaseshark.sql"

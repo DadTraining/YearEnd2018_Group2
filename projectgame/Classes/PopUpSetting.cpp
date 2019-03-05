@@ -1,43 +1,25 @@
-#include "GamePlayScene.h"
 #include "SimpleAudioEngine.h"
 #include "PopUpSetting.h"
 #include "define.h"
-#include"MapScene.h"
-
-
-USING_NS_CC;
+#include "MapScene.h"
+#include "GamePlayScene.h"
 
 bool PopupSetting::init()
 {
 	Popup::init();
 	Popup::setBackground();
+	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
+	{
+		onBGM = true;
+	}
+	else onBGM = false;
 
-	///////////////
-	//Add label setting
 	if (!Constants::isInMap())
 	{
-		auto setting = cocos2d::Sprite::create(PAUSE);
-		setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
-		mLayer->addChild(setting);
-		mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
-		setting->setScale(0.75);
-		mSfx = cocos2d::Sprite::create(SFX);
-		mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
-			setting->getPosition().y - mBackground->getContentSize().height / 8));
-		mLayer->addChild(mSfx);
-		mSfx->setScale(0.75);
-
-		mBgm = cocos2d::Sprite::create(BGM);
-		mBgm->setPosition(Vec2(mSfx->getPosition().x,
-			mSfx->getPosition().y - mBackground->getContentSize().height / 10));
-		mLayer->addChild(mBgm);
-		mBgm->setScale(0.75);
-
-		////////////////
-		//Add slider of mBgm and mSfx
-		sliderBGM();
-		sliderSFX();
-
+		mLabel = cocos2d::Sprite::create(PAUSE);
+		setContent();
+		checkboxBGM();
+		checkboxSFX();
 		////////////////////
 		auto btnHome = ui::Button::create(BUTTON_HOME);
 		btnHome->setPosition(Vec2(-mBackground->getContentSize().width / 7,
@@ -46,8 +28,8 @@ bool PopupSetting::init()
 
 		btnHome->setScale(0.75);
 		mLayer->addChild(btnHome, 1);
-		btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-			switch (t)
+		btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+			switch (touch)
 			{
 			case cocos2d::ui::Widget::TouchEventType::BEGAN:
 				break;
@@ -59,64 +41,21 @@ bool PopupSetting::init()
 
 			}
 		});
-	    
+
 
 	}
 	else
 	{
-		auto setting = cocos2d::Sprite::create(SETTING);
-		setting->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
-		mLayer->addChild(setting);
-		mSfx = cocos2d::Sprite::create(SFX);
-		mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
-			setting->getPosition().y - mBackground->getContentSize().height / 8));
-		mLayer->addChild(mSfx);
-		mSfx->setScale(0.75);
-
-		mBgm = cocos2d::Sprite::create(BGM);
-		mBgm->setPosition(Vec2(mSfx->getPosition().x,
-			mSfx->getPosition().y - mBackground->getContentSize().height / 10));
-		mLayer->addChild(mBgm);
-		mBgm->setScale(0.75);
-
+		mLabel = cocos2d::Sprite::create(SETTING);
+		setContent();
 		////////////////
 		//Add slider of mBgm and mSfx
 		sliderBGM();
 		sliderSFX();
-
-		///////////////////////////////////
-	
-
-
+		mPercentBGM = 50;
+		CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM / 100);
 	}
-	
-	
-	
-	///////////////
-	//Add label mBgm and mSfx
-	
-	////////////////
-	//Add button replay
-	/*auto btnPlay = ui::Button::create(BUTTON_REPLAY_IMG);
-	btnPlay->setPosition(Vec2(0, -mBackground->getContentSize().height / 4
-		+ mBackground->getContentSize().height / 22));
 
-	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
-		{
-		case ui::Widget::TouchEventType::BEGAN:
-			break;
-		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->resume();
-			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
-			break;
-		}
-	});*/
-
-	////////////////
-	//Button home
-	
 	return true;
 }
 
@@ -125,11 +64,31 @@ void PopupSetting::onExit()
 	Popup::onExit();
 }
 
+void PopupSetting::setContent()
+{
+
+	mLabel->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
+	mLayer->addChild(mLabel);
+	mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
+	mLabel->setScale(0.75);
+	mSfx = cocos2d::Sprite::create(SFX);
+	mSfx->setPosition(Vec2(-mBackground->getContentSize().width / 6,
+		mLabel->getPosition().y - mBackground->getContentSize().height / 8));
+	mLayer->addChild(mSfx);
+	mSfx->setScale(0.75);
+
+	mBgm = cocos2d::Sprite::create(BGM);
+	mBgm->setPosition(Vec2(mSfx->getPosition().x,
+		mSfx->getPosition().y - mBackground->getContentSize().height / 10));
+	mLayer->addChild(mBgm);
+	mBgm->setScale(0.75);
+}
+
 /*Add Slider*/
 void PopupSetting::sliderBGM()
 {
-	
 	auto sliderB = cocos2d::ui::Slider::create();
+	sliderB->setPercent(50);
 	sliderB->loadBarTexture(SLIDE_BAR_BG);
 	sliderB->loadSlidBallTextureNormal(SLIDE_ROUND);
 	sliderB->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
@@ -140,13 +99,14 @@ void PopupSetting::sliderBGM()
 		mBgm->getPosition().y));
 	mLayer->addChild(sliderB);
 
-	sliderB->addEventListener([&](Ref* sender, cocos2d::ui::Slider::EventType type) {
+	sliderB->addEventListener([=](Ref* sender, cocos2d::ui::Slider::EventType type) {
 		switch (type)
 		{
 		case cocos2d::ui::Slider::EventType::ON_PERCENTAGE_CHANGED:
 		{
 			cocos2d::ui::Slider *_slider = dynamic_cast<ui::Slider*>(sender);
-			mPercentBGM = _slider->getPercent();
+			mPercentBGM = (float)_slider->getPercent();
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM / 100);
 			break;
 		}
 		default:
@@ -159,6 +119,7 @@ void PopupSetting::sliderSFX()
 {
 
 	auto sliderS = cocos2d::ui::Slider::create();
+	sliderS->setPercent(50);
 	sliderS->loadBarTexture(SLIDE_BAR_BG);
 	sliderS->loadSlidBallTextureNormal(SLIDE_ROUND);
 	sliderS->loadProgressBarTexture(SLIDE_BAR_PROGRESS);
@@ -184,9 +145,76 @@ void PopupSetting::sliderSFX()
 	});
 }
 
+void PopupSetting::checkboxBGM()
+{
+	checkboxBOn = cocos2d::ui::CheckBox::create(BOX, BOX, BOX_TICK, BOX, BOX);
+	checkboxBOn->setPosition(Vec2(mBgm->getPosition().x + mBackground->getContentSize().width / 8,
+		mBgm->getPosition().y));
+	mLayer->addChild(checkboxBOn);
+	checkboxBOn->setSelected(onBGM);
+
+	auto on = cocos2d::Sprite::create(ONOFFSTATE);
+	on->setPosition(Vec2(checkboxBOn->getPosition().x + mBackground->getContentSize().width / 8,
+		mBgm->getPosition().y));
+	mLayer->addChild(on);
+
+		checkboxBOn->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+			switch (type)
+			{
+			case ui::Widget::TouchEventType::BEGAN:
+				break;
+			case ui::Widget::TouchEventType::ENDED:
+				onBGM = !onBGM;
+				if (!onBGM)
+				{
+					CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+				}
+				else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+				break;
+			default:
+				break;
+			}
+		});
+}
+
+void PopupSetting::checkboxSFX()
+{
+	checkboxSOn = cocos2d::ui::CheckBox::create(BOX, BOX, BOX_TICK, BOX, BOX);
+	checkboxSOn->setPosition(Vec2(mSfx->getPosition().x + mBackground->getContentSize().width / 8,
+		mSfx->getPosition().y));
+	mLayer->addChild(checkboxSOn);
+	checkboxSOn->setSelected(onBGM);
+
+	auto on = cocos2d::Sprite::create(ONOFFSTATE);
+	on->setPosition(Vec2(checkboxSOn->getPosition().x + mBackground->getContentSize().width / 8,
+		mSfx->getPosition().y));
+	mLayer->addChild(on);
+
+	checkboxSOn->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			/*onBGM = !onBGM;
+			if (!onBGM)
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+			}
+			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();*/
+			break;
+		default:
+			break;
+		}
+	});
+}
+
 void PopupSetting::HandlTouch()
 {
 	Constants::SetEnableAllTouchEventOnMapLevel(true);
 	mLayer->setVisible(false);
+	int tag = cocos2d::Director::getInstance()->getRunningScene()->getTag();
+	cocos2d::log("%d", tag);
+	
 	cocos2d::Director::getInstance()->resume();
 }

@@ -19,6 +19,9 @@
     <Filter Include="src\Scene">
       <UniqueIdentifier>{caafa401-0fa2-4df9-afed-69919718ce86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\DA">
+      <UniqueIdentifier>{28a44419-1198-4f89-b462-1bcca49be89a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -85,6 +88,21 @@
       <Filter>src\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\PopUpEndGame.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PopUpShop.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\sqlite3.c">
+      <Filter>src\DA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\DbContext.cpp">
+      <Filter>src\DA</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\SkinGame.cpp">
+      <Filter>src\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\PopUpLoseGame.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
   </ItemGroup>
@@ -156,6 +174,21 @@
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\PopUpEndGame.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PopUpShop.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\sqlite3.h">
+      <Filter>src\DA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\DbContext.h">
+      <Filter>src\DA</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SkinGame.h">
+      <Filter>src\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\PopUpLoseGame.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
   </ItemGroup>

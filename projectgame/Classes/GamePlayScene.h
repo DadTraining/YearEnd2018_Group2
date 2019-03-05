@@ -28,10 +28,23 @@ private:
 	int pressed;
 	int countDownButtonMeat;
 	int countDownMeat;
+	int countDownTime;
 	std::vector<MapLevel*> mListLevelEndGame;
 	std::vector<PopupEndGame*> mListPlayEndGame;
 	double mScore;
+	int mLevel;
 	Label* mLabelScore;
+	ui::LoadingBar *loadingTime;
+	cocos2d::Sprite *clock;
+	cocos2d::Sprite *loadingTimeBG;
+	Label* mLabelLevel;
+	Label*  mLabelCountBrick;
+	Label*  mCountHP;
+	Label*  mCountGunE;
+	std::vector<MapLevel*> mListLevelEnd;
+	std::vector<PopupEndGame*> mListPlayEnd;
+
+	int mSharksSkin;
 
 public:
 	static cocos2d::Scene* createScene();
@@ -70,11 +83,17 @@ public:
 	
 	void showEndGame();
 	void ShowScore();
+	void ShowLevel();
 	void RegisterEvent();
 	void ButtonShoot();
 	void SetItemBox();
 	void InitShark();
 	void SetPauseGame();
+	void initLevelEndGame();
+	void setCountItem();
+	
+
+	void RandomBackGround();
 
 	CREATE_FUNC(GamePlayScene);
 };
