@@ -8,6 +8,7 @@
 #define SHOP "button/home.png"
 #define BACKGROUNDSHOP "button/backgroudshop1.png"
 #define LEVEL "map/levelingame.png"
+#define LOSE_GAME "map/losegame.png"
 #define BUTTON_BUY "button/buy.png"
 
 #define SHIP_IMG "ship/Ship.png"

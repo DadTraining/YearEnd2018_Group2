@@ -12,7 +12,8 @@
 #include "PopUpSetting.h"
 #include "InfoMap.h"
 #include "MapScene.h"
-#include "PopUpEndGame.h"
+#include"PopUpEndGame.h"
+#include"PopUpLoseGame.h"
 
 #pragma region declare 
 #pragma endregion
@@ -103,7 +104,10 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-
+	if (mCable->GetHP()<=0)
+	{
+		LoseGame();
+	}
 	//	CCLOG("%d", InfoMap::getScore());
 	mLabelScore->setString(std::to_string(InfoMap::getScore()));
 	mLabelCountBrick->setString(std::to_string(Constants::GetBricks()));
@@ -203,6 +207,7 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 	default:
 		WinGame();
 		
+		
 		break;
 	}
 
@@ -255,10 +260,15 @@ bool GamePlayScene::CheckColisionSharkWithCable(int sharkTag)
 
 void GamePlayScene::WinGame()
 {
-	this->unscheduleUpdate();
-	//meatDone();
-	showEndGame();
-	InfoMap::setScore(0);
+	if (mCable->GetHP() > 0)
+	{
+		this->unscheduleUpdate();
+		Constants::EndGame(InfoMap::getMapLevel(), 1, true, InfoMap::getScore());
+		showEndGame();
+		InfoMap::setScore(0);
+	}
+	
+	
 
 }
 
@@ -648,17 +658,18 @@ void GamePlayScene::setTimeLoading()
 	clock->setPosition(Vec2(loadingTimeBG->getPosition().x - loadingTimeBG->getContentSize().width
 		, loadingTimeBG->getPosition().y));
 	this->addChild(clock, 998);
+
 }
 
 void GamePlayScene::LoseGame()
 {
-	if (mCable->GetHP() <= 0)
-	{
-		///// show game lose
-		this->unscheduleUpdate();
-		Constants::ReleaseButton();
-		Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
-	}
+	this->unscheduleUpdate();
+	PopupLoseGame *popupLose = PopupLoseGame::create();
+	this->addChild(popupLose,999);
+	popupLose->getLayer()->setVisible(true);
+	Constants::SetEnableAllTouchEventOnMapLevel(false);
+	
+	InfoMap::setScore(0);
 }
 
 bool GamePlayScene::onTouchBegan(Touch * touch, Event * event)
