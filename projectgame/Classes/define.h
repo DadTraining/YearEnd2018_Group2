@@ -8,6 +8,8 @@
 #define BACKGROUNDSHOP "button/backgroudshop1.png"
 #define LEVEL "map/levelingame.png"
 #define BUTTON_BUY "button/buy.png"
+#define BUTTON_FRAMES "button/warning12345.png"
+#define BUTTON_FRAMES_STAR "button/framstar1.png"
 
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
