@@ -647,7 +647,7 @@ void GamePlayScene::setTimeLoading()
 	clock = Sprite::create(TIME);
 	clock->setPosition(Vec2(loadingTimeBG->getPosition().x - loadingTimeBG->getContentSize().width
 		, loadingTimeBG->getPosition().y));
-	this->addChild(clock, 997);
+	this->addChild(clock, 998);
 }
 
 void GamePlayScene::LoseGame()

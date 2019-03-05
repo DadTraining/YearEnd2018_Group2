@@ -5,11 +5,11 @@
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
 bool Constants::inMap;
- int Constants::brick;
- int Constants::hp;
- int Constants::boom;
- int Constants::totalCoin;
- int Constants::totalStar;
+int Constants::brick;
+int Constants::hp;
+int Constants::boom;
+int Constants::totalCoin;
+int Constants::totalStar;
 bool Constants::pause;
 
 cocos2d::Size Constants::getVisibleSize()
@@ -86,7 +86,7 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 	map->SetScore(score);
 	if (pass)
 	{
-		if (lv<16)
+		if (lv < 16)
 		{
 			listMap.at(lv)->AllowPlay();
 		}
