@@ -62,9 +62,8 @@ void MapScene::setListButton()
 		sprintf(pressed, "map/%d.1.png", i);
 		
 		auto button = ui::Button::create(normal,pressed,pressed);
-		
-		mListButton.push_back(button);
 
+		mListButton.push_back(button);
 
 		///////////////////
 		//set position for button
