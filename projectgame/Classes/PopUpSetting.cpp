@@ -10,12 +10,13 @@ bool PopupSetting::init()
 	Popup::setBackground();
 	if (CocosDenshion::SimpleAudioEngine::getInstance()->isBackgroundMusicPlaying())
 	{
-		onBGM = true;
+		Constants::setOnBGM(true);
 	}
-	else onBGM = false;
+	else Constants::setOnBGM(false);
 
 	if (!Constants::isInMap())
 	{
+
 		mLabel = cocos2d::Sprite::create(PAUSE);
 		setContent();
 		checkboxBGM();
@@ -52,7 +53,7 @@ bool PopupSetting::init()
 		//Add slider of mBgm and mSfx
 		sliderBGM();
 		sliderSFX();
-		mPercentBGM = 50;
+		//mPercentBGM = 50;
 		CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(mPercentBGM / 100);
 	}
 
@@ -66,7 +67,6 @@ void PopupSetting::onExit()
 
 void PopupSetting::setContent()
 {
-
 	mLabel->setPosition(Vec2(0, mBackground->getContentSize().height / 7));
 	mLayer->addChild(mLabel);
 	mLayer->setPosition(Constants::getVisibleSize().width / 2, Constants::getVisibleSize().height / 1.7);
@@ -113,6 +113,8 @@ void PopupSetting::sliderBGM()
 			break;
 		}
 	});
+
+
 }
 
 void PopupSetting::sliderSFX()
@@ -151,30 +153,30 @@ void PopupSetting::checkboxBGM()
 	checkboxBOn->setPosition(Vec2(mBgm->getPosition().x + mBackground->getContentSize().width / 8,
 		mBgm->getPosition().y));
 	mLayer->addChild(checkboxBOn);
-	checkboxBOn->setSelected(onBGM);
+	checkboxBOn->setSelected(Constants::getOnBGM());
 
 	auto on = cocos2d::Sprite::create(ONOFFSTATE);
 	on->setPosition(Vec2(checkboxBOn->getPosition().x + mBackground->getContentSize().width / 8,
 		mBgm->getPosition().y));
 	mLayer->addChild(on);
 
-		checkboxBOn->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
-			switch (type)
+	checkboxBOn->addTouchEventListener([=](Ref* sender, cocos2d::ui::Widget::TouchEventType type) {
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Constants::changeOnBGM();
+			if (!Constants::getOnBGM())
 			{
-			case ui::Widget::TouchEventType::BEGAN:
-				break;
-			case ui::Widget::TouchEventType::ENDED:
-				onBGM = !onBGM;
-				if (!onBGM)
-				{
-					CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
-				}
-				else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
-				break;
-			default:
-				break;
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 			}
-		});
+			else CocosDenshion::SimpleAudioEngine::getInstance()->resumeBackgroundMusic();
+			break;
+		default:
+			break;
+		}
+	});
 }
 
 void PopupSetting::checkboxSFX()
@@ -183,7 +185,7 @@ void PopupSetting::checkboxSFX()
 	checkboxSOn->setPosition(Vec2(mSfx->getPosition().x + mBackground->getContentSize().width / 8,
 		mSfx->getPosition().y));
 	mLayer->addChild(checkboxSOn);
-	checkboxSOn->setSelected(onBGM);
+	//checkboxSOn->setSelected(onBGM);
 
 	auto on = cocos2d::Sprite::create(ONOFFSTATE);
 	on->setPosition(Vec2(checkboxSOn->getPosition().x + mBackground->getContentSize().width / 8,
@@ -215,6 +217,6 @@ void PopupSetting::HandlTouch()
 	mLayer->setVisible(false);
 	int tag = cocos2d::Director::getInstance()->getRunningScene()->getTag();
 	cocos2d::log("%d", tag);
-	
+
 	cocos2d::Director::getInstance()->resume();
 }

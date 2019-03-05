@@ -27,9 +27,19 @@ bool PopupPlay::init()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			Constants::ReleaseButton();
-			CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
-			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
-			CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_PLAY, true);
+
+			if (Constants::getOnBGM())
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+				CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
+				CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_PLAY, true);
+			}
+			else
+			{
+				CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_PLAY, true);
+				CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+			}
+			
 			
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
