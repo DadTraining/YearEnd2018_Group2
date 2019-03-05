@@ -31,7 +31,7 @@ bool MapScene::init()
 
 	setListButton();
 	coin();
-	star();
+	//star();
 	shoppe();
 
 	for (int i = 0; i < Constants::GetListMap().size(); i++)

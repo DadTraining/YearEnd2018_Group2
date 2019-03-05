@@ -10,7 +10,6 @@ int Constants::hp;
 int Constants::boom;
 int Constants::totalCoin;
 int Constants::totalStar;
-bool Constants::pause;
 bool Constants::onBGM = true;
 bool Constants::onSFX = true;
 
