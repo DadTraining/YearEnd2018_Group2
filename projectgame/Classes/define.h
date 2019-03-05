@@ -5,7 +5,7 @@
 #define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
 #define STAR "map/iconstars.png"
-#define SHOP "button/home.png"
+#define SHOP "button/shopee.png"
 #define BACKGROUNDSHOP "button/backgroudshop1.png"
 #define LEVEL "map/levelingame.png"
 #define LOSE_GAME "map/losegame.png"

@@ -102,15 +102,17 @@ void PopUpShop::setBackground()
 
 	// icon stun
 	auto mIconStun = Sprite::create(ITEM_BRICK_IMAGE);
+	mIconStun->setScale(0.8);
 	mIconStun->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.25, mBackground->getContentSize().height*0.45));
 	mBackground->addChild(mIconStun);
 	// icon health
 	auto mIconHealth = Sprite::create(ITEM_HP_IMAGE);
 	mIconHealth->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.5, mBackground->getContentSize().height*0.45));
-	mIconHealth->setScale(0.85);
+	mIconHealth->setScale(0.8);
 	mBackground->addChild(mIconHealth);
 	//icon electric gun
 	auto mIconGun = Sprite::create(ITEM_BOOM_IMAGE);
+	mIconGun->setScale(0.8);
 	mIconGun->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.75, mBackground->getContentSize().height*0.45));
 	mBackground->addChild(mIconGun);
 
@@ -176,8 +178,10 @@ cocos2d::Layer * PopUpShop::getLayer()
 
 void PopUpShop::HandlTouch()
 {
+	Constants::SetEnableAllTouchEventOnMapLevel(true);
 	mLayer->setVisible(false);
-	cocos2d::Director::getInstance()->resume();
+	
+	
 }
 
 

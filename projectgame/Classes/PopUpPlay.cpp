@@ -86,6 +86,8 @@ void PopupPlay::setLevel(int numLevel, int numStars)
 
 void PopupPlay::HandlTouch()
 {
+
+	Constants::SetEnableAllTouchEventOnMapLevel(true);
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
 		auto map = Constants::GetListMap().at(i);

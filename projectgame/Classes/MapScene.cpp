@@ -297,19 +297,21 @@ void MapScene::shoppe()
 	//button shop
 	auto btnShop = ui::Button::create(SHOP);
 	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 , visibleSize.height / 1.05));
-	
+	this->addChild(btnShop);
+	Constants::AddButtonIntoMapLevel(btnShop);
 	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:	
-			//PopUpShop*popupshop = PopUpShop::create();
-			//this->addChild(popupshop);
 			PopUpShop* popupshop = PopUpShop::create();
 			this->addChild(popupshop);
+			popupshop->getLayer()->setVisible(true);
+			Constants::SetEnableAllTouchEventOnMapLevel(false);
 			break;
 		}
 	});
-	this->addChild(btnShop);
+	
+	
 }
