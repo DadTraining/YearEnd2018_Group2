@@ -23,6 +23,8 @@ protected:
 	cocos2d::Sprite* mStunSprite;
 	cocos2d::Sprite* color_1st;
 	cocos2d::Sprite* color_2nd;
+	bool mDuplicateColor1;
+	bool mDuplicateColor2;
 
 
 public:

@@ -23,8 +23,11 @@ Shark::Shark(cocos2d::Scene * scene)
 	Shark::setShowColorVisible();
 	scene->addChild(color_1st, 101);
 	scene->addChild(color_2nd, 101);
-
+	
 	AddStun(scene);
+
+
+
 	//Init();
 }
 
@@ -340,6 +343,9 @@ void Shark::UnUpdate(cocos2d::Vec2 pos)
 /*initialization for shark*/
 void Shark::Init()
 {
+	mDuplicateColor1 = false;
+	mDuplicateColor2 = false;
+
 	mSprite->setFlipY(false);
 	mSprite->runAction(
 		cocos2d::FadeIn::create(0.1)
@@ -569,8 +575,39 @@ bool Shark::CheckColor(std::string color)
 	}
 	else
 	{
-		if (mColor_1st == color || mColor_2nd == color)
+		if (mColor_1st == color && !mDuplicateColor1)
 		{
+			mDuplicateColor1 = true;
+			std::string _name;
+
+			if (color == SHARK_YELLOW)
+			{
+				_name = "yellow.png";
+			}
+			else if (color == SHARK_BLUE)
+			{
+				_name = "blue.png";
+			}
+			else if (color == SHARK_RED)
+			{
+				_name = "red.png";
+			}
+
+			if (mTotalDuplicate == 0)
+			{
+				color_1st->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(_name));
+				mTotalDuplicate += 1;
+			}
+			else
+			{
+				color_2nd->setSpriteFrame(cocos2d::SpriteFrameCache::getInstance()->getSpriteFrameByName(_name));
+				mTotalDuplicate += 1;
+			}
+			return true;
+		}
+		if (mColor_2nd == color && !mDuplicateColor2)
+		{
+			mDuplicateColor2 = true;
 			std::string _name;
 
 			if (color == SHARK_YELLOW)

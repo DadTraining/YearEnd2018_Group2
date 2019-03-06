@@ -448,6 +448,7 @@ void GamePlayScene::ButtonShoot()
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
 	blueButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 20));
+	Constants::AddButtonIntoMapLevel(blueButton);
 	blueButton->addClickEventListener([&](Ref* event) {
 		if (Constants::getOnSFX())
 		{
@@ -467,6 +468,7 @@ void GamePlayScene::ButtonShoot()
 		}
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
+	Constants::AddButtonIntoMapLevel(redButton);
 	addChild(redButton, 999);
 
 	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
@@ -479,6 +481,7 @@ void GamePlayScene::ButtonShoot()
 		}
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
+	Constants::AddButtonIntoMapLevel(yellowButton);
 	addChild(yellowButton, 999);
 }
 
@@ -500,6 +503,7 @@ void GamePlayScene::SetItemBox()
 		auto button = ui::Button::create(name, name, _disName);
 
 		button->setAnchorPoint(cocos2d::Vec2(0, 0));
+		Constants::AddButtonIntoMapLevel(button);
 		listItem.push_back(button);
 		switch (i)
 		{
