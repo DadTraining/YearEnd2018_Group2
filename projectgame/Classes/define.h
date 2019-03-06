@@ -9,7 +9,7 @@
 #define BACKGROUNDSHOP "button/backgroudshop1.png"
 #define LEVEL "map/levelingame.png"
 #define LOSE_GAME "map/losegame.png"
-#define BUTTON_BUY "button/buy.png"
+//#define BUTTON_BUY "button/buy.png"
 #define BUTTON_COMEBACK "button/comeback.png"
 #define BUTTON_FRAMES "button/warning12345.png"
 #define BUTTON_FRAMES_STAR "button/framstar1.png"
@@ -202,7 +202,13 @@
 #define ONOFFSTATE "checkbox/blabla.png"
 #define TIME "item/clock.png"
 
-#define COST_BUY_BREACK 200
+//shop background
+#define WATER "shop/underwater.png"
+#define SHOP_BG "shop/Capture.PNG"
+#define BUTTON_BUY "shop/buybutton.png"
+
+
+#define COST_BUY_BRICK 200
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
 

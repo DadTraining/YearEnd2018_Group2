@@ -13,10 +13,11 @@ using namespace std;
 class ShopScene :public cocos2d::Scene
 {
 private:
-	cocos2d::Sprite* mCoin;
 	cocos2d::Sprite* mStar;
+	cocos2d::Sprite* mShop;
 	int mcoin;
 	int mstar;
+	Size visibleSize;
 public:
 	
 	static cocos2d::Scene* createScene();
@@ -25,7 +26,7 @@ public:
 	
 
 	void coin();
-	void star();
+	void buyFrame();
 	void comeback();
 	CREATE_FUNC(ShopScene);
 	

@@ -119,7 +119,7 @@ bool Constants::BuyBooms()
 
 bool Constants::BuyBreacks()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_BREACK)
+	if (Constants::GetTotalCoin() > COST_BUY_BRICK)
 	{
 		brick += 3;
 		return true;

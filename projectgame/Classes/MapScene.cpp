@@ -3,7 +3,7 @@
 #include"define.h"
 #include "Constants.h"
 #include "InfoMap.h"
-#include "PopUpShop.h"
+#include "ShopScene.h"
 
 Scene* MapScene::createScene()
 {
@@ -305,10 +305,8 @@ void MapScene::shoppe()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:	
-			PopUpShop* popupshop = PopUpShop::create();
-			this->addChild(popupshop);
-			popupshop->getLayer()->setVisible(true);
 			Constants::SetEnableAllTouchEventOnMapLevel(false);
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, ShopScene::createScene()));
 			break;
 		}
 	});

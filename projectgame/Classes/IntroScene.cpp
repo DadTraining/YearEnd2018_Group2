@@ -176,7 +176,7 @@ void IntroScene::Loading()
 				case ui::Widget::TouchEventType::ENDED:
 				{
 					CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
-					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, ShopScene::createScene()));
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 					break;
 				}
 
