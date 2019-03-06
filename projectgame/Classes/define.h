@@ -5,7 +5,7 @@
 #define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
 #define STAR "map/iconstars.png"
-#define SHOP "button/home.png"
+#define SHOP "button/shopee.png"
 #define BACKGROUNDSHOP "button/backgroudshop1.png"
 #define LEVEL "map/levelingame.png"
 #define LOSE_GAME "map/losegame.png"
@@ -14,6 +14,10 @@
 #define BUTTON_FRAMES_STAR "button/framstar1.png"
 #define STAR_LEVEL "button/0star.png"
 
+//#define BUTTON_BUY "button/buy.png"
+#define BUTTON_COMEBACK "button/comeback.png"
+#define BUTTON_FRAMES "button/warning12345.png"
+#define BUTTON_FRAMES_STAR "button/framstar1.png"
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
@@ -203,6 +207,12 @@
 #define ON "checkbox/on.png"
 #define ONOFFSTATE "checkbox/blabla.png"
 #define TIME "item/clock.png"
+
+//shop background
+#define WATER "shop/underwater.png"
+#define SHOP_BG "shop/Capture.PNG"
+#define BUTTON_BUY "shop/buybutton.png"
+
 
 #define COST_BUY_BRICK 200
 #define COST_BUY_HP 100

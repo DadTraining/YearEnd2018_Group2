@@ -68,7 +68,9 @@ cocos2d::Layer* Popup::getLayer()
 }
 
 void Popup::HandlTouch()
+
 {
+
 	mLayer->setVisible(false);
 	cocos2d::Director::getInstance()->resume();
 }

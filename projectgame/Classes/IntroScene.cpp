@@ -7,6 +7,7 @@
 #include "InfoMap.h"
 #include "Constants.h"
 #include "DbContext.h"
+#include "ShopScene.h"
 
 
 

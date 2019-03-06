@@ -38,7 +38,9 @@ private:
 	int mStun;
 	int mHealth;
 	int mElection;
-
+	Label *mCountBrick;
+	Label *mCountHP;
+	Label *mCountGunE;
 public:
 	virtual bool init();
 	virtual void onExit();
@@ -47,6 +49,7 @@ public:
 
 	cocos2d::Layer* getLayer();
 	virtual void HandlTouch();
+	void CountInShop();
 
 	CREATE_FUNC(PopUpShop);
 };
