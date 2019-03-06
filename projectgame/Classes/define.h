@@ -207,7 +207,7 @@
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
 
-#define DATA_BASE_NAME "databaseshark.sql"
+#define DATA_BASE_NAME "databaseshark1.sql"
 
 #define MAPSCENE_ZERO_STAR "map_star/0star.png"
 #define MAPSCENE_ONE_STAR "map_star/1star.png"
