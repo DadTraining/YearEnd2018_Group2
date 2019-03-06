@@ -149,8 +149,8 @@
 
 #define ITEM_SCAlE 0.3
 
-#define LOADING_BAR_BACKGROUND "loadingbar/bar_1.png"
-#define LOADING_BAR "loadingbar/bar_2.png"
+#define LOADING_BAR_BACKGROUND "loadingbar/loadingbar2.png"
+#define LOADING_BAR "loadingbar/loadingbar1.png"
 #define LOADING_BAR_SCALE_X 0.35
 #define LOADING_BAR_SCALE_Y 0.07
 
@@ -218,7 +218,7 @@
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
 
-#define DATA_BASE_NAME "databaseshark.sql"
+#define DATA_BASE_NAME "databaseshark1.sql"
 
 #define MAPSCENE_ZERO_STAR "map_star/0star.png"
 #define MAPSCENE_ONE_STAR "map_star/1star.png"
