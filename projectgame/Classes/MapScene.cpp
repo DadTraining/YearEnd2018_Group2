@@ -31,7 +31,7 @@ bool MapScene::init()
 
 	setListButton();
 	coin();
-	//star();
+	star();
 	shoppe();
 
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
@@ -228,7 +228,7 @@ void MapScene::initPopUpLevel()
 		popup->getLayer()->setVisible(false);
 
 
-		popup->setLevel(mListLevel[i]->GetLevel(), mListLevel[i]->GetStar());
+		popup->setLevel(mListLevel[i]->GetLevel(), mListLevel[i]->GetStar() , mListLevel[i]->GetScore());
 		mListPlay.push_back(popup);
 	}
 

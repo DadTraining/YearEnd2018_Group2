@@ -37,9 +37,11 @@ public:
 	virtual void onExit() override;
     
 	
-	void setLevel(int numLevel, int numStars);
+	void setLevel(int numLevel, int numStars,int score);
 
 	virtual void HandlTouch() override;
+
+	void showScore(int score);
 
     CREATE_FUNC(PopupPlay);
 };

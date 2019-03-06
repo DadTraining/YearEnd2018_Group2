@@ -83,16 +83,49 @@ bool Constants::ListButtonIsEmpty()
 void Constants::EndGame(int lv, int star, bool pass, int score)
 {
 	auto map = listMap.at(lv - 1);
-	map->SetStar(star);
-	map->setPlayPass(pass);
-	map->SetScore(score);
+	if (!map->WasPlay())
+	{
+		map->SetStar(star);
+		map->setPlayPass(pass);
+		map->SetScore(score);
+	}
+	else
+	{
+		if (pass)
+		{
+			if (map->GetStar()<star)
+			{
+				map->SetStar(star);
+			}
+			if (map->GetScore()<score)
+			{
+				map->SetScore(score);
+			}
+		}
+	}
 	if (pass)
 	{
-		if (lv < 16)
+		if (lv < 16 && (lv == 4 || lv == 8 || lv == 12) )
+		{
+			if (Constants::GetTotalStar() ==12 && lv ==4)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
+			else if (Constants::GetTotalStar() == 24 && lv == 8)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
+			else if(Constants::GetTotalStar() == 36 && lv == 12)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
+		}
+		else
 		{
 			listMap.at(lv)->AllowPlay();
 		}
-		DbContext::UpdateDataMap(lv, star, score);
+		
+		DbContext::UpdateDataMap(lv, map->GetStar(), map->GetScore());
 		DbContext::UpdateScore(Constants::GetTotalCoin() + score);
 	}
 	DbContext::UpdateItem(1, Constants::GetBricks());
