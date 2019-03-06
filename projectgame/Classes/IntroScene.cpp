@@ -32,6 +32,10 @@ bool IntroScene::init()
 	visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
+	auto background = cocos2d::Sprite::create(WATER);
+	background->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
+	this->addChild(background, -1);
+
 	Page();
 	Loading();
 	AddDataBase();
@@ -52,7 +56,7 @@ void IntroScene::Page()
 	pageView->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2 + visibleSize.height / 7));
 	this->addChild(pageView);
 
-	for (int i = 1; i < 4; i++)
+	for (int i = 2; i < 4; i++)
 	{
 		char normal[20] = { 0 };
 		sprintf(normal, "intro/%d.png", i);
