@@ -152,6 +152,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Cable.cpp" />
     <ClCompile Include="..\Classes\Constants.cpp" />
     <ClCompile Include="..\Classes\Bullet.cpp" />
+    <ClCompile Include="..\Classes\DbContext.cpp" />
     <ClCompile Include="..\Classes\GamePlayScene.cpp" />
     <ClCompile Include="..\Classes\HelloWorldScene.cpp" />
     <ClCompile Include="..\Classes\InfoMap.cpp" />
@@ -167,9 +168,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\PopUpSetting.cpp" />
     <ClCompile Include="..\Classes\MyBodyParser.cpp" />
     <ClCompile Include="..\Classes\Item.cpp" />
+    <ClCompile Include="..\Classes\PopUpShop.cpp" />
     <ClCompile Include="..\Classes\Ship.cpp" />
     <ClCompile Include="..\Classes\Shark.cpp" />
     <ClCompile Include="..\Classes\IntroScene.cpp" />
+    <ClCompile Include="..\Classes\ShopScene.cpp" />
+    <ClCompile Include="..\Classes\sqlite3.c" />
     <ClCompile Include="..\Classes\SkinGame.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -178,6 +182,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Cable.h" />
     <ClInclude Include="..\Classes\Constants.h" />
     <ClInclude Include="..\Classes\Bullet.h" />
+    <ClInclude Include="..\Classes\DbContext.h" />
     <ClInclude Include="..\Classes\define.h" />
     <ClInclude Include="..\Classes\GamePlayScene.h" />
     <ClInclude Include="..\Classes\HelloWorldScene.h" />
@@ -194,9 +199,12 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\PopUpSetting.h" />
     <ClInclude Include="..\Classes\Item.h" />
     <ClInclude Include="..\Classes\MyBodyParser.h" />
+    <ClInclude Include="..\Classes\PopUpShop.h" />
     <ClInclude Include="..\Classes\Shark.h" />
     <ClInclude Include="..\Classes\Ship.h" />
     <ClInclude Include="..\Classes\IntroScene.h" />
+    <ClInclude Include="..\Classes\ShopScene.h" />
+    <ClInclude Include="..\Classes\sqlite3.h" />
     <ClInclude Include="..\Classes\SkinGame.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>

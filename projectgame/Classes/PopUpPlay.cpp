@@ -19,13 +19,18 @@ bool PopupPlay::init()
 								+ mBackground->getContentSize().height / 22));
 	
 	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			Constants::ReleaseButton();
+			CocosDenshion::SimpleAudioEngine::getInstance()->pauseBackgroundMusic();
+			CocosDenshion::SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5f);
+			CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_PLAY, true);
+			
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, GamePlayScene::createScene()));
 			break;
 		}
@@ -40,10 +45,11 @@ bool PopupPlay::init()
 
 	btnSetting->setScale(0.75);
 	mLayer->addChild(btnSetting, 1);
-	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnSetting->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			PopupSetting *popup = PopupSetting::create();
@@ -80,6 +86,8 @@ void PopupPlay::setLevel(int numLevel, int numStars)
 
 void PopupPlay::HandlTouch()
 {
+
+	Constants::SetEnableAllTouchEventOnMapLevel(true);
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
 		auto map = Constants::GetListMap().at(i);

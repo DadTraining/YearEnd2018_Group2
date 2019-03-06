@@ -49,8 +49,8 @@ bool PopupPause::init()
 		+ mBackground->getContentSize().height / 22));
 
 	mLayer->addChild(btnPlay, 1);
-	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnPlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
@@ -70,8 +70,8 @@ bool PopupPause::init()
 
 	btnHome->setScale(0.75);
 	mLayer->addChild(btnHome, 1);
-	btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnHome->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			break;
@@ -79,6 +79,7 @@ bool PopupPause::init()
 			cocos2d::Director::getInstance()->resume();
 			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(MapScene::createScene());
+			CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
 			break;
 
 		}

@@ -3,6 +3,7 @@
 #include"define.h"
 #include "Constants.h"
 #include "InfoMap.h"
+#include "PopUpShop.h"
 
 Scene* MapScene::createScene()
 {
@@ -15,7 +16,6 @@ bool MapScene::init()
 	{
 		return false;
 	}
-
 
 	//Constants::getVisibleSize() = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -30,7 +30,10 @@ bool MapScene::init()
 	initPopUpLevel();
 
 	setListButton();
-
+	coin();
+	star();
+	shoppe();
+	
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
 	{
 		auto map = Constants::GetListMap().at(i)->isAllowPlay();
@@ -38,7 +41,8 @@ bool MapScene::init()
 	}
 
 	Constants::setInMap(true);
-
+	CocosDenshion::SimpleAudioEngine::getInstance()->stopBackgroundMusic();
+	CocosDenshion::SimpleAudioEngine::getInstance()->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
 	return true;
 }
 
@@ -175,6 +179,7 @@ void MapScene::setListButton()
 			switch (type)
 			{
 			case ui::Widget::TouchEventType::BEGAN:
+				CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 				break;
 			case ui::Widget::TouchEventType::ENDED:
 				mListPlay[i - 1]->getLayer()->setVisible(true);
@@ -226,4 +231,87 @@ void MapScene::setEnableTouch(bool enable)
 	{
 		btnLevels[i]->setTouchEnabled(enable);
 	}
+}
+
+void MapScene::coin()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+
+	//icon coin
+    mCoin =cocos2d:: Sprite::create(COIN);
+	mCoin->setAnchorPoint(Vec2(0, 1));
+	mCoin->setPosition(cocos2d::Vec2(visibleSize.width / 45, visibleSize.height / 1.015));
+	this->addChild(mCoin);
+	//lable coin
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_SCORE;
+	labelConfig.fontSize = 31;
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mcoin = Constants::GetTotalCoin();
+	
+	auto mLableCoin=Label::createWithTTF(labelConfig, std::to_string(mcoin));
+	mLableCoin->setAnchorPoint(Vec2(0, 1));
+	mLableCoin->setPosition(cocos2d::Vec2(visibleSize.width / 15, visibleSize.height / 1.03));
+	mLableCoin->enableGlow(Color4B::BLUE);
+	this->addChild(mLableCoin);
+
+
+}
+
+void MapScene::star()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	//icon star
+    mStar = cocos2d::Sprite::create(STAR);
+	mStar->setAnchorPoint(Vec2(0, 1));
+	mStar->setPosition(cocos2d::Vec2(visibleSize.width / 7.2, visibleSize.height / 1.01));
+	mStar->setScale(0.5);
+	this->addChild(mStar);
+
+	// lable star
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_SCORE;
+	labelConfig.fontSize = 31;
+	labelConfig.glyphs = GlyphCollection::DYNAMIC;
+	labelConfig.outlineSize = 2;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	mstar = Constants::GetTotalStar();
+	//mstar = 000000;
+	auto mLableStar = Label::createWithTTF(labelConfig, std::to_string(mstar));
+	mLableStar->setAnchorPoint(Vec2(0, 1));
+	mLableStar->setPosition(cocos2d::Vec2(visibleSize.width / 5.4, visibleSize.height / 1.03));
+	mLableStar->enableGlow(Color4B::BLUE);
+	this->addChild(mLableStar);
+
+}
+
+void MapScene::shoppe()
+{
+	auto visibleSize = Director::getInstance()->getVisibleSize();
+	//button shop
+	auto btnShop = ui::Button::create(SHOP);
+	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 , visibleSize.height / 1.05));
+	this->addChild(btnShop);
+	Constants::AddButtonIntoMapLevel(btnShop);
+	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:	
+			PopUpShop* popupshop = PopUpShop::create();
+			this->addChild(popupshop);
+			popupshop->getLayer()->setVisible(true);
+			Constants::SetEnableAllTouchEventOnMapLevel(false);
+			break;
+		}
+	});
+	
+	
 }

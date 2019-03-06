@@ -1,8 +1,16 @@
 #include "Constants.h"
+#include "define.h"
+#include "DbContext.h"
 
 cocos2d::Vector<cocos2d::ui::Button*> Constants::listButton;
 std::vector<MapLevel*> Constants::listMap;
 bool Constants::inMap;
+int Constants::brick;
+int Constants::hp;
+int Constants::boom;
+int Constants::totalCoin;
+int Constants::totalStar;
+bool Constants::pause;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -54,7 +62,8 @@ void Constants::SetPhase(int index)
 	InfoMap::setSharPhases(
 		map->GetPhase(1),
 		map->GetPhase(2),
-		map->GetPhase(3)
+		map->GetPhase(3),
+		map->GetSharksSkin()
 	);
 	InfoMap::setMapLevel(index);
 }
@@ -77,11 +86,15 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 	map->SetScore(score);
 	if (pass)
 	{
-		if (lv<16)
+		if (lv < 16)
 		{
 			listMap.at(lv)->AllowPlay();
 		}
+		DbContext::UpdateDataMap(lv, star, score);
 	}
+	DbContext::UpdateItem(1, Constants::GetBricks());
+	DbContext::UpdateItem(2, Constants::GetHps());
+	DbContext::UpdateItem(3, Constants::GetBooms());
 }
 
 void Constants::setInMap(bool in)
@@ -94,6 +107,103 @@ bool Constants::isInMap()
 	return inMap;
 }
 
+bool Constants::BuyBooms()
+{
+	if (Constants::GetTotalCoin() > COST_BUY_BOOM)
+	{
+		boom += 1;
+		return true;
+	}
+	return false;
+}
+
+bool Constants::BuyBreacks()
+{
+	if (Constants::GetTotalCoin() > COST_BUY_BREACK)
+	{
+		brick += 3;
+		return true;
+	}
+	return false;
+
+}
+
+bool Constants::BuyHps()
+{
+	if (Constants::GetTotalCoin() > COST_BUY_HP)
+	{
+		hp += 3;
+		return true;
+	}
+	return false;
+}
+
+int Constants::GetBooms()
+{
+	return boom;
+}
+
+int Constants::GetHps()
+{
+	return hp;
+}
+
+int Constants::GetBricks()
+{
+	return brick;
+}
+
+void Constants::SetBooms(int num)
+{
+	boom = num;
+}
+
+void Constants::SetHps(int num)
+{
+	hp = num;
+}
+
+void Constants::SetBricks(int num)
+{
+	brick = num;
+}
+
+void Constants::RefreshItem()
+{
+	brick = DbContext::GetItem(1);
+	hp = DbContext::GetItem(2);
+	boom = DbContext::GetItem(3);
+}
+
+void Constants::SetTotalCoin(int coins)
+{
+	totalCoin = coins;
+}
+
+int Constants::GetTotalCoin()
+{
+	totalCoin = 0;
+	for (int i = 0; i < listMap.size(); i++)
+	{
+		totalCoin += listMap.at(i)->GetScore();
+	}
+	return totalCoin;
+}
+
+int Constants::GetTotalStar()
+{
+	totalStar = 0;
+	for (int i = 0; i < listMap.size(); i++)
+	{
+		totalStar += listMap.at(i)->GetStar();
+	}
+	return totalStar;
+}
+
+void Constants::SetTotalStar(int star)
+{
+	totalStar = star;
+}
 
 
 

@@ -9,12 +9,9 @@ class PopupEndGame : public Popup
 private:
 	
 public:
-
     virtual bool init() override;
 	virtual void onExit() override;
-    
-	
-	void setLevel(int numLevel, int numStars);
+	void SetLevel(int numLevel, int numStars);
 	virtual void HandlTouch() override;
     CREATE_FUNC(PopupEndGame);
 };

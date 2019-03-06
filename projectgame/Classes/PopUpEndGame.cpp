@@ -21,10 +21,11 @@ bool PopupEndGame::init()
 
 	btnRePlay->setScale(0.75);
 	mLayer->addChild(btnRePlay, 1);
-	btnRePlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnRePlay->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
@@ -39,10 +40,11 @@ bool PopupEndGame::init()
 		+ mBackground->getContentSize().height / 22));
 
 	mLayer->addChild(btnNextLV, 1);
-	btnNextLV->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType t) {
-		switch (t)
+	btnNextLV->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			CocosDenshion::SimpleAudioEngine::getInstance()->playEffect(SFX_BUTTON, false);
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
@@ -73,7 +75,7 @@ void PopupEndGame::onExit()
 }
 
 /*Set level popup*/
-void PopupEndGame::setLevel(int numLevel, int numStars)
+void PopupEndGame::SetLevel(int numLevel, int numStars)
 {
 	std::string png = ".png", stars = "stars", path = "map/", l = "Level", le, st;
 	char cLevel[20] = { 0 };
