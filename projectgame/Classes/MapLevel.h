@@ -22,7 +22,7 @@ public:
 	MapLevel(cocos2d::Scene* scene,int lv, int st);
 	virtual ~MapLevel();
 
-
+	
 
 	int GetLevel();
 	void SetLevel(int lv);

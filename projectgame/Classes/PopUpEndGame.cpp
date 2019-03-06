@@ -48,20 +48,32 @@ bool PopupEndGame::init()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->resume();
-			Constants::SetPhase(InfoMap::getMapLevel());
 			Constants::ReleaseButton();
-			auto callback = cocos2d::CallFunc::create([=]() {
-				Director::getInstance()->replaceScene(TransitionFadeTR::create(0, MapScene::createScene()));
-			});
-			auto callback2 = cocos2d::CallFunc::create([=]() {
-				Director::getInstance()->replaceScene(TransitionFadeTR::create(1.5, GamePlayScene::createScene()));
-			});
-			auto seq = cocos2d::Sequence::create(
-				callback,
-				callback2,
-				nullptr
-			);
-			this->runAction(seq);
+
+			if (!Constants::AllowPlayNext(InfoMap::getMapLevel()))
+			{
+				auto callback = cocos2d::CallFunc::create([=]() {
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(0, MapScene::createScene()));
+				});
+				this->runAction(callback);
+			}
+			else
+			{
+				Constants::SetPhase(InfoMap::getMapLevel());
+				auto callback = cocos2d::CallFunc::create([=]() {
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(0, MapScene::createScene()));
+				});
+				auto callback2 = cocos2d::CallFunc::create([=]() {
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(1.5, GamePlayScene::createScene()));
+				});
+				auto seq = cocos2d::Sequence::create(
+					callback,
+					callback2,
+					nullptr
+				);
+				this->runAction(seq);
+			}
+			
 			break;
 		}
 	});

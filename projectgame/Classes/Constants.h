@@ -65,7 +65,7 @@ public:
 	static int GetTotalStar();
 	static void SetTotalStar(int star);
 	
-
+	static bool AllowPlayNext(int lv);
 
 
 	static void setOnBGM(bool on);

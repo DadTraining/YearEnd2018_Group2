@@ -149,7 +149,6 @@ bool Constants::BuyBooms()
 	{
 		boom += 1;
 		DbContext::UpdateItem(3, boom);
-
 		Constants::SetTotalCoin(totalCoin - COST_BUY_BOOM);
 		DbContext::UpdateScore(totalCoin);
 
@@ -162,7 +161,7 @@ bool Constants::BuyBricks()
 {
 	if (Constants::GetTotalCoin() > COST_BUY_BRICK)
 	{
-		brick += 3;
+		brick += 1;
 		DbContext::UpdateItem(1, brick);
 		Constants::SetTotalCoin(totalCoin - COST_BUY_BRICK);
 		DbContext::UpdateScore(totalCoin);
@@ -176,10 +175,10 @@ bool Constants::BuyHps()
 {
 	if (Constants::GetTotalCoin() > COST_BUY_HP)
 	{
-		hp += 3;
+		hp += 1;
 		Constants::SetTotalCoin(totalCoin - COST_BUY_HP);
-
 		DbContext::UpdateItem(2, hp);
+		DbContext::UpdateScore(totalCoin);
 
 		return true;
 	}
@@ -247,6 +246,11 @@ int Constants::GetTotalStar()
 void Constants::SetTotalStar(int star)
 {
 	totalStar = star;
+}
+
+bool Constants::AllowPlayNext(int lv)
+{
+	return listMap.at(lv)->isAllowPlay();
 }
 
 void Constants::setOnBGM(bool on)

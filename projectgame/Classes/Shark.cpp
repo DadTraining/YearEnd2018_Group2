@@ -382,7 +382,7 @@ void Shark::Init()
 		mSpeed = SHARK_SPEED_NORMAL;
 		break;
 	}
-
+	mSprite->setPositionZ(mSpeed);
 	if (mTotalColor == 1)
 	{
 		SharkSingleSkin();

@@ -104,6 +104,7 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
+	callBackAlive += 1;
 	if (mCable->GetHP() <= 0)
 	{
 		LoseGame();
@@ -206,43 +207,44 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		break;
 	default:
 		WinGame();
-
-
 		break;
 	}
 
-	for (int i = 0; i < size; i++)
+	if (callBackAlive % 40 == 0)
 	{
-		auto x = sharkList[i]->SpriteIsVisible();
-		if (!x)
+		for (int i = 0; i < size; i++)
 		{
-			if (mSharksSkin > 0 && phase != 1)
+			auto x = sharkList[i]->SpriteIsVisible();
+			if (!x)
 			{
+				if (mSharksSkin > 0 && phase != 1)
+				{
 
-				int rand = cocos2d::random(1, 10);
-				if (InfoMap::getMapLevel() <= 9 && rand <= 7)
-				{
-					sharkList[i]->SetNumSkinForShark(1);
-					sharkList[i]->Init();
-				}
-				else if (InfoMap::getMapLevel() > 9 && rand <= 4)
-				{
-					sharkList[i]->SetNumSkinForShark(1);
-					sharkList[i]->Init();
+					int rand = cocos2d::random(1, 10);
+					if (InfoMap::getMapLevel() <= 9 && rand <= 7)
+					{
+						sharkList[i]->SetNumSkinForShark(1);
+						sharkList[i]->Init();
+					}
+					else if (InfoMap::getMapLevel() > 9 && rand <= 4)
+					{
+						sharkList[i]->SetNumSkinForShark(1);
+						sharkList[i]->Init();
+					}
+					else
+					{
+						sharkList[i]->SetNumSkinForShark(2);
+						sharkList[i]->Init();
+						mSharksSkin -= 1;
+					}
 				}
 				else
 				{
-					sharkList[i]->SetNumSkinForShark(2);
+					sharkList[i]->SetNumSkinForShark(1);
 					sharkList[i]->Init();
-					mSharksSkin -= 1;
 				}
+				break;
 			}
-			else
-			{
-				sharkList[i]->SetNumSkinForShark(1);
-				sharkList[i]->Init();
-			}
-			break;
 		}
 	}
 }
