@@ -70,13 +70,14 @@ void IntroScene::Page()
 /*Create Background Music*/
 void IntroScene::BGMusic()
 {
+	bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
+	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
+	bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
+	bgmMap->preloadEffect(SFX_BUTTON_BULLET);
+	bgmMap->preloadEffect(SFX_BUTTON);
+
 	if (Constants::getOnBGM())
 	{
-		bgmMap = CocosDenshion::SimpleAudioEngine::getInstance();
-		bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_MAP);
-		bgmMap->preloadBackgroundMusic(MUSIC_BACKGROUND_PLAY);
-		bgmMap->preloadEffect(SFX_BUTTON_BULLET);
-		bgmMap->preloadEffect(SFX_BUTTON);
 		bgmMap->playBackgroundMusic(MUSIC_BACKGROUND_MAP, true);
 	}
 	//bgmMap->setBackgroundMusicVolume(0.5f);

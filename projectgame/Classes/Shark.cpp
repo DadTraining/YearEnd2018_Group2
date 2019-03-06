@@ -281,10 +281,10 @@ void Shark::UnMove(cocos2d::Vec2 pos)
 
 void Shark::RunAwayAnimation()
 {
+	mStatus = SHARK_STATUS_RUNAWAY_ANIMATION;
 	mSprite->stopAllActions();
 	//CCLOG("%s", mStatus);
 	Shark::SetAlive(false);
-	mStatus = SHARK_STATUS_RUNAWAY_ANIMATION;
 	auto _animate = cocos2d::Animate::create(CreateAnimation(mColor, SHARK_RUN_AWAY_START, SHARK_RUN_AWAY_FRAME, mDelay - 0.05));
 	auto _visi = cocos2d::CallFunc::create([=]() {
 		mSprite->stopAllActions();
