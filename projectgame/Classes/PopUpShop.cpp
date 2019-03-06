@@ -114,7 +114,7 @@ void PopUpShop::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:	
-			Constants::BuyBricks();
+			//Constants::BuyBricks();
 			
 			break;
 

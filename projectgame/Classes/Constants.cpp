@@ -93,11 +93,11 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 	{
 		if (pass)
 		{
-			if (map->GetStar()<star)
+			if (map->GetStar() < star)
 			{
 				map->SetStar(star);
 			}
-			if (map->GetScore()<score)
+			if (map->GetScore() < score)
 			{
 				map->SetScore(score);
 			}
@@ -105,9 +105,9 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 	}
 	if (pass)
 	{
-		if (lv < 16 && (lv == 4 || lv == 8 || lv == 12) )
+		if (lv < 16 && (lv == 4 || lv == 8 || lv == 12))
 		{
-			if (Constants::GetTotalStar() ==12 && lv ==4)
+			if (Constants::GetTotalStar() == 12 && lv == 4)
 			{
 				listMap.at(lv)->AllowPlay();
 			}
@@ -115,7 +115,7 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 			{
 				listMap.at(lv)->AllowPlay();
 			}
-			else if(Constants::GetTotalStar() == 36 && lv == 12)
+			else if (Constants::GetTotalStar() == 36 && lv == 12)
 			{
 				listMap.at(lv)->AllowPlay();
 			}
@@ -124,7 +124,7 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 		{
 			listMap.at(lv)->AllowPlay();
 		}
-		
+
 		DbContext::UpdateDataMap(lv, map->GetStar(), map->GetScore());
 		DbContext::UpdateScore(Constants::GetTotalCoin() + score);
 	}
@@ -145,7 +145,7 @@ bool Constants::isInMap()
 
 bool Constants::BuyBooms()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_BOOM)
+	if (Constants::GetTotalCoin() >= COST_BUY_BOOM)
 	{
 		boom += 1;
 		DbContext::UpdateItem(3, boom);
@@ -159,7 +159,7 @@ bool Constants::BuyBooms()
 
 bool Constants::BuyBricks()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_BRICK)
+	if (Constants::GetTotalCoin() >= COST_BUY_BRICK)
 	{
 		brick += 1;
 		DbContext::UpdateItem(1, brick);
@@ -173,7 +173,7 @@ bool Constants::BuyBricks()
 
 bool Constants::BuyHps()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_HP)
+	if (Constants::GetTotalCoin() >= COST_BUY_HP)
 	{
 		hp += 1;
 		Constants::SetTotalCoin(totalCoin - COST_BUY_HP);

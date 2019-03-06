@@ -18,6 +18,7 @@ private:
 	int mcoin;
 	int mstar;
 	Size visibleSize;
+	cocos2d::Label* mLableCoin;
 public:
 	
 	static cocos2d::Scene* createScene();

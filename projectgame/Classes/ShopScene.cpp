@@ -62,10 +62,11 @@ void ShopScene::coin()
 
 	mcoin = Constants::GetTotalCoin();
 	//mcoin = 11111;
-	auto mLableCoin = Label::createWithTTF(labelConfig, std::to_string(mcoin));
+	mLableCoin = Label::createWithTTF(labelConfig, std::to_string(mcoin));
 	mLableCoin->setAnchorPoint(Vec2(0, 1));
 	mLableCoin->setPosition(cocos2d::Vec2(visibleSize.width / 15, visibleSize.height / 1.03));
 	mLableCoin->enableGlow(Color4B::BLUE);
+	
 	this->addChild(mLableCoin);
 }
 
@@ -105,17 +106,17 @@ void ShopScene::buyFrame()
 	costItem3->enableGlow(Color4B::BLUE);
 	this->addChild(costItem3, 2);
 
-	buyItem1->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+	buyItem1->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType touch) {
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
-		{
-			
-		}
 
+			break;
 		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->replaceScene(this);
-
+			//cocos2d::Director::getInstance()->replaceScene(this);
+			Constants::BuyBricks();
+			mLableCoin->setString(std::to_string(Constants::GetTotalCoin()));
+		
 			break;
 		}
 	});
@@ -124,12 +125,11 @@ void ShopScene::buyFrame()
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
-		{
-
-		}
+			break;
 
 		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->replaceScene(this);
+			Constants::BuyHps();
+			mLableCoin->setString(std::to_string(Constants::GetTotalCoin()));
 
 			break;
 		}
@@ -139,12 +139,11 @@ void ShopScene::buyFrame()
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
-		{
-
-		}
+			break;
 
 		case ui::Widget::TouchEventType::ENDED:
-			cocos2d::Director::getInstance()->replaceScene(this);
+			Constants::BuyBooms();
+			mLableCoin->setString(std::to_string(Constants::GetTotalCoin()));
 
 			break;
 		}
