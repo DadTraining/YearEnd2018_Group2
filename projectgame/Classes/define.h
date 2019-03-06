@@ -144,8 +144,8 @@
 
 #define ITEM_SCAlE 0.3
 
-#define LOADING_BAR_BACKGROUND "loadingbar/bar_1.png"
-#define LOADING_BAR "loadingbar/bar_2.png"
+#define LOADING_BAR_BACKGROUND "loadingbar/loadingbar2.png"
+#define LOADING_BAR "loadingbar/loadingbar1.png"
 #define LOADING_BAR_SCALE_X 0.35
 #define LOADING_BAR_SCALE_Y 0.07
 
