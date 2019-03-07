@@ -35,6 +35,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Shark.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Item.cpp \
 				   $(LOCAL_PATH)/../../../Classes/IntroScene.cpp \
+				   $(LOCAL_PATH)/../../../Classes/ShopScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/MapScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/GamePlayScene.cpp
 				   

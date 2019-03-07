@@ -66,7 +66,7 @@ void ShopScene::coin()
 	mLableCoin->setAnchorPoint(Vec2(0, 1));
 	mLableCoin->setPosition(cocos2d::Vec2(visibleSize.width / 15, visibleSize.height / 1.03));
 	mLableCoin->enableGlow(Color4B::BLUE);
-	
+
 	this->addChild(mLableCoin);
 }
 
@@ -90,19 +90,19 @@ void ShopScene::buyFrame()
 
 	auto costItem1 = Label::createWithTTF(std::to_string(COST_BUY_BRICK), FONT_SCORE, 31);
 	costItem1->setAnchorPoint(Vec2(0, 0.5));
-	costItem1->setPosition(buyItem1->getPosition());
+	costItem1->setPosition(buyItem1->getPosition() - cocos2d::Vec2(5, 0));
 	costItem1->enableGlow(Color4B::BLUE);
 	this->addChild(costItem1, 2);
 
 	auto costItem2 = Label::createWithTTF(std::to_string(COST_BUY_HP), FONT_SCORE, 31);
 	costItem2->setAnchorPoint(Vec2(0, 0.5));
-	costItem2->setPosition(buyItem2->getPosition());
+	costItem2->setPosition(buyItem2->getPosition() - cocos2d::Vec2(5, 0));
 	costItem2->enableGlow(Color4B::BLUE);
 	this->addChild(costItem2, 2);
 
 	auto costItem3 = Label::createWithTTF(std::to_string(COST_BUY_BOOM), FONT_SCORE, 31);
 	costItem3->setAnchorPoint(Vec2(0, 0.5));
-	costItem3->setPosition(buyItem3->getPosition());
+	costItem3->setPosition(buyItem3->getPosition() - cocos2d::Vec2(5, 0));
 	costItem3->enableGlow(Color4B::BLUE);
 	this->addChild(costItem3, 2);
 
@@ -116,7 +116,7 @@ void ShopScene::buyFrame()
 			//cocos2d::Director::getInstance()->replaceScene(this);
 			Constants::BuyBricks();
 			mLableCoin->setString(std::to_string(Constants::GetTotalCoin()));
-		
+
 			break;
 		}
 	});

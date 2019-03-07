@@ -211,7 +211,7 @@
 //shop background
 #define WATER "shop/underwater.png"
 #define SHOP_BG "shop/Capture.PNG"
-#define BUTTON_BUY "shop/buybutton.png"
+#define BUTTON_BUY "shop/buybutton1.png"
 
 
 #define COST_BUY_BRICK 200
