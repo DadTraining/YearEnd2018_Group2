@@ -99,7 +99,7 @@ bool DbContext::InsertData()
 		, nullptr, nullptr, nullptr);
 	////////////////
 	sqlite3_exec(_dataBase,
-		"insert into tbSkin values (null,'ship/ship.png',1,1)"
+		"insert into tbSkin values (null,'ship/Ship.png',1,1)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
 		"insert into tbSkin values (null,'ship/ship2.png',1,0)"

@@ -322,7 +322,7 @@ std::string Constants::GetNameShip()
 	//std::string name;
 	for (int i = 0; i < listSkin.size(); i++)
 	{
-		if (listSkin.at(i)->IsAllowUse())
+		if (listSkin.at(i)->IsIssue())
 		{
 			return listSkin.at(i)->GetSkinText();
 		}
