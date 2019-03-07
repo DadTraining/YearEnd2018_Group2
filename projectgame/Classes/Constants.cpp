@@ -311,8 +311,6 @@ void Constants::SetSelectedShip(int id)
 		listSkin.at(i)->SetIssue(false);
 	}
 
-	//listSkin = DbContext::GetListShip();
-	//Constants::nameShip = listSkin.at(id + 1)->GetSkinText();
 	listSkin.at(id)->SetIssue(true);
 	DbContext::UpdateSkinShip(id + 1);
 }
