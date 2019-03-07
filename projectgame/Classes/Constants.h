@@ -82,5 +82,7 @@ public:
 	static void SetSelectedShip(int id);
 	static std::string GetNameShip();
 	static void LoadSkinGame();
+
+	static void ReLoadShop();
 };
 

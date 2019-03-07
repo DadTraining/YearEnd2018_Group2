@@ -64,7 +64,7 @@ void Shark::DamagedElectronic()
 
 void Shark::StunAnimation()
 {
-	if (Model::SpriteIsVisible())
+	if (Model::IsAlive())
 	{
 		Shark::SetStun(true);
 		if (mMoveToLeft)

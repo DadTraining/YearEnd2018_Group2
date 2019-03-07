@@ -104,6 +104,8 @@ void ShopScene::AddButtonSelect()
 	});
 	Constants::AddButtonIntoMapLevel(button3);
 	this->addChild(button3, 10);
+
+	Constants::ReLoadShop();
 }
 
 

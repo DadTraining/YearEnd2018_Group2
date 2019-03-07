@@ -334,4 +334,12 @@ void Constants::LoadSkinGame()
 	listSkin = DbContext::GetListShip();
 }
 
+void Constants::ReLoadShop()
+{
+	for (int i = 0; i < listSkin.size(); i++)
+	{
+		listButton.at(i)->setEnabled(listSkin.at(i)->IsIssue());
+	}
+}
+
 
