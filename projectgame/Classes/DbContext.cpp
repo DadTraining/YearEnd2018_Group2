@@ -39,7 +39,7 @@ bool DbContext::CreateTable()
 		int result4 = sqlite3_exec(_dataBase,
 			"create table tbSound(id integer primary key autoincrement,sound integer,bgm integer)"
 			, nullptr, nullptr, nullptr);
-		if (result == 0 && result1 == 0 && result2 ==0 && result3 == 0 && result4 ==0)
+		if (result == 0 && result1 == 0 && result2 == 0 && result3 == 0 && result4 == 0)
 		{
 			return true;
 		}
@@ -102,7 +102,10 @@ bool DbContext::InsertData()
 		"insert into tbSkin values (null,'ship/ship.png',1,1)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbSkin values (null,'ship/ship1.png',0,0)"
+		"insert into tbSkin values (null,'ship/ship2.png',1,0)"
+		, nullptr, nullptr, nullptr);
+	sqlite3_exec(_dataBase,
+		"insert into tbSkin values (null,'ship/ship1.png',1,0)"
 		, nullptr, nullptr, nullptr);
 	///////////////
 	sqlite3_exec(_dataBase,
@@ -145,8 +148,8 @@ std::vector<MapLevel*> DbContext::GetAllMapLevel()
 			bool allow = (sqlite3_column_int(stmt, 9) == 1) ? true : false;
 
 			MapLevel* mlv = new MapLevel(
-				lv,st,p1,p2,p3,sk,sc,wasplay,allow
-				);
+				lv, st, p1, p2, p3, sk, sc, wasplay, allow
+			);
 			mapLevels.push_back(mlv);
 		}
 		else
@@ -161,7 +164,7 @@ std::vector<MapLevel*> DbContext::GetAllMapLevel()
 bool DbContext::UpdateDataMap(int id, int star, int score)
 {
 	std::string sql = "Update tbMapLevel SET star =" + std::to_string(star);
-	sql.append(",score="+ std::to_string(score));
+	sql.append(",score=" + std::to_string(score));
 
 	sql.append(",pass=" + std::to_string(1));
 
@@ -169,7 +172,7 @@ bool DbContext::UpdateDataMap(int id, int star, int score)
 
 	std::string sql1 = "Update tbMapLevel SET ";
 	sql1.append("allowplay=" + std::to_string(1));
-	sql1.append(" Where id =" + std::to_string(id+1));
+	sql1.append(" Where id =" + std::to_string(id + 1));
 
 	DbContext::OpenConnect();
 	sqlite3_exec(_dataBase, sql.c_str(), NULL, NULL, NULL);
@@ -297,6 +300,83 @@ void DbContext::UpdateSound(int sf, int bg)
 	DbContext::OpenConnect();
 	sqlite3_exec(_dataBase, sql1.c_str(), NULL, NULL, NULL);
 	DbContext::CloseConnect();
+}
+
+std::vector<SkinGame*> DbContext::GetListShip()
+{
+	std::vector<SkinGame*> listSkin;
+	DbContext::OpenConnect();
+	sqlite3_stmt* stmt = nullptr;
+
+	sqlite3_prepare_v2(_dataBase, "SELECT * FROM tbSkin", -1, &stmt, nullptr);
+
+	while (true)
+	{
+		int result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW)
+		{
+			int id = sqlite3_column_int(stmt, 0);
+			std::string name = std::string(reinterpret_cast<const char*>(
+				sqlite3_column_text(stmt, 1)
+				));
+
+			bool allow = (sqlite3_column_int(stmt, 2) == 1) ? true : false;
+			bool isuse = (sqlite3_column_int(stmt, 3) == 1) ? true : false;
+
+			SkinGame* sk = new SkinGame(id, name, allow, isuse);
+			listSkin.push_back(sk);
+		}
+		else
+		{
+			break;
+		}
+	}
+	DbContext::CloseConnect();
+	return listSkin;
+}
+
+void DbContext::UpdateSkinShip(int id)
+{
+	std::string sql1 = "Update tbSkin SET ";
+	sql1.append("isuse=" + std::to_string(0));
+
+
+	std::string sql = "Update tbSkin SET ";
+	sql.append("isuse=" + std::to_string(1));
+	sql.append(" Where id =" + std::to_string(id));
+	DbContext::OpenConnect();
+
+	DbContext::OpenConnect();
+	sqlite3_exec(_dataBase, sql1.c_str(), NULL, NULL, NULL);
+	sqlite3_exec(_dataBase, sql.c_str(), NULL, NULL, NULL);
+	DbContext::CloseConnect();
+}
+
+std::string DbContext::GetNameSkin(int id)
+{
+	std::string name, sql;
+	DbContext::OpenConnect();
+	sqlite3_stmt* stmt = nullptr;
+	sql.append("SELECT * FROM tbSkin where id = " + std::to_string(id));
+
+	sqlite3_prepare_v2(_dataBase, sql.c_str(), -1, &stmt, nullptr);
+
+	while (true)
+	{
+		int result = sqlite3_step(stmt);
+		if (result == SQLITE_ROW)
+		{
+			name = std::string(reinterpret_cast<const char*>(
+				sqlite3_column_text(stmt, 1)
+				));
+		}
+		else
+		{
+			break;
+		}
+	}
+	DbContext::CloseConnect();
+	return name;
 }
 
 

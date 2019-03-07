@@ -6,6 +6,8 @@
 #include "InfoMap.h"
 #include "SimpleAudioEngine.h"
 #include "define.h"
+#include "SkinGame.h"
+
 
 
 class Constants 
@@ -24,7 +26,8 @@ private:
 	static int boom;
 	static int totalCoin;
 	static int totalStar;
-
+	static std::string nameShip;
+	static std::vector<SkinGame*> listSkin;
 public:
 	//background music
 	/*static CocosDenshion::SimpleAudioEngine *bgmMap;
@@ -75,5 +78,9 @@ public:
 	static void setOnSFX(bool on);
 	static void changeOnSFX();
 	static bool getOnSFX();
+
+	static void SetSelectedShip(int id);
+	static std::string GetNameShip();
+	static void LoadSkinGame();
 };
 

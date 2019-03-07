@@ -24,7 +24,7 @@ public:
 	static cocos2d::Scene* createScene();
 	virtual bool init();
 
-	
+	void AddButtonSelect();
 
 	void coin();
 	void buyFrame();

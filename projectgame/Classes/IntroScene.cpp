@@ -105,6 +105,8 @@ void IntroScene::AddDataBase()
 	Constants::SetTotalCoin(DbContext::GetScore());
 	Constants::setOnSFX(DbContext::GetSound(1)==1? true:false);
 	Constants::setOnBGM(DbContext::GetSound(2)==1? true:false);
+
+	Constants::LoadSkinGame();
 }
 
 void IntroScene::LoadGame()

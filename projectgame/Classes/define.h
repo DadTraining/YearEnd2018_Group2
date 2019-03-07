@@ -211,16 +211,19 @@
 //shop background
 #define WATER "shop/underwater.png"
 #define SHOP_BG "shop/Capture.PNG"
-#define BUTTON_BUY "shop/buybutton1.png"
+#define BUTTON_BUY "shop/buybutton.png"
 
 
 #define COST_BUY_BRICK 200
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
 
-#define DATA_BASE_NAME "databaseshark1.sql"
+#define DATA_BASE_NAME "databaseshark.sql"
 
 #define MAPSCENE_ZERO_STAR "map_star/0star.png"
 #define MAPSCENE_ONE_STAR "map_star/1star.png"
 #define MAPSCENE_TWO_STAR "map_star/2star.png"
 #define MAPSCENE_THREE_STAR "map_star/3star.png"
+
+#define SHOP_SELECT "shop/select1.png"
+#define SHOP_SELECTED "shop/selected1.png"

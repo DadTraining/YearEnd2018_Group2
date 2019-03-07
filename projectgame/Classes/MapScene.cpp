@@ -320,7 +320,7 @@ void MapScene::shoppe()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:	
-			Constants::SetEnableAllTouchEventOnMapLevel(false);
+			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, ShopScene::createScene()));
 			break;
 		}

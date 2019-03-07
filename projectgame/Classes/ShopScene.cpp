@@ -37,9 +37,73 @@ bool ShopScene::init()
 	coin();
 	buyFrame();
 	comeback();
+	AddButtonSelect();
+
+	
 
 
 	return true;
+}
+
+void ShopScene::AddButtonSelect()
+{
+	auto posY = mShop->getContentSize().height / 2.5;
+
+	auto button1 = ui::Button::create(SHOP_SELECT, SHOP_SELECT, SHOP_SELECTED);
+	button1->setPosition(cocos2d::Vec2(
+		mShop->getPosition().x - mShop->getContentSize().width / 3,
+		mShop->getPosition().y - posY)
+	);
+	Constants::AddButtonIntoMapLevel(button1);
+	button1->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Constants::SetSelectedShip(0);
+			break;
+		}
+	});
+	this->addChild(button1, 10);
+
+	auto button2 = ui::Button::create(SHOP_SELECT, SHOP_SELECT, SHOP_SELECTED);
+	button2->setPosition(cocos2d::Vec2(
+		mShop->getPosition().x + 2,
+		mShop->getPosition().y - posY)
+	);
+	button2->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Constants::SetSelectedShip(1);
+
+			break;
+		}
+	});
+	Constants::AddButtonIntoMapLevel(button2);
+	this->addChild(button2, 10);
+
+	auto button3 = ui::Button::create(SHOP_SELECT, SHOP_SELECT, SHOP_SELECTED);
+	button3->setPosition(cocos2d::Vec2(
+		mShop->getPosition().x + mShop->getContentSize().width / 3 + 5,
+		mShop->getPosition().y - posY)
+	);
+	button3->addTouchEventListener([=](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			Constants::SetSelectedShip(2);
+
+			break;
+		}
+	});
+	Constants::AddButtonIntoMapLevel(button3);
+	this->addChild(button3, 10);
 }
 
 
@@ -163,6 +227,7 @@ void ShopScene::comeback()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
+			Constants::ReleaseButton();
 			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
 			break;
 		}

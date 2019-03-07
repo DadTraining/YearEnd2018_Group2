@@ -10,7 +10,7 @@
 Ship::Ship(cocos2d::Scene * scene)
 {
 
-	mSprite = cocos2d::Sprite::create(SHIP_IMG);
+	mSprite = cocos2d::Sprite::create(Constants::GetNameShip());
 	scene->addChild(mSprite, 100);
 	mUp = true;
 	mLeft = false;

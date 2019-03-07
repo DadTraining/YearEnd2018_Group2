@@ -12,6 +12,8 @@ int Constants::totalCoin;
 int Constants::totalStar;
 bool Constants::onBGM = true;
 bool Constants::onSFX = true;
+std::string Constants::nameShip = "ship/Ship.png";
+std::vector<SkinGame*> Constants::listSkin;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -290,6 +292,46 @@ void Constants::changeOnSFX()
 bool Constants::getOnSFX()
 {
 	return onSFX;
+}
+
+void Constants::SetSelectedShip(int id)
+{
+	for (int i = 0; i < listButton.size(); i++)
+	{
+		if (i != id)
+		{
+			listButton.at(i)->setEnabled(true);
+		}
+		else
+		{
+			listButton.at(i)->setEnabled(false);
+		}
+		listSkin.at(i)->SetAllowUse(false);
+	}
+
+	//listSkin = DbContext::GetListShip();
+	//Constants::nameShip = listSkin.at(id + 1)->GetSkinText();
+	listSkin.at(id)->SetAllowUse(true);
+	DbContext::UpdateSkinShip(id + 1);
+}
+
+std::string Constants::GetNameShip()
+{
+	//std::string name;
+	for (int i = 0; i < listSkin.size(); i++)
+	{
+		if (listSkin.at(i)->IsAllowUse())
+		{
+			return listSkin.at(i)->GetSkinText();
+		}
+	}
+
+	return nullptr;
+}
+
+void Constants::LoadSkinGame()
+{
+	listSkin = DbContext::GetListShip();
 }
 
 
