@@ -343,7 +343,7 @@ void GamePlayScene::showEndGame()
 	Constants::SetEnableAllTouchEventOnMapLevel(false);
 	int star = 0;
 	auto score = InfoMap::getScore();
-	if (InfoMap::getScore() > 300)
+	if (InfoMap::getScore() > 350)
 	{
 		star = 3;
 	}

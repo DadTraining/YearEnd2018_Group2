@@ -53,7 +53,7 @@ bool PopupEndGame::init()
 			if (!Constants::AllowPlayNext(InfoMap::getMapLevel()))
 			{
 				auto callback = cocos2d::CallFunc::create([=]() {
-					Director::getInstance()->replaceScene(TransitionFadeTR::create(1, MapScene::createScene()));
+					Director::getInstance()->replaceScene(TransitionFadeTR::create(0, MapScene::createScene()));
 				});
 				this->runAction(callback);
 			}

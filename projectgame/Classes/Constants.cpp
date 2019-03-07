@@ -122,7 +122,10 @@ void Constants::EndGame(int lv, int star, bool pass, int score)
 		}
 		else
 		{
-			listMap.at(lv)->AllowPlay();
+			if (lv <16)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
 		}
 
 		DbContext::UpdateDataMap(lv, map->GetStar(), map->GetScore());
@@ -250,7 +253,11 @@ void Constants::SetTotalStar(int star)
 
 bool Constants::AllowPlayNext(int lv)
 {
-	return listMap.at(lv)->isAllowPlay();
+	if (lv <16)
+	{
+		return listMap.at(lv)->isAllowPlay();
+	}
+	return false;
 }
 
 void Constants::setOnBGM(bool on)
