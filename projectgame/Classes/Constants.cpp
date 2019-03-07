@@ -338,7 +338,7 @@ void Constants::ReLoadShop()
 {
 	for (int i = 0; i < listSkin.size(); i++)
 	{
-		listButton.at(i)->setEnabled(listSkin.at(i)->IsIssue());
+		listButton.at(i)->setEnabled(!listSkin.at(i)->IsIssue());
 	}
 }
 

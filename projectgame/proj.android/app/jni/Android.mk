@@ -19,6 +19,7 @@ LOCAL_SRC_FILES := $(LOCAL_PATH)/hellocpp/main.cpp \
 				   $(LOCAL_PATH)/../../../Classes/DbContext.cpp \
                    $(LOCAL_PATH)/../../../Classes/HelloWorldScene.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Model.cpp \
+				   $(LOCAL_PATH)/../../../Classes/SkinGame.cpp \
 				   $(LOCAL_PATH)/../../../Classes/InfoMap.cpp \
 				   $(LOCAL_PATH)/../../../Classes/Popup.cpp \
 				   $(LOCAL_PATH)/../../../Classes/PopUpShop.cpp \
