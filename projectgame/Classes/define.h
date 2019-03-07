@@ -5,15 +5,19 @@
 #define FONT_COUNT_ITEM "fonts/arial.ttf"
 #define COIN "button/coin.png"
 #define STAR "map/iconstars.png"
-#define SHOP "button/home.png"
+#define SHOP "button/shopee.png"
 #define BACKGROUNDSHOP "button/backgroudshop1.png"
 #define LEVEL "map/levelingame.png"
 #define LOSE_GAME "map/losegame.png"
-#define BUTTON_BUY "button/buy.png"
+//#define BUTTON_BUY "button/buy.png"
 #define BUTTON_FRAMES "button/warning12345.png"
 #define BUTTON_FRAMES_STAR "button/framstar1.png"
 #define STAR_LEVEL "button/0star.png"
 
+//#define BUTTON_BUY "button/buy.png"
+#define BUTTON_COMEBACK "button/comeback.png"
+#define BUTTON_FRAMES "button/warning12345.png"
+#define BUTTON_FRAMES_STAR "button/framstar1.png"
 #define SHIP_IMG "ship/Ship.png"
 #define SHIP_FRAME 1
 #define SHIP_SCALE 1
@@ -88,10 +92,10 @@
 
 #define SHARK_POS 100
 
-#define SHARK_SPEED_SMALL 2
-#define SHARK_SPEED_NORMAL 1.5
-#define SHARK_SPEED_BIG 1
-#define SHARK_SPEED_RUNAWAY 16
+#define SHARK_SPEED_SMALL 2.2
+#define SHARK_SPEED_NORMAL 1.7
+#define SHARK_SPEED_BIG 1.4
+#define SHARK_SPEED_RUNAWAY 13
 
 #define SHARK_BITE_START 5
 #define SHARK_BITE_FRAME 4
@@ -127,6 +131,7 @@
 
 
 //cable
+#define CABLE_BROKEN "cable_"
 #define HP_CABLEWHITE "cable/edithealthwhite.png"
 #define HP_CABLERED "cable/healthred.png"
 #define HP_CABLEGREEN "cable/healthgreen.png"
@@ -144,15 +149,15 @@
 
 #define ITEM_SCAlE 0.3
 
-#define LOADING_BAR_BACKGROUND "loadingbar/bar_1.png"
-#define LOADING_BAR "loadingbar/bar_2.png"
+#define LOADING_BAR_BACKGROUND "loadingbar/loadingbar2.png"
+#define LOADING_BAR "loadingbar/loadingbar1.png"
 #define LOADING_BAR_SCALE_X 0.35
 #define LOADING_BAR_SCALE_Y 0.07
 
 #define BUTTON_PLAY "button/button_play.png"
 
 //bgm and sfx
-#define MUSIC_BACKGROUND_PLAY "sound/AdventureInTheOcean.mp3"
+#define MUSIC_BACKGROUND_PLAY "sound/BabyShark.mp3"
 #define MUSIC_BACKGROUND_MAP "sound/Netherplace.mp3"
 #define SFX_BUTTON_BULLET "sound/Pop-sound-effect.mp3"
 #define SFX_BUTTON "sound/button4.wav"
@@ -203,6 +208,12 @@
 #define ONOFFSTATE "checkbox/blabla.png"
 #define TIME "item/clock.png"
 
+//shop background
+#define WATER "shop/underwater.png"
+#define SHOP_BG "shop/Capture.PNG"
+#define BUTTON_BUY "shop/buybutton.png"
+
+
 #define COST_BUY_BRICK 200
 #define COST_BUY_HP 100
 #define COST_BUY_BOOM 350
@@ -213,3 +224,6 @@
 #define MAPSCENE_ONE_STAR "map_star/1star.png"
 #define MAPSCENE_TWO_STAR "map_star/2star.png"
 #define MAPSCENE_THREE_STAR "map_star/3star.png"
+
+#define SHOP_SELECT "shop/select1.png"
+#define SHOP_SELECTED "shop/selected1.png"

@@ -3,7 +3,7 @@
 #include"define.h"
 #include "Constants.h"
 #include "InfoMap.h"
-#include "PopUpShop.h"
+#include "ShopScene.h"
 
 Scene* MapScene::createScene()
 {
@@ -31,7 +31,7 @@ bool MapScene::init()
 
 	setListButton();
 	coin();
-	//star();
+	star();
 	shoppe();
 
 	for (int i = 0; i < Constants::GetListMap().size(); i++)
@@ -228,7 +228,7 @@ void MapScene::initPopUpLevel()
 		popup->getLayer()->setVisible(false);
 
 
-		popup->setLevel(mListLevel[i]->GetLevel(), mListLevel[i]->GetStar());
+		popup->setLevel(mListLevel[i]->GetLevel(), mListLevel[i]->GetStar() , mListLevel[i]->GetScore());
 		mListPlay.push_back(popup);
 	}
 
@@ -311,20 +311,20 @@ void MapScene::shoppe()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	//button shop
 	auto btnShop = ui::Button::create(SHOP);
-	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05, visibleSize.height / 1.05));
-
+	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 , visibleSize.height / 1.05));
+	this->addChild(btnShop);
+	Constants::AddButtonIntoMapLevel(btnShop);
 	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
 		switch (touch)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
-			//PopUpShop*popupshop = PopUpShop::create();
-			//this->addChild(popupshop);
-			PopUpShop* popupshop = PopUpShop::create();
-			this->addChild(popupshop);
+		case ui::Widget::TouchEventType::ENDED:	
+			Constants::ReleaseButton();
+			Director::getInstance()->replaceScene(TransitionFadeTR::create(1, ShopScene::createScene()));
 			break;
 		}
 	});
-	this->addChild(btnShop);
+	
+	
 }

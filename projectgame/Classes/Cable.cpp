@@ -18,7 +18,8 @@ Cable::Cable(cocos2d::Scene * scene)
 	mSprite = cocos2d::Sprite::create(CABLE_IMG);
 
 	mSprite->setPosition(cocos2d::Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	mSprite->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height, 1, mSprite->getContentSize().height));
+
+	//mSprite->setScaleY(Constants::setScaleSprite(Constants::getVisibleSize().height, 1, mSprite->getContentSize().height));
 
 	auto width = mSprite->getContentSize().width / 4;
 	auto height = mSprite->getContentSize().height;
@@ -75,7 +76,15 @@ void Cable::Bitten()
 	{
       EffectLoadingBar();
 	}
-	
+	if (mHp<80 && mHp >= 25)
+	{
+	Cable::BrokenAnimation(2);
+	}
+	else if(mHp<25)
+	{
+	Cable::BrokenAnimation(0.5);
+	}
+
 	//log("%d", mHp);
 }
 
@@ -86,6 +95,7 @@ void Cable::Armor()
 
 void Cable::Update()
 {
+	
 	if ( mHp < 25)
 	{
 		loadingBarGreen->loadTexture(HP_RED);
@@ -212,6 +222,23 @@ void Cable::SetTarget(cocos2d::Vec2 pos, bool vis)
 int Cable::GetHP()
 {
 	return mHp;
+}
+
+void Cable::BrokenAnimation(float delay)
+{
+	mSprite->stopAllActions();
+	auto animate = cocos2d::Animate::create(Model::CreateAnimation(CABLE_BROKEN, 1, 4, 0.2));
+	auto callback = cocos2d::CallFunc::create([=]() {
+		
+	});
+
+	auto seq = cocos2d::Sequence::create(
+		animate,
+		DelayTime::create(delay),
+		nullptr
+	);
+	auto repeat = cocos2d::RepeatForever::create(seq);
+	mSprite->runAction(repeat);
 }
 
 

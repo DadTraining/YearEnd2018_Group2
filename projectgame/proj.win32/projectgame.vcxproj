@@ -172,6 +172,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\Ship.cpp" />
     <ClCompile Include="..\Classes\Shark.cpp" />
     <ClCompile Include="..\Classes\IntroScene.cpp" />
+    <ClCompile Include="..\Classes\ShopScene.cpp" />
     <ClCompile Include="..\Classes\sqlite3.c" />
     <ClCompile Include="..\Classes\SkinGame.cpp" />
     <ClCompile Include="main.cpp" />
@@ -202,6 +203,7 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\Shark.h" />
     <ClInclude Include="..\Classes\Ship.h" />
     <ClInclude Include="..\Classes\IntroScene.h" />
+    <ClInclude Include="..\Classes\ShopScene.h" />
     <ClInclude Include="..\Classes\sqlite3.h" />
     <ClInclude Include="..\Classes\SkinGame.h" />
     <ClInclude Include="main.h" />

@@ -90,15 +90,17 @@ void PopUpShop::setBackground()
 
 	// icon stun
 	auto mIconStun = Sprite::create(ITEM_BRICK_IMAGE);
+	mIconStun->setScale(0.8);
 	mIconStun->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.25, mBackground->getContentSize().height*0.45));
 	mBackground->addChild(mIconStun);
 	// icon health
 	auto mIconHealth = Sprite::create(ITEM_HP_IMAGE);
 	mIconHealth->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.5, mBackground->getContentSize().height*0.45));
-	mIconHealth->setScale(0.85);
+	mIconHealth->setScale(0.8);
 	mBackground->addChild(mIconHealth);
 	//icon electric gun
 	auto mIconGun = Sprite::create(ITEM_BOOM_IMAGE);
+	mIconGun->setScale(0.8);
 	mIconGun->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.75, mBackground->getContentSize().height*0.45));
 	mBackground->addChild(mIconGun);
 
@@ -112,7 +114,7 @@ void PopUpShop::setBackground()
 		case cocos2d::ui::Widget::TouchEventType::BEGAN:
 			break;
 		case cocos2d::ui::Widget::TouchEventType::ENDED:	
-			Constants::BuyBricks();
+			//Constants::BuyBricks();
 			
 			break;
 
@@ -154,6 +156,10 @@ void PopUpShop::setBackground()
 		}
 	});
 	mBackground->addChild(btnBuyGun);
+
+	//
+	CountInShop();
+
 }
 
 void PopUpShop::disappear()
@@ -168,8 +174,38 @@ cocos2d::Layer * PopUpShop::getLayer()
 
 void PopUpShop::HandlTouch()
 {
+	Constants::SetEnableAllTouchEventOnMapLevel(true);
 	mLayer->setVisible(false);
-	cocos2d::Director::getInstance()->resume();
+	
+	
+}
+
+void PopUpShop::CountInShop()
+{
+	TTFConfig labelConfig;
+	labelConfig.fontFilePath = FONT_LEVEL;
+	labelConfig.fontSize = 25;
+	labelConfig.customGlyphs = nullptr;
+	labelConfig.distanceFieldEnabled = false;
+
+	/// boom is brick
+	mCountBrick = Label::createWithTTF(labelConfig, std::to_string(1));
+	mCountBrick->setAlignment(TextHAlignment::CENTER);
+	mCountBrick->setColor(Color3B::BLACK);
+	mCountBrick->setPosition(cocos2d::Vec2(mBackground->getContentSize().width*0.3, mBackground->getContentSize().height*0.35));
+	mBackground->addChild(mCountBrick, 999);
+
+	mCountHP = Label::createWithTTF(labelConfig, std::to_string(1));
+	mCountHP->setAlignment(TextHAlignment::CENTER);
+	mCountHP->setColor(Color3B::BLACK);
+	mCountHP->setPosition(cocos2d::Vec2(visibleSize.width*0.519, visibleSize.height*0.45));
+	//mBackground->addChild(mCountHP, 999);
+
+	mCountGunE = Label::createWithTTF(labelConfig, std::to_string(1));
+	mCountGunE->setAlignment(TextHAlignment::CENTER);
+	mCountGunE->setColor(Color3B::BLACK);
+	mCountGunE->setPosition(cocos2d::Vec2(visibleSize.width*0.615, visibleSize.height*0.45));
+	//mBackground->addChild(mCountGunE, 999);
 }
 
 

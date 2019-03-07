@@ -3,6 +3,7 @@
 #include "sqlite3.h"
 #include "define.h"
 #include "MapLevel.h"
+#include "SkinGame.h"
 
 class DbContext
 {
@@ -30,4 +31,14 @@ public:
 	static void UpdateItem(int index,int items);
 	static int GetScore();
 	static void UpdateScore(int score);
+	/*
+		index = 1 is sound effect
+		index = 2 is background music
+	*/
+	static int GetSound(int index);
+	static void UpdateSound(int sf, int bg);
+
+	static std::vector<SkinGame*> GetListShip();
+	static void UpdateSkinShip(int id);
+	static std::string GetNameSkin(int id);
 };

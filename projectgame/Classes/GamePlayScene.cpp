@@ -83,8 +83,8 @@ bool GamePlayScene::init()
 	//loading time
 	countDownTime = 0;
 	setTimeLoading();
-	
-	
+
+
 
 	Constants::setInMap(false);
 	//initPopUpLevelEndGame();
@@ -93,7 +93,7 @@ bool GamePlayScene::init()
 	setCountItem();
 
 	this->scheduleUpdate();
-	
+
 	return true;
 }
 
@@ -104,7 +104,8 @@ void GamePlayScene::menuCloseCallback(Ref* pSender)
 
 void GamePlayScene::update(float delta)
 {
-	if (mCable->GetHP()<=0)
+	callBackAlive += 1;
+	if (mCable->GetHP() <= 0)
 	{
 		LoseGame();
 	}
@@ -161,9 +162,9 @@ void GamePlayScene::update(float delta)
 	countDownTime++;
 	if (countDownTime % FPS == 0)
 	{
-		float percent = (float) 20 / 9;
+		float percent = (float)20 / 9;
 		loadingTime->setPercent(loadingTime->getPercent() + percent);
-		
+
 		clock->setPosition(Vec2(clock->getPosition().x + loadingTimeBG->getContentSize().width / 45
 			, clock->getPosition().y));
 	}
@@ -173,17 +174,17 @@ void GamePlayScene::update(float delta)
 		SharkAliveCallBack(1);
 	}
 
-	if (countDownTime >= 600 && countDownTime < 1200)
+	else if (countDownTime < 1200)
 	{
 		SharkAliveCallBack(2);
 	}
 
-	if (countDownTime >= 1200 && countDownTime < 1800)
+	else if (countDownTime < 1800)
 	{
 		SharkAliveCallBack(3);
 	}
 
-	if (countDownTime == 1800)
+	if (countDownTime >= 1800)
 	{
 		countDownTime = 0;
 		SharkAliveCallBack(4);
@@ -206,37 +207,44 @@ void GamePlayScene::SharkAliveCallBack(int phase)
 		break;
 	default:
 		WinGame();
-		
-		
 		break;
 	}
 
-	for (int i = 0; i < size; i++)
+	if (callBackAlive % 40 == 0)
 	{
-		auto x = sharkList[i]->SpriteIsVisible();
-		if (!x)
+		for (int i = 0; i < size; i++)
 		{
-			if (mSharksSkin > 0)
+			auto x = sharkList[i]->SpriteIsVisible();
+			if (!x)
 			{
-				auto rand = cocos2d::random(1, 10);
-				if (rand % 2 == 0)
+				if (mSharksSkin > 0 && phase != 1)
+				{
+
+					int rand = cocos2d::random(1, 10);
+					if (InfoMap::getMapLevel() <= 9 && rand <= 7)
+					{
+						sharkList[i]->SetNumSkinForShark(1);
+						sharkList[i]->Init();
+					}
+					else if (InfoMap::getMapLevel() > 9 && rand <= 4)
+					{
+						sharkList[i]->SetNumSkinForShark(1);
+						sharkList[i]->Init();
+					}
+					else
+					{
+						sharkList[i]->SetNumSkinForShark(2);
+						sharkList[i]->Init();
+						mSharksSkin -= 1;
+					}
+				}
+				else
 				{
 					sharkList[i]->SetNumSkinForShark(1);
 					sharkList[i]->Init();
 				}
-				else
-				{
-					sharkList[i]->SetNumSkinForShark(2);
-					sharkList[i]->Init();
-					mSharksSkin -= 1;
-				}
+				break;
 			}
-			else
-			{
-				sharkList[i]->SetNumSkinForShark(1);
-				sharkList[i]->Init();
-			}
-			break;
 		}
 	}
 }
@@ -335,11 +343,11 @@ void GamePlayScene::showEndGame()
 	Constants::SetEnableAllTouchEventOnMapLevel(false);
 	int star = 0;
 	auto score = InfoMap::getScore();
-	if (InfoMap::getScore() > 400)
+	if (InfoMap::getScore() > InfoMap::get3Score())
 	{
 		star = 3;
 	}
-	else if (InfoMap::getScore() > 200)
+	else if (InfoMap::getScore() > InfoMap::get2Score())
 	{
 		star = 2;
 	}
@@ -440,6 +448,7 @@ void GamePlayScene::ButtonShoot()
 	auto blueButton = ui::Button::create(BUTTON_BLUE_IMG_NOR);
 	blueButton->setAnchorPoint(cocos2d::Vec2(1, 0));
 	blueButton->setPosition(cocos2d::Vec2(visibleSize.width - 20, 20));
+	Constants::AddButtonIntoMapLevel(blueButton);
 	blueButton->addClickEventListener([&](Ref* event) {
 		if (Constants::getOnSFX())
 		{
@@ -459,6 +468,7 @@ void GamePlayScene::ButtonShoot()
 		}
 		ship->ShootColor(BULLET_SHOOT_RED);
 	});
+	Constants::AddButtonIntoMapLevel(redButton);
 	addChild(redButton, 999);
 
 	auto yellowButton = ui::Button::create(BUTTON_YELLOW_IMG_NOR);
@@ -471,6 +481,7 @@ void GamePlayScene::ButtonShoot()
 		}
 		ship->ShootColor(BULLET_SHOOT_YELLOW);
 	});
+	Constants::AddButtonIntoMapLevel(yellowButton);
 	addChild(yellowButton, 999);
 }
 
@@ -485,19 +496,20 @@ void GamePlayScene::SetItemBox()
 	auto _x = itemBox->getContentSize().width;
 	for (int i = 1; i <= 3; i++)
 	{
-		std::string path = "item/", png = ".png", name,_disName;
+		std::string path = "item/", png = ".png", name, _disName;
 		char c = '0' + i;
 		name = path + c + png;
 		_disName = path + c + "." + c + png;
-		auto button = ui::Button::create(name,name,_disName);
-		
+		auto button = ui::Button::create(name, name, _disName);
+
 		button->setAnchorPoint(cocos2d::Vec2(0, 0));
+		Constants::AddButtonIntoMapLevel(button);
 		listItem.push_back(button);
 		switch (i)
 		{
 		case 1: //brick
 			button->setPosition(Vec2(45, itemBox->getPosition().y + 25));
-			if (Constants::GetBricks()<=0)
+			if (Constants::GetBricks() <= 0)
 			{
 				button->setEnabled(false);
 			}
@@ -572,7 +584,7 @@ void GamePlayScene::SetPauseGame()
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			cocos2d::Director::getInstance()->pause();
-			
+
 			PopupSetting *popUpSetting = PopupSetting::create();
 			this->addChild(popUpSetting, 110);
 			popUpSetting->getLayer()->setVisible(true);
@@ -580,7 +592,7 @@ void GamePlayScene::SetPauseGame()
 			break;
 		}
 	});
-	
+
 }
 
 void GamePlayScene::RandomBackGround()
@@ -673,10 +685,10 @@ void GamePlayScene::LoseGame()
 {
 	this->unscheduleUpdate();
 	PopupLoseGame *popupLose = PopupLoseGame::create();
-	this->addChild(popupLose,999);
+	this->addChild(popupLose, 999);
 	popupLose->getLayer()->setVisible(true);
 	Constants::SetEnableAllTouchEventOnMapLevel(false);
-	
+
 	InfoMap::setScore(0);
 }
 
@@ -730,13 +742,22 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 		)
 	{
 		bool _result = true;
+		auto _rand = cocos2d::random(1, 2);
 		if (objectA >= 100)
 		{
 			_result = ship->Collision(sharkList, objectB, objectA);
 			if (!_result)
 			{
 				//DoClone(SharkAlive(objectB));
-				SharkAlive(objectB)->Angry();
+				if (_rand == 1)
+				{
+					SharkAlive(objectB)->Angry();
+				}
+				else
+				{
+					SharkAlive(objectB)->RunAwayAnimation();
+
+				}
 			}
 		}
 		else
@@ -745,7 +766,15 @@ bool GamePlayScene::onContactBegin(PhysicsContact & contact)
 			if (!_result)
 			{
 				//DoClone(SharkAlive(objectA));
-				SharkAlive(objectA)->Angry();
+				if (_rand == 2)
+				{
+					SharkAlive(objectA)->Angry();
+				}
+				else
+				{
+					SharkAlive(objectA)->RunAwayAnimation();
+				}
+
 			}
 		}
 	}

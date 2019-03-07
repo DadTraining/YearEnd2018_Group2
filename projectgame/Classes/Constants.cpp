@@ -12,6 +12,8 @@ int Constants::totalCoin;
 int Constants::totalStar;
 bool Constants::onBGM = true;
 bool Constants::onSFX = true;
+std::string Constants::nameShip = "ship/Ship.png";
+std::vector<SkinGame*> Constants::listSkin;
 
 cocos2d::Size Constants::getVisibleSize()
 {
@@ -57,14 +59,19 @@ void Constants::AddMapIntoList(MapLevel * map)
 
 void Constants::SetPhase(int index)
 {
-	auto map = listMap.at(index);
-	InfoMap::setSharPhases(
-		map->GetPhase(1),
-		map->GetPhase(2),
-		map->GetPhase(3),
-		map->GetSharksSkin()
-	);
-	InfoMap::setMapLevel(index);
+	if (index < 16)
+	{
+		auto map = listMap.at(index);
+		InfoMap::setSharPhases(
+			map->GetPhase(1),
+			map->GetPhase(2),
+			map->GetPhase(3),
+			map->GetSharksSkin(),
+			map->get3Star(),
+			map->get2Star()
+		);
+		InfoMap::setMapLevel(index);
+	}
 }
 
 void Constants::ReleaseButton()
@@ -80,16 +87,52 @@ bool Constants::ListButtonIsEmpty()
 void Constants::EndGame(int lv, int star, bool pass, int score)
 {
 	auto map = listMap.at(lv - 1);
-	map->SetStar(star);
-	map->setPlayPass(pass);
-	map->SetScore(score);
+	if (!map->WasPlay())
+	{
+		map->SetStar(star);
+		map->setPlayPass(pass);
+		map->SetScore(score);
+	}
+	else
+	{
+		if (pass)
+		{
+			if (map->GetStar() < star)
+			{
+				map->SetStar(star);
+			}
+			if (map->GetScore() < score)
+			{
+				map->SetScore(score);
+			}
+		}
+	}
 	if (pass)
 	{
-		if (lv < 16)
+		if (lv < 16 && (lv == 4 || lv == 8 || lv == 12))
 		{
-			listMap.at(lv)->AllowPlay();
+			if (Constants::GetTotalStar() == 12 && lv == 4)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
+			else if (Constants::GetTotalStar() == 24 && lv == 8)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
+			else if (Constants::GetTotalStar() == 36 && lv == 12)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
 		}
-		DbContext::UpdateDataMap(lv, star, score);
+		else
+		{
+			if (lv <16)
+			{
+				listMap.at(lv)->AllowPlay();
+			}
+		}
+
+		DbContext::UpdateDataMap(lv, map->GetStar(), map->GetScore());
 		DbContext::UpdateScore(Constants::GetTotalCoin() + score);
 	}
 	DbContext::UpdateItem(1, Constants::GetBricks());
@@ -109,11 +152,13 @@ bool Constants::isInMap()
 
 bool Constants::BuyBooms()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_BOOM)
+	if (Constants::GetTotalCoin() >= COST_BUY_BOOM)
 	{
 		boom += 1;
 		DbContext::UpdateItem(3, boom);
 		Constants::SetTotalCoin(totalCoin - COST_BUY_BOOM);
+		DbContext::UpdateScore(totalCoin);
+
 		return true;
 	}
 	return false;
@@ -121,9 +166,9 @@ bool Constants::BuyBooms()
 
 bool Constants::BuyBricks()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_BRICK)
+	if (Constants::GetTotalCoin() >= COST_BUY_BRICK)
 	{
-		brick += 3;
+		brick += 1;
 		DbContext::UpdateItem(1, brick);
 		Constants::SetTotalCoin(totalCoin - COST_BUY_BRICK);
 		DbContext::UpdateScore(totalCoin);
@@ -135,12 +180,12 @@ bool Constants::BuyBricks()
 
 bool Constants::BuyHps()
 {
-	if (Constants::GetTotalCoin() > COST_BUY_HP)
+	if (Constants::GetTotalCoin() >= COST_BUY_HP)
 	{
-		hp += 3;
+		hp += 1;
 		Constants::SetTotalCoin(totalCoin - COST_BUY_HP);
-
 		DbContext::UpdateItem(2, hp);
+		DbContext::UpdateScore(totalCoin);
 
 		return true;
 	}
@@ -210,6 +255,15 @@ void Constants::SetTotalStar(int star)
 	totalStar = star;
 }
 
+bool Constants::AllowPlayNext(int lv)
+{
+	if (lv <16)
+	{
+		return listMap.at(lv)->isAllowPlay();
+	}
+	return false;
+}
+
 void Constants::setOnBGM(bool on)
 {
 	onBGM = on;
@@ -218,6 +272,7 @@ void Constants::setOnBGM(bool on)
 void Constants::changeOnBGM()
 {
 	onBGM = !onBGM;
+	DbContext::UpdateSound(onSFX ? 1 : 0, onBGM ? 1 : 0);
 }
 
 bool Constants::getOnBGM()
@@ -233,11 +288,60 @@ void Constants::setOnSFX(bool on)
 void Constants::changeOnSFX()
 {
 	onSFX = !onSFX;
+	DbContext::UpdateSound(onSFX ? 1 : 0, onBGM ? 1 : 0);
 }
 
 bool Constants::getOnSFX()
 {
 	return onSFX;
+}
+
+void Constants::SetSelectedShip(int id)
+{
+	for (int i = 0; i < listButton.size(); i++)
+	{
+		if (i != id)
+		{
+			listButton.at(i)->setEnabled(true);
+		}
+		else
+		{
+			listButton.at(i)->setEnabled(false);
+		}
+		listSkin.at(i)->SetAllowUse(false);
+	}
+
+	//listSkin = DbContext::GetListShip();
+	//Constants::nameShip = listSkin.at(id + 1)->GetSkinText();
+	listSkin.at(id)->SetAllowUse(true);
+	DbContext::UpdateSkinShip(id + 1);
+}
+
+std::string Constants::GetNameShip()
+{
+	//std::string name;
+	for (int i = 0; i < listSkin.size(); i++)
+	{
+		if (listSkin.at(i)->IsAllowUse())
+		{
+			return listSkin.at(i)->GetSkinText();
+		}
+	}
+
+	return nullptr;
+}
+
+void Constants::LoadSkinGame()
+{
+	listSkin = DbContext::GetListShip();
+}
+
+void Constants::ReLoadShop()
+{
+	for (int i = 0; i < listSkin.size(); i++)
+	{
+		listButton.at(i)->setEnabled(!listSkin.at(i)->IsIssue());
+	}
 }
 
 
