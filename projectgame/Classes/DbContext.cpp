@@ -59,40 +59,40 @@ bool DbContext::InsertData()
 		"insert into tbMapLevel values (null,3,0,5,7,9,0,0,0,0,320,170)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,4,0,5,7,9,5,0,0,0,300,180)"
+		"insert into tbMapLevel values (null,4,0,5,7,9,5,0,0,0,400,200)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,5,0,5,7,9,7,0,0,0,310,200)"
+		"insert into tbMapLevel values (null,5,0,5,7,9,7,0,0,0,420,250)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,6,0,5,7,9,9,0,0,0,310,250)"
+		"insert into tbMapLevel values (null,6,0,5,7,9,9,0,0,0,440,300)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,7,0,5,7,9,11,0,0,0,310,250)"
+		"insert into tbMapLevel values (null,7,0,5,7,9,11,0,0,0,440,310)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,8,0,6,8,10,13,0,0,0,370,300)"
+		"insert into tbMapLevel values (null,8,0,6,8,10,13,0,0,0,440,320)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,9,0,6,8,10,15,0,0,0,330,270)"
+		"insert into tbMapLevel values (null,9,0,6,8,10,15,0,0,0,440,330)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,10,0,6,8,10,17,0,0,0,400,350)"
+		"insert into tbMapLevel values (null,10,0,6,8,10,17,0,0,0,440,340)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,11,0,6,8,10,19,0,0,0,330,290)"
+		"insert into tbMapLevel values (null,11,0,6,8,10,19,0,0,0,450,350)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,12,0,6,8,10,20,0,0,0,370,280)"
+		"insert into tbMapLevel values (null,12,0,6,8,10,20,0,0,0,450,360)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,13,0,7,9,11,21,0,0,0,320,290)"
+		"insert into tbMapLevel values (null,13,0,7,9,11,21,0,0,0,450,360)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,14,0,7,9,11,22,0,0,0,300,280)"
+		"insert into tbMapLevel values (null,14,0,7,9,11,22,0,0,0,450,370)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
-		"insert into tbMapLevel values (null,15,0,7,9,11,23,0,0,0,400,350)"
+		"insert into tbMapLevel values (null,15,0,7,9,11,23,0,0,0,460,370)"
 		, nullptr, nullptr, nullptr);
 	sqlite3_exec(_dataBase,
 		"insert into tbMapLevel values (null,16,0,7,9,11,24,0,0,0,470,400)"
