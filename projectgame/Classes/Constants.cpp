@@ -66,7 +66,9 @@ void Constants::SetPhase(int index)
 			map->GetPhase(1),
 			map->GetPhase(2),
 			map->GetPhase(3),
-			map->GetSharksSkin()
+			map->GetSharksSkin(),
+			map->get3Star(),
+			map->get2Star()
 		);
 		InfoMap::setMapLevel(index);
 	}

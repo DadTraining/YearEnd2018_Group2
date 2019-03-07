@@ -13,11 +13,12 @@ protected:
 	int mScore;
 	bool wasPlayPass;
 	bool mAllowPlay;
-
+	int score3;
+	int score2;
 	cocos2d::Vec2 mPos;
 
 public:
-	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin,  int score, bool PlayPass, bool allow);
+	MapLevel(int lv, int star, int p1, int p2, int p3, int shaSkin,  int score, bool PlayPass, bool allow,int star3,int star2);
 	MapLevel();
 	MapLevel(cocos2d::Scene* scene,int lv, int st);
 	virtual ~MapLevel();
@@ -49,4 +50,11 @@ public:
 
 	void SetPosition(cocos2d::Vec2 pos);
 	void ShowStar(cocos2d::Scene* scene);
+
+	int get3Star() {
+		return score3;
+	}
+	int get2Star() {
+		return score2;
+	}
 };
