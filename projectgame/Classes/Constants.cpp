@@ -308,12 +308,12 @@ void Constants::SetSelectedShip(int id)
 		{
 			listButton.at(i)->setEnabled(false);
 		}
-		listSkin.at(i)->SetAllowUse(false);
+		listSkin.at(i)->SetIssue(false);
 	}
 
 	//listSkin = DbContext::GetListShip();
 	//Constants::nameShip = listSkin.at(id + 1)->GetSkinText();
-	listSkin.at(id)->SetAllowUse(true);
+	listSkin.at(id)->SetIssue(true);
 	DbContext::UpdateSkinShip(id + 1);
 }
 
