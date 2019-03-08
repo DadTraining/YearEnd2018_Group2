@@ -35,9 +35,9 @@ public:
 		return SCORE;
 	}
 	static int get2Score() {
-		return SCORE_2STAR;
-	}static int get3Score() {
 		return SCORE_3STAR;
+	}static int get3Score() {
+		return SCORE_2STAR;
 	}
 
 };
