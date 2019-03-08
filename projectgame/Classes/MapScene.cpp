@@ -326,5 +326,18 @@ void MapScene::shoppe()
 		}
 	});
 	
-	
+	auto btnExit  = ui::Button::create(BUTTON_EXIT_GAME);
+	btnExit->setPosition(btnShop->getPosition() - cocos2d::Vec2(0,50));
+	this->addChild(btnExit);
+	Constants::AddButtonIntoMapLevel(btnExit);
+	btnExit->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
+		switch (touch)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			cocos2d::Director::getInstance()->end();
+			break;
+		}
+	});
 }

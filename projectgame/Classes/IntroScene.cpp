@@ -146,7 +146,7 @@ void IntroScene::Loading()
 		{
 			loadingBarBG->setVisible(false);
 			loadingBar->setVisible(false);
-
+			//cocos2d::Director::getInstance()->end();
 			//////////////////////
 			//button play appear when loading finish
 			button->setVisible(true);

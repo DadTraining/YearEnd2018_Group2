@@ -176,6 +176,8 @@
 #define BUTTON_ACCEPT "map/accept.png"
 #define SETTING "map/setting.png"
 #define PAUSE "map/pause.png"
+#define BUTTON_EXIT_GAME "button/exit.png"
+
 
 
 
