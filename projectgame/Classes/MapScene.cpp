@@ -311,7 +311,9 @@ void MapScene::shoppe()
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	//button shop
 	auto btnShop = ui::Button::create(SHOP);
-	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 , visibleSize.height / 1.05));
+	btnShop->setAnchorPoint(cocos2d::Vec2(1, 0.5));
+
+	btnShop->setPosition(cocos2d::Vec2(visibleSize.width / 1.05 - btnShop->getContentSize().width , visibleSize.height / 1.05));
 	this->addChild(btnShop);
 	Constants::AddButtonIntoMapLevel(btnShop);
 	btnShop->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
@@ -327,7 +329,8 @@ void MapScene::shoppe()
 	});
 	
 	auto btnExit  = ui::Button::create(BUTTON_EXIT_GAME);
-	btnExit->setPosition(btnShop->getPosition() - cocos2d::Vec2(0,50));
+	btnExit->setAnchorPoint(cocos2d::Vec2(0,0.5));
+	btnExit->setPosition(btnShop->getPosition() + cocos2d::Vec2(15,0));
 	this->addChild(btnExit);
 	Constants::AddButtonIntoMapLevel(btnExit);
 	btnExit->addTouchEventListener([&](Ref* sender, ui::Widget::TouchEventType touch) {
